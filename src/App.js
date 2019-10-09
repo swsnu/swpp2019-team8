@@ -12,6 +12,7 @@ import DocumentSearchFail from './containers/SnuVoice/TellMe/DocumentSearchFail/
 import DocumentDetail from './containers/SnuVoice/TellMe/DocumentDetail/DocumentDetail';
 import DocumentCreate from './containers/SnuVoice/TellMe/DocumentCreate/DocumentCreate';
 import DocumentEdit from './containers/SnuVoice/TellMe/DocumentDetail/DocumentEdit/DocumentEdit';
+import PhotoUpload from './containers/SnuVoice/TellMe/PhotoUpload/PhotoUpload';
 
 function App(props) {
   return (
@@ -22,9 +23,10 @@ function App(props) {
           <Route path='/sign_up' exact component={SignUp} />
           <Route path='/tell_me' exact component={TellMe} />
           <Route path='/tell_me/search_fail' exact component={DocumentSearchFail} />
-          <Route path='/tell_me/document/:document_title' exact component={DocumentDetail} />
+          <Route path='/tell_me/documents/:document_title' exact component={DocumentDetail} />
           <Route path='/tell_me/create' exact component={DocumentCreate} />
-          <Route path='/tell_me/document/:document_title/edit' exact component={DocumentEdit} />
+          <Route path='/tell_me/documents/:document_title/edit' exact component={DocumentEdit} />
+          <Route path='/tell_me/photo' exact component={PhotoUpload} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >
