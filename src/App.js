@@ -16,6 +16,7 @@ import PhotoUpload from './containers/SnuVoice/TellMe/PhotoUpload/PhotoUpload';
 import DebateList from './containers/SnuVoice/TellMe/DocumentDetail/DebateList/DebateList';
 import DebateCreate from './containers/SnuVoice/TellMe/DocumentDetail/DebateList/DebateCreate/DebateCreate';
 import DebateDetail from './containers/SnuVoice/TellMe/DocumentDetail/DebateList/DebateDetail/DebateDetail';
+import HearUs from './containers/SnuVoice/HearUs/HearUs';
 
 function App(props) {
   return (
@@ -33,6 +34,7 @@ function App(props) {
           <Route path='/tell_me/documents/:document_title/debates' exact component={DebateList} />
           <Route path='/tell_me/documents/:document_title/debates/create' exact component={DebateCreate} />
           <Route path='/tell_me/documents/:document_title/debates/:debate_id' exact component={DebateDetail} />
+          <Route path='/hear_us' exact component={HearUs} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >
