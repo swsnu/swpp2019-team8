@@ -11,6 +11,7 @@ import TellMe from './containers/SnuVoice/TellMe/TellMe';
 import DocumentSearchFail from './containers/SnuVoice/TellMe/DocumentSearchFail/DocumentSearchFail';
 import DocumentDetail from './containers/SnuVoice/TellMe/DocumentDetail/DocumentDetail';
 import DocumentCreate from './containers/SnuVoice/TellMe/DocumentCreate/DocumentCreate';
+import DocumentEdit from './containers/SnuVoice/TellMe/DocumentDetail/DocumentEdit/DocumentEdit';
 
 function App(props) {
   return (
@@ -23,6 +24,7 @@ function App(props) {
           <Route path='/tell_me/search_fail' exact component={DocumentSearchFail} />
           <Route path='/tell_me/:document_title' exact component={DocumentDetail} />
           <Route path='/tell_me/create' exact component={DocumentCreate} />
+          <Route path='/tell_me/:document_title/edit' exact component={DocumentEdit} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >
