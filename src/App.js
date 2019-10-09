@@ -2,10 +2,11 @@
 import React from 'react';
 import './App.css';
 
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import SnuVoice from './containers/SnuVoice/SnuVoice';
+import SignUp from './containers/SnuVoice/SignUp/SignUp';
 
 function App(props) {
   return (
@@ -13,7 +14,7 @@ function App(props) {
       <div className="App" >
         <Switch>
           <Route path='/' exact component={SnuVoice} />
-          <Redirect exact from='/' to='/' />
+          <Route path='/sign_up' exact component={SignUp} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >
