@@ -22,6 +22,7 @@ import PetitionList from './containers/SnuVoice/HearUs/PetitionList/PetitionList
 import PetitionSearch from './containers/SnuVoice/HearUs/PetitionSearch/PetitionSearch';
 import PetitionCreate from './containers/SnuVoice/HearUs/PetitionCreate/PetitionCreate';
 import PetitionDetail from './containers/SnuVoice/HearUs/PetitionDetail/PetitionDetail';
+import PetitionStatistic from './containers/SnuVoice/HearUs/PetitionDetail/PetitionStatistic/PetitionStatistic';
 
 function App(props) {
   return (
@@ -45,6 +46,7 @@ function App(props) {
           <Route path='/hear_us/search' exact component={PetitionSearch} />
           <Route path='/hear_us/create' exact component={PetitionCreate} />
           <Route path='/hear_us/:petition_id' exact component={PetitionDetail} />
+          <Route path='/hear_us/:petition_id/statistics' exact component={PetitionStatistic} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >
