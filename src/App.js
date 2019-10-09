@@ -19,6 +19,7 @@ import DebateDetail from './containers/SnuVoice/TellMe/DocumentDetail/DebateList
 import HearUs from './containers/SnuVoice/HearUs/HearUs';
 import MyPetition from './containers/SnuVoice/HearUs/MyPetition/MyPetition';
 import PetitionList from './containers/SnuVoice/HearUs/PetitionList/PetitionList';
+import PetitionSearch from './containers/SnuVoice/HearUs/PetitionSearch/PetitionSearch';
 
 function App(props) {
   return (
@@ -39,6 +40,7 @@ function App(props) {
           <Route path='/hear_us' exact component={HearUs} />
           <Route path='/hear_us/my_petition/:user_id' exact component={MyPetition} />
           <Route path='/hear_us/petitions' exact component={PetitionList} />
+          <Route path='/hear_us/search' exact component={PetitionSearch} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >
