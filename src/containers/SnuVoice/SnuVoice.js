@@ -8,7 +8,7 @@ class SnuVoice extends Component {
     state = {
         email: '',
         password: '',
-        sign_in: false,
+        signIn: false,
     }
 
     onClickSignUpButton = () => {
