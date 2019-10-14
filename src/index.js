@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 
 import store, { history } from './store/store';
 
+import 'bootstrap/dist/css/bootstrap.css' // https://reactstrap.github.io/components/alerts/ 부트스트랩 머있는지
+
 ReactDOM.render(
     <Provider store={store}>
         <App history={history} />
