@@ -58,7 +58,7 @@ class SnuVoice extends Component {
         return (
             <div className="SnuVoice">
                 {upper_bar}
-                <div className="row">
+                <div className="Row">
                     <Button type="button" id="tell_me_button"
                         onClick={this.onClickTellMeButton}>TELL-ME</Button>
                     <Button type="button" id="hear_us_button"
