@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-
 import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class SignUp extends Component {
@@ -20,41 +19,37 @@ class SignUp extends Component {
         genderRadio: {
             male: false,
             female: false,
-            etc: false
+            etc: false,
         },
         statusRadio: {
             student: false,
             alumnus: false,
-            faculty: false
+            faculty: false,
         },
         studentRadio: {
             undergrad: false,
             grad: false,
-            doctor: false
+            doctor: false,
         },
         departmentList: [
             { value: 'Engineering' },
-            { value: 'hi' }
+            { value: 'hi' },
         ], // ex() 공대, 농생대
         majorList: {
             all: [{ value: '' }],
             Engineering: [
                 { value: 'hi' },
-                { value: 'temp' }
+                { value: 'temp' },
             ],
             hi: [
                 { value: 'asdasd' },
-                { value: 'asdasd' }
-            ]
-
-        }
-
-
+                { value: 'asdasd' },
+            ],
+        },
     }
 
     onChangeEmailInput = (event) => {
-        this.setState({ email: event.target.value })
-
+        this.setState({ email: event.target.value });
     }
 
     onChangeVerifyCodeInput = (event) => {
@@ -68,44 +63,51 @@ class SignUp extends Component {
     onChangeNicknameInput = (evnet) => {
         //나중에 중복체크 해야할 때 써야할듯 하하
     }
+
     onChangeGenderRadioButton = (event) => {
-        let temp = this.state.genderRadio
+        let temp = this.state.genderRadio;
         for (let i in temp) {
-            if (i === event.target.value) temp[i] = event.target.checked
-            else temp[i] = false;
+            if (i === event.target.value)
+                temp[i] = event.target.checked;
+            else
+                temp[i] = false;
         }
         this.setState({ genderRadio: temp })
     }
+
     onChangeStatusRadioButton = (event) => {
-        let temp = this.state.statusRadio
+        let temp = this.state.statusRadio;
         for (let i in temp) {
-            if (i === event.target.value) temp[i] = event.target.checked
-            else temp[i] = false;
+            if (i === event.target.value)
+                temp[i] = event.target.checked;
+            else
+                temp[i] = false;
         }
         this.setState({ statusRadio: temp })
     }
 
     onChangeStudentRadioButton = (event) => {
-        let temp = this.state.studentRadio
+        let temp = this.state.studentRadio;
         for (let i in temp) {
-            if (i === event.target.value) temp[i] = event.target.checked
-            else temp[i] = false;
+            if (i === event.target.value)
+                temp[i] = event.target.checked;
+            else
+                temp[i] = false;
         }
-        this.setState({ studentRadio: temp })
+        this.setState({ studentRadio: temp });
     }
 
     onChangeDepartmentSelect = (event) => {
-        this.setState({ selectedDepartment: event.target.value })
+        this.setState({ selectedDepartment: event.target.value });
     }
 
     onChangeMajorSelect = (event) => {
-        this.setState({ selectedMajor: event.target.value })
+        this.setState({ selectedMajor: event.target.value });
     }
 
     onClickAgreeToTermsCheckBox = () => {
-        this.setState({ agreeToTerms: !this.state.agreeToTerms })
+        this.setState({ agreeToTerms: !this.state.agreeToTerms });
     }
-
 
     onClickVerifyButton = () => {
 
@@ -116,23 +118,22 @@ class SignUp extends Component {
     }
 
     onClickBackButton = () => {
-        this.props.history.push('/')
+        this.props.history.push('/');
     }
 
     render() {
-        console.log(this.state.genderRadio)
         let status_detail = null;
         if (this.state.statusRadio['student']) {
             const departmentList = this.state.departmentList.map((v, i) => {
                 return (
                     <option key={i} value={v.value} label={v.value}></option>
-                )
-            })
+                );
+            });
             const majorList = this.state.majorList[this.state.selectedDepartment].map((v, i) => {
                 return (
                     <option key={i} value={v.value} label={v.value}></option>
-                )
-            })
+                );
+            });
 
             status_detail = (
                 <div className="StatusDetail">
@@ -145,7 +146,7 @@ class SignUp extends Component {
                         <Input type="radio" name="student_radio" id="student_doctor_radio" value="doctor"
                             onChange={this.onChangeStudentRadioButton}></Input>DOCTOR
                     </FormGroup>
-                    <d1>Department</d1>
+                    Department
                     <Input type="select" onChange={this.onChangeDepartmentSelect}>
                         {departmentList}
                     </Input>
@@ -154,25 +155,26 @@ class SignUp extends Component {
                         {majorList}
                     </Input>
                 </div>
-            )
+            );
         }
+
         return (
             <div className="SignUp">
                 <Form>
                     {/* 약관박스 만들기 */}
-                    <d1>Agree</d1>
+                    Agree
                     <FormGroup>
                         <Input type="checkbox" id="agree_to_terms_checkbox" checked={this.state.agreeToTerms}
                             onChange={() => this.onClickAgreeToTermsCheckBox()}></Input>
                     </FormGroup>
-                    <Label>SNUMAIL</Label>
                     <FormGroup row>
                         <Col md={2}>
-                            <Input type="email" id="email_input" placeholder="EMAIL"
+                            <Label>SNU MAIL</Label>
+                            <Input type="email" id="email_input" placeholder="SNU MAIL"
                                 onChange={this.onChangeEmailInput}></Input>
+                            <Button type="button" id="verify_button"
+                                onClick={this.onClickVerifyButton}>Verify</Button>
                         </Col>
-                        <Button type="button" id="verify_button"
-                            onClick={this.onClickVerifyButton}>Verify</Button>
                     </FormGroup>
                     <FormGroup row>
                         <Col md={2}>
@@ -206,8 +208,7 @@ class SignUp extends Component {
                     <Label>GENDER</Label>
                     <FormGroup>
                         <Input type="radio" name="gender_radio" id="gender_male_radio" value='male'
-                            onChange={this.onChangeGenderRadioButton}></Input>
-                        <Label>MALE</Label>
+                            onChange={this.onChangeGenderRadioButton}></Input>MALE
                         <Input type="radio" name="gender_radio" id="gender_female_radio" value='female'
                             onChange={this.onChangeGenderRadioButton}></Input>FEMALE
                         <Input type="radio" name="gender_radio" id="gender_etc_radio" value='etc'
@@ -229,7 +230,7 @@ class SignUp extends Component {
                         onClick={this.onClickBackButton}>BACK</Button>
                 </Form>
             </div >
-        )
+        );
     }
 }
 
