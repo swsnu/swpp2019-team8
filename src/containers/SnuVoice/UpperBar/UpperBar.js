@@ -16,7 +16,7 @@ class UpperBar extends Component {
         if (this.state.location === 'tell_me') {
             this.props.history.push('/hear_us');
         } else if (this.state.location === 'hear_us') {
-            this.props.history.push('tell_me');
+            this.props.history.push('/tell_me');
         }
 
     }
