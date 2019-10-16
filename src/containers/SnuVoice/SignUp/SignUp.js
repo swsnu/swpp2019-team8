@@ -32,8 +32,22 @@ class SignUp extends Component {
             doctor: false,
         },
         departmentList: [
+            { value: '-' },
+            { value: 'Humanities' },
+            { value: 'Social Sciences' },
+            { value: 'Natural Sciences' },
+            { value: 'Business Administration' },
+            { value: 'Nursing' },
             { value: 'Engineering' },
-            { value: 'hi' },
+            { value: 'Agriculture and Life Sciences' },
+            { value: 'Fine Arts' },
+            { value: 'Education' },
+            { value: 'Human Ecology' },
+            { value: 'Veterinary Medicine' },
+            { value: 'Pharmacy' },
+            { value: 'Music' },
+            { value: 'Medicine' },
+            { value: 'Liberal Studies' },
         ], // ex() 공대, 농생대
         majorList: {
             all: [{ value: '' }],
@@ -146,7 +160,7 @@ class SignUp extends Component {
                         <Input type="radio" name="student_radio" id="student_doctor_radio" value="doctor"
                             onChange={this.onChangeStudentRadioButton}></Input>DOCTOR
                     </FormGroup>
-                    Department
+                    College of...
                     <Input type="select" onChange={this.onChangeDepartmentSelect}>
                         {departmentList}
                     </Input>
