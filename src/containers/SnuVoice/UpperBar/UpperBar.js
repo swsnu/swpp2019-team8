@@ -9,8 +9,17 @@ class UpperBar extends Component {
         email: '',
         password: '',
         signIn: false,
+        location: ''
     }
-    
+
+    onClickCrossOverButton = () => {
+        if (this.state.location === 'tell_me') {
+            this.props.history.push('/hear_us');
+        } else if (this.state.location === 'hear_us') {
+            this.props.history.push('tell_me');
+        }
+
+    }
     onClickSignUpButton = () => {
         this.props.history.push('/sign_up');
     }
@@ -22,12 +31,28 @@ class UpperBar extends Component {
     onClickSignOutButton = () => {
         this.setState({ signIn: false });
     }
-    
+
+    componentDidMount = () => {
+        if (/tell_me/.exec(window.location.href)) {
+            this.setState({ location: 'tell_me' });
+        } else if (/hear_us/.exec(window.location.href)) {
+            this.setState({ location: 'hear_us' });
+        }
+    }
+
     render() {
-        console.log(window.location);
-        let upper_bar = null;
+        let upperBar = null;
+        let crossover = null;
+        if (this.state.location !== '') {
+            crossover = (
+                <div className="Crossover">
+                    <Button type="button" id="crossover_button"
+                        onClick={this.onClickCrossOverButton}>Cross</Button>
+                </div>
+            )
+        }
         if (this.state.signIn === false) {
-            upper_bar = (
+            upperBar = (
                 <div className="UpperBar">
                     <Input type="email" id="email_input" placeholder="SNU MAIL"
                         onChange={(event) => this.setState({ email: event.target.value })}></Input>
@@ -40,15 +65,16 @@ class UpperBar extends Component {
                 </div >
             );
         } else if (this.state.signIn === true) {
-            upper_bar =
+            upperBar =
                 <div className="UpperBar">
                     <Button type="button" id="sign_out_button"
                         onClick={this.onClickSignOutButton}>SIGN-OUT</Button>
                 </div>
         }
         return (
-            <div className = "UpperBar">
-                {upper_bar}
+            <div className="UpperBar">
+                {crossover}
+                {upperBar}
             </div>
         )
     }
