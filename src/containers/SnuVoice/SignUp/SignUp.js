@@ -248,4 +248,4 @@ class SignUp extends Component {
     }
 }
 
-export default connect(null, null)(withRouter(SignUp))
+export default connect(null, null)(withRouter(SignUp));
