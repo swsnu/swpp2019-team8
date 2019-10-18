@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Button, Input } from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 
 import UpperBar from '../UpperBar/UpperBar'
 
@@ -11,8 +11,8 @@ class TellMe extends Component {
         search: ''
     }
 
-    onChangeSearchInput  = (event) => {
-        this.setState({search : event.target.value});
+    onChangeSearchInput = (event) => {
+        this.setState({ search: event.target.value });
     }
 
     onClickSearchConfirmButton = () => {
@@ -27,15 +27,19 @@ class TellMe extends Component {
             <div className="TellMe">
                 <UpperBar />
                 <h1>TellMe</h1>
-                <Input type="text" id="search_input" autoFocus
-                    onChange={this.onChangeSearchInput}></Input>
-                <Button type="button" id="search_confirm_button"
-                    onClick={this.onClickSearchConfirmButton}>Search</Button>
+                <InputGroup>
+                    <Input type="text" id="search_input" autoFocus
+                        onChange={this.onChangeSearchInput}></Input>
+                    <InputGroupAddon addonType="append">
+                        <Button type="button" id="search_confirm_button"
+                            onClick={this.onClickSearchConfirmButton}>Search</Button>
+                    </InputGroupAddon>
+                </InputGroup>
                 <Button type="button" id="create_button"
                     onClick={this.onClickCreateButton}>Create</Button>
             </div>
-                );
-            }
-        }
-        
+        );
+    }
+}
+
 export default connect(null, null)(withRouter(TellMe));
