@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupAddon, Table } from 'reactstrap';
 
 import UpperBar from '../UpperBar/UpperBar'
+import Petiton from '../../../components/Petiton/petiton'
 
 class HearUs extends Component {
     state = {
@@ -16,7 +17,7 @@ class HearUs extends Component {
     }
 
     onClickSearchConfirmButton = (event) => {
-            // 백엔드 구현이후 추가 예정
+        // 백엔드 구현이후 추가 예정
     }
 
     onClickCreateButton = (event) => {
@@ -41,6 +42,25 @@ class HearUs extends Component {
 
 
     render() {
+        let table = (
+            <Table hover>
+                <thead>
+                    <th>State</th>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>due</th>
+                    <th>votes</th>
+                </thead>
+            </Table>
+        )
+        let votes = (
+            <Petiton key={1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
+                dueDate={"2019.10.19"} votes={123} onClickDetailButton={this.onClickDetailButton} />
+        )
+        let deadLine = (
+            <Petiton key={2} state={"done"} title={"I LIKE IT!!!"} category={"복지"}
+                dueDate={"2019.10.20"} votes={1223} onClickDetailButton={this.onClickDetailButton} />
+        )
         return (
             <div className="HearUs">
                 <UpperBar />
@@ -57,6 +77,10 @@ class HearUs extends Component {
                     onClick={this.onClickCreateButton}>Create</Button>
                 <Button type="button" id="my_petition_button"
                     onClick={this.onClickMyPetitionButton}>MY PETITION</Button>
+                {table}
+                {votes}
+                {table}
+                {deadLine}
 
             </div>
         )
