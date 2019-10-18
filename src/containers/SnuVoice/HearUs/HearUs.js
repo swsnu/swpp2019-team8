@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { Button, Input, InputGroup, InputGroupAddon, Table } from 'reactstrap';
 
 import UpperBar from '../UpperBar/UpperBar'
-import Petiton from '../../../components/Petiton/petiton'
+import Petition from '../../../components/Petition/petition'
 
 class HearUs extends Component {
     state = {
@@ -54,11 +54,11 @@ class HearUs extends Component {
             </Table>
         )
         let votes = (
-            <Petiton key={1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
+            <Petition key={1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
                 dueDate={"2019.10.19"} votes={123} onClickDetailButton={this.onClickDetailButton} />
         )
         let deadLine = (
-            <Petiton key={2} state={"done"} title={"I LIKE IT!!!"} category={"복지"}
+            <Petition key={2} state={"done"} title={"I LIKE IT!!!"} category={"복지"}
                 dueDate={"2019.10.20"} votes={1223} onClickDetailButton={this.onClickDetailButton} />
         )
         return (
