@@ -9,8 +9,8 @@ const Petition = (props) => {
                 <tr>
                     <th scope="row">{props.state}</th>
                     <td>{props.category}</td>
-                    <td><Button type="button" id="petition_title_button"
-                        onClick={props.onClickDetailButton}>{props.title}</Button>
+                    <td><Button type="button" id="petition_title_button" value={props.id}
+                        onClick={props.onClick}>{props.title}</Button>
                     </td>
                     <td>{props.dueDate}</td>
                     <td>{props.votes}</td>
