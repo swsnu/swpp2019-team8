@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { Button, Input, InputGroup, InputGroupAddon, Table } from 'reactstrap';
 
 import UpperBar from '../UpperBar/UpperBar'
+import Category from '../../../components/Category/category'
 import Petition from '../../../components/Petition/petition'
 
 class HearUs extends Component {
@@ -29,37 +30,42 @@ class HearUs extends Component {
     }
 
     onClickCategoryButton = (event) => {
-
+        // petition 을 category 따라 들고오기
     }
 
     onClickDetailButton = (event) => {
-
+        // petion detail로 redirect
+        this.props.history.push('/hear_us/' + event.target.value) 
     }
 
     onClickListButton = (event) => {
+        this.props.history.push('/hear_us/petitions')
 
     }
 
 
     render() {
+        let category = (<Category onClick = {this.onClickCategoryButton}/>)
         let table = (
             <Table hover>
                 <thead>
-                    <th>State</th>
-                    <th>Category</th>
-                    <th>Title</th>
-                    <th>due</th>
-                    <th>votes</th>
+                    <tr>
+                        <th>State</th>
+                        <th>Category</th>
+                        <th>Title</th>
+                        <th>due</th>
+                        <th>votes</th>
+                    </tr>
                 </thead>
             </Table>
         )
-        let votes = (
-            <Petition key={1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
-                dueDate={"2019.10.19"} votes={123} onClickDetailButton={this.onClickDetailButton} />
+        let voteList = (
+            <Petition key={1}  id = {1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
+                dueDate={"2019.10.19"} votes={123} onClick={this.onClickDetailButton} />
         )
-        let deadLine = (
+        let deadlineList = (
             <Petition key={2} state={"done"} title={"I LIKE IT!!!"} category={"복지"}
-                dueDate={"2019.10.20"} votes={1223} onClickDetailButton={this.onClickDetailButton} />
+                dueDate={"2019.10.20"} votes={1223} onClick={this.onClickDetailButton} />
         )
         return (
             <div className="HearUs">
@@ -74,14 +80,20 @@ class HearUs extends Component {
                     </InputGroupAddon>
                 </InputGroup>
                 <Button type="button" id="create_button"
-                    onClick={this.onClickCreateButton}>Create</Button>
+                    onClick={this.onClickCreateButton}>NEW</Button>
                 <Button type="button" id="my_petition_button"
-                    onClick={this.onClickMyPetitionButton}>MY PETITION</Button>
+                    onClick={this.onClickMyPetitionButton}>MINE</Button>
+                <br></br>
+                {category}
+                <br></br>
+                Top 5 Votes
                 {table}
-                {votes}
+                {voteList}
+                Latest 5
                 {table}
-                {deadLine}
-
+                {deadlineList}
+                <Button type="button" id="petition_list_button"
+                    onClick={this.onClickListButton}>+</Button>
             </div>
         )
     }
