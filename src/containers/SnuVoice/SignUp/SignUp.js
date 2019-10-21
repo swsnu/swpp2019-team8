@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 
 class SignUp extends Component {
     state = {
@@ -184,8 +184,13 @@ class SignUp extends Component {
                     <FormGroup row>
                         <Col md={2}>
                             <Label>SNU MAIL</Label>
-                            <Input type="email" id="email_input" placeholder="SNU MAIL"
-                                onChange={this.onChangeEmailInput}></Input>
+                            <InputGroup>
+                                <Input type="email" id="email_input" placeholder="SNU MAIL"
+                                    onChange={this.onChangeEmailInput}></Input>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText>@snu.ac.kr</InputGroupText>
+                                </InputGroupAddon>
+                            </InputGroup>
                             <Button type="button" id="verify_button"
                                 onClick={this.onClickVerifyButton}>Verify</Button>
                         </Col>
