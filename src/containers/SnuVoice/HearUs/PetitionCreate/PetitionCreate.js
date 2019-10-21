@@ -37,6 +37,7 @@ class PetitionCreate extends Component {
 
     onClickLinkAddButton = () => {
         this.state.petitionLinkList.push(this.state.petitionLink);
+        this.setState({petitionLink:''});
         this.forceUpdate();
     }
 
@@ -47,6 +48,7 @@ class PetitionCreate extends Component {
 
     onClickTagAddButton = () => {
         this.state.petitionTagList.push(this.state.petitionTag);
+        this.setState({petitionTag:''});
         this.forceUpdate();
     }
 
@@ -67,20 +69,20 @@ class PetitionCreate extends Component {
     }
 
     render() {
-        const link_list = this.state.petitionLinkList.map(link => {
+        const link_list = this.state.petitionLinkList.map((link,i) => {
             return (
                 <div className="LinkList">
                     {link}
-                    <Button type="button" id="petition_link_add_button"
+                    <Button type="button" value={i} id="petition_link_add_button"
                         onClick={this.onClickLinkDeleteButton}>Delete Link</Button>
                 </div>
             );
         });
-        const tag_list = this.state.petitionTagList.map(tag => {
+        const tag_list = this.state.petitionTagList.map((tag,i) => {
             return (
                 <div className="TagList">
                     {tag}
-                    <Button type="button" id="petition_tag_add_button"
+                    <Button type="button" value={i} id="petition_tag_add_button"
                         onClick={this.onClickTagDeleteButton}>Delete Tag</Button>
                 </div>
             );
@@ -120,27 +122,27 @@ class PetitionCreate extends Component {
                     <FormGroup row>
                         <Col md={2}>
                             <Label>Link</Label>
-                            <Input type="text" id="petition_link_input" placeholder="new link"
+                            <Input type="text" id="petition_link_input" placeholder="new link" value={this.state.petitionLink}
                                 onChange={(event) => this.setState({ petitionLink: event.target.value })}></Input>
                             <Button type="button" id="petition_link_add_button"
-                                onClick={this.onClickLinkAddButton}>Add Link</Button>
+                                onClick={this.onClickLinkAddButton} disabled={!this.state.petitionLink}>Add Link</Button>
                             {link_list}
                         </Col>
                     </FormGroup>
                     <FormGroup row>
                         <Col md={2}>
                             <Label>Tag</Label>
-                            <Input type="text" id="petition_tag_input" placeholder="new tag"
+                            <Input type="text" id="petition_tag_input" placeholder="new tag" value={this.state.petitionTag}
                                 onChange={(event) => this.setState({ petitionTag: event.target.value })}></Input>
                             <Button type="button" id="petition_tag_add_button"
-                                onClick={this.onClickTagAddButton}>Add Tag</Button>
+                                onClick={this.onClickTagAddButton} disabled={!this.state.petitionTag}>Add Tag</Button>
                             {tag_list}
                         </Col>
                     </FormGroup>
                     <Button type="button" id="petition_confirm_button"
-                        onClick={this.onClickPetitionConfirmButton}>CONFIRM</Button>
+                        onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent}>CONFIRM</Button>
                     <Button type="button" id="petition_cancel_button"
-                        onClick={this.onClickPetitionCancelButton}>BACK</Button>
+                        onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
                 </Form>
             </div>
         );
