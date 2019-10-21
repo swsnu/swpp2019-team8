@@ -44,7 +44,10 @@ class PetitionList extends Component {
         this.setState({ petitionOrder: event })
     }
 
-
+    onClickDetailButton = (event) => {
+        this.props.history.push('/hear_us/' + event.target.value) 
+    }
+ 
 
 
 
@@ -118,7 +121,7 @@ class PetitionList extends Component {
                         <br />
                         {petitionOrderButtons}
                         {tableHead}
-                        <Petition key={1} id={1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
+                        <Petition key={1} id={2} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
                             dueDate={"2019.10.19"} votes={123} onClick={this.onClickDetailButton} />
                     </TabPane>
                 </TabContent>
