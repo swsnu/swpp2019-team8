@@ -10,7 +10,7 @@ class SnuVoice extends Component {
     state = {
 
     }
-    
+
     onClickTellMeButton = () => {
         this.props.history.push('/tell_me');
     }
@@ -22,7 +22,7 @@ class SnuVoice extends Component {
     render() {
         return (
             <div className="SnuVoice">
-                <UpperBar/>
+                <UpperBar />
                 <div className="Row">
                     <Button type="button" id="tell_me_button"
                         onClick={this.onClickTellMeButton}>TELL-ME</Button>

@@ -8,6 +8,7 @@ class PetitionDetail extends Component {
         return (
             <div className="PetitionDetail">
                 <h1>PetitionDetail</h1>
+            
             </div>
         )
     }

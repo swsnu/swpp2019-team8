@@ -7,6 +7,7 @@ class DocumentCreate extends Component {
     render() {
         return (
             <div className="DocumentCreate">
+                
                 <h1>DocumentCreate</h1>
             </div>
         )

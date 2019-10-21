@@ -46,7 +46,7 @@ class HearUs extends Component {
 
     render() {
         let category = (<Category onClick = {this.onClickCategoryButton}/>)
-        let table = (
+        let tableHead = (
             <Table hover>
                 <thead>
                     <tr>
@@ -60,7 +60,7 @@ class HearUs extends Component {
             </Table>
         )
         let voteList = (
-            <Petition key={1}  id = {1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
+            <Petition key={1}  id ={1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
                 dueDate={"2019.10.19"} votes={123} onClick={this.onClickDetailButton} />
         )
         let deadlineList = (
@@ -87,10 +87,10 @@ class HearUs extends Component {
                 {category}
                 <br></br>
                 Top 5 Votes
-                {table}
+                {tableHead}
                 {voteList}
                 Latest 5
-                {table}
+                {tableHead}
                 {deadlineList}
                 <Button type="button" id="petition_list_button"
                     onClick={this.onClickListButton}>+</Button>
