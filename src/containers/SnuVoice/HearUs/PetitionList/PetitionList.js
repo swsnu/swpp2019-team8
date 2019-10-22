@@ -13,7 +13,8 @@ class PetitionList extends Component {
     state = {
         search: '',
         petitionState: 'ongoing',
-        petitionOrder: 'vote'
+        petitionOrder: 'vote',
+        listNumber : [1,2,3,4,5]
     }
 
     onChangeSearchInput = (event) => {
@@ -46,6 +47,24 @@ class PetitionList extends Component {
 
     onClickDetailButton = (event) => {
         this.props.history.push('/hear_us/' + event.target.value) 
+    }
+
+    onClickListPrevButton = (event) => {
+        let numbers = this.state.listNumber.map(listNumber => listNumber-5)
+        if (numbers[0] > 0) {
+            this.setState({ listNumber : numbers})
+
+        }
+
+    }
+
+    onClickListNumberButton = (event) => {
+    }
+
+    onClickListNextButton = (event) => {
+        let numbers = this.state.listNumber.map(listNumber => listNumber+5)
+        this.setState({ listNumber : numbers})
+
     }
  
 
@@ -90,6 +109,25 @@ class PetitionList extends Component {
                     onClick={this.onClickPetitionOrderButton}>Latest</Button>
             </ButtonGroup>
         )
+
+        let listNumbers =  this.state.listNumber.map((number, i) => { 
+            return (
+                <Button type="button" id="list_number_buttons" key = {i} value={number}
+                    onClick={this.onClickListNumberButton}>{number}</Button>
+            );
+
+        });
+
+        let listNumberButtons = (
+            <ButtonGroup>
+                <Button type ="button" id="list_prev_button"
+                    onClick={this.onClickListPrevButton}>prev</Button>
+                {listNumbers}
+                <Button type="button" id="list_next_button"
+                    onClick={this.onClickListNextButton}>next</Button>
+            </ButtonGroup>
+        )
+    
         return (
             <div className="PetitionList">
                 <UpperBar />
@@ -113,16 +151,18 @@ class PetitionList extends Component {
                         <br />
                         {petitionOrderButtons}
                         {tableHead}
-                        <Petition key={1} id={1} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
+                        <Petition key={1} id={1} state={"ongoing"} title={"Ongoiing"} category={"인권"}
                             dueDate={"2019.10.19"} votes={123} onClick={this.onClickDetailButton} />
+                        {listNumberButtons}
                     </TabPane>
                     <TabPane tabId='end'>
                         <Category />
                         <br />
                         {petitionOrderButtons}
                         {tableHead}
-                        <Petition key={1} id={2} state={"ongoing"} title={"Funny SWPP"} category={"인권"}
+                        <Petition key={1} id={2} state={"ongoing"} title={"END"} category={"인권"}
                             dueDate={"2019.10.19"} votes={123} onClick={this.onClickDetailButton} />
+                        {listNumberButtons}
                     </TabPane>
                 </TabContent>
 
