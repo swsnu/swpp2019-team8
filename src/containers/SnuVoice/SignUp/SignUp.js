@@ -60,6 +60,14 @@ class SignUp extends Component {
                 { value: 'asdasd' },
             ],
         },
+        checkInputResult: {
+            email: false,
+            verfiyCode: false,
+            password: false,
+            passwordConfirm: false,
+            nickname: false,
+            studentId: false,
+        },
     }
 
     onChangeEmailInput = (event) => {
@@ -67,14 +75,19 @@ class SignUp extends Component {
     }
 
     onChangeVerifyCodeInput = (event) => {
+        this.setState({ verifyCode: event.target.value })
+    }
 
+    onChangePasswordInput = (event) => {
+        this.setState({ password: event.target.value })
     }
 
     onChangePasswordComfirmInput = (event) => {
-
+        this.setState({ passwordConfirm: event.target.value })
     }
 
-    onChangeNicknameInput = (evnet) => {
+    onChangeNicknameInput = (event) => {
+        this.setState({ nickname: event.target.value })
         //나중에 중복체크 해야할 때 써야할듯 하하
     }
 
@@ -101,7 +114,7 @@ class SignUp extends Component {
     }
 
     onChagneStuentIdInput = (event) => {
-        this.setState({studentId : event.target.value});
+        this.setState({ studentId: event.target.value });
     }
 
     onChangeStudentRadioButton = (event) => {
@@ -130,6 +143,7 @@ class SignUp extends Component {
     onClickVerifyButton = () => {
 
     }
+
 
     onClickSignUpConfirmButton = () => {
         this.props.history.push('/');
@@ -212,7 +226,7 @@ class SignUp extends Component {
                         <Col md={2}>
                             <Label>PASSWORD</Label>
                             <Input type="password" id="password_input" placeholder="PASSWORD"
-                                onChange={(event) => this.setState({ password: event.target.value })}></Input>
+                                onChange={this.onChangePasswordInput}></Input>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
