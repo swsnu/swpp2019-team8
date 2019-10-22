@@ -100,6 +100,10 @@ class SignUp extends Component {
         this.setState({ statusRadio: temp })
     }
 
+    onChagneStuentIdInput = (event) => {
+        this.setState({studentId : event.target.value});
+    }
+
     onChangeStudentRadioButton = (event) => {
         let temp = this.state.studentRadio;
         for (let i in temp) {
@@ -151,6 +155,8 @@ class SignUp extends Component {
 
             status_detail = (
                 <div className="StatusDetail">
+                    <Input type="text" id="student_id_input" placeholder="STUDENT ID"
+                        onChange={this.onChagneStuentIdInput}></Input>
                     <Label>뭐라하지</Label>
                     <FormGroup>
                         <Input type="radio" name="student_radio" id="student_undergrad_radio" value="undergrad"
@@ -183,7 +189,7 @@ class SignUp extends Component {
                     </FormGroup>
                     <FormGroup row>
                         <Col md={2}>
-                            <Label>SNU MAIL</Label>
+                            <Label >SNU MAIL</Label>
                             <InputGroup>
                                 <Input type="email" id="email_input" placeholder="SNU MAIL"
                                     onChange={this.onChangeEmailInput}></Input>
