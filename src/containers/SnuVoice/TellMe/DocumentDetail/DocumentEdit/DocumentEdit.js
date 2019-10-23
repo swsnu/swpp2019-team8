@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Button, ButtonGroup, Input, TabContent, TabPane, Nav, NavItem, NavLink, FormGroup, Label, Form } from 'reactstrap';
-
+import { MarkdownPreview } from 'react-marked-markdown';
 
 class DocumentEdit extends Component {
     state = {
@@ -13,10 +13,6 @@ class DocumentEdit extends Component {
         documentState: 'write',
     }
 
-    mdToText = (md) => {
-        //Markdown Handling
-        return md;
-    }
 
     onClickDocumentConfirmButton = () => {
         //confirm
@@ -77,7 +73,7 @@ class DocumentEdit extends Component {
                         <Label>Title</Label>
                         <h1>{this.state.documentTitle}</h1>
                         <Label>Content</Label>
-                        <h1>{this.mdToText(this.state.documentContent)}</h1>
+                        <MarkdownPreview value={ this.state.documentContent}/>
                     </TabPane>
                 </TabContent>
                 <ButtonGroup>

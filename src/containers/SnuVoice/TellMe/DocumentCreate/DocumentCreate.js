@@ -4,18 +4,13 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Button, ButtonGroup, Input, TabContent, TabPane, Nav, NavItem, NavLink, FormGroup, Label, Form } from 'reactstrap';
-
+import { MarkdownPreview } from 'react-marked-markdown';
 
 class DocumentCreate extends Component {
     state = {
         documentTitle: '',
         documentContent: '',
         documentState: 'write',
-    }
-
-    mdToText = (md) => {
-        //Markdown Handling
-        return md;
     }
 
     onClickDocumentConfirmButton = () => {
@@ -77,11 +72,11 @@ class DocumentCreate extends Component {
                         <Label>Title</Label>
                         <h1>{this.state.documentTitle}</h1>
                         <Label>Content</Label>
-                        <h1>{this.mdToText(this.state.documentContent)}</h1>
+                        <MarkdownPreview value={ this.state.documentContent}/>
                     </TabPane>
                 </TabContent>
                 <ButtonGroup>
-                    <Button type="button" id="document_confirm_button"
+                    <Button type="button" id="document_confirm_button" disabled={!this.state.documentTitle || !this.state.documentContent}
                         onClick={this.onClickDocumentConfirmButton}>Confirm</Button>
                     <Button type="button" id="document_cancel_button"
                         onClick={this.onClickDocumentCancelButton}>Cancel</Button>
