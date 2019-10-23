@@ -14,20 +14,20 @@ class DocumentCreate extends Component {
     }
 
     onClickDocumentConfirmButton = () => {
-        //confirm
+        // confirm
     }
 
     onClickDocumentCancelButton = () => {
-        //제안: alert("변경 사항은 저장되지 않습니다..이런거")
+        // 제안: alert("변경 사항은 저장되지 않습니다..이런거")
         this.props.history.push('/tell_me');
     }
 
     onClickPhotoButton = () => {
-        this.props.history.push('/tell_me/photo')
+        this.props.history.push('/tell_me/photo');
     }
 
     onClickTabButton = (event) => {
-        this.setState({ documentState: event })
+        this.setState({ documentState: event });
     }
 
     render() {
@@ -46,7 +46,8 @@ class DocumentCreate extends Component {
                         </NavLink>
                 </NavItem>
             </Nav>
-        )
+        );
+
         return (
             <div className="DocumentCreate">
                 <h1>Document Create</h1>
@@ -54,7 +55,7 @@ class DocumentCreate extends Component {
                     onClick={this.onClickPhotoButton}>Upload Photo</Button>
                 {createStateTabbuttons}
                 <TabContent activeTab={this.state.documentState}>
-                    <TabPane tabId='write'>
+                    <TabPane tabId="write">
                         <Form>
                             <FormGroup>
                                 <Label>Title</Label>
@@ -68,7 +69,7 @@ class DocumentCreate extends Component {
                             </FormGroup>
                         </Form>
                     </TabPane>
-                    <TabPane tabId='preview'>
+                    <TabPane tabId="preview">
                         <Label>Title</Label>
                         <h1>{this.state.documentTitle}</h1>
                         <Label>Content</Label>
@@ -82,7 +83,7 @@ class DocumentCreate extends Component {
                         onClick={this.onClickDocumentCancelButton}>Cancel</Button>
                 </ButtonGroup>
             </div>
-        )
+        );
     }
 }
 
