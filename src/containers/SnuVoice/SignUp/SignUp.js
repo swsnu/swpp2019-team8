@@ -48,7 +48,7 @@ class SignUp extends Component {
             { value: 'Music' },
             { value: 'Medicine' },
             { value: 'Liberal Studies' },
-        ], // ex() 공대, 농생대
+        ],  // ex() 공대, 농생대
         majorList: {
             all: [{ value: '' }],
             Engineering: [
@@ -75,20 +75,20 @@ class SignUp extends Component {
     }
 
     onChangeVerifyCodeInput = (event) => {
-        this.setState({ verifyCode: event.target.value })
+        this.setState({ verifyCode: event.target.value });
     }
 
     onChangePasswordInput = (event) => {
-        this.setState({ password: event.target.value })
+        this.setState({ password: event.target.value });
     }
 
     onChangePasswordComfirmInput = (event) => {
-        this.setState({ passwordConfirm: event.target.value })
+        this.setState({ passwordConfirm: event.target.value });
     }
 
     onChangeNicknameInput = (event) => {
-        this.setState({ nickname: event.target.value })
-        //나중에 중복체크 해야할 때 써야할듯 하하
+        this.setState({ nickname: event.target.value });
+        // 나중에 중복체크 해야할 때 써야할듯 하하
     }
 
     onChangeGenderRadioButton = (event) => {
@@ -99,7 +99,7 @@ class SignUp extends Component {
             else
                 temp[i] = false;
         }
-        this.setState({ genderRadio: temp })
+        this.setState({ genderRadio: temp });
     }
 
     onChangeStatusRadioButton = (event) => {
@@ -110,7 +110,7 @@ class SignUp extends Component {
             else
                 temp[i] = false;
         }
-        this.setState({ statusRadio: temp })
+        this.setState({ statusRadio: temp });
     }
 
     onChagneStuentIdInput = (event) => {
@@ -144,7 +144,6 @@ class SignUp extends Component {
 
     }
 
-
     onClickSignUpConfirmButton = () => {
         this.props.history.push('/');
     }
@@ -155,6 +154,7 @@ class SignUp extends Component {
 
     render() {
         let status_detail = null;
+
         if (this.state.statusRadio['student']) {
             const departmentList = this.state.departmentList.map((v, i) => {
                 return (
@@ -195,8 +195,11 @@ class SignUp extends Component {
         return (
             <div className="SignUp">
                 <Form>
-                    {/* 약관박스 만들기 */}
-                    Agree
+                    <textarea rows="5" cols="100">
+                        약관 적어넣기
+                        약관 적어넣기
+                    </textarea>
+                    <div>Agree</div>
                     <FormGroup>
                         <Input type="checkbox" id="agree_to_terms_checkbox" checked={this.state.agreeToTerms}
                             onChange={() => this.onClickAgreeToTermsCheckBox()}></Input>
