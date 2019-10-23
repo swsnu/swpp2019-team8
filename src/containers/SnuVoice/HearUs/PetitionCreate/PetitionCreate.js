@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button, ButtonGroup, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class PetitionCreate extends Component {
     state = {
@@ -37,23 +37,23 @@ class PetitionCreate extends Component {
 
     onClickLinkAddButton = () => {
         this.state.petitionLinkList.push(this.state.petitionLink);
-        this.setState({petitionLink:''});
+        this.setState({ petitionLink: '' });
         this.forceUpdate();
     }
 
     onClickLinkDeleteButton = (event) => {
-        this.state.petitionLinkList.splice(event.target.value,1);
+        this.state.petitionLinkList.splice(event.target.value, 1);
         this.forceUpdate();
     }
 
     onClickTagAddButton = () => {
         this.state.petitionTagList.push(this.state.petitionTag);
-        this.setState({petitionTag:''});
+        this.setState({ petitionTag: '' });
         this.forceUpdate();
     }
 
     onClickTagDeleteButton = (event) => {
-        this.state.petitionTagList.splice(event.target.value,1);
+        this.state.petitionTagList.splice(event.target.value, 1);
         this.forceUpdate();
     }
 
@@ -69,7 +69,7 @@ class PetitionCreate extends Component {
     }
 
     render() {
-        const link_list = this.state.petitionLinkList.map((link,i) => {
+        const link_list = this.state.petitionLinkList.map((link, i) => {
             return (
                 <div className="LinkList">
                     {link}
@@ -78,7 +78,7 @@ class PetitionCreate extends Component {
                 </div>
             );
         });
-        const tag_list = this.state.petitionTagList.map((tag,i) => {
+        const tag_list = this.state.petitionTagList.map((tag, i) => {
             return (
                 <div className="TagList">
                     {tag}
@@ -87,7 +87,7 @@ class PetitionCreate extends Component {
                 </div>
             );
         });
-        const category_list = this.state.categoryList.map((v,i) => {
+        const category_list = this.state.categoryList.map((v, i) => {
             return (
                 <option key={i} value={v.value} label={v.value}></option>
             );
@@ -101,50 +101,52 @@ class PetitionCreate extends Component {
                         <Input type="checkbox" id="agree_to_terms_checkbox" checked={this.state.agreeToTerms}
                             onChange={() => this.onClickAgreeToTermsCheckBox()}></Input>
                     </FormGroup>
-                    <FormGroup row>
-                        <Col md={2}>
-                            <Label>Title</Label>
-                            <Input type="text" id="petition_title_input" placeholder="title"
-                                onChange={(event) => this.setState({ petitionTitle: event.target.value }) }></Input>
-                        </Col>
+                    <FormGroup>
+                        <Label>Title</Label>
+                        <Input type="text" id="petition_title_input" placeholder="title"
+                            onChange={(event) => this.setState({ petitionTitle: event.target.value })}></Input>
                     </FormGroup>
                     Category
                     <Input type="select" id="petition_category_select" onChange={this.onChangeCategorySelect}>
                         {category_list}
                     </Input>
                     <FormGroup>
-                        <Col md={2}>
-                            <Label>Content</Label>
-                            <Input type="textarea" id="petition_content_textarea" placeholder="content"
-                                onChange={(event) => this.setState({ petitionContent: event.target.value })}></Input>
-                        </Col>
+                        <Label>Content</Label>
+                        <Input type="textarea" id="petition_content_textarea" placeholder="content"
+                            onChange={(event) => this.setState({ petitionContent: event.target.value })}></Input>
                     </FormGroup>
-                    <FormGroup row>
-                        <Col md={2}>
-                            <Label>Link</Label>
+                    <FormGroup>
+                        <Label>Link</Label>
+                        <InputGroup>
                             <Input type="text" id="petition_link_input" placeholder="new link" value={this.state.petitionLink}
                                 onChange={(event) => this.setState({ petitionLink: event.target.value })}></Input>
-                            <Button type="button" id="petition_link_add_button"
-                                onClick={this.onClickLinkAddButton} disabled={!this.state.petitionLink}>Add Link</Button>
-                            {link_list}
-                        </Col>
+                            <InputGroupAddon addonType="prepend">
+                                <Button type="button" id="petition_link_add_button"
+                                    onClick={this.onClickLinkAddButton} disabled={!this.state.petitionLink}>Add Link</Button>
+                            </InputGroupAddon>
+                        </InputGroup>
+                        {link_list}
                     </FormGroup>
-                    <FormGroup row>
-                        <Col md={2}>
-                            <Label>Tag</Label>
+                    <FormGroup >
+                        <Label>Tag</Label>
+                        <InputGroup>
                             <Input type="text" id="petition_tag_input" placeholder="new tag" value={this.state.petitionTag}
                                 onChange={(event) => this.setState({ petitionTag: event.target.value })}></Input>
-                            <Button type="button" id="petition_tag_add_button"
-                                onClick={this.onClickTagAddButton} disabled={!this.state.petitionTag}>Add Tag</Button>
-                            {tag_list}
-                        </Col>
+                            <InputGroupAddon addonType="prepend">
+                                <Button type="button" id="petition_tag_add_button"
+                                    onClick={this.onClickTagAddButton} disabled={!this.state.petitionTag}>Add Tag</Button>
+                            </InputGroupAddon>
+                        </InputGroup>
+                        {tag_list}
                     </FormGroup>
-                    <Button type="button" id="petition_confirm_button"
-                        onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent}>CONFIRM</Button>
-                    <Button type="button" id="petition_cancel_button"
-                        onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
+                    <ButtonGroup>
+                        <Button type="button" id="petition_confirm_button"
+                            onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent}>CONFIRM</Button>
+                        <Button type="button" id="petition_cancel_button"
+                            onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
+                    </ButtonGroup>
                 </Form>
-            </div>
+            </div >
         );
     }
 }
