@@ -64,7 +64,7 @@ class HearUs extends Component {
                 dueDate={"2019.10.19"} votes={123} onClick={this.onClickDetailButton} />
         )
         let deadlineList = (
-            <Petition key={2} state={"done"} title={"I LIKE IT!!!"} category={"복지"}
+            <Petition key={2} id={2} state={"done"} title={"I LIKE IT!!!"} category={"복지"}
                 dueDate={"2019.10.20"} votes={1223} onClick={this.onClickDetailButton} />
         )
         return (
