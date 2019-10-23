@@ -18,8 +18,8 @@ class UpperBar extends Component {
         } else if (this.state.location === 'hear_us') {
             this.props.history.push('/tell_me');
         }
-
     }
+
     onClickSignUpButton = () => {
         this.props.history.push('/sign_up');
     }
@@ -41,42 +41,52 @@ class UpperBar extends Component {
     }
 
     render() {
-        let upperBar = null;
         let crossover = null;
+        let upperBar = null;
+
         if (this.state.location !== '') {
             crossover = (
                 <div className="Crossover">
                     <Button type="button" id="crossover_button"
                         onClick={this.onClickCrossOverButton}>Cross</Button>
                 </div>
-            )
+            );
         }
+
         if (this.state.signIn === false) {
             upperBar = (
-                <div className="UpperBar">
-                    <Input type="email" id="email_input" placeholder="SNU MAIL"
-                        onChange={(event) => this.setState({ email: event.target.value })}></Input>
-                    <Input type="password" id="password_input" placeholder="PASSWORD"
-                        onChange={(event) => this.setState({ password: event.target.value })}></Input>
-                    <Button type="button" id="sign_in_button"
-                        onClick={this.onClickSignInButton}>SIGN-IN</Button>
-                    <Button type="button" id="sign_up_button"
-                        onClick={this.onClickSignUpButton}>SIGN-UP</Button>
-                </div >
+                <nav className="UpperBar" class="navbar bg-dark">
+                    <a class="navbar-brand" href="/">SNUVOICE</a>
+                    <form class="form-inline">
+                        <Input type="email" id="email_input" placeholder="SNU MAIL"
+                            onChange={(event) => this.setState({ email: event.target.value })}></Input>
+                        <Input type="password" id="password_input" placeholder="PASSWORD"
+                            onChange={(event) => this.setState({ password: event.target.value })}></Input>
+                        <Button type="button" id="sign_in_button"
+                            onClick={this.onClickSignInButton}>SIGN-IN</Button>
+                        <Button type="button" id="sign_up_button"
+                            onClick={this.onClickSignUpButton}>SIGN-UP</Button>
+                    </form>
+                </nav>
             );
         } else if (this.state.signIn === true) {
-            upperBar =
-                <div className="UpperBar">
-                    <Button type="button" id="sign_out_button"
-                        onClick={this.onClickSignOutButton}>SIGN-OUT</Button>
-                </div>
+            upperBar = (
+                <nav className="UpperBar" class="navbar bg-dark">
+                    <a class="navbar-brand" href="/">SNUVOICE</a>
+                    <form class="form-inline">
+                        <Button type="button" id="sign_out_button"
+                            onClick={this.onClickSignOutButton}>SIGN-OUT</Button>
+                    </form>
+                </nav>
+            );
         }
+        
         return (
             <div className="UpperBar">
                 {crossover}
                 {upperBar}
             </div>
-        )
+        );
     }
 }
 
