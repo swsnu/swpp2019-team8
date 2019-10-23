@@ -16,12 +16,13 @@ class TellMe extends Component {
     }
 
     onClickSearchConfirmButton = () => {
-        this.props.history.push('/') //리다이렉트 백엔드 구햔하고 해야할듯
+        this.props.history.push('/')    // 리다이렉트 백엔드 구현하고 해야할듯
     }
 
     onClickCreateButton = () => {
         this.props.history.push('/tell_me/create');
     }
+
     render() {
         return (
             <div className="TellMe">
