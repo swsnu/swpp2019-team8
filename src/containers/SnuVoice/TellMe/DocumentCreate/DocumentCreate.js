@@ -63,7 +63,7 @@ class DocumentCreate extends Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Content</Label>
-                                <Input type="textarea" id="document_content_textarea" placeholder="content"
+                                <Input type="textarea" rows="20" id="document_content_textarea" placeholder="content"
                                     onChange={(event) => this.setState({ documentContent: event.target.value })}></Input>
                             </FormGroup>
                         </Form>
@@ -72,7 +72,7 @@ class DocumentCreate extends Component {
                         <Label>Title</Label>
                         <h1>{this.state.documentTitle}</h1>
                         <Label>Content</Label>
-                        <MarkdownPreview value={ this.state.documentContent}/>
+                        <MarkdownPreview value={ this.state.documentContent }/>
                     </TabPane>
                 </TabContent>
                 <ButtonGroup>
