@@ -48,7 +48,7 @@ class UpperBar extends Component {
             crossover = (
                 <div className="Crossover">
                     <Button type="button" id="crossover_button"
-                        onClick={this.onClickCrossOverButton}>Cross</Button>
+                        onClick={this.onClickCrossOverButton}>Cross!!!</Button>
                 </div>
             );
         }
