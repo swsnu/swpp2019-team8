@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Col, Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 
 class SignUp extends Component {
     state = {
@@ -205,46 +205,36 @@ class SignUp extends Component {
                             onChange={() => this.onClickAgreeToTermsCheckBox()}></Input>
                     </FormGroup>
                     <FormGroup row>
-                        <Col md={2}>
-                            <Label >SNU MAIL</Label>
-                            <InputGroup>
-                                <Input type="email" id="email_input" placeholder="SNU MAIL"
-                                    onChange={this.onChangeEmailInput}></Input>
-                                <InputGroupAddon addonType="prepend">
-                                    <InputGroupText>@snu.ac.kr</InputGroupText>
-                                </InputGroupAddon>
-                            </InputGroup>
-                            <Button type="button" id="verify_button"
-                                onClick={this.onClickVerifyButton}>Verify</Button>
-                        </Col>
+                        <Label >SNU MAIL</Label>
+                        <InputGroup>
+                            <Input type="email" id="email_input" placeholder="SNU MAIL"
+                                onChange={this.onChangeEmailInput}></Input>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>@snu.ac.kr</InputGroupText>
+                            </InputGroupAddon>
+                        </InputGroup>
+                        <Button type="button" id="verify_button"
+                            onClick={this.onClickVerifyButton}>Verify</Button>
                     </FormGroup>
                     <FormGroup row>
-                        <Col md={2}>
-                            <Label>VERIFY CODE</Label>
-                            <Input type="text" id="verify_code_input" placeholder="VERIFY CODE"
-                                onChange={this.onChangeVerifyCodeInput}></Input>
-                        </Col>
+                        <Label>VERIFY CODE</Label>
+                        <Input type="text" id="verify_code_input" placeholder="VERIFY CODE"
+                            onChange={this.onChangeVerifyCodeInput}></Input>
                     </FormGroup>
                     <FormGroup row>
-                        <Col md={2}>
-                            <Label>PASSWORD</Label>
-                            <Input type="password" id="password_input" placeholder="PASSWORD"
-                                onChange={this.onChangePasswordInput}></Input>
-                        </Col>
+                        <Label>PASSWORD</Label>
+                        <Input type="password" id="password_input" placeholder="PASSWORD"
+                            onChange={this.onChangePasswordInput}></Input>
                     </FormGroup>
                     <FormGroup row>
-                        <Col md={2}>
-                            <Label>PASSWORD-CONFIRM</Label>
-                            <Input type="password" id="password_confirm_input" placeholder="PASSWORD CONFIRMATION"
-                                onChange={this.onChangePasswordComfirmInput}></Input>
-                        </Col>
+                        <Label>PASSWORD-CONFIRM</Label>
+                        <Input type="password" id="password_confirm_input" placeholder="PASSWORD CONFIRMATION"
+                            onChange={this.onChangePasswordComfirmInput}></Input>
                     </FormGroup>
                     <FormGroup row>
-                        <Col md={2}>
-                            <Label>NICKNAME</Label>
-                            <Input type="text" id="nickname_input" placeholder="NICKNAME"
-                                onChange={this.onChangeNicknameInput}></Input>
-                        </Col>
+                        <Label>NICKNAME</Label>
+                        <Input type="text" id="nickname_input" placeholder="NICKNAME"
+                            onChange={this.onChangeNicknameInput}></Input>
                     </FormGroup>
                     {/* // radio input : label을 클릭해야 작동(글씨) */}
                     <Label>GENDER</Label>
