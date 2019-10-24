@@ -7,6 +7,7 @@ class DocumentDetail extends Component {
     render() {
         return (
             <div className="DocumentDetail">
+                
                 <h1>DocumentDetail</h1>
             </div>
         )
