@@ -46,9 +46,9 @@ class UpperBar extends Component {
 
         if (this.state.location !== '') {
             crossover = (
-                <div className="Crossover">
+                <div className="CrossOver">
                     <Button type="button" id="crossover_button"
-                        onClick={this.onClickCrossOverButton}>Cross</Button>
+                        onClick={this.onClickCrossOverButton}>HueHue</Button>
                 </div>
             );
         }
