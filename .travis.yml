@@ -3,8 +3,15 @@ matrix:
  - language: node_js # Your language e.g. node_js, python
    node_js:
    - '10' # node_js version
+   dist: trusty
+   addons:
+    sonarcloud:
+      organization: "swsnu"
+      token:
+        secure: "e5598bb4b7746bd906fa88400acd8727892b1b1e"    
    install: # Script to install required packages
    - yarn install
    script: # Script to test your build
    - ./node_modules/.bin/eslint src
    - yarn test --coverage --watchAll=false
+   - sonar-scanner
