@@ -6,9 +6,9 @@ matrix:
    dist: trusty
    addons:
     sonarcloud:
-      organization: "swsnu"
+      organization: swsnu
       token:
-        secure: "e5598bb4b7746bd906fa88400acd8727892b1b1e"    
+        secure: e5598bb4b7746bd906fa88400acd8727892b1b1e    
    install: # Script to install required packages
    - yarn install
    script: # Script to test your build
