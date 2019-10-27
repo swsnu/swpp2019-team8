@@ -8,7 +8,7 @@ matrix:
     sonarcloud:
       organization: swsnu
       token:
-        secure: e5598bb4b7746bd906fa88400acd8727892b1b1e    
+        secure: 2e079b3cf2fb83ff3276254523e3fd7444229042 
    install: # Script to install required packages
    - yarn install
    script: # Script to test your build
