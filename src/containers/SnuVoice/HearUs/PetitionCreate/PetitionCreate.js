@@ -71,7 +71,7 @@ class PetitionCreate extends Component {
     render() {
         const link_list = this.state.petitionLinkList.map((link, i) => {
             return (
-                <div className="LinkList">
+                <div className="LinkList" key={i}>
                     {link}
                     <Button type="button" value={i} id="petition_link_add_button"
                         onClick={this.onClickLinkDeleteButton}>Delete Link</Button>
@@ -80,7 +80,7 @@ class PetitionCreate extends Component {
         });
         const tag_list = this.state.petitionTagList.map((tag, i) => {
             return (
-                <div className="TagList">
+                <div className="TagList" key={i}>
                     {tag}
                     <Button type="button" value={i} id="petition_tag_add_button"
                         onClick={this.onClickTagDeleteButton}>Delete Tag</Button>
