@@ -25,12 +25,20 @@ class SnuVoice extends Component {
 
     render() {
         return (
-            <div className="SnuVoice">
+            <div className="SnuVoice" style={{backgroundColor: 'lightblue'}}>
                 <UpperBar />
+                <br/>
+                <Row>
+                    <Col>
+                        <i>"Fancy Quote Fancy Quote Fancy Quote Fancy Quote Fancy Quote"</i><br/>
+                        - Fancy Person -
+                    </Col>
+                </Row>
+                <br />
                 <Row>
                     <Col>
                         <Button type="button" id="tell_me_button" onClick={this.onClickTellMeButton}>
-                            <Image src={TellMeButton} alt="Go to Tell Me"rounded/>
+                            <Image src={TellMeButton} alt="Go to Tell Me" rounded/>
                         </Button>
                     </Col>
                     <Col>
