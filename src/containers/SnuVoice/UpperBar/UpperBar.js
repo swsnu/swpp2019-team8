@@ -56,7 +56,7 @@ class UpperBar extends Component {
         if (this.state.signIn === false) {
             upperBar = (
                 <nav className="UpperBar" class="navbar bg-dark">
-                    <a class="navbar-brand" href="/">SNUVOICE</a>
+                    <a classzs="navbar-brand" href="/">SNUVOICE</a>
                     <form class="form-inline">
                         <Input type="email" id="email_input" placeholder="SNU MAIL"
                             onChange={(event) => this.setState({ email: event.target.value })}></Input>

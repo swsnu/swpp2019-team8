@@ -21,11 +21,11 @@ class HearUs extends Component {
         // 백엔드 구현이후 추가 예정
     }
 
-    onClickCreateButton = (event) => {
+    onClickCreateButton = () => {
         this.props.history.push('/hear_us/create');
     }
 
-    onClickMyPetitionButton = (event) => {
+    onClickMyPetitionButton = () => {
         this.props.history.push('/hear_us/my_petition/:user_id');
     }
 
@@ -38,7 +38,7 @@ class HearUs extends Component {
         this.props.history.push('/hear_us/' + event.target.value) 
     }
 
-    onClickListButton = (event) => {
+    onClickListButton = () => {
         this.props.history.push('/hear_us/petitions')
 
     }
