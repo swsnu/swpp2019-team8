@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Button } from 'reactstrap';
 
-import Debate from '../../../../../components/Debate/debatelist'
+import Debate from '../../../../../components/Debate/debate'
 
 class DebateList extends Component {
 
@@ -20,13 +20,15 @@ class DebateList extends Component {
     render() {
         
         return (
-            <div className="DebateList">
-                <h1>Debate List</h1>
-                <Debate />
+            <div>
+                <div className="DebateList">
+                    <h1>Debate List</h1>
+                    <h3>Document Title</h3>
+                    <Debate />
+
+                </div>
                 <Button>NEW</Button>
             </div>
-
-
         )
     }
 }

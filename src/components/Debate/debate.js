@@ -1,13 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-import ListGroup from 'react-bootstrap/ListGroup';
-
-const Debate = (props) => {
+const DebateList = (props) => {
     return (
-        <ListGroup>
-            <ListGroupItem>Hi</ListGroupItem>
-        </ListGroup>
+        <div>
+            <Link>Hi</Link>
+        </div>
     )
 }
 
-export default Debate
+export default DebateList
