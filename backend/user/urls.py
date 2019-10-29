@@ -1,6 +1,11 @@
 from django.urls import path
-from user import views
 
 urlpatterns = [
-    
+    # path('signup/'),
+    # path('signin/'),
+    # path('signout/'),
+    # path('email/<str:email>'),
+    # path('studentId/<int:studentId>'),
+    # path('')
+
 ]
