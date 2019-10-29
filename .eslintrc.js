@@ -1,8 +1,10 @@
 module.exports = {
+    parser: "babel-eslint",
     "env": {
         "es6": true,
         "node": true,
-        "jest": true
+        "jest": true,
+        "browser": true
     },
     "extends": ["eslint:recommended", 'plugin:react/recommended'],
     "globals": {
@@ -20,5 +22,13 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "no-unused-vars": 0,
+        "react/prop-types": 0,
+        "react/no-unknown-property": 0
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 };
