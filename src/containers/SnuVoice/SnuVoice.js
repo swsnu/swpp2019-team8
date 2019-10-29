@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { Row, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 
@@ -29,14 +30,18 @@ class SnuVoice extends Component {
         return (
             <div className="SnuVoice">
                 <UpperBar />
-                <div className="Row">
-                    <Button type="button" id="tell_me_button" onClick={this.onClickTellMeButton}>
-                        <Image src={TellMeButton} rounded/>
-                    </Button>
-                    <Button type="button" id="hear_us_button" onClick={this.onClickHearUsButton}>
-                        <Image src={HearUsButton} />
-                    </Button>
-                </div>
+                <Row>
+                    <Col>
+                        <Button type="button" id="tell_me_button" onClick={this.onClickTellMeButton}>
+                            <Image src={TellMeButton} alt="Go to Tell Me"rounded/>
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button type="button" id="hear_us_button" onClick={this.onClickHearUsButton}>
+                            <Image src={HearUsButton} alt="Go to Hear Us" rounded/>
+                        </Button>
+                    </Col>
+                </Row>
             </div>
         );
     }
