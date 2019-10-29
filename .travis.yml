@@ -8,3 +8,6 @@ matrix:
    script: # Script to test your build
    - ./node_modules/.bin/eslint src
    - yarn test --coverage --watchAll=false
+
+notifications:
+  slack: swpp-team8:NPIs4kBcXYNcBwa9Z5TIrkk0
