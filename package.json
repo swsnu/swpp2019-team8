@@ -4,8 +4,10 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@restart/context": "^2.1.4",
+    "@restart/hooks": "^0.3.11",
     "axios": "^0.19.0",
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "^4.3.1",
     "connected-react-router": "^6.5.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
