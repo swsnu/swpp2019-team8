@@ -3,20 +3,21 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 # Create your models here.
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, nickname=None, gender=None, status=None, studentId=None, department=None, major=None, studentStatus=None):
         if not email:
             raise ValueError("Users must have an email address")
-        
+
         user = self.model(
-            email = self.normalize_email(email),
-            nickname = nickname,
-            gender = gender,
-            status = status,
-            studentId = studentId,
-            department = department,
-            major = major,
-            studentStatus = studentStatus       
+            email=self.normalize_email(email),
+            nickname=nickname,
+            gender=gender,
+            status=status,
+            studentId=studentId,
+            department=department,
+            major=major,
+            studentStatus=studentStatus
         )
 
         user.set_password(password)
@@ -26,14 +27,14 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password=None, nickname=None, gender=None, status=None, studentId=None, department=None, major=None, studentStatus=None):
         user = self.create_user(
             email,
-            password = password,
-            nickname = nickname,
-            gender = gender,
-            status = status,
-            studentId = studentId,
-            department = department,
-            major = major,
-            studentStatus = studentStatus  
+            password=password,
+            nickname=nickname,
+            gender=gender,
+            status=status,
+            studentId=studentId,
+            department=department,
+            major=major,
+            studentStatus=studentStatus
         )
 
         user.is_admin = True
@@ -41,13 +42,12 @@ class UserManager(BaseUserManager):
         return user
 
 
-
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=64, unique=True)
-    nickname = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=32, unique=True)
     gender = models.CharField(max_length=16)
     status = models.CharField(max_length=16)
-    studentId = models.CharField(max_length=16)
+    studentId = models.CharField(max_length=16, unique=True)
     department = models.CharField(max_length=64)
     major = models.CharField(max_length=64)
     studentStatus = models.CharField(max_length=16)
@@ -57,8 +57,8 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS =['nickname', 'gender', 'status', 'studentId', 
-                        'department','major', 'studentStatus']
+    REQUIRED_FIELDS = ['nickname', 'gender', 'status', 'studentId',
+                       'department', 'major', 'studentStatus']
 
     def has_perm(self, perm, obj=None):
         return True
@@ -69,5 +69,3 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
-
-
