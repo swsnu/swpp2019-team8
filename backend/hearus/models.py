@@ -1,8 +1,12 @@
 from django.db import models
+from user.models import User
 
 # Create your models here.
 class Petition(models.Model):
-    #author user import 해야함
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
     title = models.CharField(max_length=64)
     content = models.TextField()
     category = models.TextField()
@@ -17,6 +21,9 @@ class PetitionComment(models.Model):
         Petition,
         on_delete=models.CASCADE,
     )
-    #author user import 해야함
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
     comment = models.TextField()
     date = models.DateTimeField()
