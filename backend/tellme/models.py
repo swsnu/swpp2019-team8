@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import User
 
 # Create your models here.
 class Document(models.Model):
@@ -15,7 +16,10 @@ class Debate(models.Model):
         Document,
         on_delete=models.CASCADE,
     )
-    # author user import 해야함
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
     title = models.CharField(max_length=64)
     content = models.TextField()
 
@@ -24,6 +28,9 @@ class DebateComment(models.Model):
         Debate,
         on_delete=models.CASCADE,
     )
-    # author user import 해야함
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
     comment = models.TextField()
     date = models.DateTimeField() 
