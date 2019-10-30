@@ -30,7 +30,7 @@ class SnuVoice extends Component {
                 <br/>
                 <Row>
                     <Col>
-                        <i>"Fancy Quote Fancy Quote Fancy Quote Fancy Quote Fancy Quote"</i><br/>
+                        <i>Fancy Quote Fancy Quote Fancy Quote Fancy Quote Fancy Quote</i><br/>
                         - Fancy Person -
                     </Col>
                 </Row>
