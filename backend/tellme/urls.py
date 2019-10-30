@@ -1,5 +1,5 @@
 from django.urls import path
-from tellme import views
+from . import views
 
 urlpatterns = [
     #path('document/', views.document),

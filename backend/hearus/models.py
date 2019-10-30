@@ -4,7 +4,7 @@ from user.models import User
 # Create your models here.
 
 class Tag(models.Model):
-    tag = models.CharField(max_length=64)
+    tag = models.URLField()
 
 class Link(models.Model):
     link = models.CharField(max_length=64)

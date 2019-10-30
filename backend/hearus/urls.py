@@ -1,5 +1,5 @@
 from django.urls import path
-from hearus import views
+from . import views
 
 urlpatterns = [
     path('petition/', views.petition),
