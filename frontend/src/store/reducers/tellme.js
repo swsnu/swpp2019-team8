@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     // TODO
+    selectedDocument: null,
 };
 
 const tellmeReducer = (state = initialState, action) => {
@@ -9,7 +10,7 @@ const tellmeReducer = (state = initialState, action) => {
         case actionTypes.POST_DOCUMENT:
             return state;   // TODO
         case actionTypes.GET_DOCUMENT:
-            return state;   // TODO
+            return { ...state, selectedDocument: action.target };
         case actionTypes.PUT_DOCUMENT:
             return state;   // TODO
         case actionTypes.POST_PHOTO:

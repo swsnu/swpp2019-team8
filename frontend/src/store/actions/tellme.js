@@ -16,16 +16,17 @@ export const postDocument = (/* TODO */) => {
     };
 };
 
-export const getDocument_ = (/* TODO */) => {
+export const getDocument_ = (document) => {
     return {
         type: actionTypes.GET_DOCUMENT,
-        // TODO
+        target: document,
     };
 };
 
-export const getDocument = (/* TODO */) => {
+export const getDocument = (document_title) => {
     return dispatch => {
-        // TODO
+        return axios.get('/api/document/' + document_title)
+            .then(res => dispatch(getDocument_(res.data)));
     };
 };
 
