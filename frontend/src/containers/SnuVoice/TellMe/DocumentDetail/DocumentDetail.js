@@ -12,6 +12,8 @@ class DocumentDetail extends Component {
         return (
             <div className="DocumentDetail">
                 <h1>DocumentDetail</h1>
+                <h2>{this.props.selectedDocument.title}</h2>
+                <p>{this.props.selectedDocument.content}</p>
             </div>
         )
     }
