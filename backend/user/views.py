@@ -1,10 +1,15 @@
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, HttpResponseNotFound, JsonResponse
 
+from django.core.exceptions import ObjectDoesNotExist
 
 import json
+import string
+import random
 
 from .models import User
 from django.contrib.auth import authenticate, login, logout
+from django.forms.models import model_to_dict
+from django.core.mail import EmailMessage
 # Create your views here.
 
 
@@ -44,6 +49,8 @@ def sign_in(request):
         else:
             login(request, user)
             return HttpResponse(status=204)
+    else:
+        return HttpResponseNotAllowed(['POST'])
 
 
 def sign_out(request):
@@ -54,3 +61,70 @@ def sign_out(request):
         return HttpResponse(status=204)
     else:
         return HttpResponseNotAllowed(['GET'])
+
+
+def get_user_by_email(request, email):
+    if request.method == 'GET':
+        selectedUser = User.objects.filter(email=email)
+        if selectedUser.count() == 0:
+            verifyCode = ""
+            for i in range(1, 6):
+                verifyCode += random.choice(string.digits)
+            email = EmailMessage(
+                '인증 메일입니다.',
+                '인증 번호는 ' + verifyCode + ' 입니다.',
+                to=['dkwanm1@snu.ac.kr']
+            )
+            email.send()
+
+            user_to_return = {
+                'selectedUser': '',
+                'verifyCode': verifyCode
+            }
+            return JsonResponse(user_to_return, status=200)
+        else:
+            user = model_to_dict(selectedUser[0])
+            user_to_return = {
+                'selectedUser': user,
+                'verifyCode': ''
+            }
+            return JsonResponse(user_to_return, status=200, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+
+def get_user_by_student_id(request, student_id):
+    if request.method == 'GET':
+        selectedUser = User.objects.filter(studentId=student_id)
+        if selectedUser.count() == 0:
+            user_to_return = {
+                'selectedUser' : ''
+            }
+            return JsonResponse(user_to_return, status=200, safe=False)
+        else:
+            user = model_to_dict(selectedUser[0])
+            user_to_return = {
+                'selectedUser' : user
+            }
+            return JsonResponse(user_to_return, status=200, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+def get_user_by_nickname(request, nickname):
+    if request.method == 'GET':
+        selectedUser = User.objects.filter(nickname=nickname)
+        if selectedUser.count() == 0:
+            user_to_return = {
+                'selectedUser' : ''
+            }
+            return JsonResponse(user_to_return, status=200, safe=False)
+        else:
+            user = model_to_dict(selectedUser[0])
+            user_to_return = {
+                'selectedUser' : user
+            }
+            return JsonResponse(user_to_return, status=200, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+
