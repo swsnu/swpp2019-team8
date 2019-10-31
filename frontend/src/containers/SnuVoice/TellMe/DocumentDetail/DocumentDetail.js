@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import * as actionCreators from '../../../../store/actions/index';
+
 class DocumentDetail extends Component {
     componentDidMount() {
         this.props.onGetDocument(this.props.match.params.document_title);
