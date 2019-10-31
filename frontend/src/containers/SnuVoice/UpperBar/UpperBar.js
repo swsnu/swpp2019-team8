@@ -2,14 +2,26 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Button, Input } from 'reactstrap';
+import { 
+    Button, 
+    Input, 
+    Modal,
+    ModalBody, 
+    ModalHeader, 
+    ModalFooter } from 'reactstrap';
 
 class UpperBar extends Component {
     state = {
         email: '',
         password: '',
         signIn: false,
-        location: ''
+        location: '',
+        modal: false,
+    }
+
+    //Set modal (sign in window)
+    toggleModal = () => {
+        this.setState({modal: !this.state.modal})
     }
 
     onClickCrossOverButton = () => {
@@ -24,7 +36,9 @@ class UpperBar extends Component {
         this.props.history.push('/sign_up');
     }
 
+    //NOT the sign-in button in navbar, but sign-in button in the modal (popup)
     onClickSignInButton = () => {
+        this.toggleModal();
         this.setState({ signIn: true });
     }
 
@@ -56,14 +70,11 @@ class UpperBar extends Component {
         if (this.state.signIn === false) {
             upperBar = (
                 <nav className="UpperBar" class="navbar bg-dark">
-                    <a classzs="navbar-brand" href="/">SNUVOICE</a>
+                    <a class="navbar-brand" href="/">SNUVOICE</a>
                     <form class="form-inline">
-                        <Input type="email" id="email_input" placeholder="SNU MAIL"
-                            onChange={(event) => this.setState({ email: event.target.value })}></Input>
-                        <Input type="password" id="password_input" placeholder="PASSWORD"
-                            onChange={(event) => this.setState({ password: event.target.value })}></Input>
+                        {crossover}
                         <Button type="button" id="sign_in_button"
-                            onClick={this.onClickSignInButton}>SIGN-IN</Button>
+                            onClick={this.toggleModal}>SIGN-IN</Button>
                         <Button type="button" id="sign_up_button"
                             onClick={this.onClickSignUpButton}>SIGN-UP</Button>
                     </form>
@@ -74,6 +85,7 @@ class UpperBar extends Component {
                 <nav className="UpperBar" class="navbar bg-dark">
                     <a class="navbar-brand" href="/">SNUVOICE</a>
                     <form class="form-inline">
+                        {crossover}
                         <Button type="button" id="sign_out_button"
                             onClick={this.onClickSignOutButton}>SIGN-OUT</Button>
                     </form>
@@ -83,8 +95,21 @@ class UpperBar extends Component {
         
         return (
             <div className="UpperBar">
-                {crossover}
                 {upperBar}
+                <Modal isOpen={this.state.modal} toggle={this.toggleModal} className="SignInModal">
+                    <ModalHeader>
+                        Welcome to SNU VOICE
+                    </ModalHeader>
+                    <ModalBody>
+                        <Input type="email" id="email_input" placeholder="SNU MAIL"
+                            onChange={(event) => this.setState({ email: event.target.value })}></Input>
+                        <Input type="password" id="password_input" placeholder="PASSWORD"
+                            onChange={(event) => this.setState({ password: event.target.value })}></Input>                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={this.onClickSignInButton}>Sign In</Button>
+                        <Button onClick={this.toggleModal}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         );
     }
