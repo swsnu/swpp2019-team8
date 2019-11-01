@@ -12,33 +12,43 @@ class DebateTestCase(TestCase):
         user1 = User.objects.create_user(username='swpp', password='iluvswpp')
 
         response = client.get()
-        self.assertEqual(response.status_code,)
+        self.assertEqual(response.status_code, 200)
 
+        #successful post
         response = client.post()
-        self.assertEqual(response.status_code,)
+        self.assertEqual(response.status_code, 201)
+
+        #KeyError
+        response = client.post()
+        self.assertEqual(response.status_code, 400)
 
         response = client.delete()
-        self.assertEqual(response.status_code,)
+        self.assertEqual(response.status_code, 405)
 
     def test_debate_get(self):
         client = Client()
         user1 = User.objects.create_user(username='swpp', password='iluvswpp')
 
         response = client.get()
-        self.assertEqual(response.status_code,)
+        self.assertEqual(response.status_code, 200)
 
         response = client.delete()
-        self.assertEqual(response.status_code,)
+        self.assertEqual(response.status_code, 405)
 
     def test_debate_comments(self):
         client = Client()
         user1 = User.objects.create_user(username='swpp', password='iluvswpp')
 
         response = client.get()
-        self.assertEqual(response.status_code,)
+        self.assertEqual(response.status_code, 200)
         
+        #successful post
         response = client.post()
-        self.assertEqual(response.status_code,)
+        self.assertEqual(response.status_code, 201)
+
+        #KeyError
+        response = client.post()
+        self.assertEqual(response.status_code, 400)
         
         response = client.delete()
-        self.assertEqual(response.status_code,)
+        self.assertEqual(response.status_code, 405)
