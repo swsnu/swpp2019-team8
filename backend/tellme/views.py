@@ -34,7 +34,10 @@ def debates_by_document(request, document_title):
 
 def debate_get(request, document_title, debate_id):
     if request.method=='GET':
-        debate = Debate.objects.get(title=debate_id)
+        try:
+            debate = Debate.objects.get(title=debate_id)
+        except Debate.DoesNotExist:
+            return HttpResponse(status=404)
         return JsonResponse(debate, safe=False, status=200)
 
     else:

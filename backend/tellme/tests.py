@@ -29,8 +29,13 @@ class DebateTestCase(TestCase):
         client = Client()
         user1 = User.objects.create_user(username='swpp', password='iluvswpp')
 
+        #successful get
         response = client.get()
         self.assertEqual(response.status_code, 200)
+        
+        #attempt to get non-existing debate
+        response = client.get()
+        self.assertEqual(response.status_code, 404)
 
         response = client.delete()
         self.assertEqual(response.status_code, 405)
