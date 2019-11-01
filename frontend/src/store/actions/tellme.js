@@ -1,8 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
-import { push } from 'connected-react-router';
-
 export const postDocument_ = (/* TODO */) => {
     return {
         type: actionTypes.POST_DOCUMENT,
