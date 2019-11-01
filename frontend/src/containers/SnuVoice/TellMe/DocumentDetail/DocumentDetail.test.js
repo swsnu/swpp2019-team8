@@ -31,19 +31,19 @@ describe('<DocumentDetail />', () => {
         );
     });
 
-    it('should render DocumentDetail', () => {
+    it(`should render DocumentDetail`, () => {
         const component = mount(documentDetail);
         const wrapper = component.find('.DocumentDetail');
         expect(wrapper.length).toBe(1);
     });
 
-    it('should render SELECTED_DOCUMENT - title', () => {
+    it(`should render SELECTED_DOCUMENT - title`, () => {
         const component = mount(documentDetail);
         const wrapper = component.find('.title');
         expect(wrapper.at(0).text()).toBe('SELECTED_DOCUMENT_TEST_TITLE');
     });
 
-    it('should render SELECTED_DOCUMENT - content', () => {
+    it(`should render SELECTED_DOCUMENT - content`, () => {
         const component = mount(documentDetail);
         const wrapper = component.find('.content');
         expect(wrapper.at(0).text()).toBe('SELECTED_DOCUMENT_TEST_CONTENT');
