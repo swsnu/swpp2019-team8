@@ -4,18 +4,18 @@ import store from '../store'
 
 describe('Axios User test', () => {
     const stubUser = {
-            selectedUser : {
-                id : '1',
-                email: 'dkwanm1@naver.com',
-                password: '123',
-                nickname: '123',
-                studentId: '12'
-            },
-            verifyCode : '1'
-        }
+        selectedUser: {
+            id: '1',
+            email: 'dkwanm1@naver.com',
+            password: '123',
+            nickname: '123',
+            studentId: '12'
+        },
+        verifyCode: '1'
+    }
     const blank = {
-        selectedUser : '',
-        verifyCode : ''
+        selectedUser: '',
+        verifyCode: ''
     }
 
     afterEach(() => { jest.clearAllMocks() })
@@ -25,8 +25,8 @@ describe('Axios User test', () => {
             .mockImplementation((url) => {
                 return new Promise((resolve, reject) => {
                     const result = {
-                        status : 200,
-                        data : ''
+                        status: 200,
+                        data: ''
                     }
                     resolve(result);
                 })
@@ -44,8 +44,8 @@ describe('Axios User test', () => {
             .mockImplementation((url) => {
                 return new Promise((resolve, reject) => {
                     const result = {
-                        status : 200,
-                        data : stubUser
+                        status: 200,
+                        data: stubUser
                     }
                     resolve(result);
                 })
@@ -63,8 +63,8 @@ describe('Axios User test', () => {
             .mockImplementation((url) => {
                 return new Promise((resolve, reject) => {
                     const result = {
-                        status : 200,
-                        data : stubUser
+                        status: 200,
+                        data: stubUser
                     }
                     resolve(result);
                 })
@@ -84,8 +84,8 @@ describe('Axios User test', () => {
             .mockImplementation(url => {
                 return new Promise((resolve, reject) => {
                     const result = {
-                        status : 200,
-                        data : stubUser
+                        status: 200,
+                        data: stubUser
                     };
                     resolve(result);
                 });
@@ -105,8 +105,8 @@ describe('Axios User test', () => {
             .mockImplementation(url => {
                 return new Promise((resolve, reject) => {
                     const result = {
-                        status : 200,
-                        data : stubUser
+                        status: 200,
+                        data: stubUser
                     };
                     resolve(result);
                 });
@@ -126,8 +126,8 @@ describe('Axios User test', () => {
             .mockImplementation(url => {
                 return new Promise((resolve, reject) => {
                     const result = {
-                        status : 200,
-                        data : stubUser
+                        status: 200,
+                        data: stubUser
                     };
                     resolve(result);
                 });
@@ -147,8 +147,8 @@ describe('Axios User test', () => {
             .mockImplementation(url => {
                 return new Promise((resolve, reject) => {
                     const result = {
-                        status : 200,
-                        data : stubUser
+                        status: 200,
+                        data: stubUser
                     };
                     resolve(result);
                 });
