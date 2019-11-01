@@ -1,10 +1,7 @@
 export const POST_SIGN_UP = 'POST_SIGN_UP';
 export const POST_SIGN_IN = 'POST_SIGN_IN';
 export const GET_SIGN_OUT = 'GET_SIGN_OUT';
-export const GET_USER_BY_USER_ID = 'GET_USER_BY_USER_ID';
-export const GET_USER_BY_EMAIL = 'GET_USER_BY_EMAIL';
-export const GET_USER_BY_STUDENT_ID = 'GET_USER_BY_STUDENT_ID';
-export const GET_USER_BY_NICKNAME = 'GET_USER_BY_NICKNAME';
+export const GET_USER = 'GET_USER';
 export const POST_DOCUMENT = 'POST_DOCUMENT';
 export const GET_DOCUMENT = 'GET_DOCUMENT';
 export const PUT_DOCUMENT = 'PUT_DOCUMENT';

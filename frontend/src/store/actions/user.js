@@ -3,93 +3,86 @@ import axios from 'axios';
 
 import { push } from 'connected-react-router';
 
-export const postSignUp_ = (/* TODO */) => {
+export const postSignUp_ = () => {
     return {
         type: actionTypes.POST_SIGN_UP,
-        // TODO
     };
 };
 
-export const postSignUp = (/* TODO */) => {
+export const postSignUp = (user) => {
     return dispatch => {
-        // TODO
+        return axios.post('api/user/signup/', user).then(res => {
+            dispatch(postSignUp_());
+        });
     };
 };
 
-export const postSignIn_ = (/* TODO */) => {
+export const postSignIn_ = (response) => {
     return {
         type: actionTypes.POST_SIGN_IN,
-        // TODO
+        selectedUser : response.selectedUser
     };
 };
 
-export const postSignIn = (/* TODO */) => {
+export const postSignIn = (user) => {
     return dispatch => {
-        // TODO
+        return axios.post('api/user/signin/', user).then(res => {
+            dispatch(postSignIn_(res.data));
+        });
     };
 };
 
-export const getSignOut_ = (/* TODO */) => {
+export const getSignOut_ = () => {
     return {
         type: actionTypes.GET_SIGN_OUT,
-        // TODO
     };
 };
 
-export const getSignOut = (/* TODO */) => {
+export const getSignOut = () => {
     return dispatch => {
-        // TODO
+        return axios.get('api/user/signout/').then(res => {
+            dispatch(getSignOut_());
+        })
     };
 };
 
-export const getUserByUserId_ = (/* TODO */) => {
+export const getUser_= (response) => {
     return {
-        type: actionTypes.GET_USER_BY_USER_ID,
-        // TODO
-    };
+        type: actionTypes.GET_USER,
+        selectedUser: response.selectedUser,
+        verifyCode: response.verifyCode
+    }
 };
 
-export const getUserByUserId = (/* TODO */) => {
+export const getUserByUserId = (userId) => {
     return dispatch => {
-        // TODO
-    };
-};
+        return axios.get('api/user/userId/' + userId + '/').then(res => {
+            dispatch(getUser_(res.data))
+        });
+    }
+}
 
-export const getUserByEmail_ = (/* TODO */) => {
-    return {
-        type: actionTypes.GET_USER_BY_EMAIL,
-        // TODO
-    };
-};
-
-export const getUserByEmail = (/* TODO */) => {
+export const getUserByEmail = (email) => {
     return dispatch => {
-        // TODO
+        return axios.get('api/user/email/' + email + '/').then(res => {
+            dispatch(getUser_(res.data));
+        });
     };
 };
 
-export const getUserByStudentId_ = (/* TODO */) => {
-    return {
-        type: actionTypes.GET_USER_BY_STUDENT_ID,
-        // TODO
-    };
-};
-
-export const getUserByStudentId = (/* TODO */) => {
+export const getUserByStudentId = (studentId) => {
     return dispatch => {
-        // TODO
+        return axios.get('api/user/studentId/' + studentId + '/').then(res => {
+            dispatch(getUser_(res.data))
+        });
     };
 };
 
-export const getUserByNickname_ = (/* TODO */) => {
-    return {
-        type: actionTypes.GET_USER_BY_NICKNAME,
-        // TODO
-    };
-};
-
-export const getUserByNickname = (/* TODO */) => {
+export const getUserByNickname = (nickname) => {
     return dispatch => {
+        return axios.get('api/user/nickname/' + nickname + '/').then(res => {
+            dispatch(getUser_(res.data))
+        });
         // TODO
     };
 };
