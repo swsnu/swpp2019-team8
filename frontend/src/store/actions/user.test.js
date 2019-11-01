@@ -108,7 +108,6 @@ describe('Axios User test', () => {
 
         store.dispatch(actionCreators.getUserByUserId(stubUser.selectedUser.id))
             .then(() => {
-                const newState = store.getState();
                 expect(spyGetUser).toHaveBeenCalledTimes(1);
                 done();
             })
