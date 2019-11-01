@@ -10,12 +10,10 @@ from .models import Debate, DebateComment
 
 def debates_by_document(request, document_title):
     if request.method=='GET':
-        #TODO
         debate_list_by_document = [debate for debate in Debate.objects.filter(document=document_title).values()]
         return JsonResponse(debate_list_by_document, safe=False, status=200)
 
     elif request.method=='POST':
-        #TODO
         try:
             req_data = json.loads(request.body.decode())
             debate_title = req_data['title']
@@ -26,6 +24,9 @@ def debates_by_document(request, document_title):
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest(400)
 
+        new_debate = Debate(document=document_title, author=debate_author, title=debate_title, content=debate_content)
+        new_debate.save()
+
         return HttpResponse(status=201)
 
     else:
@@ -33,7 +34,6 @@ def debates_by_document(request, document_title):
 
 def debate_get(request, document_title, debate_id):
     if request.method=='GET':
-        #TODO
         debate = Debate.objects.get(title=debate_id)
         return JsonResponse(debate, safe=False, status=200)
 
@@ -42,12 +42,10 @@ def debate_get(request, document_title, debate_id):
 
 def debate_comments(request, debate_id):
     if request.method=='GET':
-        #TODO
         debate_comment_list = [comment for comment in DebateComment.objects.filter(debate=debate_id).values()]
         return JsonResponse(debate_comment_list, safe=False, status=200)
 
     elif request.method=='POST':
-        #TODO
         try:
             req_data = json.loads(request.body.decode())
             comment_debate = debate_id
@@ -58,6 +56,9 @@ def debate_comments(request, debate_id):
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest(400)
         
+        new_debate_comment = DebateComment(debate=comment_debate, author=comment_author, comment=comment_content, date=comment_date)
+        new_debate_comment.save()
+
         return HttpResponse(status=201)
 
     else:

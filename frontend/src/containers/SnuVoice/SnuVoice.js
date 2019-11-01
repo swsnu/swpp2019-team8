@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { Row, Col, Button, Image } from 'react-bootstrap';
+import { Row, Col, Button } from 'reactstrap';
 
 import UpperBar from './UpperBar/UpperBar'
 
@@ -38,12 +38,12 @@ class SnuVoice extends Component {
                 <Row>
                     <Col>
                         <Button type="button" id="tell_me_button" onClick={this.onClickTellMeButton}>
-                            <Image src={TellMeButton} alt="Go to Tell Me" rounded/>
+                            <img src={TellMeButton} alt="Go to Tell Me" rounded/>
                         </Button>
                     </Col>
                     <Col>
                         <Button type="button" id="hear_us_button" onClick={this.onClickHearUsButton}>
-                            <Image src={HearUsButton} alt="Go to Hear Us" rounded/>
+                            <img src={HearUsButton} alt="Go to Hear Us" rounded/>
                         </Button>
                     </Col>
                 </Row>
