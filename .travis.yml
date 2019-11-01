@@ -1,24 +1,35 @@
 matrix:
- include:
- - language: node_js # Your language e.g. node_js, python
-   node_js:
-   - '10' # node_js version
-   dist: trusty
-   addons:
-    sonarcloud:
-      organization: "swsnu"
-      token:
-        secure: "VMZrMqxJ5Z62z/pc87eX8ZmTQujRfbSW796DAQBSzgIx0QgauD9XlGIK5XdKSIMTmENe7dnI1PTRklQjDsksycxF5dKy+X6ILZ1nFJUNxcaUQqkEECpH5SAu6PNCnXWl3gIQ4kfPpxyO5HM0eGOCLyQELV+vdo7avVuIW2GVP/FtR2HkCQ3lfeiCXKi70CNRnn95LikjCPkMZHdin8LK26fCJziJH+AgcsA57MsP6zVNk+Hr8aVEishPgpzE57GnN8T1FeYMn8otJJO1q6PX0yjbQZI2xelCknHJB4P72Qvq744G+jDJhayUfLzjoKTWVATXBYaeAEV6l3HW7P4dXc8Sm2UYdCM3ZrSZZFT7VCjiLhGEgHAtpXHSdnAlQPdhHrg6Ceej/x19eZLS+peCBFuLmI24GJDGrBykhJaJNHc2/Yjnj3gShKEdRVgOJGXkNvZIvDnu7Ogk1H/uph3lg+YXdYtBuHPKNczERTZgCa/EBq4iUhh8u9Qytv1/FrKd4xNjl7hPB6oqxOZb1a/15sYzZXB3C/HK05yzY7AZOwC2YgH7K73ZzJpZq0130h3VU7hWXnbblkOsXKfYamZrK4+DvlL3sIeMqJwCyIMkmcRS2p3IDTjfWNg6uT1tKq9rypKR4eIpXnhMX+hU3hgeGKwCA/D1iKyk0nSyEQuI2WM="
-   before_install:
-   - cd frontend
-   install: # Script to install required packages
-   - yarn install
-   - yarn add coveralls
-   script: # Script to test your build
-   - ./node_modules/.bin/eslint src
-   - yarn test --coverage --watchAll=false
-   - sonar-scanner
-  after_success:
-    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  include:
+    - language: node_js
+      node_js:
+        - "10"
+      dist: trusty
+      addons:
+        sonarcloud:
+          organization: "swsnu"
+          token:
+            secure: "VMZrMqxJ5Z62z/pc87eX8ZmTQujRfbSW796DAQBSzgIx0QgauD9XlGIK5XdKSIMTmENe7dnI1PTRklQjDsksycxF5dKy+X6ILZ1nFJUNxcaUQqkEECpH5SAu6PNCnXWl3gIQ4kfPpxyO5HM0eGOCLyQELV+vdo7avVuIW2GVP/FtR2HkCQ3lfeiCXKi70CNRnn95LikjCPkMZHdin8LK26fCJziJH+AgcsA57MsP6zVNk+Hr8aVEishPgpzE57GnN8T1FeYMn8otJJO1q6PX0yjbQZI2xelCknHJB4P72Qvq744G+jDJhayUfLzjoKTWVATXBYaeAEV6l3HW7P4dXc8Sm2UYdCM3ZrSZZFT7VCjiLhGEgHAtpXHSdnAlQPdhHrg6Ceej/x19eZLS+peCBFuLmI24GJDGrBykhJaJNHc2/Yjnj3gShKEdRVgOJGXkNvZIvDnu7Ogk1H/uph3lg+YXdYtBuHPKNczERTZgCa/EBq4iUhh8u9Qytv1/FrKd4xNjl7hPB6oqxOZb1a/15sYzZXB3C/HK05yzY7AZOwC2YgH7K73ZzJpZq0130h3VU7hWXnbblkOsXKfYamZrK4+DvlL3sIeMqJwCyIMkmcRS2p3IDTjfWNg6uT1tKq9rypKR4eIpXnhMX+hU3hgeGKwCA/D1iKyk0nSyEQuI2WM="
+      install:
+        - cd frontend
+        - yarn install
+        - cd ..
+        # - cd backend
+        # - pip install -r requirements.txt
+        # - cd ..
+      script:
+        - cd frontend
+        - ./node_modules/.bin/eslint src
+        - yarn test --coverage --watchAll=false
+        - cd ..
+        # - cd backend
+        # - pylint **/*.py --load-plugins pylint_django
+        # - coverage run --source='.' manage.py test
+        # - coverage xml
+        # - cd ..
+        - sonar-scanner
+      after_success:
+        - cd frontend
+        - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+
 notifications:
   slack: swpp-team8:NPIs4kBcXYNcBwa9Z5TIrkk0
