@@ -11,7 +11,7 @@ import { history } from '../../../../store/store';
 const stubInitialState = {
     selectedDocument: {
         title: 'SELECTED_DOCUMENT_TEST_TITLE',
-        content: 'SELECTED_DOCUMENT_TEST_CONTENT'
+        content: 'SELECTED_DOCUMENT_TEST_CONTENT',
     },
 };
 
