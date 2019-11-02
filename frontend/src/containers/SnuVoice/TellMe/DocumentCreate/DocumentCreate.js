@@ -40,7 +40,7 @@ class DocumentCreate extends Component {
                         </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink className={classnames({ active: this.state.petitionState === 'preview' })}
+                    <NavLink className={classnames({ active: this.state.documentState === 'preview' })}
                         id="preview_tab_button" onClick={() => this.onClickTabButton('preview')}>
                         Preview
                         </NavLink>
