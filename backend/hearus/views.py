@@ -3,19 +3,21 @@ from json import JSONDecodeError
 from django.forms.models import model_to_dict
 from user.models import User
 from .models import Petition, PetitionComment
-from datetime import datetime
+from django.utils import timezone
 import json
 
 def petition(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
     if request.method == 'POST':
         try:
             body = request.body.decode()
             petition_title = json.loads(body)['title']
             petition_content = json.loads(body)['content']
-            petition_category = json.loads(body)['category'] #array?
+            petition_category = json.loads(body)['category'] 
             petition_link = json.loads(body)['link'] #array?
-            petition_tag = json.loads(body)['tag']
-            petition_start_date = datetime.now()
+            petition_tag = json.loads(body)['tag'] #array?
+            petition_start_date = timezone.now()
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         petition = Petition(author=request.user, title=petition_title, content=petition_content, category=petition_category, link=petition_link, tag=petition_tag, start_date=petition_start_date, votes=0, status=0)
@@ -25,18 +27,16 @@ def petition(request):
     else:
         return HttpResponseNotAllowed(['POST'])
 
-def petition_vote(request,catetory):
+def petition_vote(request,category):
     if request.method == 'GET':
-        petition_list = Petition.objects.order_by('votes')
-        model_to_dict(petition_list)
+        petition_list = [petition for petition in Petition.objects.all().values().order_by('votes')]
         return JsonResponse(petition_list,safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
-def petition_latest(request,catetory):
+def petition_latest(request,category):
     if request.method == 'GET':
-        petition_list = Petition.objects.order_by('start_date')
-        model_to_dict(petition_list)
+        petition_list = [petition for petition in Petition.objects.all().values().order_by('start_date')]
         return JsonResponse(petition_list,safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
@@ -55,11 +55,7 @@ def petition_petitionid(request,petition_id):
 
 def petition_userid(request,user_id):
     if request.method == 'GET':
-        try:
-            petition = Petition.objects.get(id=user_id)
-        except Petition.DoesNotExist:
-            return HttpResponse(status=404)
-        ret_petition=model_to_dict(petition)
+        ret_petition = [petition for petition in Petition.objects.filter(id=user_id).values()]
         return JsonResponse(ret_petition, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
@@ -69,10 +65,12 @@ def petition_comment(request,petition_id):
         comment_list = [comment for comment in PetitionComment.objects.filter(petition=petition_id).values()]
         return JsonResponse(comment_list, safe=False)
     elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
         try:
             body = request.body.decode()
             comment_comment = json.loads(body)['comment']
-            comment_date = datetime.now()
+            comment_date = timezone.now()
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         comment_petition = Petition.objects.get(id=petition_id)
