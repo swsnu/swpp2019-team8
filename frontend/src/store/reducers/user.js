@@ -15,7 +15,7 @@ const userReducer = (state = initialState, action) => {
         case actionTypes.GET_SIGN_OUT:
             return {selectedUser : '', verifyCode : '', signIn : false}
         case actionTypes.GET_USER:
-            return {selectedUser : action.selectedUser, verifyCode : action.verifyCode, ...state}
+            return {...state, selectedUser : action.selectedUser, verifyCode : action.verifyCode}
         default:
             break;
     }
