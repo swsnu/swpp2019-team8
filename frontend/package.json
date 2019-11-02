@@ -2,6 +2,7 @@
   "name": "swpp2019-team8",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
