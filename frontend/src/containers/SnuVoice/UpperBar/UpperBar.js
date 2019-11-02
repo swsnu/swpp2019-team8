@@ -13,7 +13,7 @@ import {
     ModalFooter
 } from 'reactstrap';
 
-class UpperBar extends Component {
+export class UpperBar extends Component {
     state = {
         email: '',
         password: '',
@@ -72,9 +72,9 @@ class UpperBar extends Component {
 
         if (this.props.signIn === false) {
             upperBar = (
-                <nav className="UpperBar" class="navbar bg-dark">
-                    <a class="navbar-brand" href="/">SNUVOICE</a>
-                    <form class="form-inline">
+                <nav className="UpperBar" className="navbar bg-dark">
+                    <a className="navbar-brand" href="/">SNUVOICE</a>
+                    <form className="form-inline">
                         {crossover}
                         <Button type="button" id="sign_in_button"
                             onClick={this.toggleModal}>SIGN-IN</Button>
@@ -83,11 +83,11 @@ class UpperBar extends Component {
                     </form>
                 </nav>
             );
-        } else if (this.props.signIn === true) {
+        } else {
             upperBar = (
-                <nav className="UpperBar" class="navbar bg-dark">
-                    <a class="navbar-brand" href="/">SNUVOICE</a>
-                    <form class="form-inline">
+                <nav className="UpperBar" className="navbar bg-dark">
+                    <a className="navbar-brand" href="/">SNUVOICE</a>
+                    <form className="form-inline">
                         {crossover}
                         <Button type="button" id="sign_out_button"
                             onClick={this.onClickSignOutButton}>SIGN-OUT</Button>
@@ -118,7 +118,7 @@ class UpperBar extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = dispatch => {
     return {
         postSignIn: (email, password) =>
             dispatch(actionCreator.postSignIn({ email: email, password: password })),
@@ -129,7 +129,7 @@ const mapDispatchToProps = dispatch => {
 
 };
 
-const mapStateToProps = state => {
+export const mapStateToProps = state => {
     return {
         selectedUser: state.usr.selectedUser,
         signIn : state.usr.signIn
