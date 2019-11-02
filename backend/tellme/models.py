@@ -7,7 +7,7 @@ class Document(models.Model):
     content = models.TextField()
 
 class Photo(models.Model):
-    # photo field 정해야함
+    photo = models.ImageField()
     title = models.CharField(max_length=64)
     content = models.TextField()
 
