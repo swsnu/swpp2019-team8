@@ -26,8 +26,13 @@ export const postSignIn_ = (response) => {
 
 export const postSignIn = (user) => {
     return dispatch => {
-        return axios.post('/api/user/signin/', user).then(res => {
+        return axios.post('/api/user/signin/', user)
+        .then(res => {
             dispatch(postSignIn_(res.data));
+        })
+        .catch(res => {
+            dispatch({type: actionTypes.POST_SIGN_IN, selectedUser : ''})
+            alert('이메일 또는 비밀번호를 다시 학인해주십시오.')
         });
     };
 };

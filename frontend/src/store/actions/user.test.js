@@ -71,6 +71,23 @@ describe('Axios User test', () => {
         })
     })
 
+    it('signIn with noneUser should done correctly', (done) => {
+        const spy = jest.spyOn(axios, 'post')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    resolve(reject);
+                })
+            })
+        const alert = jest.spyOn(window, 'alert').mockImplementation(() => {})
+        store.dispatch(actionCreators.postSignIn(stubUser)).then(() => {
+            const newState = store.getState();
+            expect(newState.usr.selectedUser).toStrictEqual('');
+            expect(spy).toHaveBeenCalledTimes(1);
+            expect(alert).toHaveBeenCalledTimes(1);
+            done();
+        })
+    })
+
     it('signOut should done correctly', (done) => {
         const spy = jest.spyOn(axios, 'get')
             .mockImplementation((url) => {
