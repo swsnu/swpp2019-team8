@@ -3,12 +3,6 @@ from user.models import User
 
 # Create your models here.
 
-class Tag(models.Model):
-    tag = models.URLField()
-
-class Link(models.Model):
-    link = models.CharField(max_length=64)
-
 class Petition(models.Model):
     author = models.ForeignKey(
         User,
@@ -17,8 +11,8 @@ class Petition(models.Model):
     title = models.CharField(max_length=64)
     content = models.TextField()
     category = models.TextField()
-    link = models.ManyToManyField(Link)
-    tag = models.ManyToManyField(Tag)
+    link = models.TextField()
+    tag = models.TextField()
     start_date = models.DateTimeField()
     votes = models.IntegerField()
     status = models.TextField()

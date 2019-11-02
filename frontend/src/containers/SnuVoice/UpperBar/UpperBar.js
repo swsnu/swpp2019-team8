@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { 
-    Button, 
-    Input, 
-    Modal,
-    ModalBody, 
-    ModalHeader, 
-    ModalFooter } from 'reactstrap';
+import * as actionCreator from '../../../store/actions/index'
 
-class UpperBar extends Component {
+import {
+    Button,
+    Input,
+    Modal,
+    ModalBody,
+    ModalHeader,
+    ModalFooter
+} from 'reactstrap';
+
+export class UpperBar extends Component {
     state = {
         email: '',
         password: '',
@@ -21,7 +24,7 @@ class UpperBar extends Component {
 
     //Set modal (sign in window)
     toggleModal = () => {
-        this.setState({modal: !this.state.modal})
+        this.setState({ modal: !this.state.modal })
     }
 
     onClickCrossOverButton = () => {
@@ -39,11 +42,11 @@ class UpperBar extends Component {
     //NOT the sign-in button in navbar, but sign-in button in the modal (popup)
     onClickSignInButton = () => {
         this.toggleModal();
-        this.setState({ signIn: true });
+        this.props.postSignIn(this.state.email, this.state.password);
     }
 
     onClickSignOutButton = () => {
-        this.setState({ signIn: false });
+        this.props.getSignOut();
     }
 
     componentDidMount = () => {
@@ -67,11 +70,11 @@ class UpperBar extends Component {
             );
         }
 
-        if (this.state.signIn === false) {
+        if (this.props.signIn === false) {
             upperBar = (
-                <nav className="UpperBar" class="navbar bg-dark">
-                    <a class="navbar-brand" href="/">SNUVOICE</a>
-                    <form class="form-inline">
+                <nav className="navbar bg-dark">
+                    <a className="navbar-brand" href="/">SNUVOICE</a>
+                    <form className="form-inline">
                         {crossover}
                         <Button type="button" id="sign_in_button"
                             onClick={this.toggleModal}>SIGN-IN</Button>
@@ -80,11 +83,11 @@ class UpperBar extends Component {
                     </form>
                 </nav>
             );
-        } else if (this.state.signIn === true) {
+        } else {
             upperBar = (
-                <nav className="UpperBar" class="navbar bg-dark">
-                    <a class="navbar-brand" href="/">SNUVOICE</a>
-                    <form class="form-inline">
+                <nav className="navbar bg-dark">
+                    <a className="navbar-brand" href="/">SNUVOICE</a>
+                    <form className="form-inline">
                         {crossover}
                         <Button type="button" id="sign_out_button"
                             onClick={this.onClickSignOutButton}>SIGN-OUT</Button>
@@ -92,7 +95,7 @@ class UpperBar extends Component {
                 </nav>
             );
         }
-        
+
         return (
             <div className="UpperBar">
                 {upperBar}
@@ -115,4 +118,25 @@ class UpperBar extends Component {
     }
 }
 
-export default connect(null, null)(withRouter(UpperBar));
+export const mapDispatchToProps = dispatch => {
+    return {
+        postSignIn: (email, password) =>
+            dispatch(actionCreator.postSignIn({ email: email, password: password })),
+        getSignOut : () =>
+            dispatch(actionCreator.getSignOut())
+        
+    }
+
+};
+
+export const mapStateToProps = state => {
+    return {
+        selectedUser: state.usr.selectedUser,
+        signIn : state.usr.signIn
+    }
+
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(UpperBar));

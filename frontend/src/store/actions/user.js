@@ -11,7 +11,7 @@ export const postSignUp_ = () => {
 
 export const postSignUp = (user) => {
     return dispatch => {
-        return axios.post('api/user/signup/', user).then(res => {
+        return axios.post('/api/user/signup/', user).then(res => {
             dispatch(postSignUp_());
         });
     };
@@ -20,14 +20,20 @@ export const postSignUp = (user) => {
 export const postSignIn_ = (response) => {
     return {
         type: actionTypes.POST_SIGN_IN,
-        selectedUser : response.selectedUser
+        selectedUser : response.selectedUser,
+        signIn : true
     };
 };
 
 export const postSignIn = (user) => {
     return dispatch => {
-        return axios.post('api/user/signin/', user).then(res => {
+        return axios.post('/api/user/signin/', user)
+        .then(res => {
             dispatch(postSignIn_(res.data));
+        })
+        .catch(res => {
+            dispatch({type: actionTypes.POST_SIGN_IN, selectedUser : '', signIn : false})
+            alert('이메일 또는 비밀번호를 다시 학인해주십시오.')
         });
     };
 };
@@ -40,7 +46,7 @@ export const getSignOut_ = () => {
 
 export const getSignOut = () => {
     return dispatch => {
-        return axios.get('api/user/signout/').then(res => {
+        return axios.get('/api/user/signout/').then(res => {
             dispatch(getSignOut_());
         })
     };
@@ -56,7 +62,7 @@ export const getUser_= (response) => {
 
 export const getUserByUserId = (userId) => {
     return dispatch => {
-        return axios.get('api/user/userId/' + userId + '/').then(res => {
+        return axios.get('/api/user/userId/' + userId + '/').then(res => {
             dispatch(getUser_(res.data))
         });
     }
@@ -64,7 +70,7 @@ export const getUserByUserId = (userId) => {
 
 export const getUserByEmail = (email) => {
     return dispatch => {
-        return axios.get('api/user/email/' + email + '/').then(res => {
+        return axios.get('/api/user/email/' + email + '/').then(res => {
             dispatch(getUser_(res.data));
         });
     };
@@ -72,7 +78,7 @@ export const getUserByEmail = (email) => {
 
 export const getUserByStudentId = (studentId) => {
     return dispatch => {
-        return axios.get('api/user/studentId/' + studentId + '/').then(res => {
+        return axios.get('/api/user/studentId/' + studentId + '/').then(res => {
             dispatch(getUser_(res.data))
         });
     };
@@ -80,7 +86,7 @@ export const getUserByStudentId = (studentId) => {
 
 export const getUserByNickname = (nickname) => {
     return dispatch => {
-        return axios.get('api/user/nickname/' + nickname + '/').then(res => {
+        return axios.get('/api/user/nickname/' + nickname + '/').then(res => {
             dispatch(getUser_(res.data))
         });
         // TODO

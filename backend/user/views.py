@@ -48,7 +48,11 @@ def sign_in(request):
             return HttpResponse(status=401)
         else:
             login(request, user)
-            return HttpResponse(status=204)
+            selectedUser = User.objects.get(email=userEmail)
+            user_to_return = {
+                'selectedUser' : model_to_dict(selectedUser)
+            }
+            return JsonResponse(user_to_return ,status=201, safe=False)
     else:
         return HttpResponseNotAllowed(['POST'])
 

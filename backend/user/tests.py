@@ -41,7 +41,7 @@ class UserTestCase(TestCase):
 
         response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
                                content_type='application/json')
-        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.status_code, 201)
 
     def test_sign_in_none_user(self):
         client = Client(enforce_csrf_checks=False)
