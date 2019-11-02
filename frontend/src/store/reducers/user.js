@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     selectedUser : '',
-    verifyCode : '',
+    verifyCode :  '',
     signIn : false
 };
 
