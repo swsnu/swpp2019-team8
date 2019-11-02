@@ -10,18 +10,21 @@ describe ('user reducer', () => {
         })
         expect(newState).toEqual({
             selectedUser: '',
-            verifyCode : ''
+            verifyCode : '',
+            signIn : false
         })
     })
 
     it ('should signIn', () => {
         const newState = userReducer(undefined, {
             type: actionTypes.POST_SIGN_IN,
-            selectedUser : '1234'
+            selectedUser : '1234',
+            signIn : true
         })
         expect(newState).toEqual({
             selectedUser: '1234',
-            verifyCode : ''
+            verifyCode : '',
+            signIn : true
         })
     })
 
@@ -35,7 +38,8 @@ describe ('user reducer', () => {
         })
         expect(newState).toEqual({
             selectedUser: '',
-            verifyCode : ''
+            verifyCode : '',
+            signIn : false
         })
     })
 
@@ -47,21 +51,24 @@ describe ('user reducer', () => {
         })
         expect(newState).toEqual({
             selectedUser: '123',
-            verifyCode : '12'
+            verifyCode : '12',
+            signIn : false
         })
     })
 
     it ('not allowed actionTypes', () => {
         const beforState = {
             selectedUser : '1234',
-            verifyCode : '123'
+            verifyCode : '123',
+            signIn : false
         }
         const newState = userReducer(beforState, {
             type: actionTypes.POST_PETITION,
         })
         expect(newState).toEqual({
             selectedUser: '1234',
-            verifyCode : '123'
+            verifyCode : '123',
+            signIn : false
         })
     })
 })

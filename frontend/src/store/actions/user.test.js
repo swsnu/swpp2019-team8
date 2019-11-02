@@ -11,11 +11,13 @@ describe('Axios User test', () => {
             nickname: '123',
             studentId: '12'
         },
-        verifyCode: '1'
+        verifyCode: '1',
+        signIn : true
     }
     const blank = {
         selectedUser: '',
-        verifyCode: ''
+        verifyCode: '',
+        signIn : false
     }
 
     let spyGetUser;
@@ -110,7 +112,6 @@ describe('Axios User test', () => {
 
 
     it('getUser by email should fetch User correctly', (done) => {
-
 
         store.dispatch(actionCreators.getUserByEmail(stubUser.email))
             .then(() => {
