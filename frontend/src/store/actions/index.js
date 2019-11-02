@@ -9,17 +9,17 @@ export {
 } from './user';
 
 export {
-    postDocument,
+    // postDocument,
     getDocument,
-    putDocument,
-    postPhoto,
-    getPhoto,
-    putPhoto,
-    getDebates,
-    postDebate,
-    getDebate,
-    getDebateComments,
-    postDebateComment,
+    // putDocument,
+    // postPhoto,
+    // getPhoto,
+    // putPhoto,
+    // getDebates,
+    // postDebate,
+    // getDebate,
+    // getDebateComments,
+    // postDebateComment,
 } from './tellme';
 
 export {
