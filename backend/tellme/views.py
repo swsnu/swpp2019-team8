@@ -2,10 +2,30 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
 
 import json
+from json import JSONDecodeError
 import datetime
 
 from user.models import User
 from .models import Document, Photo, Debate, DebateComment
+
+
+def document(request):
+    if request.method == 'POST':
+        try:
+            req_data = json.loads(request.body.decode())
+            document_title = req_data['title']
+            document_content = req_data['content']
+            if len(req_data) != 2:
+                return HttpResponseBadRequest()
+        except (KeyError, JSONDecodeError) as e:
+            return HttpResponseBadRequest()
+        document = Document(title=document_title, content=document_content)
+        document.save()
+        response_dict = {'id': document.id,
+                         'title': document.title, 'content': document.content}
+        return JsonResponse(response_dict, status=201)
+    else:
+        return HttpResponseNotAllowed(['POST'])
 
 
 def document_title(request, document_title):
@@ -16,7 +36,7 @@ def document_title(request, document_title):
             return HttpResponse(status=404)
         response_dict = {'title': document_specific.title,
                          'content': document_specific.content}
-        return JsonResponse(response_dict, safe=False)
+        return JsonResponse(response_dict)
     else:
         return HttpResponseNotAllowed(['GET'])
 
