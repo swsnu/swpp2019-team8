@@ -22,5 +22,22 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+.env
+db.sqlite3
+
 # added by swpp2019-team8
 package-lock.json
