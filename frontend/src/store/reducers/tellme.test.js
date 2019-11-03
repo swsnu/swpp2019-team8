@@ -5,6 +5,7 @@ describe('TellMe Reducer', () => {
     it(`should return default state`, () => {
         const newState = reducer(undefined, {});
         expect(newState).toEqual({
+            documents: [],
             selectedDocument: null
         });
     });
@@ -16,6 +17,7 @@ describe('TellMe Reducer', () => {
             target: stubSelectedDocument,
         });
         expect(newState).toEqual({
+            documents: [],
             selectedDocument: stubSelectedDocument
         });
     });
