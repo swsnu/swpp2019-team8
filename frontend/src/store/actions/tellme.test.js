@@ -12,7 +12,25 @@ const stubDocument = {
 describe('ActionCreators', () => {
     afterEach(() => {
         jest.clearAllMocks();
-    })
+    });
+
+    it(`'postDocument' should post document correctly`, (done) => {
+        const spy = jest.spyOn(axios, 'post')
+            .mockImplementation((url, tm) => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: stubDocument,
+                    };
+                    resolve(result);
+                });
+            })
+
+        store.dispatch(actionCreators.postDocument(stubDocument)).then(() => {
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
 
     it(`'getDocument' should fetch document correctly`, (done) => {
         const spy = jest.spyOn(axios, 'get')
@@ -20,7 +38,7 @@ describe('ActionCreators', () => {
                 return new Promise((resolve, reject) => {
                     const result = {
                         status: 200,
-                        data: stubDocument
+                        data: stubDocument,
                     };
                     resolve(result);
                 });

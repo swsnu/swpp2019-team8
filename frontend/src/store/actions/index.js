@@ -9,7 +9,7 @@ export {
 } from './user';
 
 export {
-    // postDocument,
+    postDocument,
     getDocument,
     // putDocument,
     // postPhoto,

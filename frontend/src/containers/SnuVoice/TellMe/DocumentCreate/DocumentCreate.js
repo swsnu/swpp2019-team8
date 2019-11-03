@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { Button, ButtonGroup, Input, TabContent, TabPane, Nav, NavItem, NavLink, FormGroup, Label, Form } from 'reactstrap';
 import { MarkdownPreview } from 'react-marked-markdown';
 
+import * as actionCreators from '../../../../store/actions/index';
 class DocumentCreate extends Component {
     state = {
         documentTitle: '',
@@ -14,7 +15,7 @@ class DocumentCreate extends Component {
     }
 
     onClickDocumentConfirmButton = () => {
-        // confirm
+        this.props.onStoreDocument(this.state.documentTitle, this.state.documentContent);
     }
 
     onClickDocumentCancelButton = () => {
@@ -73,7 +74,7 @@ class DocumentCreate extends Component {
                         <Label>Title</Label>
                         <h1>{this.state.documentTitle}</h1>
                         <Label>Content</Label>
-                        <MarkdownPreview value={ this.state.documentContent }/>
+                        <MarkdownPreview value={this.state.documentContent} />
                     </TabPane>
                 </TabContent>
                 <ButtonGroup>
@@ -87,4 +88,11 @@ class DocumentCreate extends Component {
     }
 }
 
-export default connect(null, null)(withRouter(DocumentCreate));
+export const mapDispatchToProps = dispatch => {
+    return {
+        onStoreDocument: (title, content) =>
+            dispatch(actionCreators.postDocument({ title: title, content: content })),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(DocumentCreate));
