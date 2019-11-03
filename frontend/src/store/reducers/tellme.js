@@ -1,14 +1,20 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    // TODO
+    documents: [
+    ],
     selectedDocument: null,
 };
 
 const tellmeReducer = (state = initialState, action) => {
     switch (action.type) {
-        // case actionTypes.POST_DOCUMENT:
-        //     return state;   // TODO
+        case actionTypes.POST_DOCUMENT:
+            const newDocument = {
+                id: action.id,
+                title: action.title,
+                content: action.content,
+            };
+            return { ...state, documents: state.documents.concat(newDocument) };
         case actionTypes.GET_DOCUMENT:
             return { ...state, selectedDocument: action.target };
         // case actionTypes.PUT_DOCUMENT:
