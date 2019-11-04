@@ -33,11 +33,11 @@ class PetitionDetail extends Component {
                     <ul class="View_write_link">
                         <li>
                             <p>Link 1 : </p>
-                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank">여기에 링크1</a>
+                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">여기에 링크1</a>
                         </li>
                         <li>
                             <p>Link 2 : </p>
-                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank">여기에 링크2</a>
+                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">여기에 링크2</a>
                         </li>
                     </ul>
                 </div>
