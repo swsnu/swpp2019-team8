@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { MarkdownPreview } from 'react-marked-markdown';
 
 import * as actionCreators from '../../../../store/actions/index';
 
@@ -11,21 +12,29 @@ class DocumentDetail extends Component {
     }
 
     render() {
+        let title = '';
+        let content = '';
+        if (this.props.selectedDocument) {
+            title = this.props.selectedDocument.title;
+            content = this.props.selectedDocument.content;
+        }
         return (
             <div className="DocumentDetail">
                 <h1>DocumentDetail</h1>
-                <h2 className="title">{this.props.selectedDocument.title}</h2>
-                <p className="content">{this.props.selectedDocument.content}</p>
+                <h3>TITLE</h3>
+                <p className="title">{title}</p>
+                <h3>CONTENT</h3>
+                <MarkdownPreview className="content" value={content} />
             </div>
-        )
+        );
     }
 }
 
 export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
-    };
-};
+    }
+}
 
 export const mapDispatchToProps = dispatch => {
     return {
