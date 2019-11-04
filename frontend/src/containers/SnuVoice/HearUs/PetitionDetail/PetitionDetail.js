@@ -3,12 +3,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import * as actionCreators from '../../../../store/actions/index';
+
 class PetitionDetail extends Component {
+    componentDidMount() {
+        this.props.onGetPetition(this.props.match.params.petition_id);
+    }
+
     render() {
+        let title = '';
+        let content = '';
+        if (this.props.selectedPetition) {
+            title = this.props.selectedPetition.title;
+            content = this.props.selectedPetition.content;
+        }
         return (
             <div className="PetitionDetail">
                 <h1>PetitionDetail</h1>
-                <h2 class="petitionsView_title">여기에 제목</h2>
+                <h2 class="petitionsView_title">{title}</h2>
                 <p class="petitionsView_count">Votes: [ 여기에 투표 수 ]</p>
                 <div class="petitionsView_info">
                     <ul class="petitionsView_info_list">
@@ -22,14 +34,7 @@ class PetitionDetail extends Component {
 
                 <div class="petitionsView_write">
                     <h4 class="petitionsView_writeHead">Content</h4>
-                    <div class="View_write">
-                        여기에 청원내용<br></br>
-                        소개원실 하하하하하하하ㅏ하하하하하하핳<br></br>
-                        소개원실 하하하하하하하ㅏ하하하하하하핳<br></br>
-                        소개원실 하하하하하하하ㅏ하하하하하하핳<br></br>
-                        소개원실 하하하하하하하ㅏ하하하하하하핳<br></br>
-                        <br></br><br></br>
-                    </div>
+                    <div class="View_write">{content}</div>
                     <ul class="View_write_link">
                         <li>
                             <p>Link 1 : </p>
@@ -109,4 +114,17 @@ class PetitionDetail extends Component {
     }
 }
 
-export default connect(null, null)(withRouter(PetitionDetail));
+export const mapStateToProps = state => {
+    return {
+        selectedPetition: state.hu.selectedPetition,
+    }
+}
+
+export const mapDispatchToProps = dispatch => {
+    return {
+        onGetPetition: petition_id =>
+            dispatch(actionCreators.getPetition(petition_id)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PetitionDetail));
