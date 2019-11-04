@@ -1,20 +1,26 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
-/*
-export const postDocument_ = (TODO) => {
+import { push } from 'connected-react-router';
+
+export const postDocument_ = (document) => {
     return {
         type: actionTypes.POST_DOCUMENT,
-        // TODO
+        id: document.id,
+        title: document.title,
+        content: document.content,
     };
 };
 
-export const postDocument = (TODO) => {
+export const postDocument = (document) => {
     return dispatch => {
-        // TODO
+        return axios.post('/api/tellme/document/', document)
+            .then(res => {
+                dispatch(postDocument_(res.data));
+                dispatch(push('/tell_me/documents/' + res.data.title));
+            });
     };
 };
-*/
 
 export const getDocument_ = (document) => {
     return {
@@ -25,7 +31,7 @@ export const getDocument_ = (document) => {
 
 export const getDocument = (document_title) => {
     return dispatch => {
-        return axios.get('/api/document/' + document_title)
+        return axios.get('/api/tellme/document/' + document_title)
             .then(res => dispatch(getDocument_(res.data)));
     };
 };

@@ -2,35 +2,71 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
 
 import json
+from json import JSONDecodeError
 import datetime
 
 from user.models import User
-from .models import Debate, DebateComment
+from .models import Document, Photo, Debate, DebateComment
+
+
+def document(request):
+    if request.method == 'POST':
+        try:
+            req_data = json.loads(request.body.decode())
+            document_title = req_data['title']
+            document_content = req_data['content']
+            if len(req_data) != 2:
+                return HttpResponseBadRequest()
+        except (KeyError, JSONDecodeError) as e:
+            return HttpResponseBadRequest()
+        document = Document(title=document_title, content=document_content)
+        document.save()
+        response_dict = {'id': document.id,
+                         'title': document.title, 'content': document.content}
+        return JsonResponse(response_dict, status=201)
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
+
+def document_title(request, document_title):
+    if request.method == 'GET':
+        try:
+            document_specific = Document.objects.get(title=document_title)
+        except Document.DoesNotExist:
+            return HttpResponse(status=404)
+        response_dict = {'title': document_specific.title,
+                         'content': document_specific.content}
+        return JsonResponse(response_dict)
+    else:
+        return HttpResponseNotAllowed(['GET'])
 
 
 def debates_by_document(request, document_title):
-    if request.method=='GET':
-        debate_list_by_document = [debate for debate in Debate.objects.filter(document=document_title).values()]
+    if request.method == 'GET':
+        debate_list_by_document = [debate for debate in Debate.objects.filter(
+            document=document_title).values()]
         return JsonResponse(debate_list_by_document, safe=False, status=200)
 
-    elif request.method=='POST':
+    elif request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
             debate_title = req_data['title']
             debate_content = req_data['content']
             debate_document = document_title
             debate_author = request.user
-        
+
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest(400)
 
-        new_debate = Debate(document=document_title, author=debate_author, title=debate_title, content=debate_content)
+        new_debate = Debate(document=document_title, author=debate_author,
+                            title=debate_title, content=debate_content)
         new_debate.save()
 
         return HttpResponse(status=201)
 
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
+
 
 def debate_get(request, document_title, debate_id):
     if request.method=='GET':
@@ -43,23 +79,26 @@ def debate_get(request, document_title, debate_id):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+
 def debate_comments(request, debate_id):
-    if request.method=='GET':
-        debate_comment_list = [comment for comment in DebateComment.objects.filter(debate=debate_id).values()]
+    if request.method == 'GET':
+        debate_comment_list = [
+            comment for comment in DebateComment.objects.filter(debate=debate_id).values()]
         return JsonResponse(debate_comment_list, safe=False, status=200)
 
-    elif request.method=='POST':
+    elif request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
             comment_debate = debate_id
             comment_author = request.user
             comment_content = req_data['content']
             comment_date = datetime.datetime.now()
-        
+
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest(400)
-        
-        new_debate_comment = DebateComment(debate=comment_debate, author=comment_author, comment=comment_content, date=comment_date)
+
+        new_debate_comment = DebateComment(
+            debate=comment_debate, author=comment_author, comment=comment_content, date=comment_date)
         new_debate_comment.save()
 
         return HttpResponse(status=201)

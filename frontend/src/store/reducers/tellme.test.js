@@ -1,11 +1,31 @@
 import reducer from './tellme';
 import * as actionTypes from '../actions/actionTypes';
 
+const stubDocument = {
+    id: 0,
+    title: 'title 1',
+    content: 'content 1',
+};
+
 describe('TellMe Reducer', () => {
     it(`should return default state`, () => {
         const newState = reducer(undefined, {});
         expect(newState).toEqual({
-            selectedDocument: null
+            documents: [],
+            selectedDocument: null,
+        });
+    });
+
+    it('should post document', () => {
+        const newState = reducer(undefined, {
+            type: actionTypes.POST_DOCUMENT,
+            id: stubDocument.id,
+            title: stubDocument.title,
+            content: stubDocument.content,
+        });
+        expect(newState).toEqual({
+            documents: [stubDocument],
+            selectedDocument: null,
         });
     });
 
@@ -16,7 +36,8 @@ describe('TellMe Reducer', () => {
             target: stubSelectedDocument,
         });
         expect(newState).toEqual({
-            selectedDocument: stubSelectedDocument
+            documents: [],
+            selectedDocument: stubSelectedDocument,
         });
     });
 })
