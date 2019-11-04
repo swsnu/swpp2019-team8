@@ -37,15 +37,28 @@ describe('<DocumentDetail />', () => {
         expect(wrapper.length).toBe(1);
     });
 
-    it(`should render SELECTED_DOCUMENT - title`, () => {
+    it(`should render SELECTED_DOCUMENT`, () => {
         const component = mount(documentDetail);
-        const wrapper = component.find('.title');
-        expect(wrapper.at(0).text()).toBe('SELECTED_DOCUMENT_TEST_TITLE');
+        const wrapperTitle = component.find('.title');
+        const wrapperContent = component.find('.content');
+        expect(wrapperTitle.at(0).text()).toBe('SELECTED_DOCUMENT_TEST_TITLE');
+        expect(wrapperContent.at(0).props().value).toBe('SELECTED_DOCUMENT_TEST_CONTENT');
     });
 
-    it(`should render SELECTED_DOCUMENT - content`, () => {
-        const component = mount(documentDetail);
-        const wrapper = component.find('.content');
-        expect(wrapper.at(0).text()).toBe('SELECTED_DOCUMENT_TEST_CONTENT');
+    it(`should not render SELECTED_DOCUMENT`, () => {
+        const mockInitialStore = getMockStore({ selectedDocument: null });
+        const component = mount(
+            <Provider store={mockInitialStore}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={DocumentDetail} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        );
+        const wrapperTitle = component.find('.title');
+        const wrapperContent = component.find('.content');
+        expect(wrapperTitle.at(0).text()).toBe('');
+        expect(wrapperContent.at(0).props().value).toBe('');
     });
 });
