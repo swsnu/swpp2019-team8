@@ -14,7 +14,7 @@ export const postDocument_ = (document) => {
 
 export const postDocument = (document) => {
     return dispatch => {
-        return axios.post('/api/document/', document)
+        return axios.post('/api/tellme/document/', document)
             .then(res => {
                 dispatch(postDocument_(res.data));
                 dispatch(push('/tell_me/documents/' + res.data.title));
@@ -31,7 +31,7 @@ export const getDocument_ = (document) => {
 
 export const getDocument = (document_title) => {
     return dispatch => {
-        return axios.get('/api/document/' + document_title)
+        return axios.get('/api/tellme/document/' + document_title)
             .then(res => dispatch(getDocument_(res.data)));
     };
 };
