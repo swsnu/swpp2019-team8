@@ -8,9 +8,7 @@ const hearusReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.POST_PETITION:
             return state;   // TODO
-        case actionTypes.GET_PETITIONS_BY_VOTE:
-            return state;   // TODO
-        case actionTypes.GET_PETITIONS_BY_LASTEST:
+        case actionTypes.GET_ALL_PETITIONS:
             return state;   // TODO
         case actionTypes.GET_PETITION:
             return state;   // TODO

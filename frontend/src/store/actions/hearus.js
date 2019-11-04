@@ -16,27 +16,14 @@ export const postPetition = (/* TODO */) => {
     };
 };
 
-export const getPetitionsByVote_ = (/* TODO */) => {
+export const getAllPetitions_ = (/* TODO */) => {
     return {
         type: actionTypes.GET_PETITIONS_BY_VOTE,
         // TODO
     };
 };
 
-export const getPetitionsByVote = (/* TODO */) => {
-    return dispatch => {
-        // TODO
-    };
-};
-
-export const getPetitionsByLatest_ = (/* TODO */) => {
-    return {
-        type: actionTypes.GET_PETITIONS_BY_LASTEST,
-        // TODO
-    };
-};
-
-export const getPetitionsByLatest = (/* TODO */) => {
+export const getAllPetitions = (/* TODO */) => {
     return dispatch => {
         // TODO
     };
