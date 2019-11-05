@@ -50,26 +50,12 @@ export class UpperBar extends Component {
     }
 
     componentDidMount = () => {
-        console.log(window.location.href)
         if (window.sessionStorage.getItem('userId') !== null) {
             this.props.getUserByUserId(parseInt(window.sessionStorage.getItem('userId')))
-        } else {
-            if (/^http::\/\/localhost:3000\/tell_me\/documents\/:document_title\/debates\/create$/.exec(window.location.href)) {
-                window.alert('로그인이 필요합니다.\n 메인으로 이동합니다.');
-                this.props.history.push('/');
-            }
-            if (/^http::\/\/localhost:3000\/hear_us\/create$/.exec(window.location.href)) {
-                window.alert('로그인이 필요합니다.\n 메인으로 이동합니다.');
-                this.props.history.push('/');
-            }
-            if (/^http::\/\/localhost:3000\/hear_us\/my_petition\/:user_id$/.exec(window.location.href)) {
-                window.alert('로그인이 필요합니다.\n 메인으로 이동합니다.');
-                this.props.history.push('/');
-            }
         }
-        if (/^http::\/\/localhost:3000\/tell_me$/.exec(window.location.href)) {
+        if (/^http:\/\/localhost:3000\/tell_me$/.exec(window.location.href)) {
             this.setState({ location: 'tell_me' });
-        } else if (/^http::\/\/localhost:3000\/tell_me$/.exec(window.location.href)) {
+        } else if (/^http:\/\/localhost:3000\/hear_us$/.exec(window.location.href)) {
             this.setState({ location: 'hear_us' });
         }
     }

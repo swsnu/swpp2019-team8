@@ -15,6 +15,7 @@ const userReducer = (state = initialState, action) => {
             window.sessionStorage.setItem('userId', parseInt(action.selectedUser.id))
             return { selectedUser: action.selectedUser, verifyCode: '', signIn: action.signIn }
         case actionTypes.GET_SIGN_OUT:
+            window.sessionStorage.removeItem('userId')
             return { selectedUser: '', verifyCode: '', signIn: false }
         case actionTypes.GET_USER:
             if (window.sessionStorage.getItem('userId') === null) signIn = false
