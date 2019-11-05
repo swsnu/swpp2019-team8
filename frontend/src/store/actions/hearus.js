@@ -54,16 +54,17 @@ export const getPetitionsByLatest = (/* TODO */) => {
     };
 };
 
-export const getPetition_ = (/* TODO */) => {
+export const getPetition_ = (petition) => {
     return {
         type: actionTypes.GET_PETITION,
-        // TODO
+        target: petition,
     };
 };
 
-export const getPetition = (/* TODO */) => {
+export const getPetition = (petition_id) => {
     return dispatch => {
-        // TODO
+        return axios.get('/api/hearus/petition/' + petition_id)
+            .then(res => dispatch(getPetition_(res.data)));
     };
 };
 
