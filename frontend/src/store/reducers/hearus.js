@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     petition_list: [],
-    selectedpetition: null,
+    selectedPetition: null,
     comment_list: [],
 };
 
