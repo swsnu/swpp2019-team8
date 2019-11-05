@@ -50,8 +50,8 @@ export class UpperBar extends Component {
     }
 
     componentDidMount = () => {
-        if (window.sessionStorage.getItem('userId') !== null) {
-            this.props.getUserByUserId(parseInt(window.sessionStorage.getItem('userId')))
+        if (window.localStorage.getItem('userId') !== null) {
+            this.props.getUserByUserId(parseInt(window.localStorage.getItem('userId')))
         }
         if (/^http:\/\/localhost:3000\/tell_me$/.exec(window.location.href)) {
             this.setState({ location: 'tell_me' });
