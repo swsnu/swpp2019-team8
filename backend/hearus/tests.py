@@ -30,19 +30,13 @@ class HearusTestCase(TestCase):
         response = client.put('/api/hearus/petition/')
         self.assertEqual(response.status_code, 405)
 
-    def test_petition_votes(self):
+    def test_petition_list(self):
         client = Client(enforce_csrf_checks=False)
-        response = client.get('/api/hearus/petition/category/vote/')
+        response = client.get('/api/hearus/petition/petitions/')
         self.assertEqual(382, len(response.content.decode()))
-        response = client.put('/api/hearus/petition/category/vote/')
+        response = client.put('/api/hearus/petition/petitions/')
         self.assertEqual(response.status_code, 405)
 
-    def test_petition_latest(self):
-        client = Client(enforce_csrf_checks=False)
-        response = client.get('/api/hearus/petition/category/latest/')
-        self.assertEqual(382, len(response.content.decode()))
-        response = client.put('/api/hearus/petition/category/latest/')
-        self.assertEqual(response.status_code, 405)
 
     def test_petition_petitionid(self):
         client = Client(enforce_csrf_checks=False)

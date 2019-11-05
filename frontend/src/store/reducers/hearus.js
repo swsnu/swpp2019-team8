@@ -1,17 +1,17 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    petitionList : '',
     selectedPetition: null,
-}
+    // TODO
+};
 
 const hearusReducer = (state = initialState, action) => {
     switch (action.type) {
-        // case actionTypes.POST_PETITION:
-        //     return state;   // TODO
-        // case actionTypes.GET_PETITIONS_BY_VOTE:
-        //     return state;   // TODO
-        // case actionTypes.GET_PETITIONS_BY_LASTEST:
-        //     return state;   // TODO
+        case actionTypes.POST_PETITION:
+            return state;   // TODO
+        case actionTypes.GET_ALL_PETITIONS:
+            return {...state, petitionList : action.petitionList};   // TODO
         case actionTypes.GET_PETITION:
             return { ...state, selectedPetition: action.target }
         // case actionTypes.GET_MY_PETITIONS:
