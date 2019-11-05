@@ -12,6 +12,10 @@ const stubInitialState = {
     selectedPetition: {
         title: 'SELECTED_PETITION_TEST_TITLE',
         content: 'SELECTED_PETITION_TEST_CONTENT',
+        votes: 'SELECTED_PETITION_TEST_VOTES',
+        category: 'SELECTED_PETITION_TEST_CATEGORY',
+        start_date: '0000-00-00T00:00:00.000',
+        end_date: '0000-00-00T00:00:00.000',
     },
 }
 
@@ -41,8 +45,16 @@ describe('<PetitionDetail />', () => {
         const component = mount(petitionDetail);
         const wrapperTitle = component.find('.petitionsView_title');
         const wrapperContent = component.find('.View_write');
+        const wrapperVotes = component.find('.petitionsView_count');
+        const wrapperCategory = component.find('.petitionsView_category');
+        const wrapperStartDate = component.find('.petitionsView_start_date');
+        const wrapperEndDate = component.find('.petitionsView_end_date');
         expect(wrapperTitle.at(0).text()).toBe('SELECTED_PETITION_TEST_TITLE');
         expect(wrapperContent.at(0).text()).toBe('SELECTED_PETITION_TEST_CONTENT');
+        expect(wrapperVotes.at(0).text()).toBe('Votes: [ SELECTED_PETITION_TEST_VOTES ]');
+        expect(wrapperCategory.at(0).text()).toBe('Category: SELECTED_PETITION_TEST_CATEGORY');
+        expect(wrapperStartDate.at(0).text()).toBe('Start: 0000-00-00');
+        expect(wrapperEndDate.at(0).text()).toBe('End: 0000-00-00');
     });
 
     it(`should not render SELECTED_PETITION`, () => {
@@ -58,7 +70,15 @@ describe('<PetitionDetail />', () => {
         );
         const wrapperTitle = component.find('.petitionsView_title');
         const wrapperContent = component.find('.View_write');
+        const wrapperVotes = component.find('.petitionsView_count');
+        const wrapperCategory = component.find('.petitionsView_category');
+        const wrapperStartDate = component.find('.petitionsView_start_date');
+        const wrapperEndDate = component.find('.petitionsView_end_date');
         expect(wrapperTitle.at(0).text()).toBe('');
         expect(wrapperContent.at(0).text()).toBe('');
+        expect(wrapperVotes.at(0).text()).toBe('Votes: [  ]');
+        expect(wrapperCategory.at(0).text()).toBe('Category: ');
+        expect(wrapperStartDate.at(0).text()).toBe('Start: ');
+        expect(wrapperEndDate.at(0).text()).toBe('End: ');
     });
 });
