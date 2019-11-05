@@ -26,8 +26,8 @@ export {
     postPetition,
     getAllPetitions,
     getPetition,
-    getMyPetitions,
-    getPetitionComments,
-    postPetitionComment,
+    // getMyPetitions,
+    // getPetitionComments,
+    // postPetitionComment,
     // Statistic에 해당하는 것은 아직 안 만듦
 } from './hearus';
