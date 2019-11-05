@@ -43,7 +43,8 @@ describe ('user reducer', () => {
         })
     })
 
-    it ('should getUser', () => {
+    it ('should getUser not logged In', () => {
+        Storage.prototype.getItem = jest.fn(() => {return null})
         const newState = userReducer(undefined, {
             type: actionTypes.GET_USER,
             selectedUser: '123',
@@ -53,6 +54,21 @@ describe ('user reducer', () => {
             selectedUser: '123',
             verifyCode : '12',
             signIn : false
+        })
+    })
+
+    
+    it ('should getUser not logged In', () => {
+        Storage.prototype.getItem = jest.fn(() => {return '1'})
+        const newState = userReducer(undefined, {
+            type: actionTypes.GET_USER,
+            selectedUser: '123',
+            verifyCode : '12'
+        })
+        expect(newState).toEqual({
+            selectedUser: '123',
+            verifyCode : '12',
+            signIn : true
         })
     })
 

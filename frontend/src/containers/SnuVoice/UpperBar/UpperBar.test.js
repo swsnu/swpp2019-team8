@@ -12,7 +12,8 @@ describe('<UpperBar/>', () => {
             selectedUser: '',
             signIn: false,
             postSignIn: mocked,
-            getSignOut: mocked
+            getSignOut: mocked,
+            getUserByUserId : mocked
         }
     })
 
@@ -108,40 +109,46 @@ describe('<UpperBar/>', () => {
         expect(mocked).toHaveBeenCalledTimes(2);
     })
 
-    it('componeneDidMount works in tell_me', () => {
+    it('componeneDidMount works in tell_me and chekcs logIn', () => {
+        Storage.prototype.getItem = jest.fn(() => {return null})
         global.window = Object.create(window);
         Object.defineProperty(window, 'location', {
             writable: true,
             value: {
-                href : 'localhost:3000/tell_me'
+                href : 'http://localhost:3000/tell_me'
             }
           });
         const component = mount(<UpperBar {...props} />)
         expect(component.instance().state.location).toBe('tell_me')
+        expect(mocked).toHaveBeenCalledTimes(0)
     })
 
     it('componeneDidMount works in hear_us', () => {
+        Storage.prototype.getItem = jest.fn(() => {return '1'})
         global.window = Object.create(window);
         Object.defineProperty(window, 'location', {
             writable: true,
             value: {
-                href : 'localhost:3000/hear_us'
+                href : 'http://localhost:3000/hear_us'
             }
           });
         const component = mount(<UpperBar {...props} />)
         expect(component.instance().state.location).toBe('hear_us')
+        expect(mocked).toHaveBeenCalledTimes(1)
     })
 
     it('componeneDidMount works in main', () => {
+        Storage.prototype.getItem = jest.fn(() => {return '1'})
         global.window = Object.create(window);
         Object.defineProperty(window, 'location', {
             writable: true,
             value: {
-                href : 'localhost:3000/SnuVoice'
+                href : 'http://localhost:3000/'
             }
           });
         const component = mount(<UpperBar {...props} />)
         expect(component.instance().state.location).toBe('')
+        expect(mocked).toHaveBeenCalledTimes(1)
     })
 
 
@@ -165,6 +172,11 @@ describe('<UpperBar/> : Dispatch to Props', () => {
 
     it('test getSignOut', () => {
         mapDispatchToProps(dispatch).getSignOut();
+        expect(dispatch).toHaveBeenCalledTimes(1);
+    })
+
+    it('test getUserByUserId', () => {
+        mapDispatchToProps(dispatch).getUserByUserId();
         expect(dispatch).toHaveBeenCalledTimes(1);
     })
 
