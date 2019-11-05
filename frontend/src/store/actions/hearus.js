@@ -28,28 +28,24 @@ export const postPetition = (petition) => {
     };
 };
 
-export const getPetitionsByVote_ = (/* TODO */) => {
+
+export const getAllPetitions_ = (response) => {
     return {
-        type: actionTypes.GET_PETITIONS_BY_VOTE,
+        type: actionTypes.GET_ALL_PETITIONS,
+        petitionList : response
         // TODO
     };
 };
 
-export const getPetitionsByVote = (/* TODO */) => {
+export const getAllPetitions = (/* TODO */) => {
     return dispatch => {
-        // TODO
-    };
-};
-
-export const getPetitionsByLatest_ = (/* TODO */) => {
-    return {
-        type: actionTypes.GET_PETITIONS_BY_LASTEST,
-        // TODO
-    };
-};
-
-export const getPetitionsByLatest = (/* TODO */) => {
-    return dispatch => {
+        return axios.get('/api/hearus/petition/petitions/')
+            .then(res => {
+                dispatch(getAllPetitions_(res.data))
+            })
+            .catch(e => {
+                console.log(e)
+            })
         // TODO
     };
 };

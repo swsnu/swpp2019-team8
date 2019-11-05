@@ -24,8 +24,7 @@ export {
 
 export {
     postPetition,
-    // getPetitionsByVote,
-    // getPetitionsByLatest,
+    getAllPetitions,
     getPetition,
     // getMyPetitions,
     // getPetitionComments,
