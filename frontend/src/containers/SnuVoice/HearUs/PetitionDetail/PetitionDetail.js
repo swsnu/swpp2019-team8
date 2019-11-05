@@ -32,10 +32,10 @@ class PetitionDetail extends Component {
                 <p className="petitionsView_count">Votes: [ {votes} ]</p>
                 <div className="petitionsView_info">
                     <ul className="petitionsView_info_list">
-                        <li>Category: {category}</li>
-                        <li>Start: {start_date}</li>
-                        <li>End: {end_date}</li>
-                        <li>Petitioner: 여기에 닉네임</li>
+                        <li className="petitionsView_category">Category: {category}</li>
+                        <li className="petitionsView_start_date">Start: {start_date}</li>
+                        <li className="petitionsView_end_date">End: {end_date}</li>
+                        <li className="petitionsView_petitioner">Petitioner: 여기에 닉네임</li>
                     </ul>
                 </div>
                 <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p>
