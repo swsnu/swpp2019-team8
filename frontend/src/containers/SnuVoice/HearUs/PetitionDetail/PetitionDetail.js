@@ -3,15 +3,128 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import * as actionCreators from '../../../../store/actions/index';
+
 class PetitionDetail extends Component {
+    componentDidMount() {
+        this.props.onGetPetition(this.props.match.params.petition_id);
+    }
+
     render() {
+        let title = '';
+        let content = '';
+        if (this.props.selectedPetition) {
+            title = this.props.selectedPetition.title;
+            content = this.props.selectedPetition.content;
+        }
         return (
             <div className="PetitionDetail">
                 <h1>PetitionDetail</h1>
-            
-            </div>
-        )
+                <h2 className="petitionsView_title">{title}</h2>
+                <p className="petitionsView_count">Votes: [ 여기에 투표 수 ]</p>
+                <div className="petitionsView_info">
+                    <ul className="petitionsView_info_list">
+                        <li>Category: 여기에 카테고리</li>
+                        <li>Start: 여기에 시작 날짜</li>
+                        <li>End: 여기에 마감 날짜</li>
+                        <li>Petitioner: 여기에 닉네임</li>
+                    </ul>
+                </div>
+                <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p>
+
+                <div className="petitionsView_write">
+                    <h4 className="petitionsView_writeHead">Content</h4>
+                    <div className="View_write">{content}</div>
+                    <ul className="View_write_link">
+                        <li>
+                            <p>Link 1 : </p>
+                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">여기에 링크1</a>
+                        </li>
+                        <li>
+                            <p>Link 2 : </p>
+                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">여기에 링크2</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="petitionsView_statistic">
+                    <br></br><br></br>** 여기에 통계 **<br></br><br></br>
+                </div>
+
+                <div className="petitionsReply_area">
+                    <div className="Reply_area_head">
+                        <h5 className="Reply_area_agree">Votes: 여기에 투표 수</h5>
+                        <div className="Reply_area_url">
+                            URL: 여기에 URL
+                            <button>Copy</button>
+                        </div>
+                    </div>
+                    <div className="Reply_area_write">
+                        <textarea id="tw_contents"></textarea>
+                        <button>Agree</button>
+                    </div>
+                    <div className="petitionsReply_Reply">
+                        <ul>
+                            <li className="Reply_Reply_list">
+                                <div className="Reply_Reply_contents">
+                                    <div className="pv3_R_contents_head">
+                                        <h4>여기에 닉네임</h4>
+                                    </div>
+                                    <div className="R_R_contents_txt">
+                                        여기에 댓글
+                                    </div>
+                                </div>
+                            </li>
+                            <li className="Reply_Reply_list">
+                                <div className="Reply_Reply_contents">
+                                    <div className="pv3_R_contents_head">
+                                        <h4>여기에 닉네임</h4>
+                                    </div>
+                                    <div className="R_R_contents_txt">
+                                        여기에 댓글
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="paging">
+                        <div className="p_wrap">
+                            <div className="p_btn">
+                                <div className="p_btn">
+                                    <a><strong>1</strong></a>
+                                    <a>2</a>
+                                    <a>3</a>
+                                    <a>4</a>
+                                    <a>5</a>
+                                    <a>6</a>
+                                    <a>7</a>
+                                    <a>8</a>
+                                    <a>9</a>
+                                    <a>10</a>
+                                </div>
+                                <div className="p_btn next">
+                                    <a>Next</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div >
+        );
     }
 }
 
-export default connect(null, null)(withRouter(PetitionDetail));
+export const mapStateToProps = state => {
+    return {
+        selectedPetition: state.hu.selectedPetition,
+    }
+}
+
+export const mapDispatchToProps = dispatch => {
+    return {
+        onGetPetition: petition_id =>
+            dispatch(actionCreators.getPetition(petition_id)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PetitionDetail));

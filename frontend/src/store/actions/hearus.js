@@ -3,55 +3,64 @@ import axios from 'axios';
 
 import { push } from 'connected-react-router';
 
-export const postPetition_ = (/* TODO */) => {
+export const postPetition_ = (petition) => {
     return {
         type: actionTypes.POST_PETITION,
-        // TODO
+        id: petition.id,
+        title: petition.title,
+        content: petition.content,
+        category: petition.category,
+        tag: petition.tag,
+        link: petition.link,
+        
     };
 };
 
-export const postPetition = (/* TODO */) => {
+export const postPetition = (petition) => {
     return dispatch => {
-        // TODO
+        return axios.post('/api/hearus/petition/', petition).then(res => {
+            dispatch(postPetition_(res.data));
+            dispatch(push('/hear_us/' + res.data.id));
+        })
+        .catch(res => {
+            alert('post Petition Failed.')
+        });
     };
 };
 
-export const getPetitionsByVote_ = (/* TODO */) => {
+
+export const getAllPetitions_ = (response) => {
     return {
-        type: actionTypes.GET_PETITIONS_BY_VOTE,
+        type: actionTypes.GET_ALL_PETITIONS,
+        petitionList : response
         // TODO
     };
 };
 
-export const getPetitionsByVote = (/* TODO */) => {
+export const getAllPetitions = (/* TODO */) => {
     return dispatch => {
+        return axios.get('/api/hearus/petition/petitions/')
+            .then(res => {
+                dispatch(getAllPetitions_(res.data))
+            })
+            .catch(e => {
+                console.log(e)
+            })
         // TODO
     };
 };
 
-export const getPetitionsByLatest_ = (/* TODO */) => {
-    return {
-        type: actionTypes.GET_PETITIONS_BY_LASTEST,
-        // TODO
-    };
-};
-
-export const getPetitionsByLatest = (/* TODO */) => {
-    return dispatch => {
-        // TODO
-    };
-};
-
-export const getPetition_ = (/* TODO */) => {
+export const getPetition_ = (petition) => {
     return {
         type: actionTypes.GET_PETITION,
-        // TODO
+        target: petition,
     };
 };
 
-export const getPetition = (/* TODO */) => {
+export const getPetition = (petition_id) => {
     return dispatch => {
-        // TODO
+        return axios.get('/api/hearus/petition/' + petition_id)
+            .then(res => dispatch(getPetition_(res.data)));
     };
 };
 

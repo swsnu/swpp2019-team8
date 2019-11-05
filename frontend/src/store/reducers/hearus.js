@@ -1,19 +1,27 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    // TODO
+    petition_list: [],
+    selectedPetition: null,
+    comment_list: [],
 };
 
 const hearusReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.POST_PETITION:
-            return state;   // TODO
-        case actionTypes.GET_PETITIONS_BY_VOTE:
-            return state;   // TODO
-        case actionTypes.GET_PETITIONS_BY_LASTEST:
-            return state;   // TODO
+        case actionTypes.POST_PETITION: {
+            const newPetition = {
+                id: action.id,
+                title: action.title,
+                content: action.content,
+                link: action.link,
+                tag: action.tag,
+            };
+            return { ...state, petition_list: state.petition_list.concat(newPetition)};
+        }
+        case actionTypes.GET_ALL_PETITIONS:
+            return {...state, petitionList : action.petitionList};   // TODO
         case actionTypes.GET_PETITION:
-            return state;   // TODO
+            return { ...state, selectedPetition: action.target };   // TODO
         case actionTypes.GET_MY_PETITIONS:
             return state;   // TODO
         case actionTypes.GET_PETITION_COMMENTS:
