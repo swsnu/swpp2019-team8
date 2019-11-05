@@ -54,7 +54,7 @@ export class UpperBar extends Component {
         if (window.sessionStorage.getItem('userId') !== null) {
             this.props.getUserByUserId(parseInt(window.sessionStorage.getItem('userId')))
         } else {
-            if (/^http::\/\/localhost:3000\/tell_me\/documents\/\:document_title\/debates\/create$/.exec(window.location.href)) {
+            if (/^http::\/\/localhost:3000\/tell_me\/documents\/:document_title\/debates\/create$/.exec(window.location.href)) {
                 window.alert('로그인이 필요합니다.\n 메인으로 이동합니다.');
                 this.props.history.push('/');
             }
