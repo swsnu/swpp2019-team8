@@ -8,7 +8,7 @@ class Petition(models.Model):
         User,
         on_delete=models.CASCADE,
     )
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=128)
     content = models.TextField()
     category = models.TextField()
     link = models.TextField()

@@ -68,7 +68,7 @@ class PetitionCreate extends Component {
         }
         for(var j in this.state.petitionTag)
         {
-            retTag += this.state.petitionTagList[i];
+            retTag += this.state.petitionTagList[j];
         }
         this.props.onStorePetition(this.state.petitionTitle, this.state.petitionContent, this.state.selectedCategory, retTag, retLink);
     }
@@ -83,7 +83,7 @@ class PetitionCreate extends Component {
             return (
                 <div className="LinkList" key={i}>
                     {link}
-                    <Button type="button" value={i} id="petition_link_add_button"
+                    <Button type="button" value={i} id="petition_link_delete_button"
                         onClick={this.onClickLinkDeleteButton}>Delete Link</Button>
                 </div>
             );
@@ -92,7 +92,7 @@ class PetitionCreate extends Component {
             return (
                 <div className="TagList" key={i}>
                     {tag}
-                    <Button type="button" value={i} id="petition_tag_add_button"
+                    <Button type="button" value={i} id="petition_tag_delete_button"
                         onClick={this.onClickTagDeleteButton}>Delete Tag</Button>
                 </div>
             );
