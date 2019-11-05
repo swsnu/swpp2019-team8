@@ -16,15 +16,23 @@ export const postPetition = (/* TODO */) => {
     };
 };
 
-export const getAllPetitions_ = (/* TODO */) => {
+export const getAllPetitions_ = (response) => {
     return {
-        type: actionTypes.GET_PETITIONS_BY_VOTE,
+        type: actionTypes.GET_ALL_PETITIONS,
+        petitionList : response
         // TODO
     };
 };
 
 export const getAllPetitions = (/* TODO */) => {
     return dispatch => {
+        return axios.get('/api/hearus/petition/petitions/')
+            .then(res => {
+                dispatch(getAllPetitions_(res.data))
+            })
+            .catch(e => {
+                console.log(e)
+            })
         // TODO
     };
 };

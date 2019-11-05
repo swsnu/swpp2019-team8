@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    petitionList : ''
     // TODO
 };
 
@@ -9,7 +10,7 @@ const hearusReducer = (state = initialState, action) => {
         case actionTypes.POST_PETITION:
             return state;   // TODO
         case actionTypes.GET_ALL_PETITIONS:
-            return state;   // TODO
+            return {...state, petitionList : action.petitionList};   // TODO
         case actionTypes.GET_PETITION:
             return state;   // TODO
         case actionTypes.GET_MY_PETITIONS:
