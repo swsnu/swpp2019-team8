@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
+from django.contrib.auth import authenticate
 
 import json
 from json import JSONDecodeError
@@ -42,23 +43,29 @@ def document_title(request, document_title):
 
 
 def debates_by_document(request, document_title):
+    try:
+        debate_document = Document.objects.get(title=document_title)
+    except Document.DoesNotExist:
+        return HttpResponse(status=404)
+
     if request.method == 'GET':
-        debate_list_by_document = [debate for debate in Debate.objects.filter(
-            document=document_title).values()]
+        debate_list_by_document = [debate for debate in Debate.objects.filter(document=debate_document).values()]
         return JsonResponse(debate_list_by_document, safe=False, status=200)
 
     elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+    
         try:
             req_data = json.loads(request.body.decode())
             debate_title = req_data['title']
             debate_content = req_data['content']
-            debate_document = document_title
             debate_author = request.user
 
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest(400)
 
-        new_debate = Debate(document=document_title, author=debate_author,
+        new_debate = Debate(document=debate_document, author=debate_author,
                             title=debate_title, content=debate_content)
         new_debate.save()
 
@@ -71,10 +78,12 @@ def debates_by_document(request, document_title):
 def debate_get(request, document_title, debate_id):
     if request.method=='GET':
         try:
-            debate = Debate.objects.get(title=debate_id)
+            debate = Debate.objects.get(id=debate_id)
         except Debate.DoesNotExist:
             return HttpResponse(status=404)
-        return JsonResponse(debate, safe=False, status=200)
+
+        response_dict = {'title': debate.title, 'content': debate.content}
+        return JsonResponse(response_dict, safe=False, status=200)
 
     else:
         return HttpResponseNotAllowed(['GET'])
@@ -87,6 +96,9 @@ def debate_comments(request, debate_id):
         return JsonResponse(debate_comment_list, safe=False, status=200)
 
     elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+
         try:
             req_data = json.loads(request.body.decode())
             comment_debate = debate_id
