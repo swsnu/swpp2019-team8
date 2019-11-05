@@ -14,6 +14,23 @@ describe('ActionCreators', () => {
         jest.clearAllMocks();
     });
 
+    it(`'postPetition' should post petition correctly`, (done) => {
+        const  spy = jest.spyOn(axios, 'post')
+            .mockImplementation((url, hu) => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: stubPetition
+                    };
+                    resolve(result);
+                });
+            })
+        store.dispatch(actionCreators.postPetition()).then(() => {
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        })
+    })
+
     it(`'getPetition' should fetch petition correctly`, (done) => {
         const spy = jest.spyOn(axios, 'get')
             .mockImplementation(url => {

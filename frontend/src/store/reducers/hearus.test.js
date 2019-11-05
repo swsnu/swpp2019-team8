@@ -5,6 +5,8 @@ describe('HearUs Reducer', () => {
     it(`should return default state`, () => {
         const newState = reducer(undefined, {});
         expect(newState).toEqual({
+            comment_list: [],
+            petition_list: [],
             selectedPetition: null,
         });
     });
