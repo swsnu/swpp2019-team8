@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { InputGroup, InputGroupAddon, Button, ButtonGroup, Form, FormGroup, Label, Input } from 'reactstrap';
+import * as actionCreators from '../../../../store/actions/index';
 
 class PetitionCreate extends Component {
     state = {
@@ -59,8 +60,17 @@ class PetitionCreate extends Component {
 
     onClickPetitionConfirmButton = () => {
         //Todo: title중복
-        //Todo: POST petition
-        this.props.history.push('/hear_us');
+        let retLink = '';
+        let retTag = '';
+        for(var i in this.state.petitionLinkList)
+        {
+            retLink += this.state.petitionLinkList[i];
+        }
+        for(var i in this.state.petitionTag)
+        {
+            retTag += this.state.petitionTagList[i];
+        }
+        this.props.onStorePetition(this.state.petitionTitle, this.state.petitionContent, this.state.selectedCategory, retTag, retLink);
     }
 
     onClickPetitionCancelButton = () => {
@@ -151,4 +161,11 @@ class PetitionCreate extends Component {
     }
 }
 
-export default connect(null, null)(withRouter(PetitionCreate));
+export const mapDispatchToProps = dispatch => {
+    return {
+        onStorePetition: (title, content, category, tag, link) => 
+            dispatch(actionCreators.postPetition({title: title, content: content, category: category, tag: tag, link: link})),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(PetitionCreate));

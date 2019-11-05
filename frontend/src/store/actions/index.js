@@ -23,7 +23,7 @@ export {
 } from './tellme';
 
 export {
-    // postPetition,
+    postPetition,
     // getPetitionsByVote,
     // getPetitionsByLatest,
     getPetition,
