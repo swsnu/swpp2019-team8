@@ -7,7 +7,7 @@ describe('HearUs Reducer', () => {
         expect(newState).toEqual({
             comment_list: [],
             petition_list: [],
-            selectedPetition: null,
+            selectedpetition: null,
         });
     });
 
@@ -18,7 +18,7 @@ describe('HearUs Reducer', () => {
             target: stubSelectedPetition,
         });
         expect(newState).toEqual({
-            selectedPetition: stubSelectedPetition,
+            
         });
     });
 });
