@@ -18,10 +18,8 @@ const hearusReducer = (state = initialState, action) => {
             };
             return { ...state, petition_list: state.petition_list.concat(newPetition)};
         }
-        case actionTypes.GET_PETITIONS_BY_VOTE:
-            return state;   // TODO
-        case actionTypes.GET_PETITIONS_BY_LASTEST:
-            return state;   // TODO
+        case actionTypes.GET_ALL_PETITIONS:
+            return {...state, petitionList : action.petitionList};   // TODO
         case actionTypes.GET_PETITION:
             return { ...state, selectedPetition: action.target };   // TODO
         case actionTypes.GET_MY_PETITIONS:
