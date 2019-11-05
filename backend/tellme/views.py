@@ -90,10 +90,21 @@ def debate_get(request, document_title, debate_id):
 
 
 def debate_comments(request, debate_id):
+    try:
+        debate = Debate.objects.get(id=debate_id)
+    except Debate.DoesNotExist:
+        return HttpResponse(status=404)
+
     if request.method == 'GET':
         debate_comment_list = [
             comment for comment in DebateComment.objects.filter(debate=debate_id).values()]
-        return JsonResponse(debate_comment_list, safe=False, status=200)
+            
+        response = {
+            'debateDocumentTitle' : debate.document.title,
+            'debateTitle' : debate.title,
+            'commentList' : debate_comment_list
+        }
+        return JsonResponse(response, safe=False, status=200)
 
     elif request.method == 'POST':
         if not request.user.is_authenticated:
@@ -101,11 +112,10 @@ def debate_comments(request, debate_id):
 
         try:
             req_data = json.loads(request.body.decode())
-            comment_debate = debate_id
+            comment_debate = Debate.objects.get(id=debate_id)
             comment_author = request.user
-            comment_content = req_data['content']
+            comment_content = req_data['comment']
             comment_date = datetime.datetime.now()
-
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest(400)
 
