@@ -60,10 +60,6 @@ class PetitionDetail extends Component {
                             <p>Link 1 : </p>
                             <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">{link}</a>
                         </li>
-                        <li>
-                            <p>Link 2 : </p>
-                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">{link}</a>
-                        </li>
                     </ul>
                 </div>
 
