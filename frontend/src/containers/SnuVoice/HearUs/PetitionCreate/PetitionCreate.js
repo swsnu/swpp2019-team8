@@ -66,7 +66,7 @@ class PetitionCreate extends Component {
         {
             retLink += this.state.petitionLinkList[i];
         }
-        for(i in this.state.petitionTag)
+        for(var j in this.state.petitionTag)
         {
             retTag += this.state.petitionTagList[i];
         }
