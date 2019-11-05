@@ -37,7 +37,7 @@ export const getAllPetitions = (/* TODO */) => {
         // TODO
     };
 };
-*/
+
 
 export const getPetition_ = (petition) => {
     return {
