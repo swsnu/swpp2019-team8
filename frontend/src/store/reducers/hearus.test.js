@@ -5,6 +5,8 @@ describe('HearUs Reducer', () => {
     it(`should return default state`, () => {
         const newState = reducer(undefined, {});
         expect(newState).toEqual({
+            comment_list: [],
+            petition_list: [],
             selectedPetition: null,
         });
     });
@@ -16,7 +18,13 @@ describe('HearUs Reducer', () => {
             target: stubSelectedPetition,
         });
         expect(newState).toEqual({
-            selectedPetition: stubSelectedPetition,
+            comment_list: [],
+            petition_list: [],
+            selectedPetition: {
+                content: "content",
+                id: 1,
+                title: "title",
+            },
         });
     });
 });
