@@ -3,7 +3,7 @@ from user.models import User
 
 # Create your models here.
 class Document(models.Model):
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=64, unique=True)
     content = models.TextField()
 
 class Photo(models.Model):
