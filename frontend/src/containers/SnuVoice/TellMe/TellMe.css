@@ -5,17 +5,17 @@
 }
 
 .SearchBar {
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
 
 
 .Title {
     color: white;
-    float: left;
+    /* float: left; */
     padding-bottom: 30px;
-    text-align: left;
+    /* text-align: left; */
 }
 
 .TellMe {
