@@ -87,27 +87,6 @@ class PetitionDetail extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="paging">
-                        <div className="p_wrap">
-                            <div className="p_btn">
-                                <div className="p_btn">
-                                    <a><strong>1</strong></a>
-                                    <a>2</a>
-                                    <a>3</a>
-                                    <a>4</a>
-                                    <a>5</a>
-                                    <a>6</a>
-                                    <a>7</a>
-                                    <a>8</a>
-                                    <a>9</a>
-                                    <a>10</a>
-                                </div>
-                                <div className="p_btn next">
-                                    <a>Next</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div >
         );
