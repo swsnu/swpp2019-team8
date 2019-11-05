@@ -13,21 +13,29 @@ class PetitionDetail extends Component {
     render() {
         let title = '';
         let content = '';
+        let votes = '';
+        let category = '';
+        let start_date = '';
+        let end_date = '';
         if (this.props.selectedPetition) {
             title = this.props.selectedPetition.title;
             content = this.props.selectedPetition.content;
+            votes = this.props.selectedPetition.votes;
+            category = this.props.selectedPetition.category;
+            start_date = this.props.selectedPetition.start_date.substring(0, 10);
+            end_date = this.props.selectedPetition.end_date.substring(0, 10);
         }
         return (
             <div className="PetitionDetail">
                 <h1>PetitionDetail</h1>
                 <h2 className="petitionsView_title">{title}</h2>
-                <p className="petitionsView_count">Votes: [ 여기에 투표 수 ]</p>
+                <p className="petitionsView_count">Votes: [ {votes} ]</p>
                 <div className="petitionsView_info">
                     <ul className="petitionsView_info_list">
-                        <li>Category: 여기에 카테고리</li>
-                        <li>Start: 여기에 시작 날짜</li>
-                        <li>End: 여기에 마감 날짜</li>
-                        <li>Petitioner: 여기에 닉네임</li>
+                        <li className="petitionsView_category">Category: {category}</li>
+                        <li className="petitionsView_start_date">Start: {start_date}</li>
+                        <li className="petitionsView_end_date">End: {end_date}</li>
+                        <li className="petitionsView_petitioner">Petitioner: 여기에 닉네임</li>
                     </ul>
                 </div>
                 <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p>
@@ -86,27 +94,6 @@ class PetitionDetail extends Component {
                                 </div>
                             </li>
                         </ul>
-                    </div>
-                    <div className="paging">
-                        <div className="p_wrap">
-                            <div className="p_btn">
-                                <div className="p_btn">
-                                    <a><strong>1</strong></a>
-                                    <a>2</a>
-                                    <a>3</a>
-                                    <a>4</a>
-                                    <a>5</a>
-                                    <a>6</a>
-                                    <a>7</a>
-                                    <a>8</a>
-                                    <a>9</a>
-                                    <a>10</a>
-                                </div>
-                                <div className="p_btn next">
-                                    <a>Next</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div >

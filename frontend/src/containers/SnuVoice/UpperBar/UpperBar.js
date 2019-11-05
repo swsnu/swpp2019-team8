@@ -50,9 +50,12 @@ export class UpperBar extends Component {
     }
 
     componentDidMount = () => {
-        if (/tell_me/.exec(window.location.href)) {
+        if (window.localStorage.getItem('userId') !== null) {
+            this.props.getUserByUserId(parseInt(window.localStorage.getItem('userId')))
+        }
+        if (/^http:\/\/localhost:3000\/tell_me$/.exec(window.location.href)) {
             this.setState({ location: 'tell_me' });
-        } else if (/hear_us/.exec(window.location.href)) {
+        } else if (/^http:\/\/localhost:3000\/hear_us$/.exec(window.location.href)) {
             this.setState({ location: 'hear_us' });
         }
     }
@@ -107,7 +110,8 @@ export class UpperBar extends Component {
                         <Input type="email" id="email_input" placeholder="SNU MAIL"
                             onChange={(event) => this.setState({ email: event.target.value })}></Input>
                         <Input type="password" id="password_input" placeholder="PASSWORD"
-                            onChange={(event) => this.setState({ password: event.target.value })}></Input>                    </ModalBody>
+                            onChange={(event) => this.setState({ password: event.target.value })}></Input>
+                    </ModalBody>
                     <ModalFooter>
                         <Button onClick={this.onClickSignInButton}>Sign In</Button>
                         <Button onClick={this.toggleModal}>Cancel</Button>
@@ -122,9 +126,11 @@ export const mapDispatchToProps = dispatch => {
     return {
         postSignIn: (email, password) =>
             dispatch(actionCreator.postSignIn({ email: email, password: password })),
-        getSignOut : () =>
-            dispatch(actionCreator.getSignOut())
-        
+        getSignOut: () =>
+            dispatch(actionCreator.getSignOut()),
+        getUserByUserId: (userId) =>
+            dispatch(actionCreator.getUserByUserId(userId))
+
     }
 
 };
@@ -132,7 +138,7 @@ export const mapDispatchToProps = dispatch => {
 export const mapStateToProps = state => {
     return {
         selectedUser: state.usr.selectedUser,
-        signIn : state.usr.signIn
+        signIn: state.usr.signIn
     }
 
 }

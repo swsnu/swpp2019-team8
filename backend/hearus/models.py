@@ -1,21 +1,26 @@
 from django.db import models
 from user.models import User
+from datetime import datetime, timedelta
 
 # Create your models here.
+
 
 class Petition(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
     )
-    title = models.CharField(max_length=64)
+    title = models.CharField(max_length=128)
     content = models.TextField()
     category = models.TextField()
     link = models.TextField()
     tag = models.TextField()
     start_date = models.DateTimeField()
+    end_date = models.DateTimeField(
+        default=datetime.now()+timedelta(days=30))
     votes = models.IntegerField()
     status = models.TextField()
+
 
 class PetitionComment(models.Model):
     petition = models.ForeignKey(
