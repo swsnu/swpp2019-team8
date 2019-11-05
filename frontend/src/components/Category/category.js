@@ -5,14 +5,20 @@ import { Button, ButtonGroup } from 'reactstrap';
 const Category = (props) => {
     return (
         <ButtonGroup size="lg">
-            <Button type="button" id="category_button_1" value="what"
+            <Button type="button" id="category_button_1" value="" All
                 onClick={props.onClick}>All</Button>
-            <Button type="button" id="category_button_2" value="wha"
-                onClick={props.onClick}>wow</Button>
-            <Button type="button" id="category_button_3" value="wh"
-                onClick={props.onClick}>뭐하지</Button>
-            <Button type="button" id="category_button_4" value="w"
-                onClick={props.onClick}>뭐있지</Button>
+            <Button type="button" id="category_button_2" value="HumanRights"
+                onClick={props.onClick}>Human Rights</Button>
+            <Button type="button" id="category_button_3" value="Welfare"
+                onClick={props.onClick}>Welfare</Button>
+            <Button type="button" id="category_button_4" value="Traffic"
+                onClick={props.onClick}>Traffic</Button>
+            <Button type="button" id="category_button_5" value="Education"
+                onClick={props.onClick}>Education</Button>
+            <Button type="button" id="category_button_5" value="Administration"
+                onClick={props.onClick}>Administration</Button>
+            <Button type="button" id="category_button_6" value="Facility"
+                onClick={props.onClick}>Facility</Button>
         </ButtonGroup>
     )
 }

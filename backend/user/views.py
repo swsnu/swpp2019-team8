@@ -50,9 +50,9 @@ def sign_in(request):
             login(request, user)
             selectedUser = User.objects.get(email=userEmail)
             user_to_return = {
-                'selectedUser' : model_to_dict(selectedUser)
+                'selectedUser': model_to_dict(selectedUser)
             }
-            return JsonResponse(user_to_return ,status=201, safe=False)
+            return JsonResponse(user_to_return, status=201, safe=False)
     else:
         return HttpResponseNotAllowed(['POST'])
 
@@ -97,38 +97,55 @@ def get_user_by_email(request, email):
         return HttpResponseNotAllowed(['GET'])
 
 
-def get_user_by_student_id(request, student_id):
+def get_user_by_user_id(request, user_id):
     if request.method == 'GET':
-        selectedUser = User.objects.filter(studentId=student_id)
+        selectedUser = User.objects.filter(id=user_id)
         if selectedUser.count() == 0:
             user_to_return = {
-                'selectedUser' : ''
+                'selectedUser': ''
             }
             return JsonResponse(user_to_return, status=200, safe=False)
         else:
             user = model_to_dict(selectedUser[0])
             user_to_return = {
-                'selectedUser' : user
+                'selectedUser': user
             }
             return JsonResponse(user_to_return, status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
+
+
+def get_user_by_student_id(request, student_id):
+    if request.method == 'GET':
+        selectedUser = User.objects.filter(studentId=student_id)
+        if selectedUser.count() == 0:
+            user_to_return = {
+                'selectedUser': ''
+            }
+            return JsonResponse(user_to_return, status=200, safe=False)
+        else:
+            user = model_to_dict(selectedUser[0])
+            user_to_return = {
+                'selectedUser': user
+            }
+            return JsonResponse(user_to_return, status=200, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
 
 def get_user_by_nickname(request, nickname):
     if request.method == 'GET':
         selectedUser = User.objects.filter(nickname=nickname)
         if selectedUser.count() == 0:
             user_to_return = {
-                'selectedUser' : ''
+                'selectedUser': ''
             }
             return JsonResponse(user_to_return, status=200, safe=False)
         else:
             user = model_to_dict(selectedUser[0])
             user_to_return = {
-                'selectedUser' : user
+                'selectedUser': user
             }
             return JsonResponse(user_to_return, status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
-
-
