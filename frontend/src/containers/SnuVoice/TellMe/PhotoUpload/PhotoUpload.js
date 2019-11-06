@@ -6,6 +6,10 @@ import { withRouter } from 'react-router';
 import { Button, ButtonGroup, Input, TabContent, TabPane, Nav, NavItem, NavLink, Label, Form, FormGroup } from 'reactstrap';
 import { MarkdownPreview } from 'react-marked-markdown';
 
+import Upperbar from '../../UpperBar/UpperBar';
+
+import './PhotoUpload.css';
+
 class PhotoUpload extends Component {
     state = {
         photoTitle: '',
@@ -83,12 +87,17 @@ class PhotoUpload extends Component {
             (<div className="noPhoto">There is no image to preview</div>);
 
         return (
+            <div>
+                <Upperbar/>
             <div className="PhotoUpload">
+                <br/>
                 <h1>Photo Upload</h1>
+                <br/>
                 <p>
                     <div className="FileUpload">
                         <Input type="file" name="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
                     </div>
+                    <br/>
                     {photoStateTabbuttons}
                     <TabContent activeTab={this.state.photoState}>
                         <TabPane tabId="photo">
@@ -131,6 +140,7 @@ class PhotoUpload extends Component {
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>
                     </ButtonGroup>
 
+                            </div>
             </div>
         )
     }

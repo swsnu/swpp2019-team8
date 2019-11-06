@@ -7,3 +7,22 @@
 .photoButton {
     float: right;
 }
+
+.preview {
+    background-color: white;
+    min-height: 400px;
+}
+
+h1, h5 {
+    color: black;
+    text-align: left;
+}
+
+
+.document {
+    color: black;
+    text-align: left;
+    padding-left: 5%;
+}
+
+

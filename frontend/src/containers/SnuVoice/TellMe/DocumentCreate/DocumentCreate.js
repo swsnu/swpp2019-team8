@@ -58,7 +58,10 @@ class DocumentCreate extends Component {
                 <Upperbar />
             <div className="DocumentCreate">
                 <br/>
+                <div className="pageTitle">
                 <h1>Document Create</h1>
+
+                </div>
                 <Button type="button" id="photo_button" className="photoButton"
                     onClick={this.onClickPhotoButton}>Upload Photo</Button>
                     <br/>
@@ -79,12 +82,19 @@ class DocumentCreate extends Component {
                         </Form>
                     </TabPane>
                     <TabPane tabId="preview">
-                        <h4>Title</h4>
+                        <div className="preview">
+                        <div className="document">
+<br/>
+                        <h3>Title:</h3>
                         <h1>{this.state.documentTitle}</h1>
-                        <Label>Content</Label>
+                        <br/>
+                        <h4>Content:</h4>
                         <MarkdownPreview value={this.state.documentContent} />
+                        </div>
+                        </div>
                     </TabPane>
                 </TabContent>
+                <br/>
                 <ButtonGroup>
                     <Button type="button" id="document_confirm_button" disabled={!this.state.documentTitle || !this.state.documentContent}
                         onClick={this.onClickDocumentConfirmButton}>Confirm</Button>
