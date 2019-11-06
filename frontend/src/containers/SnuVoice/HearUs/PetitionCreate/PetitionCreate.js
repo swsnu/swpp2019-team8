@@ -62,13 +62,11 @@ class PetitionCreate extends Component {
         //Todo: title중복
         let retLink = '';
         let retTag = '';
-        for(var i in this.state.petitionLinkList)
-        {
-            retLink += this.state.petitionLinkList[i];
+        for (var i in this.state.petitionLinkList) {
+            retLink += this.state.petitionLinkList[i] + ' ';
         }
-        for(var j in this.state.petitionTag)
-        {
-            retTag += this.state.petitionTagList[j];
+        for (var j in this.state.petitionTag) {
+            retTag += this.state.petitionTagList[j] + ' ';
         }
         this.props.onStorePetition(this.state.petitionTitle, this.state.petitionContent, this.state.selectedCategory, retTag, retLink);
     }
@@ -163,8 +161,8 @@ class PetitionCreate extends Component {
 
 export const mapDispatchToProps = dispatch => {
     return {
-        onStorePetition: (title, content, category, tag, link) => 
-            dispatch(actionCreators.postPetition({title: title, content: content, category: category, tag: tag, link: link})),
+        onStorePetition: (title, content, category, tag, link) =>
+            dispatch(actionCreators.postPetition({ title: title, content: content, category: category, tag: tag, link: link })),
     }
 }
 
