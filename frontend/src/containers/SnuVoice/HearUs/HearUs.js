@@ -75,7 +75,7 @@ class HearUs extends Component {
     if (this.state.selectedCategory === 'All') {
       voteList = (
         this.props.petitionList
-          .sort((a, b) => a.votes > b.votes)
+          .sort((a, b) => a.votes > b.votes ? -1 : a.votes < b.votes ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
               return (
