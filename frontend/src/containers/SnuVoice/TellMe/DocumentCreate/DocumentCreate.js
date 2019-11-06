@@ -85,8 +85,15 @@ class DocumentCreate extends Component {
                         <div className="preview">
                         <div className="document">
 <br/>
-                        <h3>Title:</h3>
-                        <h1>{this.state.documentTitle}</h1>
+                        <h3>
+                            Title:
+                            </h3>
+
+                        <h1>
+<div className="title">
+                        {this.state.documentTitle}
+</div>
+                        </h1>
                         <br/>
                         <h4>Content:</h4>
                         <MarkdownPreview value={this.state.documentContent} />

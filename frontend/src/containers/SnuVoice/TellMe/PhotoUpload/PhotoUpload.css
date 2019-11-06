@@ -2,9 +2,18 @@
     background-color: #3779c4;
     padding-left: 8%;
     padding-right: 8%;
-    color: white;
 }
 
-h1 {
-    color: white;
+.preview {
+    background-color: white;
+}
+
+.photoInfo {
+    padding-left: 4%;
+    padding-right: 4%;
+    text-align: left;
+}
+
+.photoTitle {
+    color: black;
 }

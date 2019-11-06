@@ -13,7 +13,7 @@
     min-height: 400px;
 }
 
-h1, h5 {
+.title {
     color: black;
     text-align: left;
 }

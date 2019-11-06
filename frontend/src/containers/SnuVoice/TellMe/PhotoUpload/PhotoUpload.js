@@ -126,10 +126,15 @@ class PhotoUpload extends Component {
                             </Form>
                         </TabPane>
                         <TabPane tabId="preview">
-                            <Label>Title</Label>
-                            <h1>{this.state.documentTitle}</h1>
-                            <Label>Content</Label>
+                            <div className="preview">
+                            <div className="photoInfo">
+<br/>
+                            <Label>Title:</Label>
+                            <h1><div className="photoTitle">{this.state.documentTitle}</div></h1>
+                            <Label>Content:</Label>
                             <MarkdownPreview value={this.state.documentContent} />
+                            </div>
+                            </div>
                         </TabPane>
                     </TabContent>
                     </p>
