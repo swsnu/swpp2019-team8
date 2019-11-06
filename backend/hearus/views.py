@@ -1,8 +1,13 @@
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, HttpResponseNotFound,  JsonResponse
+
+from django.core.exceptions import ObjectDoesNotExist
 from json import JSONDecodeError
-from django.forms.models import model_to_dict
-from user.models import User
+
 from .models import Petition, PetitionComment
+from user.models import User
+
+
+from django.forms.models import model_to_dict
 from django.utils import timezone
 import json
 
@@ -33,25 +38,16 @@ def petition(request):
 def petition_list(request):
     if request.method == 'GET':
         petition_list = [
-            petition for petition in Petition.objects.all().values()]
+            petition for petition in Petition.objects.all().values().order_by('start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
 
-def petition_vote(request, category):
+def petition_serach_by_title(request, petition_title):
     if request.method == 'GET':
-        petition_list = [
-            petition for petition in Petition.objects.all().values().order_by('votes')]
-        return JsonResponse(petition_list, safe=False)
-    else:
-        return HttpResponseNotAllowed(['GET'])
-
-
-def petition_latest(request, category):
-    if request.method == 'GET':
-        petition_list = [petition for petition in Petition.objects.all(
-        ).values().order_by('start_date')]
+        petition_list = [petition for petition in Petition.objects.filter(
+            title__icontains=petition_title).values().order_by('start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
