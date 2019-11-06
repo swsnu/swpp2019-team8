@@ -7,6 +7,7 @@ import { Button, Input, InputGroup, InputGroupAddon, Table } from "reactstrap";
 import UpperBar from "../UpperBar/UpperBar";
 import Category from "../../../components/Category/category";
 import Petition from "../../../components/Petition/petition";
+import * as actionCreator from '../../../store/actions/index'
 
 import "./HearUs.css";
 
@@ -21,6 +22,8 @@ class HearUs extends Component {
 
   onClickSearchConfirmButton = event => {
     // 백엔드 구현이후 추가 예정
+    window.sessionStorage.setItem('petitionSearch', this.state.search)
+    this.props.history.push("/hear_us/create");
   };
 
   onClickCreateButton = () => {
@@ -44,8 +47,15 @@ class HearUs extends Component {
     this.props.history.push("/hear_us/petitions");
   };
 
+  componentDidMount = () => {
+    this.props.getAllPetitions();
+  }
+
   render() {
     let category = <Category onClick={this.onClickCategoryButton} />;
+    let voteList, deadlineList;
+    console.log(this.props.petitionList)
+
     let tableHead = (
       <Table hover>
         <thead>
@@ -59,30 +69,49 @@ class HearUs extends Component {
         </thead>
       </Table>
     );
-    let voteList = (
-      <Petition
-        key={1}
-        id={1}
-        state={"ongoing"}
-        title={"Funny SWPP"}
-        category={"인권"}
-        dueDate={"2019.10.19"}
-        votes={123}
-        onClick={this.onClickDetailButton}
-      />
-    );
-    let deadlineList = (
-      <Petition
-        key={2}
-        id={2}
-        state={"done"}
-        title={"I LIKE IT!!!"}
-        category={"복지"}
-        dueDate={"2019.10.20"}
-        votes={1223}
-        onClick={this.onClickDetailButton}
-      />
-    );
+
+      voteList = (
+        this.props.petitionList
+          .sort((a, b) => a.votes > b.votes)
+          .map((petition, i) => {
+            if (i < 5) {
+              return (
+                <Petition
+                  key={petition.id}
+                  id={petition.id}
+                  state={petition.status}
+                  title={petition.title}
+                  category={petition.category}
+                  dueDate={petition.end_date}
+                  votes={petition.votes}
+                  onClick={this.onClickDetailButton}
+                />
+              )
+            }
+          })
+
+      );
+      deadlineList = (
+        this.props.petitionList.map((petition, i) => {
+          if (i < 5) {
+            return (
+              <Petition
+                key={petition.id}
+                id={petition.id}
+                state={petition.status}
+                title={petition.title}
+                category={petition.category}
+                dueDate={petition.end_date}
+                votes={petition.votes}
+                onClick={this.onClickDetailButton}
+              />
+            )
+          }
+
+        })
+
+      );
+  
     return (
       <div>
         <UpperBar />
@@ -140,7 +169,20 @@ class HearUs extends Component {
   }
 }
 
+export const mapDispatchToProps = dispatch => {
+  return {
+    getAllPetitions: () =>
+      dispatch(actionCreator.getAllPetitions())
+  }
+}
+
+export const mapStateToProps = state => {
+  return {
+    petitionList: state.hu.petition_list
+  }
+}
+
 export default connect(
-  null,
-  null
+  mapStateToProps,
+  mapDispatchToProps
 )(withRouter(HearUs));

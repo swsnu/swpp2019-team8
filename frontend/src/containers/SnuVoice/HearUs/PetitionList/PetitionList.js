@@ -8,13 +8,15 @@ import { Button, ButtonGroup, Input, InputGroup, InputGroupAddon, Table, TabCont
 import UpperBar from '../../UpperBar/UpperBar'
 import Petition from '../../../../components/Petition/petition'
 import Category from '../../../../components/Category/category'
+import * as actionCreator from '../../../../store/actions/index'
 
 class PetitionList extends Component {
     state = {
         search: '',
         petitionState: 'ongoing',
         petitionOrder: 'vote',
-        listNumber : [1,2,3,4,5]
+        listNumber: [1, 2, 3, 4, 5],
+        selectedNumber: 1,
     }
 
     onChangeSearchInput = (event) => {
@@ -46,27 +48,31 @@ class PetitionList extends Component {
     }
 
     onClickDetailButton = (event) => {
-        this.props.history.push('/hear_us/' + event.target.value) 
+        this.props.history.push('/hear_us/' + event.target.value)
     }
 
     onClickListPrevButton = (event) => {
-        let numbers = this.state.listNumber.map(listNumber => listNumber-5)
+        let numbers = this.state.listNumber.map(listNumber => listNumber - 5)
         if (numbers[0] > 0) {
-            this.setState({ listNumber : numbers})
-
+            this.setState({ listNumber: numbers, selectedNumber: numbers[0] })
         }
 
     }
 
     onClickListNumberButton = (event) => {
+        this.setState({ selectedNumber: event.target.value })
     }
 
     onClickListNextButton = (event) => {
-        let numbers = this.state.listNumber.map(listNumber => listNumber+5)
-        this.setState({ listNumber : numbers})
+        let numbers = this.state.listNumber.map(listNumber => listNumber + 5)
+        this.setState({ listNumber: numbers, selectedNumber: numbers[0] })
 
     }
- 
+
+    componentDidMount = () => {
+        this.props.getAllPetitions()
+    }
+
 
 
 
@@ -110,24 +116,45 @@ class PetitionList extends Component {
             </ButtonGroup>
         )
 
-        let listNumbers =  this.state.listNumber.map((number, i) => { 
-            return (
-                <Button type="button" id="list_number_buttons" key = {i} value={number}
-                    onClick={this.onClickListNumberButton}>{number}</Button>
-            );
+        let listNumbers = this.state.listNumber.map((number, i) => {
+            if (this.props.petitionList.length / 10 + 1 >= number) {
+                return (
+                    <Button type="button" id="list_number_buttons" key={i} value={number}
+                        onClick={this.onClickListNumberButton}>{number}</Button>
+                );
+            }
 
         });
 
+        let petitionList = (
+            this.props.petitionList.map((petition, i) => {
+                if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber-1) * 10 ) {
+                    return (
+                        <Petition
+                            key={petition.id}
+                            id={petition.id}
+                            state={petition.status}
+                            title={petition.title}
+                            category={petition.category}
+                            dueDate={petition.end_date}
+                            votes={petition.votes}
+                            onClick={this.onClickDetailButton}
+                        />
+                    )
+                }
+            })
+        )
+
         let listNumberButtons = (
             <ButtonGroup>
-                <Button type ="button" id="list_prev_button"
+                <Button type="button" id="list_prev_button"
                     onClick={this.onClickListPrevButton}>prev</Button>
                 {listNumbers}
                 <Button type="button" id="list_next_button"
                     onClick={this.onClickListNextButton}>next</Button>
             </ButtonGroup>
         )
-    
+
         return (
             <div className="PetitionList">
                 <UpperBar />
@@ -151,8 +178,7 @@ class PetitionList extends Component {
                         <br />
                         {petitionOrderButtons}
                         {tableHead}
-                        <Petition key={1} id={1} state={"ongoing"} title={"Ongoiing"} category={"인권"}
-                            dueDate={"2019.10.19"} votes={123} onClick={this.onClickDetailButton} />
+                        {petitionList}
                         {listNumberButtons}
                     </TabPane>
                     <TabPane tabId='end'>
@@ -160,8 +186,7 @@ class PetitionList extends Component {
                         <br />
                         {petitionOrderButtons}
                         {tableHead}
-                        <Petition key={1} id={2} state={"ongoing"} title={"END"} category={"인권"}
-                            dueDate={"2019.10.19"} votes={123} onClick={this.onClickDetailButton} />
+                        {petitionList}
                         {listNumberButtons}
                     </TabPane>
                 </TabContent>
@@ -173,4 +198,20 @@ class PetitionList extends Component {
     }
 }
 
-export default connect(null, null)(withRouter(PetitionList));
+export const mapDispatchToProps = dispatch => {
+    return {
+        getAllPetitions: () =>
+            dispatch(actionCreator.getAllPetitions())
+    }
+}
+
+export const mapStateToProps = state => {
+    return {
+        petitionList: state.hu.petition_list
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(PetitionList));

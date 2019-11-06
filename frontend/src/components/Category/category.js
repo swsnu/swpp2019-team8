@@ -5,7 +5,7 @@ import { Button, ButtonGroup } from 'reactstrap';
 const Category = (props) => {
     return (
         <ButtonGroup size="lg">
-            <Button type="button" id="category_button_1" value="" All
+            <Button type="button" id="category_button_1" value="All"
                 onClick={props.onClick}>All</Button>
             <Button type="button" id="category_button_2" value="HumanRights"
                 onClick={props.onClick}>Human Rights</Button>

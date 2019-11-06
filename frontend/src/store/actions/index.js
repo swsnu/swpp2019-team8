@@ -26,6 +26,7 @@ export {
     postPetition,
     getAllPetitions,
     getPetition,
+    getPetitionByTitle,
     // getMyPetitions,
     // getPetitionComments,
     // postPetitionComment,
