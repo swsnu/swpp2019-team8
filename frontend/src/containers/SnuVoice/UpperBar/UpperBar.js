@@ -75,7 +75,7 @@ export class UpperBar extends Component {
 
         if (this.props.signIn === false) {
             upperBar = (
-                <nav className="navbar bg-dark">
+                <nav className="navbar">
                     <a className="navbar-brand" href="/">SNUVOICE</a>
                     <form className="form-inline">
                         {crossover}
@@ -88,7 +88,7 @@ export class UpperBar extends Component {
             );
         } else {
             upperBar = (
-                <nav className="navbar bg-dark">
+                <nav className="navbar">
                     <a className="navbar-brand" href="/">SNUVOICE</a>
                     <form className="form-inline">
                         {crossover}

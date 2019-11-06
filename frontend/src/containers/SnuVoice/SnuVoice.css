@@ -1,0 +1,13 @@
+html, .SnuVoice {
+    min-height: 100%;
+    background-color: #3779c4;
+}
+
+
+h1, h4 {
+    color: white;
+}
+
+.btn-primary {
+    background-color: #f1cc75;
+}

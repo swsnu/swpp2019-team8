@@ -1,5 +1,24 @@
 
 .HearUs {
+    background-color: #3779c4;
     padding-left: 8%;
     padding-right: 8%;
+}
+
+.UserOptions {
+    float: right;
+}
+
+.Category {
+    float: left;
+}
+
+.Tables {
+    background-color: white;
+    /* text-align: left; */
+}
+
+h5 {
+    text-align: left;
+    padding-left: 15%;
 }
