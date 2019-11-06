@@ -103,7 +103,7 @@ class PetitionCreate extends Component {
         return (
             <div className="PetitionCreate">
                 <Form>
-                    <Input type="textarea" id="petition_content_textarea" placeholder="content" readOnly
+                    <Input type="textarea" id="petition_terms_textarea" placeholder="content" readOnly
                         defaultValue="청원 작성 시 주의할 점"></Input>
                     Agree
                     <FormGroup>
