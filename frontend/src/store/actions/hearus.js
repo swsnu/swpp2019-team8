@@ -67,7 +67,7 @@ export const getPetitionByTitle_ = (response) => {
 
 export const getPetitionByTitle = (title) => {
     return dispatch => {
-        return axios.get('/api/hearus/petition/petition_title' + title)
+        return axios.get('/api/hearus/petition/petition_title' + title + '/')
             .then(res => dispatch(getPetitionByTitle_(res.data)))
             .catch(
 
