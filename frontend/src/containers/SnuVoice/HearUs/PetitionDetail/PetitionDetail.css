@@ -1,0 +1,21 @@
+.PetitionDetail {
+    background-color: #3779c4;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.petitionsView_info {
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.content {
+    min-height: 500px;
+    background-color: white;
+    color: black;
+
+}
+
+h4 {
+    color: black;
+}

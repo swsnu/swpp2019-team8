@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import { Row, Col } from 'reactstrap';
+
 import * as actionCreators from '../../../../store/actions/index';
+
+import UpperBar from '../../UpperBar/UpperBar';
+import './PetitionDetail.css';
 
 class PetitionDetail extends Component {
     state = {
@@ -38,19 +43,38 @@ class PetitionDetail extends Component {
             link = this.props.selectedPetition.link;
         }
         return (
+            <div>
+                <UpperBar />
             <div className="PetitionDetail">
-                <h1>PetitionDetail</h1>
-                <h2 className="petitionsView_title">{title}</h2>
+                <br/><br/>
+                <div className="content">
+                <b>
+                {/* <h1>Petition Detail</h1> */}
+                <br/>
+                <h2 className="petitionsView_title">Title: {title}</h2>
                 <p className="petitionsView_count">Votes: [ {votes} ]</p>
                 <div className="petitionsView_info">
-                    <ul className="petitionsView_info_list">
-                        <li className="petitionsView_category">Category: {category}</li>
-                        <li className="petitionsView_start_date">Start: {start_date}</li>
-                        <li className="petitionsView_end_date">End: {end_date}</li>
-                        <li className="petitionsView_petitioner">Petitioner: {petitioner}</li>
-                    </ul>
+                    <Row className="petitionsView_info_list">
+                        <Col>
+                        <div className="petitionsView_category">Category: {category}</div>
+                        </Col>
+                        <Col>
+                        <div className="petitionsView_start_date">Start: {start_date}</div>
+                        </Col>
+                        <Col>
+                        <div className="petitionsView_petitioner">Petitioner: {petitioner}</div>
+                        </Col>
+                        <Col>
+                        <div className="petitionsView_end_date">End: {end_date}</div>
+                        </Col>
+                    </Row>
                 </div>
-                <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p>
+                </b>
+                <br />
+
+                {/* TODO */}
+                {/* <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p> */}
+
 
                 <div className="petitionsView_write">
                     <h4 className="petitionsView_writeHead">Content</h4>
@@ -104,7 +128,9 @@ class PetitionDetail extends Component {
                         </ul>
                     </div>
                 </div>
+                </div>
             </div >
+        </div>
         );
     }
 }
