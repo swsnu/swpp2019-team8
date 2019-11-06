@@ -13,7 +13,8 @@ import "./HearUs.css";
 
 class HearUs extends Component {
   state = {
-    search: ""
+    search: "",
+    selectedCategory: 'All'
   };
 
   onChangeSearchInput = event => {
@@ -36,6 +37,7 @@ class HearUs extends Component {
 
   onClickCategoryButton = event => {
     // petition 을 category 따라 들고오기
+    this.setState({ selectedCategory: event.target.value })
   };
 
   onClickDetailButton = event => {
@@ -55,7 +57,6 @@ class HearUs extends Component {
   render() {
     let category = <Category onClick={this.onClickCategoryButton} />;
     let voteList, deadlineList;
-    console.log(this.props.petitionList)
 
     let tableHead = (
       <Table hover>
@@ -71,7 +72,7 @@ class HearUs extends Component {
       </Table>
     );
 
-
+    if (this.state.selectedCategory === 'All') {
       voteList = (
         this.props.petitionList
           .sort((a, b) => a.votes > b.votes)
@@ -109,67 +110,109 @@ class HearUs extends Component {
               />
             )
           }
-
         })
-
       );
-  
+    } else {
+      voteList = (
+        this.props.petitionList
+          .filter(petition => petition.category === this.state.selectedCategory)
+          .sort((a, b) => a.votes > b.votes)
+          .map((petition, i) => {
+            if (i < 5) {
+              return (
+                <Petition
+                  key={petition.id}
+                  id={petition.id}
+                  state={petition.status}
+                  title={petition.title}
+                  category={petition.category}
+                  dueDate={petition.end_date}
+                  votes={petition.votes}
+                  onClick={this.onClickDetailButton}
+                />
+              )
+            }
+          })
+      );
+      deadlineList = (
+        this.props.petitionList
+          .filter(petition => petition.category === this.state.selectedCategory)
+          .map((petition, i) => {
+            if (i < 5) {
+              return (
+                <Petition
+                  key={petition.id}
+                  id={petition.id}
+                  state={petition.status}
+                  title={petition.title}
+                  category={petition.category}
+                  dueDate={petition.end_date}
+                  votes={petition.votes}
+                  onClick={this.onClickDetailButton}
+                />
+              )
+            }
+          })
+      );
+
+    }
+
     return (
       <div>
         <UpperBar />
         <div className="TopOfPage">
-          <br/>
-        <div className="HearUs">
-          <h1>Hear Us</h1>
-          <br/>
-          <InputGroup>
-            <Input
-              type="text"
-              id="search_input"
-              autoFocus
-              onChange={this.onChangeSearchInput}
-            ></Input>
-            <InputGroupAddon addonType="append">
-              <Button
-                type="button"
-                id="search_confirm_button"
-                onClick={this.onClickSearchConfirmButton}
-              >
-                Search
+          <br />
+          <div className="HearUs">
+            <h1>Hear Us</h1>
+            <br />
+            <InputGroup>
+              <Input
+                type="text"
+                id="search_input"
+                autoFocus
+                onChange={this.onChangeSearchInput}
+              ></Input>
+              <InputGroupAddon addonType="append">
+                <Button
+                  type="button"
+                  id="search_confirm_button"
+                  onClick={this.onClickSearchConfirmButton}
+                >
+                  Search
               </Button>
-            </InputGroupAddon>
-          </InputGroup>
+              </InputGroupAddon>
+            </InputGroup>
           </div>
-          <br/>
+          <br />
           <div className="UserOptions">
-          <Button
-            type="button"
-            id="create_button"
-            onClick={this.onClickCreateButton}
-          >
-            NEW
+            <Button
+              type="button"
+              id="create_button"
+              onClick={this.onClickCreateButton}
+            >
+              NEW
           </Button>
-          <Button
-            type="button"
-            id="my_petition_button"
-            onClick={this.onClickMyPetitionButton}
-          >
-            MINE
+            <Button
+              type="button"
+              id="my_petition_button"
+              onClick={this.onClickMyPetitionButton}
+            >
+              MINE
           </Button>
           </div>
-          <br></br><br/>
+          <br></br><br />
           <div className="Category">{category}</div>
-          <br/><br/><br/>
+          <br /><br /><br />
           <div className="Tables">
-            <br/>
-          <h5><b>Top 5 Votes</b></h5>
-          {tableHead}
-          {voteList}
-          <br/>
-          <h5><b>Latest 5</b></h5>
-          {tableHead}
-          {deadlineList}
-          <br/>
+            <br />
+            <h5><b>Top 5 Votes</b></h5>
+            {tableHead}
+            {voteList}
+            <br />
+            <h5><b>Latest 5</b></h5>
+            {tableHead}
+            {deadlineList}
+            <br />
           </div>
           <br />
           <Button
@@ -179,7 +222,7 @@ class HearUs extends Component {
           >
             +
           </Button>
-          <br/>
+          <br />
         </div>
       </div>
     );
