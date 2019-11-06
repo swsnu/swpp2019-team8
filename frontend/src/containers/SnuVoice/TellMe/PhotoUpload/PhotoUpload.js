@@ -101,10 +101,10 @@ class PhotoUpload extends Component {
                     {photoStateTabbuttons}
                     <TabContent activeTab={this.state.photoState}>
                         <TabPane tabId="photo">
-                            ML Part
+                            {$imagePreview}
                         </TabPane>
                         <TabPane tabId="preview">
-                            {$imagePreview}
+                            ML Part
                         </TabPane>
                     </TabContent>
                 </p>

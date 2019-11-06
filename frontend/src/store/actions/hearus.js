@@ -57,6 +57,24 @@ export const getPetition_ = (petition) => {
     };
 };
 
+export const getPetitionByTitle_ = (response) => {
+    return {
+        type: actionTypes.GET_PETITION_BY_TITLE,
+        petitionList : response
+    }
+
+}
+
+export const getPetitionByTitle = (title) => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/petition_title' + title + '/')
+            .then(res => dispatch(getPetitionByTitle_(res.data)))
+            .catch(
+
+            );
+    }
+}
+
 export const getPetition = (petition_id) => {
     return dispatch => {
         return axios.get('/api/hearus/petition/' + petition_id)

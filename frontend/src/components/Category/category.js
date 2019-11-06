@@ -5,11 +5,11 @@ import { Button, ButtonGroup } from 'reactstrap';
 const Category = (props) => {
     return (
         <ButtonGroup size="lg">
-            <Button type="button" id="category_button_1" value="" All
+            <Button type="button" id="category_button_1" value="All"
                 onClick={props.onClick}>All</Button>
-            <Button type="button" id="category_button_2" value="HumanRights"
+            <Button type="button" id="category_button_2" value="human rights"
                 onClick={props.onClick}>Human Rights</Button>
-            <Button type="button" id="category_button_3" value="Welfare"
+            <Button type="button" id="category_button_3" value="welfare"
                 onClick={props.onClick}>Welfare</Button>
             <Button type="button" id="category_button_4" value="Traffic"
                 onClick={props.onClick}>Traffic</Button>
