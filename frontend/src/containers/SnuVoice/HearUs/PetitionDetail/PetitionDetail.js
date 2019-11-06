@@ -51,7 +51,7 @@ class PetitionDetail extends Component {
                 <b>
                 {/* <h1>Petition Detail</h1> */}
                 <br/>
-                <h2 className="petitionsView_title">Title: {title}</h2>
+                <h2 className="petitionsView_title">{title}</h2>
                 <p className="petitionsView_count">Votes: [ {votes} ]</p>
                 <div className="petitionsView_info">
                     <Row className="petitionsView_info_list">

@@ -6,7 +6,11 @@ import { withRouter } from 'react-router';
 import { Button, ButtonGroup, Input, TabContent, TabPane, Nav, NavItem, NavLink, FormGroup, Label, Form } from 'reactstrap';
 import { MarkdownPreview } from 'react-marked-markdown';
 
+import Upperbar from '../../UpperBar/UpperBar';
+import './DocumentCreate.css';
+
 import * as actionCreators from '../../../../store/actions/index';
+
 class DocumentCreate extends Component {
     state = {
         documentTitle: '',
@@ -50,28 +54,32 @@ class DocumentCreate extends Component {
         );
 
         return (
+            <div>
+                <Upperbar />
             <div className="DocumentCreate">
+                <br/>
                 <h1>Document Create</h1>
-                <Button type="button" id="photo_button"
+                <Button type="button" id="photo_button" className="photoButton"
                     onClick={this.onClickPhotoButton}>Upload Photo</Button>
+                    <br/>
                 {createStateTabbuttons}
                 <TabContent activeTab={this.state.documentState}>
                     <TabPane tabId="write">
                         <Form>
                             <FormGroup>
-                                <Label>Title</Label>
+                                <h4>Title</h4>
                                 <Input type="text" id="document_title_input" placeholder="title"
                                     onChange={(event) => this.setState({ documentTitle: event.target.value })}></Input>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Content</Label>
+                                <h4>Content</h4>
                                 <Input type="textarea" rows="20" id="document_content_textarea" placeholder="content"
                                     onChange={(event) => this.setState({ documentContent: event.target.value })}></Input>
                             </FormGroup>
                         </Form>
                     </TabPane>
                     <TabPane tabId="preview">
-                        <Label>Title</Label>
+                        <h4>Title</h4>
                         <h1>{this.state.documentTitle}</h1>
                         <Label>Content</Label>
                         <MarkdownPreview value={this.state.documentContent} />
@@ -84,6 +92,7 @@ class DocumentCreate extends Component {
                         onClick={this.onClickDocumentCancelButton}>Cancel</Button>
                 </ButtonGroup>
             </div>
+</div>
         );
     }
 }
