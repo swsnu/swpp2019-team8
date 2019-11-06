@@ -6,10 +6,6 @@ import { withRouter } from 'react-router';
 import * as actionCreators from '../../../../store/actions/index';
 
 class PetitionDetail extends Component {
-    state = {
-        isSelected: false,
-    }
-
     componentDidMount() {
         this.props.onGetPetition(this.props.match.params.petition_id);
     }
@@ -21,8 +17,6 @@ class PetitionDetail extends Component {
         let category = '';
         let start_date = '';
         let end_date = '';
-        let petitioner = '';
-        let link = '';
         if (this.props.selectedPetition) {
             title = this.props.selectedPetition.title;
             content = this.props.selectedPetition.content;
@@ -30,12 +24,6 @@ class PetitionDetail extends Component {
             category = this.props.selectedPetition.category;
             start_date = this.props.selectedPetition.start_date.substring(0, 10);
             end_date = this.props.selectedPetition.end_date.substring(0, 10);
-            if (this.state.isSelected === false) {
-                this.props.onGetUserByUserId(this.props.selectedPetition.author);
-                this.setState({ isSelected: true });
-            }
-            petitioner = this.props.selectedUser.nickname;
-            link = this.props.selectedPetition.link;
         }
         return (
             <div className="PetitionDetail">
@@ -47,7 +35,7 @@ class PetitionDetail extends Component {
                         <li className="petitionsView_category">Category: {category}</li>
                         <li className="petitionsView_start_date">Start: {start_date}</li>
                         <li className="petitionsView_end_date">End: {end_date}</li>
-                        <li className="petitionsView_petitioner">Petitioner: {petitioner}</li>
+                        <li className="petitionsView_petitioner">Petitioner: 여기에 닉네임</li>
                     </ul>
                 </div>
                 <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p>
@@ -58,7 +46,11 @@ class PetitionDetail extends Component {
                     <ul className="View_write_link">
                         <li>
                             <p>Link 1 : </p>
-                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">{link}</a>
+                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">여기에 링크1</a>
+                        </li>
+                        <li>
+                            <p>Link 2 : </p>
+                            <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">여기에 링크2</a>
                         </li>
                     </ul>
                 </div>
@@ -112,7 +104,6 @@ class PetitionDetail extends Component {
 export const mapStateToProps = state => {
     return {
         selectedPetition: state.hu.selectedPetition,
-        selectedUser: state.usr.selectedUser,
     }
 }
 
@@ -120,8 +111,6 @@ export const mapDispatchToProps = dispatch => {
     return {
         onGetPetition: petition_id =>
             dispatch(actionCreators.getPetition(petition_id)),
-        onGetUserByUserId: user_id =>
-            dispatch(actionCreators.getUserByUserId(user_id)),
     }
 }
 
