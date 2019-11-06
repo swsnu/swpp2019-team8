@@ -77,7 +77,7 @@ class PetitionDetail extends Component {
 
 
                 <div className="petitionsView_write">
-                    <h4 className="petitionsView_writeHead">Content</h4>
+                    {/* <h4 className="petitionsView_writeHead">Content</h4> */}
                     <div className="View_write">{content}</div>
                     <ul className="View_write_link">
                         <li>
@@ -93,11 +93,17 @@ class PetitionDetail extends Component {
 
                 <div className="petitionsReply_area">
                     <div className="Reply_area_head">
+                        <Row>
+<Col>
                         <h5 className="Reply_area_agree">Votes: 여기에 투표 수</h5>
+</Col>
+<Col>
                         <div className="Reply_area_url">
                             URL: 여기에 URL
                             <button>Copy</button>
                         </div>
+</Col>
+                        </Row>
                     </div>
                     <div className="Reply_area_write">
                         <textarea id="tw_contents"></textarea>
@@ -105,7 +111,7 @@ class PetitionDetail extends Component {
                     </div>
                     <div className="petitionsReply_Reply">
                         <ul>
-                            <li className="Reply_Reply_list">
+                            <div className="Reply_Reply_list">
                                 <div className="Reply_Reply_contents">
                                     <div className="pv3_R_contents_head">
                                         <h4>여기에 닉네임</h4>
@@ -114,8 +120,8 @@ class PetitionDetail extends Component {
                                         여기에 댓글
                                     </div>
                                 </div>
-                            </li>
-                            <li className="Reply_Reply_list">
+                            </div>
+                            <div className="Reply_Reply_list">
                                 <div className="Reply_Reply_contents">
                                     <div className="pv3_R_contents_head">
                                         <h4>여기에 닉네임</h4>
@@ -124,7 +130,7 @@ class PetitionDetail extends Component {
                                         여기에 댓글
                                     </div>
                                 </div>
-                            </li>
+                            </div>
                         </ul>
                     </div>
                 </div>

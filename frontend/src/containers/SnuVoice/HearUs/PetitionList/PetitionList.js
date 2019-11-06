@@ -10,6 +10,8 @@ import Petition from '../../../../components/Petition/petition'
 import Category from '../../../../components/Category/category'
 import * as actionCreator from '../../../../store/actions/index'
 
+import './PetitionList.css';
+
 class PetitionList extends Component {
     state = {
         search: '',
@@ -183,10 +185,16 @@ class PetitionList extends Component {
         )
 
         return (
-            <div className="PetitionList">
-                <UpperBar />
-                <h1>PetitionList</h1>
-                <InputGroup>
+            <div>
+
+            <UpperBar />
+            <div className="TopOfPage">
+            <br/>
+                <div className="PetitionList">
+                <h1>Hear Us</h1>
+                    <h4>Petition List</h4>
+                    <br/>
+                <InputGroup className="searchBar">
                     <Input type="text" id="search_input" autoFocus
                         onChange={this.onChangeSearchInput}></Input>
                     <InputGroupAddon addonType="append">
@@ -194,31 +202,58 @@ class PetitionList extends Component {
                             onClick={this.onClickSearchConfirmButton}>Search</Button>
                     </InputGroupAddon>
                 </InputGroup>
+                </div>
+                <br/>
+                <div className="userOptions">
+
                 <Button type="button" id="create_button"
                     onClick={this.onClickCreateButton}>NEW</Button>
                 <Button type="button" id="my_petition_button"
                     onClick={this.onClickMyPetitionButton}>MINE</Button>
+                </div>
                 {petitionStateTabButtons}
                 <TabContent activeTab={this.state.petitionState}>
                     <TabPane tabId='ongoing'>
-                        <Category onClick={this.onClickCategoryButton} />
                         <br />
-                        {petitionOrderButtons}
+                        <div className="tableButtons1">
+                        {petitionOrderButtons}<br/>
+                        </div>
+                        <br />
+                        <br/>
+                        <div className="tableButtons2">
+                        <Category onClick={this.onClickCategoryButton} />
+                        </div>
+                        <br/><br/><br/>
+                        <div className="Tables">
+
                         {tableHead}
                         {petitionList}
+                        </div>
                         {listNumberButtons}
                     </TabPane>
                     <TabPane tabId='end'>
-                        <Category onClick={this.onClickCategoryButton} />
                         <br />
-                        {petitionOrderButtons}
+                        <div className="tableButtons1">
+
+                        {petitionOrderButtons}<br/>
+                        </div>
+                        <br />
+                        <br/>
+                        <div className="tableButtons1">
+                        <Category onClick={this.onClickCategoryButton} />
+                        </div>
+<br/><br/><br/>
+                        <div className="Tables">
+
                         {tableHead}
                         {petitionList}
+                        </div>
                         {listNumberButtons}
                     </TabPane>
                 </TabContent>
 
 
+                    </div>
 
             </div>
         )

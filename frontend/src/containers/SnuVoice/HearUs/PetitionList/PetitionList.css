@@ -1,0 +1,45 @@
+.PetitionList {
+    background-color: #3779c4;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.userOptions {
+    float: right;
+}
+
+.Category {
+    float: left;
+}
+
+.Tables {
+    background-color: white;
+    /* text-align: left; */
+}
+
+.searchBar {
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.tableButtons1 {
+    background-color: #3779c4;
+
+    float: left;
+}
+
+.tableButtons2 {
+    background-color: #3779c4;
+
+    float: left;
+}
+
+h4 {
+    color: white;
+}
+
+.petitionsReply_Reply {
+    padding-left: 8%;
+    padding-right: 8%;
+    text-align: left;
+}
