@@ -6,7 +6,6 @@ import { withRouter } from 'react-router';
 import { Row, Col, Button, Image } from 'react-bootstrap';
 
 import UpperBar from './UpperBar/UpperBar'
-
 import TellMeButton from "../../img/tell_me.png";
 import HearUsButton from "../../img/hear_us.png";
 
