@@ -37,7 +37,7 @@ class SnuVoice extends Component {
                         <br/>
                         <h1><b>SNU VOICE</b></h1>
                         <h4>
-                            <i><b>COLLECTING THE STUDENTS' VOICE</b></i>
+                            <i><b>COLLECTING THE STUDENTS&apos; VOICE</b></i>
                         </h4>
                         <br/>
                     </Col>
