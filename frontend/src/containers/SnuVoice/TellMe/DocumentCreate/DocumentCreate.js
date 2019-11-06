@@ -96,11 +96,11 @@ class DocumentCreate extends Component {
                         </h1>
                         <br/>
                         <h4>
-                            {/* <div className="content"> */}
                             Content:
-                            {/* </div> */}
                             </h4>
+                            <div className="content">
                         <MarkdownPreview value={this.state.documentContent} />
+                            </div>
                         </div>
                         </div>
                     </TabPane>
