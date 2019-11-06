@@ -5,6 +5,9 @@ import { withRouter } from 'react-router';
 import { InputGroup, InputGroupAddon, Button, ButtonGroup, Form, FormGroup, Label, Input } from 'reactstrap';
 import * as actionCreators from '../../../../store/actions/index';
 
+import './PetitionCreate.css';
+import UpperBar from '../../UpperBar/UpperBar';
+
 class PetitionCreate extends Component {
     state = {
         agreeToTerms: false,
@@ -103,14 +106,15 @@ class PetitionCreate extends Component {
             );
         });
         return (
+            <div>
+                <UpperBar/>
             <div className="PetitionCreate">
                 <Form>
-                    {/* 청원 약관박스 만들기 */}
-                    Agree
-                    <FormGroup>
-                        <Input type="checkbox" id="agree_to_terms_checkbox" checked={this.state.agreeToTerms}
-                            onChange={() => this.onClickAgreeToTermsCheckBox()}></Input>
-                    </FormGroup>
+                    <b><br/>
+                    <h1>New Petition</h1>
+                    <br/>
+                    <div className="inputTop">
+
                     <FormGroup>
                         <Label>Title</Label>
                         <Input type="text" id="petition_title_input" placeholder="title"
@@ -120,11 +124,14 @@ class PetitionCreate extends Component {
                     <Input type="select" id="petition_category_select" onChange={this.onChangeCategorySelect}>
                         {category_list}
                     </Input>
+                            </div>
                     <FormGroup>
                         <Label>Content</Label>
-                        <Input type="textarea" id="petition_content_textarea" placeholder="content"
+                        <Input type="textarea" id="petition_content_textarea" placeholder="content" style={{height: 200}}
                             onChange={(event) => this.setState({ petitionContent: event.target.value })}></Input>
                     </FormGroup>
+                    <div className="inputBottom">
+
                     <FormGroup>
                         <Label>Link</Label>
                         <InputGroup>
@@ -149,14 +156,25 @@ class PetitionCreate extends Component {
                         </InputGroup>
                         {tag_list}
                     </FormGroup>
-                    <ButtonGroup>
+                                    </div>
+                    {/* 청원 약관박스 만들기 */}
+                    <div className="agree">
+
+                    <FormGroup>
+                        <Input type="checkbox" id="agree_to_terms_checkbox" checked={this.state.agreeToTerms}
+                            onChange={() => this.onClickAgreeToTermsCheckBox()}></Input>
+                    </FormGroup>Agree
+                            </div><br/><br/><br/>
+                    <ButtonGroup className="buttons">
                         <Button type="button" id="petition_confirm_button"
                             onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent}>CONFIRM</Button>
                         <Button type="button" id="petition_cancel_button"
                             onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
                     </ButtonGroup>
+                            </b>
                 </Form>
             </div >
+</div>
         );
     }
 }

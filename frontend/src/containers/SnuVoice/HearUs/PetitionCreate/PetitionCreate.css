@@ -1,0 +1,23 @@
+.PetitionCreate {
+    background-color: #3779c4;
+    padding-left: 8%;
+    padding-right: 8%;
+    text-align: left;
+    color: white;
+}
+
+.inputTop {
+    padding-right: 50%;
+}
+
+.inputBottom {
+    padding-right: 20%;
+}
+
+.buttons {
+    float: right;
+}
+
+.agree {
+    padding-left: 50px;
+} 
