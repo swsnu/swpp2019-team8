@@ -19,25 +19,25 @@ class PetitionList extends Component {
         petitionOrder: 'vote',
         listNumber: [1, 2, 3, 4, 5],
         selectedNumber: 1,
-        selectedCategory: 'All'
+        selectedCategory: 'All',
     }
 
     onChangeSearchInput = (event) => {
         this.setState({ search: event.target.value });
     }
 
-    onClickSearchConfirmButton = (event) => {
+    onClickSearchConfirmButton = () => {
         window.sessionStorage.setItem('petitionSearch', this.state.search)
         this.props.getPetitionByTitle(this.state.search)
         this.props.history.push('/hear_us/search')
     }
 
-    onClickCreateButton = (event) => {
+    onClickCreateButton = () => {
         this.props.history.push('/hear_us/create')
     }
 
-    onClickMyPetitionButton = (event) => {
-        this.props.history.push('/hear_us/my_petition/:user_id')
+    onClickMyPetitionButton = () => {
+        this.props.history.push('/hear_us/my_petition/' + this.props.selectedUser.id)
     }
 
     onClickPetitionTabButton = (event) => {
@@ -49,14 +49,14 @@ class PetitionList extends Component {
     }
 
     onClickPetitionOrderButton = (event) => {
-        this.setState({ petitionOrder: event })
+        this.setState({ petitionOrder: event.target.value })
     }
 
     onClickDetailButton = (event) => {
         this.props.history.push('/hear_us/' + event.target.value)
     }
 
-    onClickListPrevButton = (event) => {
+    onClickListPrevButton = () => {
         let numbers = this.state.listNumber.map(listNumber => listNumber - 5)
         if (numbers[0] > 0) {
             this.setState({ listNumber: numbers, selectedNumber: numbers[0] })
@@ -68,10 +68,11 @@ class PetitionList extends Component {
         this.setState({ selectedNumber: event.target.value })
     }
 
-    onClickListNextButton = (event) => {
+    onClickListNextButton = () => {
         let numbers = this.state.listNumber.map(listNumber => listNumber + 5)
-        this.setState({ listNumber: numbers, selectedNumber: numbers[0] })
-
+        if (this.props.petitionList.length / 10 + 1 >= numbers[0]) {
+            this.setState({ listNumber: numbers, selectedNumber: numbers[0] })
+        }
     }
 
     componentDidMount = () => {
@@ -83,7 +84,7 @@ class PetitionList extends Component {
 
 
     render() {
-        let petitionList;
+        let petitionList, categoryPetitionList;
         let tableHead = (
             <Table hover>
                 <thead>
@@ -116,7 +117,7 @@ class PetitionList extends Component {
         )
         let petitionOrderButtons = (
             <ButtonGroup>
-                <Button type="button" id="top_votes_button" value="topVotes"
+                <Button type="button" id="top_votes_button" value="vote"
                     onClick={this.onClickPetitionOrderButton}>Top Votes</Button>
                 <Button type="button" id="latest_button" value="latest"
                     onClick={this.onClickPetitionOrderButton}>Latest</Button>
@@ -132,24 +133,27 @@ class PetitionList extends Component {
             }
 
         });
+
+
         if (this.state.selectedCategory === 'All') {
             petitionList = (
-                this.props.petitionList.map((petition, i) => {
-                    if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
-                        return (
-                            <Petition
-                                key={petition.id}
-                                id={petition.id}
-                                state={petition.status}
-                                title={petition.title}
-                                category={petition.category}
-                                dueDate={petition.end_date}
-                                votes={petition.votes}
-                                onClick={this.onClickDetailButton}
-                            />
-                        )
-                    }
-                })
+                this.props.petitionList
+                    .map((petition, i) => {
+                        if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
+                            return (
+                                <Petition
+                                    key={petition.id}
+                                    id={petition.id}
+                                    state={petition.status}
+                                    title={petition.title}
+                                    category={petition.category}
+                                    dueDate={petition.end_date}
+                                    votes={petition.votes}
+                                    onClick={this.onClickDetailButton}
+                                />
+                            )
+                        }
+                    })
             )
         } else {
             petitionList = (
@@ -171,15 +175,19 @@ class PetitionList extends Component {
                             )
                         }
                     })
+
             )
+
         }
+
+
 
         let listNumberButtons = (
             <ButtonGroup>
-                <Button type="button" id="list_prev_button"
+                <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1}
                     onClick={this.onClickListPrevButton}>prev</Button>
                 {listNumbers}
-                <Button type="button" id="list_next_button"
+                <Button type="button" id="list_next_button" disabled={this.state.listNumber[0] + 5 > this.props.petitionList.length / 10 + 1}
                     onClick={this.onClickListNextButton}>next</Button>
             </ButtonGroup>
         )
@@ -187,73 +195,73 @@ class PetitionList extends Component {
         return (
             <div>
 
-            <UpperBar />
-            <div className="TopOfPage">
-            <br/>
-                <div className="PetitionList">
-                <h1>Hear Us</h1>
-                    <h4>Petition List</h4>
-                    <br/>
-                <InputGroup className="searchBar">
-                    <Input type="text" id="search_input" autoFocus
-                        onChange={this.onChangeSearchInput}></Input>
-                    <InputGroupAddon addonType="append">
-                        <Button type="button" id="search_confirm_button"
-                            onClick={this.onClickSearchConfirmButton}>Search</Button>
-                    </InputGroupAddon>
-                </InputGroup>
-                </div>
-                <br/>
-                <div className="userOptions">
-
-                <Button type="button" id="create_button"
-                    onClick={this.onClickCreateButton}>NEW</Button>
-                <Button type="button" id="my_petition_button"
-                    onClick={this.onClickMyPetitionButton}>MINE</Button>
-                </div>
-                {petitionStateTabButtons}
-                <TabContent activeTab={this.state.petitionState}>
-                    <TabPane tabId='ongoing'>
+                <UpperBar />
+                <div className="TopOfPage">
+                    <br />
+                    <div className="PetitionList">
+                        <h1>Hear Us</h1>
+                        <h4>Petition List</h4>
                         <br />
-                        <div className="tableButtons1">
-                        {petitionOrderButtons}<br/>
-                        </div>
-                        <br />
-                        <br/>
-                        <div className="tableButtons2">
-                        <Category onClick={this.onClickCategoryButton} />
-                        </div>
-                        <br/><br/><br/>
-                        <div className="Tables">
-
-                        {tableHead}
-                        {petitionList}
-                        </div>
-                        {listNumberButtons}
-                    </TabPane>
-                    <TabPane tabId='end'>
-                        <br />
-                        <div className="tableButtons1">
-
-                        {petitionOrderButtons}<br/>
-                        </div>
-                        <br />
-                        <br/>
-                        <div className="tableButtons1">
-                        <Category onClick={this.onClickCategoryButton} />
-                        </div>
-<br/><br/><br/>
-                        <div className="Tables">
-
-                        {tableHead}
-                        {petitionList}
-                        </div>
-                        {listNumberButtons}
-                    </TabPane>
-                </TabContent>
-
-
+                        <InputGroup className="searchBar">
+                            <Input type="text" id="search_input" autoFocus
+                                onChange={this.onChangeSearchInput}></Input>
+                            <InputGroupAddon addonType="append">
+                                <Button type="button" id="search_confirm_button"
+                                    onClick={this.onClickSearchConfirmButton}>Search</Button>
+                            </InputGroupAddon>
+                        </InputGroup>
                     </div>
+                    <br />
+                    <div className="userOptions">
+
+                        <Button type="button" id="create_button"
+                            onClick={this.onClickCreateButton}>NEW</Button>
+                        <Button type="button" id="my_petition_button"
+                            onClick={this.onClickMyPetitionButton}>MINE</Button>
+                    </div>
+                    {petitionStateTabButtons}
+                    <TabContent activeTab={this.state.petitionState}>
+                        <TabPane tabId='ongoing'>
+                            <br />
+                            <div className="tableButtons1">
+                                {petitionOrderButtons}<br />
+                            </div>
+                            <br />
+                            <br />
+                            <div className="tableButtons2">
+                                <Category onClick={this.onClickCategoryButton} />
+                            </div>
+                            <br /><br /><br />
+                            <div className="Tables">
+
+                                {tableHead}
+                                {petitionList}
+                            </div>
+                            {listNumberButtons}
+                        </TabPane>
+                        <TabPane tabId='end'>
+                            <br />
+                            <div className="tableButtons1">
+
+                                {petitionOrderButtons}<br />
+                            </div>
+                            <br />
+                            <br />
+                            <div className="tableButtons1">
+                                <Category onClick={this.onClickCategoryButton} />
+                            </div>
+                            <br /><br /><br />
+                            <div className="Tables">
+
+                                {tableHead}
+                                {petitionList}
+                            </div>
+                            {listNumberButtons}
+                        </TabPane>
+                    </TabContent>
+
+
+                </div>
 
             </div>
         )
@@ -271,6 +279,7 @@ export const mapDispatchToProps = dispatch => {
 
 export const mapStateToProps = state => {
     return {
+        selectedUser: state.usr.selectedUser,
         petitionList: state.hu.petition_list
     }
 }
