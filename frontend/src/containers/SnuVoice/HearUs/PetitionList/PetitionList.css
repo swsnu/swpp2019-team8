@@ -38,3 +38,8 @@ h4 {
     color: white;
 }
 
+.petitionsReply_Reply {
+    padding-left: 8%;
+    padding-right: 8%;
+    text-align: left;
+}
