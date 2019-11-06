@@ -45,13 +45,10 @@ def petition_list(request):
 
 
 def petition_serach_by_title(request, petition_title):
-    try:
-        petition_list = [petition for petition in Petition.objects.get(
-            title_icontains=petition_title).order_by('start_date')]
-    except ObjectDoesNotExist as e:
-        return HttpResponseNotFound()
     if request.method == 'GET':
-        return JsonResponse(petition_list, state=200, safe=False)
+        petition_list = [petition for petition in Petition.objects.filter(
+            title__icontains=petition_title).values().order_by('start_date')]
+        return JsonResponse(petition_list, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
