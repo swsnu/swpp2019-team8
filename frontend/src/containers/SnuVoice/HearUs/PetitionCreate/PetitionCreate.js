@@ -14,7 +14,7 @@ class PetitionCreate extends Component {
             { value: 'human rights' },
             { value: 'welfare' },
         ],
-        selectedCategory: '',
+        selectedCategory: 'All',
         petitionContent: '',
         petitionLink: '',
         petitionLinkList: [
@@ -149,7 +149,7 @@ class PetitionCreate extends Component {
                     </FormGroup>
                     <ButtonGroup>
                         <Button type="button" id="petition_confirm_button"
-                            onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent}>CONFIRM</Button>
+                            onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent || this.state.selectedCategory == 'All'}>CONFIRM</Button>
                         <Button type="button" id="petition_cancel_button"
                             onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
                     </ButtonGroup>
