@@ -17,6 +17,7 @@ class PetitionList extends Component {
         petitionOrder: 'vote',
         listNumber: [1, 2, 3, 4, 5],
         selectedNumber: 1,
+        selectedCategory: 'All'
     }
 
     onChangeSearchInput = (event) => {
@@ -24,7 +25,9 @@ class PetitionList extends Component {
     }
 
     onClickSearchConfirmButton = (event) => {
-        // 리다이렉트
+        window.sessionStorage.setItem('petitionSearch', this.state.search)
+        this.props.getPetitionByTitle(this.state.search)
+        this.props.history.push('/hear_us/search')
     }
 
     onClickCreateButton = (event) => {
@@ -40,7 +43,7 @@ class PetitionList extends Component {
     }
 
     onClickCategoryButton = (event) => {
-
+        this.setState({ selectedCategory: event.target.value })
     }
 
     onClickPetitionOrderButton = (event) => {
@@ -70,13 +73,15 @@ class PetitionList extends Component {
     }
 
     componentDidMount = () => {
-        this.props.getAllPetitions()
+        if (window.sessionStorage.getItem('petitionSearch') === null) this.props.getAllPetitions()
+        else this.props.getPetitionByTitle(window.sessionStorage.getItem('petitionSearch'))
     }
 
 
 
 
     render() {
+        let petitionList;
         let tableHead = (
             <Table hover>
                 <thead>
@@ -125,25 +130,47 @@ class PetitionList extends Component {
             }
 
         });
-
-        let petitionList = (
-            this.props.petitionList.map((petition, i) => {
-                if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber-1) * 10 ) {
-                    return (
-                        <Petition
-                            key={petition.id}
-                            id={petition.id}
-                            state={petition.status}
-                            title={petition.title}
-                            category={petition.category}
-                            dueDate={petition.end_date}
-                            votes={petition.votes}
-                            onClick={this.onClickDetailButton}
-                        />
-                    )
-                }
-            })
-        )
+        if (this.state.selectedCategory === 'All') {
+            petitionList = (
+                this.props.petitionList.map((petition, i) => {
+                    if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
+                        return (
+                            <Petition
+                                key={petition.id}
+                                id={petition.id}
+                                state={petition.status}
+                                title={petition.title}
+                                category={petition.category}
+                                dueDate={petition.end_date}
+                                votes={petition.votes}
+                                onClick={this.onClickDetailButton}
+                            />
+                        )
+                    }
+                })
+            )
+        } else {
+            petitionList = (
+                this.props.petitionList
+                    .filter(petition => petition.category === this.state.selectedCategory)
+                    .map((petition, i) => {
+                        if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
+                            return (
+                                <Petition
+                                    key={petition.id}
+                                    id={petition.id}
+                                    state={petition.status}
+                                    title={petition.title}
+                                    category={petition.category}
+                                    dueDate={petition.end_date}
+                                    votes={petition.votes}
+                                    onClick={this.onClickDetailButton}
+                                />
+                            )
+                        }
+                    })
+            )
+        }
 
         let listNumberButtons = (
             <ButtonGroup>
@@ -174,7 +201,7 @@ class PetitionList extends Component {
                 {petitionStateTabButtons}
                 <TabContent activeTab={this.state.petitionState}>
                     <TabPane tabId='ongoing'>
-                        <Category />
+                        <Category onClick={this.onClickCategoryButton} />
                         <br />
                         {petitionOrderButtons}
                         {tableHead}
@@ -182,7 +209,7 @@ class PetitionList extends Component {
                         {listNumberButtons}
                     </TabPane>
                     <TabPane tabId='end'>
-                        <Category />
+                        <Category onClick={this.onClickCategoryButton} />
                         <br />
                         {petitionOrderButtons}
                         {tableHead}
@@ -201,7 +228,9 @@ class PetitionList extends Component {
 export const mapDispatchToProps = dispatch => {
     return {
         getAllPetitions: () =>
-            dispatch(actionCreator.getAllPetitions())
+            dispatch(actionCreator.getAllPetitions()),
+        getPetitionByTitle: (title) =>
+            dispatch(actionCreator.getPetitionByTitle(title))
     }
 }
 
