@@ -1,0 +1,21 @@
+.DocumentDetail {
+    background-color: #3779c4;
+    padding-left: 8%;
+    padding-right: 8%;
+    text-align: left;
+}
+
+.content {
+    padding-left: 8%;
+    padding-right: 8%;
+    background-color: white;
+}
+
+.document {
+    text-align: left;
+    color: white;
+}
+
+.debateButton {
+    float: right;
+}

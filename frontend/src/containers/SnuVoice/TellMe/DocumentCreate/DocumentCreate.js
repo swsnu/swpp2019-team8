@@ -95,7 +95,11 @@ class DocumentCreate extends Component {
 </div>
                         </h1>
                         <br/>
-                        <h4>Content:</h4>
+                        <h4>
+                            {/* <div className="content"> */}
+                            Content:
+                            {/* </div> */}
+                            </h4>
                         <MarkdownPreview value={this.state.documentContent} />
                         </div>
                         </div>
