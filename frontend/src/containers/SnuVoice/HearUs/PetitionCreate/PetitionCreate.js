@@ -17,7 +17,7 @@ class PetitionCreate extends Component {
             { value: 'human rights' },
             { value: 'welfare' },
         ],
-        selectedCategory: '',
+        selectedCategory: 'All',
         petitionContent: '',
         petitionLink: '',
         petitionLinkList: [
@@ -65,13 +65,11 @@ class PetitionCreate extends Component {
         //Todo: title중복
         let retLink = '';
         let retTag = '';
-        for(var i in this.state.petitionLinkList)
-        {
-            retLink += this.state.petitionLinkList[i];
+        for (var i in this.state.petitionLinkList) {
+            retLink += this.state.petitionLinkList[i] + ' ';
         }
-        for(var j in this.state.petitionTag)
-        {
-            retTag += this.state.petitionTagList[j];
+        for (var j in this.state.petitionTag) {
+            retTag += this.state.petitionTagList[j] + ' ';
         }
         this.props.onStorePetition(this.state.petitionTitle, this.state.petitionContent, this.state.selectedCategory, retTag, retLink);
     }
@@ -168,7 +166,7 @@ class PetitionCreate extends Component {
                             </div><br/><br/><br/>
                     <ButtonGroup className="buttons">
                         <Button type="button" id="petition_confirm_button"
-                            onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent}>CONFIRM</Button>
+                            onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent || this.state.selectedCategory == 'All'}>CONFIRM</Button>
                         <Button type="button" id="petition_cancel_button"
                             onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
                     </ButtonGroup>
@@ -182,8 +180,8 @@ class PetitionCreate extends Component {
 
 export const mapDispatchToProps = dispatch => {
     return {
-        onStorePetition: (title, content, category, tag, link) => 
-            dispatch(actionCreators.postPetition({title: title, content: content, category: category, tag: tag, link: link})),
+        onStorePetition: (title, content, category, tag, link) =>
+            dispatch(actionCreators.postPetition({ title: title, content: content, category: category, tag: tag, link: link })),
     }
 }
 
