@@ -15,6 +15,7 @@ class HearusTestCase(TestCase):
         new_petition2 = Petition.objects.create(author=new_user, title="title2", content="content2", category="category", link="link2", tag="tag2",
                                  start_date=timezone.now(), votes=1, status="1")
         new_comment = PetitionComment.objects.create(author=new_user, petition=new_petition, comment="comment", date=timezone.now())
+        
     def test_petition(self):
         client = Client(enforce_csrf_checks=False)
         response = client.get('/api/hearus/petition/')
