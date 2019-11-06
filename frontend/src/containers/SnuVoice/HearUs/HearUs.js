@@ -83,11 +83,15 @@ class HearUs extends Component {
         onClick={this.onClickDetailButton}
       />
     );
+
     return (
       <div>
         <UpperBar />
+        <div className="TopOfPage">
+          <br/>
         <div className="HearUs">
-          <h1>HearUs</h1>
+          <h1>Hear Us</h1>
+          <br/>
           <InputGroup>
             <Input
               type="text"
@@ -105,6 +109,9 @@ class HearUs extends Component {
               </Button>
             </InputGroupAddon>
           </InputGroup>
+          </div>
+          <br/>
+          <div className="UserOptions">
           <Button
             type="button"
             id="create_button"
@@ -119,14 +126,22 @@ class HearUs extends Component {
           >
             MINE
           </Button>
-          <br></br>
-          {category}
-          <br></br>
-          Top 5 Votes
+          </div>
+          <br></br><br/>
+          <div className="Category">{category}</div>
+          <br/><br/><br/>
+          <div className="Tables">
+            <br/>
+          <h5><b>Top 5 Votes</b></h5>
           {tableHead}
           {voteList}
-          Latest 5{tableHead}
+          <br/>
+          <h5><b>Latest 5</b></h5>
+          {tableHead}
           {deadlineList}
+          <br/>
+          </div>
+          <br />
           <Button
             type="button"
             id="petition_list_button"
@@ -134,6 +149,7 @@ class HearUs extends Component {
           >
             +
           </Button>
+          <br/>
         </div>
       </div>
     );
