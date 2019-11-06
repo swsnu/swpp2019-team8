@@ -103,7 +103,8 @@ class PetitionCreate extends Component {
         return (
             <div className="PetitionCreate">
                 <Form>
-                    {/* 청원 약관박스 만들기 */}
+                    <Input type="textarea" id="petition_terms_textarea" placeholder="content" readOnly
+                        defaultValue="청원 작성 시 주의할 점"></Input>
                     Agree
                     <FormGroup>
                         <Input type="checkbox" id="agree_to_terms_checkbox" checked={this.state.agreeToTerms}
