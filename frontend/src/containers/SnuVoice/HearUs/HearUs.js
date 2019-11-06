@@ -48,6 +48,7 @@ class HearUs extends Component {
   };
 
   componentDidMount = () => {
+    window.sessionStorage.removeItem('petitionSearch')
     this.props.getAllPetitions();
   }
 
