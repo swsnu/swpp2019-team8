@@ -125,6 +125,7 @@ class PetitionCreate extends Component {
                         {category_list}
                     </Input>
                             </div>
+                            <br/>
                     <FormGroup>
                         <Label>Content</Label>
                         <Input type="textarea" id="petition_content_textarea" placeholder="content" style={{height: 200}}
