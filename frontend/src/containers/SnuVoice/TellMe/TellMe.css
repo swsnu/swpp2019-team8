@@ -1,0 +1,35 @@
+.TopOfPage {
+    background-color: #3779c4;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.SearchBar {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+
+
+.Title {
+    color: white;
+    /* float: left; */
+    padding-bottom: 30px;
+    /* text-align: left; */
+}
+
+.TellMe {
+    background-color: white;
+    min-height: 370px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.TellMeText {
+    text-align: left;
+}
+
+.CreateButton {
+    float: right;
+    bottom: 10px;
+}
