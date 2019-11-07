@@ -83,9 +83,9 @@ class DocumentCreate extends Component {
         <Upperbar />
         <div className="DocumentCreate">
           <br />
-          <div className="pageTitle">
-            <h1>Document Create</h1>
-          </div>
+          
+            <h1 className="pageTitle">Document Create</h1>
+
           <Button
             type="button"
             id="photo_button"
