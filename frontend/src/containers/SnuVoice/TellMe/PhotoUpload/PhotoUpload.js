@@ -104,7 +104,7 @@ class PhotoUpload extends Component {
                             {$imagePreview}
                         </TabPane>
                         <TabPane tabId="preview">
-                            ML Part
+                            <b>*Photo with selected blur applied will appear here*</b>
                         </TabPane>
                     </TabContent>
                 </p>
