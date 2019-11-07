@@ -96,11 +96,11 @@ class PetitionDetail extends Component {
                     <div className="Reply_area_head">
                         <Row>
 <Col>
-                        <h5 className="Reply_area_agree">Votes: 여기에 투표 수</h5>
+                        <h5 className="Reply_area_agree">Votes: {votes}</h5>
 </Col>
 <Col>
                         <div className="Reply_area_url">
-                            URL: 여기에 URL
+                            URL: {window.location.href}
                             <button>Copy</button>
                         </div>
 </Col>

@@ -53,9 +53,9 @@ export class UpperBar extends Component {
         if (window.localStorage.getItem('userId') !== null) {
             this.props.getUserByUserId(parseInt(window.localStorage.getItem('userId')))
         }
-        if (/^http:\/\/localhost:3000\/tell_me$/.exec(window.location.href)) {
+        if (/^http:\/\/localhost:3000\/tell_me/.exec(window.location.href)) {
             this.setState({ location: 'tell_me' });
-        } else if (/^http:\/\/localhost:3000\/hear_us$/.exec(window.location.href)) {
+        } else if (/^http:\/\/localhost:3000\/hear_us/.exec(window.location.href)) {
             this.setState({ location: 'hear_us' });
         }
     }
