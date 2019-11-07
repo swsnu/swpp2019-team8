@@ -5,6 +5,7 @@ import { withRouter } from "react-router";
 import { Button, Input, InputGroup, InputGroupAddon } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
+import * as actionCreator from '../../../store/actions/index'
 
 import "./TellMe.css";
 
@@ -18,7 +19,7 @@ class TellMe extends Component {
   };
 
   onClickSearchConfirmButton = () => {
-    this.props.history.push("/"); // 리다이렉트 백엔드 구현하고 해야할듯
+    this.props.getDocumentByTitle(this.state.search)
   };
 
   onClickCreateButton = () => {
@@ -38,45 +39,45 @@ class TellMe extends Component {
             </h6>
           </div>
           <div className="SearchBar">
-          <InputGroup>
-            <Input
-              type="text"
-              id="search_input"
-              autoFocus
-              onChange={this.onChangeSearchInput}
-            ></Input>
-            <InputGroupAddon addonType="append">
-              <Button
-                type="button"
-                id="search_confirm_button"
-                onClick={this.onClickSearchConfirmButton}
-              >
-                Search
+            <InputGroup>
+              <Input
+                type="text"
+                id="search_input"
+                autoFocus
+                onChange={this.onChangeSearchInput}
+              ></Input>
+              <InputGroupAddon addonType="append">
+                <Button
+                  type="button"
+                  id="search_confirm_button"
+                  onClick={this.onClickSearchConfirmButton}
+                >
+                  Search
               </Button>
-            </InputGroupAddon>
-          </InputGroup>
+              </InputGroupAddon>
+            </InputGroup>
           </div>
           <br />
           <div />
-            <br/>
+          <br />
           <div className="TellMe">
-           <br/>
-           <div className="TellMeText">
-               <h5><b>Tell Me 설명글:</b></h5>
-                   <br/>
-               예: Tell Me는 무엇인가<br/>
-               Tell Me의 목적?<br/>
-               Tell Me의 규정?<br/>
-               Tell Me의 사용법?<br/>
-               Tell Me는 마크다운 기반?
+            <br />
+            <div className="TellMeText">
+              <h5><b>Tell Me 설명글:</b></h5>
+              <br />
+              예: Tell Me는 무엇인가<br />
+              Tell Me의 목적?<br />
+              Tell Me의 규정?<br />
+              Tell Me의 사용법?<br />
+              Tell Me는 마크다운 기반?
            </div>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <Button
-                className="CreateButton"
+              className="CreateButton"
               type="button"
               id="create_button"
               onClick={this.onClickCreateButton}
@@ -90,7 +91,15 @@ class TellMe extends Component {
   }
 }
 
+export const mapDispatchToProps = dispatch => {
+  return {
+    getDocumentByTitle: (title) =>
+      dispatch(actionCreator.getDocument(title))
+  }
+}
+
 export default connect(
   null,
-  null
+  mapDispatchToProps
 )(withRouter(TellMe));
+
