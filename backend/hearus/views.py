@@ -9,6 +9,7 @@ from user.models import User
 
 from django.forms.models import model_to_dict
 from django.utils import timezone
+from datetime import timedelta
 import json
 
 
@@ -24,10 +25,12 @@ def petition(request):
             petition_link = json.loads(body)['link']  # array?
             petition_tag = json.loads(body)['tag']  # array?
             petition_start_date = timezone.now()
+            petition_end_date = petition_start_date + timedelta(days=30)
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         petition = Petition(author=request.user, title=petition_title, content=petition_content, category=petition_category,
-                            link=petition_link, tag=petition_tag, start_date=petition_start_date, votes=0, status=0)
+                            link=petition_link, tag=petition_tag, start_date=petition_start_date, end_date=petition_end_date, votes=0, status=0)
+        print(petition_start_date)
         petition.save()
         response_dict = model_to_dict(petition)
         return JsonResponse(response_dict, status=201)
@@ -38,7 +41,7 @@ def petition(request):
 def petition_list(request):
     if request.method == 'GET':
         petition_list = [
-            petition for petition in Petition.objects.all().values().order_by('start_date')]
+            petition for petition in Petition.objects.all().values().order_by('-start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])

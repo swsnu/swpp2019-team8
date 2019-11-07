@@ -16,8 +16,7 @@ class Petition(models.Model):
     link = models.TextField()
     tag = models.TextField()
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField(
-        default=datetime.now()+timedelta(days=30))
+    end_date = models.DateTimeField()
     votes = models.IntegerField()
     status = models.TextField()
 

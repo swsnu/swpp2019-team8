@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from .models import Petition, PetitionComment
 from user.models import User
 from django.utils import timezone
+from datetime import timedelta
 import json
 
 # Create your tests here.
@@ -11,9 +12,9 @@ class HearusTestCase(TestCase):
         new_user = User.objects.create_user(email="dkwanm1@naver.com", password="1", nickname="!", gender="MALE", status="1",
                                  studentId="2018-15722", department="ENGINEERING", major="CSE", studentStatus="student")
         new_petition = Petition.objects.create(author=new_user, title="title", content="content", category="category", link="link", tag="tag",
-                                 start_date=timezone.now(), votes=2, status="1")
+                                 start_date=timezone.now(), end_date=timezone.now+timedelta(days=30), votes=2, status="1")
         new_petition2 = Petition.objects.create(author=new_user, title="title2", content="content2", category="category", link="link2", tag="tag2",
-                                 start_date=timezone.now(), votes=1, status="1")
+                                 start_date=timezone.now(), end_date=timezone.now+timedelta(days=30),votes=1, status="1")
         new_comment = PetitionComment.objects.create(author=new_user, petition=new_petition, comment="comment", date=timezone.now())
         
     def test_petition(self):
