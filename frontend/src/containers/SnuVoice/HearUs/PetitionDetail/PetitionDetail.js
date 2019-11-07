@@ -48,10 +48,10 @@ class PetitionDetail extends Component {
             <div className="PetitionDetail">
                 <br/><br/>
                 <div className="content">
-                <b>
-                {/* <h1>Petition Detail</h1> */}
+                <b><br/>
+                <h6>Petition</h6>
+                <h2 className="petitionsView_title"><b>{title}</b></h2>
                 <br/>
-                <h2 className="petitionsView_title">{title}</h2>
                 <p className="petitionsView_count">Votes: [ {votes} ]</p>
                 <div className="petitionsView_info">
                     <Row className="petitionsView_info_list">
@@ -77,18 +77,19 @@ class PetitionDetail extends Component {
 
 
                 <div className="petitionsView_write">
-                    {/* <h4 className="petitionsView_writeHead">Content</h4> */}
+                    <h6 className="petitionsView_writeHead">Petition Description:</h6>
                     <div className="View_write">{content}</div>
-                    <ul className="View_write_link">
+                    <br/>
+                    {/* <ul className="View_write_link"> */}
+                        <h6>Attached links: </h6>
                         <li>
-                            <p>Link 1 : </p>
                             <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">{link}</a>
                         </li>
-                    </ul>
+                    {/* </ul> */}
                 </div>
 
                 <div className="petitionsView_statistic">
-                    <br></br><br></br>** 여기에 통계 **<br></br><br></br>
+                    <br></br><br></br>** 여기에 통계 **<br></br><br></br><br/><br/>
                 </div>
 
                 <div className="petitionsReply_area">
@@ -106,10 +107,13 @@ class PetitionDetail extends Component {
                         </Row>
                     </div>
                     <div className="Reply_area_write">
-                        <textarea id="tw_contents"></textarea>
+                        <textarea id="tw_contents" style={{width: 700}}></textarea>
                         <button>Agree</button>
                     </div>
-                    <div className="petitionsReply_Reply">
+                    <br/>
+                    **Comment List**
+                    <br/>
+                    {/* <div className="petitionsReply_Reply">
                         <ul>
                             <div className="Reply_Reply_list">
                                 <div className="Reply_Reply_contents">
@@ -132,7 +136,7 @@ class PetitionDetail extends Component {
                                 </div>
                             </div>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
                 </div>
             </div >
