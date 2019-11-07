@@ -42,7 +42,31 @@ describe('<HearUs/>', () => {
                     category: 'human rights',
                     end_date: '2019-12-08',
                     votes: 125
-                }
+                },
+                {
+                    id: 5,
+                    status: 'end',
+                    title: 'Ihateswpp',
+                    category: 'human rights',
+                    end_date: '2019-12-08',
+                    votes: 125
+                },
+                {
+                    id: 6,
+                    status: 'end',
+                    title: 'Ihateswpp',
+                    category: 'human rights',
+                    end_date: '2019-12-08',
+                    votes: 125
+                },
+                {
+                    id: 7,
+                    status: 'end',
+                    title: 'Ihateswpp',
+                    category: 'human rights',
+                    end_date: '2019-12-08',
+                    votes: 125
+                },
             ],
             selectedUser: { id: 1 },
             getAllPetitions: mocked
@@ -99,14 +123,14 @@ describe('<HearUs/>', () => {
     it('should make list well', () => {
         const component = shallow(<HearUs {...props}/>)
         const petitionList = component.find('Petition')
-        expect(petitionList.length).toBe(8)
+        expect(petitionList.length).toBe(10)
     })
 
     it('should make list well', () => {
         const component = shallow(<HearUs {...props}/>)
-        component.instance().setState({ selectedCategory : 'welfare'})
+        component.instance().setState({ selectedCategory : 'human rights'})
         const petitionList = component.find('Petition')
-        expect(petitionList.length).toBe(2)
+        expect(petitionList.length).toBe(10)
     })
 
     it ('should onClickDetailButton works', () => {
