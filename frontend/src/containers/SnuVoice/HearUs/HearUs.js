@@ -11,7 +11,7 @@ import * as actionCreator from '../../../store/actions/index'
 
 import "./HearUs.css";
 
-class HearUs extends Component {
+export class HearUs extends Component {
   state = {
     search: "",
     selectedCategory: 'All'
@@ -21,7 +21,7 @@ class HearUs extends Component {
     this.setState({ search: event.target.value });
   };
 
-  onClickSearchConfirmButton = event => {
+  onClickSearchConfirmButton = event =>  {
     // 백엔드 구현이후 추가 예정
     window.sessionStorage.setItem('petitionSearch', this.state.search)
     this.props.history.push("/hear_us/search");
@@ -32,7 +32,7 @@ class HearUs extends Component {
   };
 
   onClickMyPetitionButton = () => {
-    this.props.history.push("/hear_us/my_petition/:user_id");
+    this.props.history.push("/hear_us/my_petition/" + this.props.selectedUser.id);
   };
 
   onClickCategoryButton = event => {
@@ -116,7 +116,7 @@ class HearUs extends Component {
       voteList = (
         this.props.petitionList
           .filter(petition => petition.category === this.state.selectedCategory)
-          .sort((a, b) => a.votes > b.votes)
+          .sort((a, b) => a.votes > b.votes ? -1 : a.votes < b.votes ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
               return (
@@ -238,7 +238,8 @@ export const mapDispatchToProps = dispatch => {
 
 export const mapStateToProps = state => {
   return {
-    petitionList: state.hu.petition_list
+    petitionList: state.hu.petition_list,
+    selectedUser: state.usr.selectedUser
   }
 }
 
