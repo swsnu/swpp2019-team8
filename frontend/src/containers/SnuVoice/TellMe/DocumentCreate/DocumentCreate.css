@@ -4,13 +4,16 @@
     padding-right: 8%;
 }
 
+.pageTitle {
+    color: white !important;
+}
+
 .photoButton {
     float: right;
 }
 
 .preview {
     background-color: white;
-    color: black !important;
     min-height: 400px;
 }
 
@@ -19,10 +22,9 @@
     text-align: left;
 }
 
-
-/* h3, h4 {
+h2, h3, h4, h6 {
     color: black;
-} */
+}
 
 .inputTab {
     padding-left: 4%;
