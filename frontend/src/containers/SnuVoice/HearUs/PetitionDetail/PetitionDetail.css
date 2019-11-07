@@ -9,8 +9,14 @@
     padding-right: 8%;
 }
 
+.petitionsView_write {
+    padding-left: 15%;
+    padding-right: 15%;
+    text-align: left;
+}
+
 .content {
-    min-height: 500px;
+    min-height: 800px;
     background-color: white;
     color: black;
 

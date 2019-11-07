@@ -13,7 +13,7 @@
 
 .document {
     text-align: left;
-    color: white;
+    color: white !important;
 }
 
 .debateButton {
