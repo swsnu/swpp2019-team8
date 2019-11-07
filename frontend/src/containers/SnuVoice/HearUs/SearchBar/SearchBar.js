@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import * as actionCreator from '../../../store/actions/index'
 
 import {
     Button,
-    Input
+    Input,
+    InputGroup,
+    InputGroupAddon
 } from 'reactstrap';
 
 export class SearchBar extends Component {
@@ -20,7 +21,7 @@ export class SearchBar extends Component {
 
     onClickSearchConfirmButton = () => {
         let toSearch = this.state.searchInput
-        for (i = toSearch.length - 1; i >= 0; i++) {
+        for (var i = toSearch.length - 1; i >= 0; i--) {
             if (toSearch[i] === ' ') break;
             else toSearch.slice(0, i)
         }
