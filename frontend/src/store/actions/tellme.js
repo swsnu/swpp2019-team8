@@ -32,7 +32,14 @@ export const getDocument_ = (document) => {
 export const getDocument = (document_title) => {
     return dispatch => {
         return axios.get('/api/tellme/document/' + document_title)
-            .then(res => dispatch(getDocument_(res.data)));
+            .then(res =>  {
+                dispatch(getDocument_(res.data))
+                dispatch(push('/tell_me/documents/' + res.data.title))
+            })
+            .catch(e => {
+                dispatch(push('/tell_me/search_fail'))
+            })
+
     };
 };
 
