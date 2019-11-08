@@ -51,6 +51,7 @@ class PetitionDetail extends Component {
         return (
             <div>
                 <UpperBar />
+
             <div className="PetitionDetail">
                 <br/><br/>
                 <div className="content">
@@ -78,7 +79,6 @@ class PetitionDetail extends Component {
                 {/* TODO */}
                 {/* <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p> */}
 
-
                 <div className="petitionsView_write">
                     <h6 className="petitionsView_writeHead">Petition Description:</h6>
                     <div className="View_write">{content}</div>
@@ -99,17 +99,6 @@ class PetitionDetail extends Component {
                     <br/><br/>
                 </div>
 
-                <div className="petitionsReply_area">
-                    <div className="Reply_area_head">
-                        <Row>
-<Col>
-                        <h5 className="Reply_area_agree">Votes: {votes}</h5>
-</Col>
-<Col>
-                        <div className="Reply_area_url">
-                            URL: {window.location.href}
-                            <button>Copy</button>
-                        </div>
 </Col>
                         </Row>
                     </div>
@@ -128,28 +117,18 @@ class PetitionDetail extends Component {
                                 <div className="Reply_Reply_contents">
                                     <div className="pv3_R_contents_head">
                                         <h4>여기에 닉네임</h4>
+                                            </div>
+                                            <div className="R_R_contents_txt">
+                                                여기에 댓글
                                     </div>
-                                    <div className="R_R_contents_txt">
-                                        여기에 댓글
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="Reply_Reply_list">
-                                <div className="Reply_Reply_contents">
-                                    <div className="pv3_R_contents_head">
-                                        <h4>여기에 닉네임</h4>
-                                    </div>
-                                    <div className="R_R_contents_txt">
-                                        여기에 댓글
-                                    </div>
-                                </div>
-                            </div>
-                        </ul>
-                    </div> */}
-                </div>
-                </div>
-            </div >
-        </div>
+                                </ul>
+                            </div> */}
+                        </div>
+                    </div>
+                </div >
+            </div>
         );
     }
 }
