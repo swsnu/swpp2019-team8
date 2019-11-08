@@ -94,4 +94,13 @@ describe('<PetitionDetail />', () => {
         // expect(wrapperPetitioner.at(0).text()).toBe('Petitioner: ');
         // expect(wrapperLink.at(0).text()).toBe('Link 1 : ');
     });
+
+    it(`should call 'onClickPetitionCancelButton'`, () => {
+        const spyHistoryPush = jest.spyOn(history, 'push')
+            .mockImplementation(path => { });
+        const component = mount(petitionDetail);
+        const wrapper = component.find('#petition_cancel_button').at(0);
+        wrapper.simulate('click');
+        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us');
+    });
 });
