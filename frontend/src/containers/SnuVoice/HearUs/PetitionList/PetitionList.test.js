@@ -136,51 +136,51 @@ describe('<PetitionList />', () => {
         delete global.__mobxInstanceCount;
     })
 
-    it('should render PetitionList', () => {
-        const component = mount(petitionList)
+    it('should render PetitionList', async() => {
+        const component = await mount(petitionList)
         const top = component.find('.TopOfPage')
         expect(top.length).toBe(1)
     })
 
-    it('should clickMyPetitionButton works', () => {
+    it('should clickMyPetitionButton works', async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-        const component = mount(petitionList)
+        const component = await mount(petitionList)
         const myPetiton = component.find('#my_petition_button').at(0)
         myPetiton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/my_petition/1')
     })
 
-    it('should clickCreateButton works', () => {
+    it('should clickCreateButton works', async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-        const component = mount(petitionList)
+        const component = await mount(petitionList)
         const create = component.find('#create_button').at(0)
         create.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/create')
     })
 
-    it('should searchButton works', () => {
+    it('should searchButton works', async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
         Storage.prototype.setItem = jest.fn(() => { })
-        const component = mount(petitionList)
+        const component = await mount(petitionList)
         const searchButton = component.find('#search_confirm_button').at(0)
         searchButton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/search')
     })
 
-    it('should searchInput works', () => {
+    it('should searchInput works', async () => {
         let temp = '1';
-        const component = mount(petitionList);
+        const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         const searchInput = component.find('#search_input').at(0)
         searchInput.simulate('change', { target: { value: temp } })
         expect(petitionListComponent.state.search).toBe(temp)
     })
 
-    it('should list_prev_button works', () => {
-        const component = mount(petitionList);
+    it('should list_prev_button works', async () => {
+        const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         const prevButton = component.find('#list_prev_button').at(0)
         prevButton.simulate('click')
@@ -192,8 +192,8 @@ describe('<PetitionList />', () => {
         expect(petitionListComponent.state.listNumber).toStrictEqual([1, 2, 3, 4, 5])
     })
 
-    it('should petitionOrderButtonWorks', () => {
-        const component = mount(petitionList);
+    it('should petitionOrderButtonWorks',async () => {
+        const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         const votesButton = component.find('#top_votes_button').at(0)
         const latestButton = component.find('#latest_button').at(0)
@@ -206,8 +206,8 @@ describe('<PetitionList />', () => {
         expect(petition.length).toBe(2)
     })
 
-    it('should petitionStateButtonWorks', () => {
-        const component = mount(petitionList);
+    it('should petitionStateButtonWorks', async () => {
+        const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         const ongoingButton = component.find('#ongoing_petition_button').at(0)
         const endedButton = component.find('#ended_petition_button').at(0)
@@ -222,16 +222,16 @@ describe('<PetitionList />', () => {
         expect(petition.length).toBe(2)
     })
 
-    it('should clickCategoryButton work', () => {
-        const component = mount(petitionList);
+    it('should clickCategoryButton work', async () => {
+        const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         petitionListComponent.onClickCategoryButton({ target: { value: 'welfare' } })
         const petition = component.find('Petition')
         expect(petition.length).toBe(2)
     })
 
-    it('should clickListNumberButton work', () => {
-        const component = mount(petitionList);
+    it('should clickListNumberButton work', async () => {
+        const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         petitionListComponent.setState({
             petitionOrder: 'not Vote'
@@ -243,8 +243,8 @@ describe('<PetitionList />', () => {
         expect(petition.length).toBe(2)
     })
 
-    it('should sort well', () => { // something strange
-        const component = mount(petitionList);
+    it('should sort well', async () => { // something strange
+        const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         petitionListComponent.onClickPetitionTabButton('end')
         petitionListComponent.forceUpdate()
@@ -254,10 +254,10 @@ describe('<PetitionList />', () => {
         expect(petition.length).toBe(2)
     })
 
-    it('should onClickDetailButtonWorks', () => {
+    it('should onClickDetailButtonWorks', async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-        const component = mount(petitionList);
+        const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         petitionListComponent.onClickDetailButton({target : {value : '1'}})
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/1')
@@ -265,7 +265,7 @@ describe('<PetitionList />', () => {
 
     })
 
-    it('should clickListNextButton, listPrevButton works well', () => {
+    it('should clickListNextButton, listPrevButton works well', async () => {
         const mockInitialStore = getMockStore({
             petition_list: [
                 {
@@ -282,7 +282,7 @@ describe('<PetitionList />', () => {
                 id: 1
             }
         })
-        const component = mount(
+        const component = await mount(
             <Provider store={mockInitialStore}>
                 <ConnectedRouter history={history}>
                     <Switch>
@@ -308,9 +308,9 @@ describe('<PetitionList />', () => {
 
     })
 
-    it('should componentDidMount works', () => {
+    it('should componentDidMount works', async () => {
         Storage.prototype.getItem = jest.fn((temp) => {return 1})
-        const component = mount(petitionList);
+        const component = await mount(petitionList);
         expect(true).toBe(true)
 
     })
