@@ -63,6 +63,22 @@ class PetitionDetail extends Component {
             );
         });
 
+        const comments = this.props.storedPetitionComments.map(com => {
+            console.log(com);
+            return (
+                <div className="Reply_Reply_list">
+                    <div className="Reply_Reply_contents">
+                        <div className="pv3_R_contents_head">
+                            {com.date}
+                        </div>
+                        <div className="R_R_contents_txt">
+                            {com.comment}
+                        </div>
+                    </div>
+                </div>
+            );
+        });
+
         return (
             <div>
                 <UpperBar />
@@ -118,23 +134,10 @@ class PetitionDetail extends Component {
                     <Button type="button" id="petition_cancel_button"
                         onClick={this.onClickPetitionCancelButton}>BACK</Button>
 
-                    <br />
-                    ** Comment List **
-                    <br />
-                    {/* <div className="petitionsReply_Reply">
-                        <ul>
-                            <div className="Reply_Reply_list">
-                                <div className="Reply_Reply_contents">
-                                    <div className="pv3_R_contents_head">
-                                        <h4>여기에 닉네임</h4>
-                                    </div>
-                                    <div className="R_R_contents_txt">
-                                        여기에 댓글
-                                    </div>
-                                </div>
-                            </div>
-                        </ul>
-                    </div> */}
+                    <br /><br />
+                    <div className="petitionsReply_Reply">
+                        {comments}
+                    </div>
                 </div >
             </div >
         );
