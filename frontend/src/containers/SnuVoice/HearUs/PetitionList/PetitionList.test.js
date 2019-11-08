@@ -7,6 +7,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import PetitionList from './PetitionList'
 import { history } from '../../../../store/store'
 import { getMockStore } from '../../../../test-utils/mocks'
+import * as actionCreator from '../../../../store/actions/hearus'
 
 const stubInitialState = {
     selectedUser: {
@@ -119,6 +120,8 @@ const mockStore = getMockStore(stubInitialState)
 
 describe('<PetitionList />', () => {
     let petitionList;
+    let spyGetAllPetition;
+    let spyGetPetitionByTitle;
     beforeEach(() => {
         petitionList = (
             <Provider store={mockStore}>
@@ -129,6 +132,10 @@ describe('<PetitionList />', () => {
                 </ConnectedRouter>
             </Provider>
         )
+        spyGetAllPetition = jest.spyOn(actionCreator, 'getAllPetitions')
+            .mockImplementation(() => {return dispatch => {}; });
+        spyGetPetitionByTitle = jest.spyOn(actionCreator, 'getPetitionByTitle')
+            .mockImplementation((title) => {return dispatch => {}; })
     });
 
     afterEach(() => {
@@ -136,16 +143,16 @@ describe('<PetitionList />', () => {
         delete global.__mobxInstanceCount;
     })
 
-    it('should render PetitionList', async() => {
-        const component = await mount(petitionList)
+    it('should render PetitionList', () => {
+        const component = mount(petitionList)
         const top = component.find('.TopOfPage')
         expect(top.length).toBe(1)
     })
 
-    it('should clickMyPetitionButton works', async () => {
+    it('should clickMyPetitionButton works', () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-        const component = await mount(petitionList)
+        const component = mount(petitionList)
         const myPetiton = component.find('#my_petition_button').at(0)
         myPetiton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/my_petition/1')
@@ -311,7 +318,7 @@ describe('<PetitionList />', () => {
     it('should componentDidMount works', async () => {
         Storage.prototype.getItem = jest.fn((temp) => {return 1})
         const component = await mount(petitionList);
-        expect(true).toBe(true)
+        expect(spyGetPetitionByTitle).toHaveBeenCalledTimes(1);
 
     })
 
