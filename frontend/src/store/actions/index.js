@@ -29,6 +29,6 @@ export {
     getPetitionByTitle,
     // getMyPetitions,
     getPetitionComments,
-    // postPetitionComment,
+    postPetitionComment,
     // Statistic에 해당하는 것은 아직 안 만듦
 } from './hearus';

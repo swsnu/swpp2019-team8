@@ -12,7 +12,6 @@ export const postPetition_ = (petition) => {
         category: petition.category,
         tag: petition.tag,
         link: petition.link,
-
     };
 };
 
@@ -104,21 +103,23 @@ export const getPetitionComments_ = (comment_list) => {
 
 export const getPetitionComments = (petition_id) => {
     return dispatch => {
-        return axios.get('/api/hearus/petition/' + petition_id)
+        return axios.get('/api/hearus/petition/' + petition_id + '/comment/')
             .then(res => dispatch(getPetitionComments_(res.data)));
     };
 };
 
-export const postPetitionComment_ = (/* TODO */) => {
+export const postPetitionComment_ = (comment) => {
     return {
         type: actionTypes.POST_PETITION_COMMENT,
-        // TODO
+        id: comment.id,
+        comment: comment.comment,
     };
 };
 
-export const postPetitionComment = (/* TODO */) => {
+export const postPetitionComment = (comment) => {
     return dispatch => {
-        // TODO
+        return axios.post('/api/hearus/petition/' + comment.petition_id + '/comment/', comment)
+            .then(res => dispatch(postPetitionComment_(res.data)));
     };
 };
 

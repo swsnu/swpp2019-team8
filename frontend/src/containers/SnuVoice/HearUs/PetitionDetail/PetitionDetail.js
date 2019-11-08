@@ -15,11 +15,16 @@ import demoGraph from '../../../../img/demoGraph.png';
 class PetitionDetail extends Component {
     state = {
         isSelected: false,
+        comment: '',
     }
 
     componentDidMount() {
         this.props.onGetPetition(this.props.match.params.petition_id);
         this.props.onGetPetitionComments(this.props.match.params.petition_id);
+    }
+
+    onClickCommentConfirmButton = () => {
+        this.props.onStorePetitionComment(this.props.match.params.petition_id, this.state.comment);
     }
 
     onClickPetitionCancelButton = () => {
@@ -104,8 +109,10 @@ class PetitionDetail extends Component {
                     </div>
 
                     <div className="Reply_area_write">
-                        <textarea id="tw_contents" style={{ width: 700 }}></textarea>
-                        <button>Agree</button>
+                        <textarea id="tw_contents" style={{ width: 700 }}
+                            onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
+                        <Button type="button" id="comment_confirm_button"
+                            onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 
                     <Button type="button" id="petition_cancel_button"
@@ -150,6 +157,8 @@ export const mapDispatchToProps = dispatch => {
             dispatch(actionCreators.getUserByUserId(user_id)),
         onGetPetitionComments: petition_id =>
             dispatch(actionCreators.getPetitionComments(petition_id)),
+        onStorePetitionComment: (petition_id, comment) =>
+            dispatch(actionCreators.postPetitionComment({ petition_id: petition_id, comment: comment })),
     }
 }
 
