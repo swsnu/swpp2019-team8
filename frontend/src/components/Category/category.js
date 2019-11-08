@@ -11,13 +11,13 @@ const Category = (props) => {
                 onClick={props.onClick}>Human Rights</Button>
             <Button type="button" id="category_button_3" value="welfare"
                 onClick={props.onClick}>Welfare</Button>
-            <Button type="button" id="category_button_4" value="Traffic"
+            <Button type="button" id="category_button_4" value="traffic"
                 onClick={props.onClick}>Traffic</Button>
-            <Button type="button" id="category_button_5" value="Education"
+            <Button type="button" id="category_button_5" value="education"
                 onClick={props.onClick}>Education</Button>
-            <Button type="button" id="category_button_5" value="Administration"
+            <Button type="button" id="category_button_5" value="administration"
                 onClick={props.onClick}>Administration</Button>
-            <Button type="button" id="category_button_6" value="Facility"
+            <Button type="button" id="category_button_6" value="facility"
                 onClick={props.onClick}>Facility</Button>
         </ButtonGroup>
     )
