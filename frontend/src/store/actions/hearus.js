@@ -53,8 +53,15 @@ export const getPetition_ = (petition) => {
     return {
         type: actionTypes.GET_PETITION,
         target: petition,
-    };
-};
+    }
+}
+
+export const getPetition = (petition_id) => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/' + petition_id)
+            .then(res => dispatch(getPetition_(res.data)));
+    }
+}
 
 export const getPetitionByTitle_ = (response) => {
     return {
@@ -74,25 +81,20 @@ export const getPetitionByTitle = (title) => {
     }
 }
 
-export const getPetition = (petition_id) => {
-    return dispatch => {
-        return axios.get('/api/hearus/petition/' + petition_id)
-            .then(res => dispatch(getPetition_(res.data)));
-    };
-};
-
-export const getMyPetitions_ = (/* TODO */) => {
+/*
+export const getMyPetitions_ = () => {
     return {
         type: actionTypes.GET_MY_PETITIONS,
         // TODO
     };
 };
 
-export const getMyPetitions = (/* TODO */) => {
+export const getMyPetitions = () => {
     return dispatch => {
         // TODO
     };
 };
+*/
 
 export const getPetitionComments_ = (comment_list) => {
     return {
