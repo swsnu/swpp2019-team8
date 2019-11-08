@@ -32,8 +32,8 @@ class PetitionDetail extends Component {
         let category = '';
         let start_date = '';
         let end_date = '';
-        let petitioner = '';
-        let link = '';
+        let link = [''];
+
         if (this.props.selectedPetition) {
             title = this.props.selectedPetition.title;
             content = this.props.selectedPetition.content;
@@ -45,9 +45,18 @@ class PetitionDetail extends Component {
                 this.props.onGetUserByUserId(this.props.selectedPetition.author);
                 this.setState({ isSelected: true });
             }
-            petitioner = this.props.selectedUser.nickname;
-            link = this.props.selectedPetition.link;
+            link = this.props.selectedPetition.link.split(' ');
+            link = link.slice(0, link.length - 1);
         }
+
+        const links = link.map(url => {
+            return (
+                <li key="">
+                    <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
+                </li>
+            );
+        });
+
         return (
             <div>
                 <UpperBar />
@@ -76,19 +85,12 @@ class PetitionDetail extends Component {
                         </b>
                         <br />
 
-                        {/* TODO */}
-                        {/* <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p> */}
-
                         <div className="petitionsView_write">
                             <h6 className="petitionsView_writeHead">Petition Description:</h6>
                             <div className="View_write">{content}</div>
                             <br />
-                            {/* <ul className="View_write_link"> */}
-                            <h6>Attached links: </h6>
-                            <li>
-                                <a href="https://github.com/swsnu/swppfall2019" target="_blank" rel="noopener noreferrer">{link}</a>
-                            </li>
-                            {/* </ul> */}
+                            <h6 className="View_write_link">Attached links: </h6>
+                            {links}
                         </div>
 
                         <div className="petitionsView_statistic">
