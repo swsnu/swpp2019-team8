@@ -64,7 +64,6 @@ class PetitionDetail extends Component {
         });
 
         const comments = this.props.storedPetitionComments.map(com => {
-            console.log(com);
             return (
                 <div className="Reply_Reply_list">
                     <div className="Reply_Reply_contents">
