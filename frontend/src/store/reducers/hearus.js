@@ -16,20 +16,25 @@ const hearusReducer = (state = initialState, action) => {
                 link: action.link,
                 tag: action.tag,
             };
-            return { ...state, petition_list: state.petition_list.concat(newPetition)};
+            return { ...state, petition_list: state.petition_list.concat(newPetition) };
         }
         case actionTypes.GET_ALL_PETITIONS:
-            return {...state, petition_list : action.petitionList};   // TODO
+            return { ...state, petition_list: action.petitionList };   // TODO
         case actionTypes.GET_PETITION_BY_TITLE:
-            return {...state, petition_list : action.petitionList}
+            return { ...state, petition_list: action.petitionList }
         case actionTypes.GET_PETITION:
             return { ...state, selectedPetition: action.target };   // TODO
-        case actionTypes.GET_MY_PETITIONS:
-            return state;   // TODO
+        // case actionTypes.GET_MY_PETITIONS:
+        //     return state;   // TODO
         case actionTypes.GET_PETITION_COMMENTS:
-            return state;   // TODO
-        case actionTypes.POST_PETITION_COMMENT:
-            return state;   // TODO
+            return { ...state, comment_list: action.comment_list };
+        case actionTypes.POST_PETITION_COMMENT: {
+            const newPetitionComment = {
+                id: action.id,
+                comment: action.comment,
+            };
+            return { ...state, comment_list: state.comment_list.concat(newPetitionComment) };
+        }
 
         // Statistic에 해당하는 것은 아직 안 만듦
 

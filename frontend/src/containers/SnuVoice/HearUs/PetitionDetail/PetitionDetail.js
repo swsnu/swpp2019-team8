@@ -15,10 +15,16 @@ import demoGraph from '../../../../img/demoGraph.png';
 class PetitionDetail extends Component {
     state = {
         isSelected: false,
+        comment: '',
     }
 
     componentDidMount() {
         this.props.onGetPetition(this.props.match.params.petition_id);
+        this.props.onGetPetitionComments(this.props.match.params.petition_id);
+    }
+
+    onClickCommentConfirmButton = () => {
+        this.props.onStorePetitionComment(this.props.match.params.petition_id, this.state.comment);
     }
 
     onClickPetitionCancelButton = () => {
@@ -41,10 +47,6 @@ class PetitionDetail extends Component {
             category = this.props.selectedPetition.category;
             start_date = this.props.selectedPetition.start_date.substring(0, 10);
             end_date = this.props.selectedPetition.end_date.substring(0, 10);
-            if (this.state.isSelected === false) {
-                this.props.onGetUserByUserId(this.props.selectedPetition.author);
-                this.setState({ isSelected: true });
-            }
             link = this.props.selectedPetition.link.split(' ');
             link = link.slice(0, link.length - 1);
         }
@@ -56,6 +58,24 @@ class PetitionDetail extends Component {
                 </li>
             );
         });
+
+        let comments = [];
+        if (this.props.storedPetitionComments) {
+            comments = this.props.storedPetitionComments.map(com => {
+                return (
+                    <div key={com.id} className="Reply_Reply_list">
+                        <div className="Reply_Reply_contents">
+                            <div className="pv3_R_contents_head">
+                                {com.date}
+                            </div>
+                            <div className="R_R_contents_txt">
+                                {com.comment}
+                            </div>
+                        </div>
+                    </div>
+                );
+            });
+        }
 
         return (
             <div>
@@ -94,37 +114,28 @@ class PetitionDetail extends Component {
                         </div>
 
                         <div className="petitionsView_statistic">
-                            <br></br><br></br>
+                            <br /><br />
                             <img src={demoGraph} style={{ width: 450 }} />
-                            <Button type="button" id="more-statistics-button"
-                            >More Statistics..</Button>
+                            <Button type="button" id="more-statistics-button">More Statistics..</Button>
                             <br /><br />
                         </div>
 
                     </div>
+
                     <div className="Reply_area_write">
-                        <textarea id="tw_contents" style={{ width: 700 }}></textarea>
-                        <button>Agree</button>
+                        <textarea id="tw_contents" style={{ width: 700 }}
+                            onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
+                        <Button type="button" id="comment_confirm_button"
+                            onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
+
                     <Button type="button" id="petition_cancel_button"
                         onClick={this.onClickPetitionCancelButton}>BACK</Button>
-                    <br />
-                    ** Comment List **
-                    <br />
-                    {/* <div className="petitionsReply_Reply">
-                        <ul>
-                            <div className="Reply_Reply_list">
-                                <div className="Reply_Reply_contents">
-                                    <div className="pv3_R_contents_head">
-                                        <h4>여기에 닉네임</h4>
-                                    </div>
-                                    <div className="R_R_contents_txt">
-                                        여기에 댓글
-                                    </div>
-                                </div>
-                            </div>
-                        </ul>
-                    </div> */}
+
+                    <br /><br />
+                    <div className="petitionsReply_Reply">
+                        {comments}
+                    </div>
                 </div >
             </div >
         );
@@ -134,7 +145,7 @@ class PetitionDetail extends Component {
 export const mapStateToProps = state => {
     return {
         selectedPetition: state.hu.selectedPetition,
-        selectedUser: state.usr.selectedUser,
+        storedPetitionComments: state.hu.comment_list,
     }
 }
 
@@ -142,8 +153,10 @@ export const mapDispatchToProps = dispatch => {
     return {
         onGetPetition: petition_id =>
             dispatch(actionCreators.getPetition(petition_id)),
-        onGetUserByUserId: user_id =>
-            dispatch(actionCreators.getUserByUserId(user_id)),
+        onGetPetitionComments: petition_id =>
+            dispatch(actionCreators.getPetitionComments(petition_id)),
+        onStorePetitionComment: (petition_id, comment) =>
+            dispatch(actionCreators.postPetitionComment({ petition_id: petition_id, comment: comment })),
     }
 }
 

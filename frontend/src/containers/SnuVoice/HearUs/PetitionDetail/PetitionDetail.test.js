@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import PetitionDetail from './PetitionDetail';
 import { getMockStore } from '../../../../test-utils/mocks';
 import { history } from '../../../../store/store';
+import * as actionCreators from '../../../../store/actions/hearus';
 
 const stubInitialState = {
     selectedPetition: {
@@ -19,9 +20,11 @@ const stubInitialState = {
         author: 1,
         link: 'SELECTED_PETITION_TEST_LINK',
     },
-    selectedUser: {
-        nickname: 'SELECTED_PETITION_TEST_NICKNAME',
-    },
+    comment_list: [
+        { id: 1, comment: 'COMMENT_TEST_COMMENT_1' },
+        { id: 2, comment: 'COMMENT_TEST_COMMENT_2' },
+        { id: 3, comment: 'COMMENT_TEST_COMMENT_3' },
+    ],
 }
 
 const mockStore = getMockStore(stubInitialState);
@@ -62,7 +65,6 @@ describe('<PetitionDetail />', () => {
         expect(wrapperCategory.at(0).text()).toBe('Category: SELECTED_PETITION_TEST_CATEGORY');
         expect(wrapperStartDate.at(0).text()).toBe('Start: 0000-00-00');
         expect(wrapperEndDate.at(0).text()).toBe('End: 0000-00-00');
-        // expect(wrapperPetitioner.at(0).text()).toBe('Petitioner: SELECTED_PETITION_TEST_NICKNAME');
         // expect(wrapperLink.at(0).text()).toBe('Link 1 : SELECTED_PETITION_TEST_LINK');
     });
 
@@ -93,6 +95,33 @@ describe('<PetitionDetail />', () => {
         expect(wrapperEndDate.at(0).text()).toBe('End: ');
         // expect(wrapperPetitioner.at(0).text()).toBe('Petitioner: ');
         // expect(wrapperLink.at(0).text()).toBe('Link 1 : ');
+    });
+
+    it(`should render STORED_PETITION_COMMENTS`, () => {
+        const component = mount(petitionDetail);
+        const wrapper = component.find('.R_R_contents_txt');
+        expect(wrapper.length).toBe(3);
+        expect(wrapper.at(0).text()).toBe('COMMENT_TEST_COMMENT_1');
+        expect(wrapper.at(1).text()).toBe('COMMENT_TEST_COMMENT_2');
+        expect(wrapper.at(2).text()).toBe('COMMENT_TEST_COMMENT_3');
+    });
+
+    it(`should set state properly on comment input`, () => {
+        const petitionComment = 'TEST_COMMENT';
+        const component = mount(petitionDetail);
+        const wrapper = component.find('#tw_contents').at(0);
+        wrapper.simulate('change', { target: { value: petitionComment } });
+        const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
+        expect(petitionCommentInstance.state.comment).toEqual(petitionComment);
+    });
+
+    it(`should call 'onClickCommentConfirmButton'`, () => {
+        const spyPostPetitionComment = jest.spyOn(actionCreators, 'postPetitionComment')
+            .mockImplementation(id => { return dispatch => { }; });
+        const component = mount(petitionDetail);
+        const wrapper = component.find('#comment_confirm_button').at(0);
+        wrapper.simulate('click');
+        expect(spyPostPetitionComment).toHaveBeenCalledTimes(1);
     });
 
     it(`should call 'onClickPetitionCancelButton'`, () => {
