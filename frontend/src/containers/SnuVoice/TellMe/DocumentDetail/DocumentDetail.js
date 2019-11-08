@@ -16,6 +16,10 @@ class DocumentDetail extends Component {
         this.props.onGetDocument(this.props.match.params.document_title);
     }
 
+    onClickDocumentCancelButton = () => {
+        this.props.history.push("/tell_me");
+    };
+
     render() {
         let title = '';
         let content = '';
@@ -25,22 +29,35 @@ class DocumentDetail extends Component {
         }
         return (
             <div>
-                <Upperbar/>
-            <div className="DocumentDetail">
-                <br/>
-                <h4 className="document">Document:</h4>
-                <div className="content">
-<br/>
-                {/* <h3>TITLE</h3> */}
-                <h1 className="title">{title}</h1>
-                {/* <h3>CONTENT</h3> */}
-                <hr/>
-                <MarkdownPreview className="content" value={content} />
-                <hr/>
-                
-                <Button className="debateButton">Debate</Button>
+                <Upperbar />
+                <div className="DocumentDetail">
+                    <br />
+                    <h4 className="document">Document:</h4>
+                    <div className="content">
+                        <br />
+                        {/* <h3>TITLE</h3> */}
+                        <h1 className="title">{title}</h1>
+                        {/* <h3>CONTENT</h3> */}
+                        <hr />
+                        <MarkdownPreview className="content" value={content} />
+                        <hr />
+                        <Button
+                            type="button"
+                            id="document_cancel_button"
+                            onClick={this.onClickDocumentCancelButton}
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            type="button"
+                            id="document_edit_button"
+                            onClick={this.onClickDocumentEditButton}
+                        >
+                            Edit
+                        </Button>
+                        <Button className="debateButton">Debate</Button>
+                    </div>
                 </div>
-            </div>
             </div>
         );
     }

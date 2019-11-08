@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 
 import * as actionCreators from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
 import './PetitionDetail.css';
+
+import demoGraph from '../../../../img/demoGraph.png';
 
 class PetitionDetail extends Component {
     state = {
@@ -17,6 +19,10 @@ class PetitionDetail extends Component {
 
     componentDidMount() {
         this.props.onGetPetition(this.props.match.params.petition_id);
+    }
+
+    onClickPetitionCancelButton = () => {
+        this.props.history.push('/hear_us');
     }
 
     render() {
@@ -45,6 +51,7 @@ class PetitionDetail extends Component {
         return (
             <div>
                 <UpperBar />
+
                 <div className="PetitionDetail">
                     <br /><br />
                     <div className="content">
@@ -62,9 +69,6 @@ class PetitionDetail extends Component {
                                         <div className="petitionsView_start_date">Start: {start_date}</div>
                                     </Col>
                                     <Col>
-                                        <div className="petitionsView_petitioner">Petitioner: {petitioner}</div>
-                                    </Col>
-                                    <Col>
                                         <div className="petitionsView_end_date">End: {end_date}</div>
                                     </Col>
                                 </Row>
@@ -75,7 +79,6 @@ class PetitionDetail extends Component {
                         {/* TODO */}
                         {/* <p className="petitionsView_graphy">-----여기에 진행상태바 근데 이건 css 힘이 너무 많이 필요해서 일단 패스-----</p> */}
 
-
                         <div className="petitionsView_write">
                             <h6 className="petitionsView_writeHead">Petition Description:</h6>
                             <div className="View_write">{content}</div>
@@ -83,64 +86,45 @@ class PetitionDetail extends Component {
                             {/* <ul className="View_write_link"> */}
                             <h6>Attached links: </h6>
                             <li>
-                                <a href="https://github.com/swsnu/swpp2019-team8" target="_blank" rel="noopener noreferrer">{link}</a>
+                                <a href="https://github.com/swsnu/swppfall2019" target="_blank" rel="noopener noreferrer">{link}</a>
                             </li>
                             {/* </ul> */}
                         </div>
 
                         <div className="petitionsView_statistic">
-                            <br></br><br></br>** 여기에 통계 **<br></br><br></br><br /><br />
+                            <br></br><br></br>
+                            <img src={demoGraph} style={{ width: 450 }} />
+                            <Button type="button" id="more-statistics-button"
+                            >More Statistics..</Button>
+                            <br /><br />
                         </div>
 
-                        <div className="petitionsReply_area">
-                            <div className="Reply_area_head">
-                                <Row>
-                                    <Col>
-                                        <h5 className="Reply_area_agree">Votes: {votes}</h5>
-                                    </Col>
-                                    <Col>
-                                        <div className="Reply_area_url">
-                                            URL: {window.location.href}
-                                            <button>Copy</button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </div>
-                            <div className="Reply_area_write">
-                                <textarea id="tw_contents" style={{ width: 700 }}></textarea>
-                                <button>Agree</button>
-                            </div>
-                            <br />
-                            **Comment List**
-                            <br />
-                            {/* <div className="petitionsReply_Reply">
-                                <ul>
-                                    <div className="Reply_Reply_list">
-                                        <div className="Reply_Reply_contents">
-                                            <div className="pv3_R_contents_head">
-                                                <h4>여기에 닉네임</h4>
-                                            </div>
-                                            <div className="R_R_contents_txt">
-                                                여기에 댓글
-                                    </div>
-                                        </div>
-                                    </div>
-                                    <div className="Reply_Reply_list">
-                                        <div className="Reply_Reply_contents">
-                                            <div className="pv3_R_contents_head">
-                                                <h4>여기에 닉네임</h4>
-                                            </div>
-                                            <div className="R_R_contents_txt">
-                                                여기에 댓글
-                                    </div>
-                                        </div>
-                                    </div>
-                                </ul>
-                            </div> */}
-                        </div>
                     </div>
+                    <div className="Reply_area_write">
+                        <textarea id="tw_contents" style={{ width: 700 }}></textarea>
+                        <button>Agree</button>
+                    </div>
+                    <Button type="button" id="petition_cancel_button"
+                        onClick={this.onClickPetitionCancelButton}>BACK</Button>
+                    <br />
+                    ** Comment List **
+                    <br />
+                    {/* <div className="petitionsReply_Reply">
+                        <ul>
+                            <div className="Reply_Reply_list">
+                                <div className="Reply_Reply_contents">
+                                    <div className="pv3_R_contents_head">
+                                        <h4>여기에 닉네임</h4>
+                                    </div>
+                                    <div className="R_R_contents_txt">
+                                        여기에 댓글
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div> */}
                 </div >
-            </div>
+            </div >
         );
     }
 }

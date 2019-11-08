@@ -117,7 +117,7 @@ class PetitionCreate extends Component {
                             <br />
                             <div className="inputTop">
                                 <Input type="textarea" id="petition_terms_textarea" placeholder="content" readOnly
-                                    defaultValue="청원 작성 시 주의할 점"></Input>
+                                    defaultValue="Cautions when you create new petition"></Input>
                                 <div className="agree">
 
                                     <FormGroup>
@@ -155,7 +155,7 @@ class PetitionCreate extends Component {
                                     </InputGroup>
                                     {link_list}
                                 </FormGroup>
-                                <FormGroup >
+                                {/*<FormGroup >
                                     <Label>Tag</Label>
                                     <InputGroup>
                                         <Input type="text" id="petition_tag_input" placeholder="new tag" value={this.state.petitionTag}
@@ -166,7 +166,7 @@ class PetitionCreate extends Component {
                                         </InputGroupAddon>
                                     </InputGroup>
                                     {tag_list}
-                                </FormGroup>
+                                </FormGroup> */}
                             </div>
                             <br /><br /><br />
                             <ButtonGroup className="buttons">
