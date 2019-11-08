@@ -35,13 +35,14 @@ const hearusReducer = (state = initialState, action) => {
             };
             return { ...state, comment_list: state.comment_list.concat(newPetitionComment) };
         }
-        case actionTypes.PUT_PETITION_VOTE:
+        case actionTypes.PUT_PETITION_VOTE: {
             const modified = state.petition_list.map((petition) => {
                 if (petition.id === action.targetID) {
                     return { ...petition, votes: petition.votes + 1 };
                 }
             });
             return { ...state, petition_list: modified };
+        }
 
         // Statistic에 해당하는 것은 아직 안 만듦
 
