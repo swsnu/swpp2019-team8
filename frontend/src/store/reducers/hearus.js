@@ -28,12 +28,13 @@ const hearusReducer = (state = initialState, action) => {
             return state;   // TODO
         case actionTypes.GET_PETITION_COMMENTS:
             return { ...state, comment_list: action.comment_list };
-        case actionTypes.POST_PETITION_COMMENT:
+        case actionTypes.POST_PETITION_COMMENT: {
             const newPetitionComment = {
                 id: action.id,
                 comment: action.comment,
             };
             return { ...state, comment_list: state.comment_list.concat(newPetitionComment) };
+        }
 
         // Statistic에 해당하는 것은 아직 안 만듦
 
