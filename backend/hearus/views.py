@@ -65,8 +65,17 @@ def petition_petitionid(request, petition_id):
         ret_petition = model_to_dict(petition)
         return JsonResponse(ret_petition, safe=False)
     # put: 1.votes++ 2.change status
+    elif request.method == 'PUT':
+        try:
+            petition = Petition.objects.get(id=petition_id)
+        except Petition.DoesNotExist:
+            return HttpResponse(status=404)
+        petition.votes = petition.votes + 1
+        petition.save()
+        ret_petition = model_to_dict(petition)
+        return JsonResponse(ret_petition, status=200)
     else:
-        return HttpResponseNotAllowed(['GET'])
+        return HttpResponseNotAllowed(['GET', 'PUT'])
 
 
 def petition_userid(request, user_id):
