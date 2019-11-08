@@ -131,6 +131,11 @@ describe('<PetitionList />', () => {
         )
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+        delete global.__mobxInstanceCount;
+    })
+
     it('should render PetitionList', () => {
         const component = mount(petitionList)
         const top = component.find('.TopOfPage')
