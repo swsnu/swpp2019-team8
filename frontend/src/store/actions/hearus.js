@@ -12,7 +12,7 @@ export const postPetition_ = (petition) => {
         category: petition.category,
         tag: petition.tag,
         link: petition.link,
-        
+
     };
 };
 
@@ -22,9 +22,9 @@ export const postPetition = (petition) => {
             dispatch(postPetition_(res.data));
             dispatch(push('/hear_us/' + res.data.id));
         })
-        .catch(res => {
-            alert('post Petition Failed.')
-        });
+            .catch(res => {
+                alert('post Petition Failed.')
+            });
     };
 };
 
@@ -32,7 +32,7 @@ export const postPetition = (petition) => {
 export const getAllPetitions_ = (response) => {
     return {
         type: actionTypes.GET_ALL_PETITIONS,
-        petitionList : response
+        petitionList: response
         // TODO
     };
 };
@@ -60,7 +60,7 @@ export const getPetition_ = (petition) => {
 export const getPetitionByTitle_ = (response) => {
     return {
         type: actionTypes.GET_PETITION_BY_TITLE,
-        petitionList : response
+        petitionList: response
     }
 
 }
@@ -95,16 +95,17 @@ export const getMyPetitions = (/* TODO */) => {
     };
 };
 
-export const getPetitionComments_ = (/* TODO */) => {
+export const getPetitionComments_ = (comment_list) => {
     return {
         type: actionTypes.GET_PETITION_COMMENTS,
-        // TODO
+        comment_list: comment_list,
     };
 };
 
-export const getPetitionComments = (/* TODO */) => {
+export const getPetitionComments = (petition_id) => {
     return dispatch => {
-        // TODO
+        return axios.get('/api/hearus/petition/' + petition_id)
+            .then(res => dispatch(getPetitionComments_(res.data)));
     };
 };
 

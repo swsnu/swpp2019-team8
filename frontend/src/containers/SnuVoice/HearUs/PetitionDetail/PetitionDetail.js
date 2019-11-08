@@ -19,6 +19,7 @@ class PetitionDetail extends Component {
 
     componentDidMount() {
         this.props.onGetPetition(this.props.match.params.petition_id);
+        this.props.onGetPetitionComments(this.props.match.params.petition_id);
     }
 
     onClickPetitionCancelButton = () => {
@@ -94,20 +95,22 @@ class PetitionDetail extends Component {
                         </div>
 
                         <div className="petitionsView_statistic">
-                            <br></br><br></br>
+                            <br /><br />
                             <img src={demoGraph} style={{ width: 450 }} />
-                            <Button type="button" id="more-statistics-button"
-                            >More Statistics..</Button>
+                            <Button type="button" id="more-statistics-button">More Statistics..</Button>
                             <br /><br />
                         </div>
 
                     </div>
+
                     <div className="Reply_area_write">
                         <textarea id="tw_contents" style={{ width: 700 }}></textarea>
                         <button>Agree</button>
                     </div>
+
                     <Button type="button" id="petition_cancel_button"
                         onClick={this.onClickPetitionCancelButton}>BACK</Button>
+
                     <br />
                     ** Comment List **
                     <br />
@@ -135,6 +138,7 @@ export const mapStateToProps = state => {
     return {
         selectedPetition: state.hu.selectedPetition,
         selectedUser: state.usr.selectedUser,
+        storedPetitionComments: state.hu.comment_list,
     }
 }
 
@@ -144,6 +148,8 @@ export const mapDispatchToProps = dispatch => {
             dispatch(actionCreators.getPetition(petition_id)),
         onGetUserByUserId: user_id =>
             dispatch(actionCreators.getUserByUserId(user_id)),
+        onGetPetitionComments: petition_id =>
+            dispatch(actionCreators.getPetitionComments(petition_id)),
     }
 }
 
