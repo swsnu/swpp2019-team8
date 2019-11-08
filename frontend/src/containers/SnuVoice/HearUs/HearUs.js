@@ -21,7 +21,7 @@ export class HearUs extends Component {
     this.setState({ search: event.target.value });
   };
 
-  onClickSearchConfirmButton = event =>  {
+  onClickSearchConfirmButton = () =>  {
     // 백엔드 구현이후 추가 예정
     window.sessionStorage.setItem('petitionSearch', this.state.search)
     this.props.history.push("/hear_us/search");

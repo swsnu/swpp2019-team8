@@ -15,7 +15,7 @@ import './PetitionList.css';
 class PetitionList extends Component {
     state = {
         search: '',
-        petitionState: 'ongoing',
+        petitionState: 'onGoing',
         petitionOrder: 'vote',
         listNumber: [1, 2, 3, 4, 5],
         selectedNumber: 1,
@@ -101,8 +101,8 @@ class PetitionList extends Component {
         let petitionStateTabButtons = (
             <Nav tabs>
                 <NavItem>
-                    <NavLink className={classnames({ active: this.state.petitionState === 'ongoing' })}
-                        id="ongoing_petition_button" onClick={() => this.onClickPetitionTabButton('ongoing')}>
+                    <NavLink className={classnames({ active: this.state.petitionState === 'onGoing' })}
+                        id="ongoing_petition_button" onClick={() => this.onClickPetitionTabButton('onGoing')}>
                         Ongoing
                         </NavLink>
                 </NavItem>
@@ -136,12 +136,17 @@ class PetitionList extends Component {
 
 
         if (this.state.selectedCategory === 'All') {
-            petitionList = this.props.petitionList;
+            petitionList =
+                this.props.petitionList
+                .filter(petition =>
+                    petition.status === this.state.petitionState)
 
         } else {
             petitionList = (
                 this.props.petitionList
-                    .filter(petition => petition.category === this.state.selectedCategory)
+                    .filter(petition =>
+                        petition.category === this.state.selectedCategory
+                        && petition.status === this.state.petitionState)
             )
         }
 
@@ -225,7 +230,7 @@ class PetitionList extends Component {
                     </div>
                     {petitionStateTabButtons}
                     <TabContent activeTab={this.state.petitionState}>
-                        <TabPane tabId='ongoing'>
+                        <TabPane tabId='onGoing'>
                             <br />
                             <div className="tableButtons1">
                                 {petitionOrderButtons}<br />
