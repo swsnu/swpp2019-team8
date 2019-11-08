@@ -120,8 +120,9 @@ class PetitionDetail extends Component {
                             <Button type="button" id="more-statistics-button">More Statistics..</Button>
                             <br /><br />
                         </div>
-
                     </div>
+
+                    <h3 class="Reply_area_agree">Votes <span>{votes}</span></h3>
 
                     <div className="Reply_area_write">
                         <textarea id="tw_contents" style={{ width: 700 }}
