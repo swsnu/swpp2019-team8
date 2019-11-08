@@ -24,8 +24,8 @@ const hearusReducer = (state = initialState, action) => {
             return { ...state, petition_list: action.petitionList }
         case actionTypes.GET_PETITION:
             return { ...state, selectedPetition: action.target };   // TODO
-        case actionTypes.GET_MY_PETITIONS:
-            return state;   // TODO
+        // case actionTypes.GET_MY_PETITIONS:
+        //     return state;   // TODO
         case actionTypes.GET_PETITION_COMMENTS:
             return { ...state, comment_list: action.comment_list };
         case actionTypes.POST_PETITION_COMMENT: {
