@@ -51,8 +51,8 @@ class PetitionDetail extends Component {
 
         const links = link.map(url => {
             return (
-                <li>
-                    <a href={url} target="_blank" rel="noopener noreferrer">url</a>
+                <li key="">
+                    <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
                 </li>
             );
         });
