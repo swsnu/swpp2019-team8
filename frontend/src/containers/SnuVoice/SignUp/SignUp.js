@@ -120,6 +120,8 @@ class SignUp extends Component {
       //중복체크? 
       await this.props.checkEmailDuplicate(email)
       if (this.props.emailDuplicate === true) {
+        inputResult.email = false;
+        inputInvalid.email = true;
         formFeedbackMessage.email = '이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.';
       } else {
         inputResult.email = true;
@@ -181,10 +183,11 @@ class SignUp extends Component {
         inputResult.password = false;
         inputInvalid.password = false;
         formFeedbackMessage.password = ''
+      } else {
+        inputResult.password = false;
+        inputInvalid.password = true;
+        formFeedbackMessage.password = '비밀번호가 너무 짧습니다. 8자 이상으로 설정해주십시오'
       }
-      inputResult.password = false;
-      inputInvalid.password = true;
-      formFeedbackMessage.password = '비밀번호가 너무 짧습니다. 8자 이상으로 설정해주십시오'
     } else {
       if (/[a-zA-Z]+/.exec(event.target.value) && /[0-9]+/.exec(event.target.value) && /[^\w\s]+/.exec(event.target.value)) {
         inputResult.password = true;
@@ -204,7 +207,7 @@ class SignUp extends Component {
     })
   };
 
-  onChangePasswordComfirmInput = event => {
+  onChangePasswordConfirmInput = event => {
     let inputResult = this.state.checkInputResult;
     let formFeedbackMessage = this.state.formFeedbackMessage;
     let inputInvalid = this.state.checkInputInvalid;
@@ -235,20 +238,18 @@ class SignUp extends Component {
     let formFeedbackMessage = this.state.formFeedbackMessage;
     let inputInvalid = this.state.checkInputInvalid;
     if (nickname !== '') await this.props.checkNicknameDuplicate(nickname)
-    if (this.props.nicknameDuplicate === true) {
+    if (nickname === '') {
+      inputResult.nickname = false;
+      inputInvalid.nickname = false;
+      formFeedbackMessage.nickname = ''
+    } else if (this.props.nicknameDuplicate === true) {
       inputResult.nickname = false;
       inputInvalid.nickname = true;
       formFeedbackMessage.nickname = '이미 존재하는 닉네임입니다.'
     } else {
-      if (nickname === '') {
-        inputResult.nickname = false;
-        inputInvalid.nickname = false;
-        formFeedbackMessage.nickname = ''
-      } else {
-        inputResult.nickname = true;
-        inputInvalid.nickname = false;
-        formFeedbackMessage.nickname = ''
-      }
+      inputResult.nickname = true;
+      inputInvalid.nickname = false;
+      formFeedbackMessage.nickname = ''
 
     }
     //중복체크만 확인
@@ -286,17 +287,17 @@ class SignUp extends Component {
       } else selectedStatus[i] = false;
     }
     this.setState({
-      studentId: event.target.value,
+      statusRadio: selectedStatus,
       checkInputResult: inputResult,
     })
   };
 
-  onChagneStuentIdInput = async (event) => {
+  onChangeStudentIdInput = async (event) => {
     let studentId = event.target.value
     let inputResult = this.state.checkInputResult;
     let inputInvalid = this.state.checkInputInvalid;
     let formFeedbackMessage = this.state.formFeedbackMessage;
-    if (/^[1-2][0-9][0-9]{2}-[0-9]{5}$/.exec(studentId)) {
+    if (/^[1-2][0-9]{3}-[0-9]{5}$/.exec(studentId)) {
       await this.props.checkStudentIdDuplicate(studentId)
       if (this.props.studentIdDuplicate === true) {
         inputResult.studentId = false;
@@ -345,8 +346,7 @@ class SignUp extends Component {
     let inputResult = this.state.checkInputResult;
     if (event.target.value !== 'all') {
       inputResult.department = true;
-    }
-    inputResult.department = false;
+    } else inputResult.department = false;
     this.setState({
       selectedDepartment: event.target.value,
       checkInputResult: inputResult
@@ -357,8 +357,7 @@ class SignUp extends Component {
     let inputResult = this.state.checkInputResult;
     if (event.target.value !== '-') {
       inputResult.major = true;
-    }
-    inputResult.major = false;
+    } else inputResult.major = false;
     this.setState({
       selectedMajor: event.target.value,
       checkInputResult: inputResult
@@ -371,21 +370,12 @@ class SignUp extends Component {
     this.setState({ checkInputResult: inputResult });
   };
 
-  onClickVerifyButton = async () => { //중복체크
+  onClickVerifyButton = async () => { 
     await this.props.getVerifyCode(this.state.email);
   };
 
-  onClickSignUpConfirmButton = async () => { // 회원가입 확인
+  onClickSignUpConfirmButton = async () => { // 회원가입 확인 + 추가 구현 예정
     let inputResult = this.state.checkInputResult;
-    let alertMessage = '';
-    if (inputResult.email === false) alertMessage += '스누메일, '
-    if (inputResult.verifyCode === false) alertMessage += '인증번호, '
-    if (inputResult.password === false) alertMessage += '비밀번호, '
-    if (inputResult.passwordConfirm === false) alertMessage += '비밀번호 확인, '
-    if (inputResult.gerder === false) alertMessage += '성별, '
-    if (inputResult.studentId === false) alertMessage += '학번, '
-    alertMessage += '을 다시 한 번 확인해주십시오'
-    alert(alertMessage)
     this.props.history.push("/");
   };
 
@@ -412,7 +402,7 @@ class SignUp extends Component {
               type="text"
               id="student_id_input"
               placeholder="STUDENT ID"
-              onChange={this.onChagneStuentIdInput}
+              onChange={this.onChangeStudentIdInput}
               valid={this.state.checkInputResult.studentId}
               invalid={this.state.checkInputInvalid.studentId}
             ></Input>
@@ -466,6 +456,7 @@ class SignUp extends Component {
         </div>
       );
     }
+    let terms = '약관 적어넣기 약관 적어넣기'
 
     return (
       <div className="SignUp">
@@ -473,8 +464,7 @@ class SignUp extends Component {
         <h1>Sign Up</h1>
         <Container>
           <Form>
-            <textarea rows="5" cols="80">
-              약관 적어넣기 약관 적어넣기
+            <textarea rows="5" cols="80" defaultValue={terms}>
             </textarea>
             <FormGroup>
               <Input
@@ -523,8 +513,8 @@ class SignUp extends Component {
                   invalid={this.state.checkInputInvalid.verifyCode}
                 ></Input>
                 <FormFeedback >
-                    {this.state.formFeedbackMessage.verifyCode}
-                  </FormFeedback>
+                  {this.state.formFeedbackMessage.verifyCode}
+                </FormFeedback>
               </FormGroup>
               <FormGroup row>
                 <Label>PASSWORD</Label>
@@ -537,8 +527,8 @@ class SignUp extends Component {
                   invalid={this.state.checkInputInvalid.password}
                 ></Input>
                 <FormFeedback >
-                    {this.state.formFeedbackMessage.password}
-                  </FormFeedback>
+                  {this.state.formFeedbackMessage.password}
+                </FormFeedback>
               </FormGroup>
               <FormGroup row>
                 <Label>PASSWORD-CONFIRM</Label>
@@ -546,13 +536,13 @@ class SignUp extends Component {
                   type="password"
                   id="password_confirm_input"
                   placeholder="PASSWORD CONFIRMATION"
-                  onChange={this.onChangePasswordComfirmInput}
+                  onChange={this.onChangePasswordConfirmInput}
                   valid={this.state.checkInputResult.passwordConfirm}
                   invalid={this.state.checkInputInvalid.passwordConfirm}
                 ></Input>
                 <FormFeedback >
-                    {this.state.formFeedbackMessage.passwordConfirm}
-                  </FormFeedback>
+                  {this.state.formFeedbackMessage.passwordConfirm}
+                </FormFeedback>
               </FormGroup>
               <FormGroup row>
                 <Label>NICKNAME</Label>
@@ -565,8 +555,8 @@ class SignUp extends Component {
                   invalid={this.state.checkInputInvalid.nickname}
                 ></Input>
                 <FormFeedback >
-                    {this.state.formFeedbackMessage.nickname}
-                  </FormFeedback>
+                  {this.state.formFeedbackMessage.nickname}
+                </FormFeedback>
               </FormGroup>
               {/* // radio input : label을 클릭해야 작동(글씨) */}
               <Label>GENDER</Label>
