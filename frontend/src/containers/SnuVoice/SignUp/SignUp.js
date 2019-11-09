@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import * as actionCreator from '../../../store/actions/index';
+
 import {
   Button,
   Form,
@@ -9,12 +11,13 @@ import {
   Label,
   Input,
   InputGroup,
-  InputGroupAddon,
-  InputGroupText,
+  FormFeedback,
   Col,
   Row,
   Container
 } from "reactstrap";
+
+import UpperBar from "../UpperBar/UpperBar";
 
 class SignUp extends Component {
   state = {
@@ -26,8 +29,6 @@ class SignUp extends Component {
     studentId: "",
     selectedDepartment: "all",
     selectedMajor: "", // ex) 컴퓨터공학부...
-    agreeToTerms: false,
-    verify: false,
     genderRadio: {
       male: false,
       female: false,
@@ -44,105 +45,347 @@ class SignUp extends Component {
       doctor: false
     },
     departmentList: [
-      { value: "-" },
-      { value: "Humanities" },
-      { value: "Social Sciences" },
-      { value: "Natural Sciences" },
-      { value: "Business Administration" },
-      { value: "Nursing" },
-      { value: "Engineering" },
-      { value: "Agriculture and Life Sciences" },
-      { value: "Fine Arts" },
-      { value: "Education" },
-      { value: "Human Ecology" },
-      { value: "Veterinary Medicine" },
-      { value: "Pharmacy" },
-      { value: "Music" },
-      { value: "Medicine" },
-      { value: "Liberal Studies" }
+      { value: "all", label: '-' },
+      { value: "agricultureAndLifeSciences", label: "Agriculture and Life Sciences" },
+      { value: "businessAdministration", label: "Business Administration" },
+      { value: "education", label: "Education" },
+      { value: "engineering", label: "Engineering" },
+      { value: "fineArts", label: "Fine Arts" },
+      { value: "humanities", label: "Humanities" },
+      { value: "humanEcology", label: "Human Ecology" },
+      { value: "liberalStudies", label: "Liberal Studies" },
+      { value: "medicine", label: "Medicine" },
+      { value: "music", label: "Music" },
+      { value: "naturalSciences", label: "Natural Sciences" },
+      { value: "nursing", label: "Nursing" },
+      { value: "socialSciences", label: "Social Sciences" },
+      { value: "pharmacy", label: "Pharmacy" },
+      { value: "veterinaryMedicine", label: "Veterinary Medicine" }
     ], // ex() 공대, 농생대
     majorList: {
-      all: [{ value: "" }],
-      Engineering: [{ value: "hi" }, { value: "temp" }],
-      hi: [{ value: "asdasd" }, { value: "asdasd" }]
+      all: [{ value: "-" }],
+      agricultureAndLifeSciences: [{ value: 'agricultureAndLifeSciences' }],
+      businessAdministration: [{ value: 'businessAdministration' }],
+      education: [{ value: 'education' }],
+      engineering: [{ value: "engineering" }],
+      fineArts: [{ value: 'fineArts' }],
+      humanities: [{ value: 'humanities' }],
+      liberalStudies: [{ value: 'liberalStudies' }],
+      medicine: [{ value: 'medicine' }],
+      naturalSciences: [{ value: 'naturalSciences' }],
+      nursing: [{ value: 'nursing' }],
+      socialSciences: [{ value: 'socialSciences' }],
+      pharmacy: [{ value: 'pharmacy' }],
+      veterinaryMedicine: [{ value: 'veterinaryMedicine' }]
     },
-    checkInputResult: {
+    checkInputResult: { // 회원가입을 위한 정보들이 알맞게 들어왔는지 확인
+      agreeToTerms: false,
       email: false,
-      verfiyCode: false,
+      verifyCode: false,
+      password: false,
+      passwordConfirm: false,
+      nickname: false,
+      studentId: false,
+      department: false,
+      major: false,
+      gender: false,
+      status: false,
+      studentStatus: false
+    },
+    checkInputInvalid: { // input이 invalid한 상태이어야 하는지 확인
+      email: false,
+      verifyCode: false,
       password: false,
       passwordConfirm: false,
       nickname: false,
       studentId: false
-    }
+    },
+    formFeedbackMessage: {
+      email: '',
+      verifyCode: '',
+      password: '',
+      passwordConfirm: '',
+      nickname: '',
+      studentId: ''
+    },
+
   };
 
-  onChangeEmailInput = event => {
-    this.setState({ email: event.target.value });
+  onChangeEmailInput = async (event) => {
+    let email = event.target.value;
+    let formFeedbackMessage = this.state.formFeedbackMessage;
+    let inputResult = this.state.checkInputResult;
+    let inputInvalid = this.state.checkInputInvalid;
+    if (/^[a-zA-Z0-9]+@snu\.ac\.kr$/.exec(email)) { // 성공
+      //중복체크? 
+      await this.props.checkEmailDuplicate(email)
+      if (this.props.emailDuplicate === true) {
+        formFeedbackMessage.email = '이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.';
+      } else {
+        inputResult.email = true;
+        inputInvalid.email = false;
+        formFeedbackMessage.email = ''
+
+      }
+    } else if (email === '') {
+      inputResult.email = false;
+      inputInvalid.email = false;
+      formFeedbackMessage.email = ''
+    } else {                                                  // 실패
+      inputResult.email = false;
+      inputInvalid.email = true;
+      formFeedbackMessage.email = '스누메일 형식으로 입력해주세요.'
+    }
+
+    this.setState({
+      email: email,
+      checkInputInvalid: inputInvalid,
+      checkInputResult: inputResult,
+      formFeedbackMessage: formFeedbackMessage,
+    })
+
   };
 
   onChangeVerifyCodeInput = event => {
-    this.setState({ verifyCode: event.target.value });
+    let inputResult = this.state.checkInputResult;
+    let formFeedbackMessage = this.state.formFeedbackMessage;
+    let inputInvalid = this.state.checkInputInvalid;
+    if (event.target.value === this.props.verifyCode && this.props.verifyCode !== '') { //성공
+      inputResult.verifyCode = true;
+      inputInvalid.verifyCode = false;
+      formFeedbackMessage.verifyCode = '';
+    } else if (event.target.value === '') {
+      inputResult.verifyCode = false;
+      inputInvalid.verifyCode = false;
+      formFeedbackMessage.verifyCode = '';
+    } else {                                                                          //실패
+      inputResult.verifyCode = false;
+      inputInvalid.verifyCode = true;
+      formFeedbackMessage.verifyCode = '인증번호가 일치하지 않습니다.';
+    }
+    this.setState({
+      verifyCode: event.target.value,
+      checkInputInvalid: inputInvalid,
+      checkInputResult: inputResult,
+      formFeedbackMessage: formFeedbackMessage,
+    })
   };
 
   onChangePasswordInput = event => {
-    this.setState({ password: event.target.value });
+    //정규표현식 추가
+    let inputResult = this.state.checkInputResult;
+    let formFeedbackMessage = this.state.formFeedbackMessage;
+    let inputInvalid = this.state.checkInputInvalid;
+    if (event.target.value.length < 8) {
+      if (event.target.value === '') {
+        inputResult.password = false;
+        inputInvalid.password = false;
+        formFeedbackMessage.password = ''
+      }
+      inputResult.password = false;
+      inputInvalid.password = true;
+      formFeedbackMessage.password = '비밀번호가 너무 짧습니다. 8자 이상으로 설정해주십시오'
+    } else {
+      if (/[a-zA-Z]+/.exec(event.target.value) && /[0-9]+/.exec(event.target.value) && /[^\w\s]+/.exec(event.target.value)) {
+        inputResult.password = true;
+        inputInvalid.password = false;
+        formFeedbackMessage.password = ''
+      } else {
+        inputResult.password = false;
+        inputInvalid.password = true;
+        formFeedbackMessage.password = '영문자, 특수기호, 숫자를 포함한 8자 이상으로 설정해주십시오.'
+      }
+    }
+    this.setState({
+      password: event.target.value,
+      checkInputInvalid: inputInvalid,
+      checkInputResult: inputResult,
+      formFeedbackMessage: formFeedbackMessage,
+    })
   };
 
   onChangePasswordComfirmInput = event => {
-    this.setState({ passwordConfirm: event.target.value });
-  };
-
-  onChangeNicknameInput = event => {
-    this.setState({ nickname: event.target.value });
-    // 나중에 중복체크 해야할 때 써야할듯 하하
-  };
-
-  onChangeGenderRadioButton = event => {
-    let temp = this.state.genderRadio;
-    for (let i in temp) {
-      if (i === event.target.value) temp[i] = event.target.checked;
-      else temp[i] = false;
+    let inputResult = this.state.checkInputResult;
+    let formFeedbackMessage = this.state.formFeedbackMessage;
+    let inputInvalid = this.state.checkInputInvalid;
+    if (this.state.password === event.target.value) { //성공
+      inputResult.passwordConfirm = true;
+      inputInvalid.passwordConfirm = false;
+      formFeedbackMessage.passwordConfirm = '';
+    } else if (event.target.value === '') {                                          //실패
+      inputResult.passwordConfirm = false;
+      inputInvalid.passwordConfirm = false;
+      formFeedbackMessage.passwordConfirm = '';
+    } else {
+      inputResult.passwordConfirm = false;
+      inputInvalid.passwordConfirm = true;
+      formFeedbackMessage.passwordConfirm = '비밀번호와 일치하지 않습니다.'
     }
-    this.setState({ genderRadio: temp });
+    this.setState({
+      passwordConfirm: event.target.value,
+      checkInputInvalid: inputInvalid,
+      checkInputResult: inputResult,
+      formFeedbackMessage: formFeedbackMessage,
+    })
+  };
+
+  onChangeNicknameInput = async (event) => {
+    let nickname = event.target.value
+    let inputResult = this.state.checkInputResult;
+    let formFeedbackMessage = this.state.formFeedbackMessage;
+    let inputInvalid = this.state.checkInputInvalid;
+    if (nickname !== '') await this.props.checkNicknameDuplicate(nickname)
+    if (this.props.nicknameDuplicate === true) {
+      inputResult.nickname = false;
+      inputInvalid.nickname = true;
+      formFeedbackMessage.nickname = '이미 존재하는 닉네임입니다.'
+    } else {
+      if (nickname === '') {
+        inputResult.nickname = false;
+        inputInvalid.nickname = false;
+        formFeedbackMessage.nickname = ''
+      } else {
+        inputResult.nickname = true;
+        inputInvalid.nickname = false;
+        formFeedbackMessage.nickname = ''
+      }
+
+    }
+    //중복체크만 확인
+    this.setState({
+      nickname: nickname,
+      checkInputInvalid: inputInvalid,
+      checkInputResult: inputResult,
+      formFeedbackMessage: formFeedbackMessage,
+    });
+  };
+
+  onChangeGenderRadioButton = (event) => {
+    let inputResult = this.state.checkInputResult;
+    let selectedGender = this.state.genderRadio;
+    for (let i in selectedGender) {
+      if (i === event.target.value) {
+        inputResult.gender = true;
+        selectedGender[i] = event.target.checked;
+      }
+      else selectedGender[i] = false;
+    }
+    this.setState({
+      genderRadio: selectedGender,
+      checkInputResult: inputResult
+    });
   };
 
   onChangeStatusRadioButton = event => {
-    let temp = this.state.statusRadio;
-    for (let i in temp) {
-      if (i === event.target.value) temp[i] = event.target.checked;
-      else temp[i] = false;
+    let inputResult = this.state.checkInputResult;
+    let selectedStatus = this.state.statusRadio;
+    for (let i in selectedStatus) {
+      if (i === event.target.value) {
+        inputResult.status = true;
+        selectedStatus[i] = event.target.checked;
+      } else selectedStatus[i] = false;
     }
-    this.setState({ statusRadio: temp });
+    this.setState({
+      studentId: event.target.value,
+      checkInputResult: inputResult,
+    })
   };
 
-  onChagneStuentIdInput = event => {
-    this.setState({ studentId: event.target.value });
+  onChagneStuentIdInput = async (event) => {
+    let studentId = event.target.value
+    let inputResult = this.state.checkInputResult;
+    let inputInvalid = this.state.checkInputInvalid;
+    let formFeedbackMessage = this.state.formFeedbackMessage;
+    if (/^[1-2][0-9][0-9]{2}-[0-9]{5}$/.exec(studentId)) {
+      await this.props.checkStudentIdDuplicate(studentId)
+      if (this.props.studentIdDuplicate === true) {
+        inputResult.studentId = false;
+        inputInvalid.studentId = true;
+        formFeedbackMessage.studentId = '이미 가입한 학번입니다.'
+      } else {
+        inputResult.studentId = true;
+        inputInvalid.studentId = false;
+        formFeedbackMessage.studentId = ''
+      }
+    } else {
+      if (studentId === '') {
+        inputResult.studentId = false;
+        inputInvalid.studentId = false;
+        formFeedbackMessage.studentId = ''
+      } else {
+        inputResult.studentId = false;
+        inputInvalid.studentId = true;
+        formFeedbackMessage.studentId = '학번의 형식이 올바르지 않습니다.\n20XX-XXXXX 형식으로 입력하여 주십시오'
+      }
+    }
+    this.setState({
+      studentId: studentId,
+      checkInputResult: inputResult,
+      checkInputInvalid: inputInvalid,
+      formFeedbackMessage: formFeedbackMessage,
+    });
   };
 
   onChangeStudentRadioButton = event => {
-    let temp = this.state.studentRadio;
-    for (let i in temp) {
-      if (i === event.target.value) temp[i] = event.target.checked;
-      else temp[i] = false;
+    let inputResult = this.state.checkInputResult;
+    let selectedStudent = this.state.studentRadio;
+    for (let i in selectedStudent) {
+      if (i === event.target.value) {
+        inputResult.studentStatus = true;
+        selectedStudent[i] = event.target.checked;
+      } else selectedStudent[i] = false;
     }
-    this.setState({ studentRadio: temp });
+    this.setState({
+      studentRadio: selectedStudent,
+      checkInputResult: inputResult
+    });
   };
 
   onChangeDepartmentSelect = event => {
-    this.setState({ selectedDepartment: event.target.value });
+    let inputResult = this.state.checkInputResult;
+    if (event.target.value !== 'all') {
+      inputResult.department = true;
+    }
+    inputResult.department = false;
+    this.setState({
+      selectedDepartment: event.target.value,
+      checkInputResult: inputResult
+    });
   };
 
   onChangeMajorSelect = event => {
-    this.setState({ selectedMajor: event.target.value });
+    let inputResult = this.state.checkInputResult;
+    if (event.target.value !== '-') {
+      inputResult.major = true;
+    }
+    inputResult.major = false;
+    this.setState({
+      selectedMajor: event.target.value,
+      checkInputResult: inputResult
+    });
   };
 
   onClickAgreeToTermsCheckBox = () => {
-    this.setState({ agreeToTerms: !this.state.agreeToTerms });
+    let inputResult = this.state.checkInputResult;
+    inputResult.agreeToTerms = !inputResult.agreeToTerms;
+    this.setState({ checkInputResult: inputResult });
   };
 
-  onClickVerifyButton = () => {};
+  onClickVerifyButton = async () => { //중복체크
+    await this.props.getVerifyCode(this.state.email);
+  };
 
-  onClickSignUpConfirmButton = () => {
+  onClickSignUpConfirmButton = async () => { // 회원가입 확인
+    let inputResult = this.state.checkInputResult;
+    let alertMessage = '';
+    if (inputResult.email === false) alertMessage += '스누메일, '
+    if (inputResult.verifyCode === false) alertMessage += '인증번호, '
+    if (inputResult.password === false) alertMessage += '비밀번호, '
+    if (inputResult.passwordConfirm === false) alertMessage += '비밀번호 확인, '
+    if (inputResult.gerder === false) alertMessage += '성별, '
+    if (inputResult.studentId === false) alertMessage += '학번, '
+    alertMessage += '을 다시 한 번 확인해주십시오'
+    alert(alertMessage)
     this.props.history.push("/");
   };
 
@@ -152,10 +395,9 @@ class SignUp extends Component {
 
   render() {
     let status_detail = null;
-
     if (this.state.statusRadio["student"]) {
       const departmentList = this.state.departmentList.map((v, i) => {
-        return <option key={i} value={v.value} label={v.value}></option>;
+        return <option key={i} value={v.value} label={v.label}></option>;
       });
       const majorList = this.state.majorList[this.state.selectedDepartment].map(
         (v, i) => {
@@ -171,7 +413,12 @@ class SignUp extends Component {
               id="student_id_input"
               placeholder="STUDENT ID"
               onChange={this.onChagneStuentIdInput}
+              valid={this.state.checkInputResult.studentId}
+              invalid={this.state.checkInputInvalid.studentId}
             ></Input>
+            <FormFeedback >
+              {this.state.formFeedbackMessage.studentId}
+            </FormFeedback>
             <br />
             <Label>Degree</Label>
             <Row>
@@ -222,6 +469,7 @@ class SignUp extends Component {
 
     return (
       <div className="SignUp">
+        <UpperBar />
         <h1>Sign Up</h1>
         <Container>
           <Form>
@@ -246,19 +494,23 @@ class SignUp extends Component {
                     id="email_input"
                     placeholder="SNU MAIL"
                     onChange={this.onChangeEmailInput}
+                    valid={this.state.checkInputResult.email}
+                    invalid={this.state.checkInputInvalid.email}
                   ></Input>
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>@snu.ac.kr</InputGroupText>
-                  </InputGroupAddon>
-                </InputGroup>
-                <Button
-                  type="button"
-                  id="verify_button"
-                  onClick={this.onClickVerifyButton}
-                  className="float-right"
-                >
-                  Verify
+                  <Button
+                    type="button"
+                    id="verify_button"
+                    className="float-right"
+                    disabled={!this.state.checkInputResult.email}
+                    onClick={this.onClickVerifyButton}
+                  >
+                    Verify
                 </Button>
+                  <FormFeedback >
+                    {this.state.formFeedbackMessage.email}
+                  </FormFeedback>
+                </InputGroup>
+
               </FormGroup>
               <FormGroup row>
                 <Label>VERIFY CODE</Label>
@@ -267,7 +519,12 @@ class SignUp extends Component {
                   id="verify_code_input"
                   placeholder="VERIFY CODE"
                   onChange={this.onChangeVerifyCodeInput}
+                  valid={this.state.checkInputResult.verifyCode}
+                  invalid={this.state.checkInputInvalid.verifyCode}
                 ></Input>
+                <FormFeedback >
+                    {this.state.formFeedbackMessage.verifyCode}
+                  </FormFeedback>
               </FormGroup>
               <FormGroup row>
                 <Label>PASSWORD</Label>
@@ -276,7 +533,12 @@ class SignUp extends Component {
                   id="password_input"
                   placeholder="PASSWORD"
                   onChange={this.onChangePasswordInput}
+                  valid={this.state.checkInputResult.password}
+                  invalid={this.state.checkInputInvalid.password}
                 ></Input>
+                <FormFeedback >
+                    {this.state.formFeedbackMessage.password}
+                  </FormFeedback>
               </FormGroup>
               <FormGroup row>
                 <Label>PASSWORD-CONFIRM</Label>
@@ -285,7 +547,12 @@ class SignUp extends Component {
                   id="password_confirm_input"
                   placeholder="PASSWORD CONFIRMATION"
                   onChange={this.onChangePasswordComfirmInput}
+                  valid={this.state.checkInputResult.passwordConfirm}
+                  invalid={this.state.checkInputInvalid.passwordConfirm}
                 ></Input>
+                <FormFeedback >
+                    {this.state.formFeedbackMessage.passwordConfirm}
+                  </FormFeedback>
               </FormGroup>
               <FormGroup row>
                 <Label>NICKNAME</Label>
@@ -294,7 +561,12 @@ class SignUp extends Component {
                   id="nickname_input"
                   placeholder="NICKNAME"
                   onChange={this.onChangeNicknameInput}
+                  valid={this.state.checkInputResult.nickname}
+                  invalid={this.state.checkInputInvalid.nickname}
                 ></Input>
+                <FormFeedback >
+                    {this.state.formFeedbackMessage.nickname}
+                  </FormFeedback>
               </FormGroup>
               {/* // radio input : label을 클릭해야 작동(글씨) */}
               <Label>GENDER</Label>
@@ -332,7 +604,7 @@ class SignUp extends Component {
                   </Col>
                 </Row>
               </FormGroup>
-              <br/>
+              <br />
               <Label>STATUS</Label>
               <FormGroup>
                 <Row>
@@ -393,7 +665,35 @@ class SignUp extends Component {
   }
 }
 
+export const mapDispatchToProps = dispatch => {
+  return {
+    postSignUp: (user) =>
+      dispatch(actionCreator.postSignUp(user)),
+    getVerifyCode: (email) =>
+      dispatch(actionCreator.getVerifyCode(email)),
+    checkEmailDuplicate: (email) =>
+      dispatch(actionCreator.checkEmailDuplicate(email)),
+    checkNicknameDuplicate: (nickname) =>
+      dispatch(actionCreator.checkNicknameDuplicate(nickname)),
+    checkStudentIdDuplicate: (studentId) =>
+      dispatch(actionCreator.checkStudentIdDuplicate(studentId))
+
+    //중복 체크를 위한 것들 추가
+  }
+}
+
+export const mapStateToProps = state => {
+  return {
+    verifyCode: state.usr.verifyCode,
+    emailDuplicate: state.usr.emailDuplicate,
+    nicknameDuplicate: state.usr.nicknameDuplicate,
+    studentIdDuplicate: state.usr.studentIdDuplicate
+    //중복 체크를 위한 것들 추가
+
+  }
+}
+
 export default connect(
-  null,
-  null
+  mapStateToProps,
+  mapDispatchToProps
 )(withRouter(SignUp));
