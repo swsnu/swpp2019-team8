@@ -32,7 +32,6 @@ export const postSignIn = (user) => {
             })
             .catch(res => {
                 dispatch({ type: actionTypes.POST_SIGN_IN, selectedUser: '', signIn: false })
-                window.alert('이메일 또는 비밀번호를 다시 학인해주십시오.')
             });
     };
 };
