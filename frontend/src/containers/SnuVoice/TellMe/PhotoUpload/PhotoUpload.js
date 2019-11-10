@@ -95,7 +95,8 @@ class PhotoUpload extends Component {
                     <br />
                     <p>
                         <div className="FileUpload">
-                            <Input type="file" name="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
+                            <Input type="file" name="photo_file_file"
+                                onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" />
                         </div>
                         <br />
                         {photoStateTabbuttons}
