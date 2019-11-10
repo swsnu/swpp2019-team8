@@ -46,7 +46,7 @@ class PhotoUpload extends Component {
             this.setState({ photoFile: file, photoUrl: reader.result });
         }
 
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
     }
 
     render() {
@@ -88,55 +88,55 @@ class PhotoUpload extends Component {
 
         return (
             <div>
-                <Upperbar/>
-            <div className="PhotoUpload">
-                <br/>
-                <h1>Photo Upload</h1>
-                <br/>
-                <p>
-                    <div className="FileUpload">
-                        <Input type="file" name="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
-                    </div>
-                    <br/>
-                    {photoStateTabbuttons}
-                    <TabContent activeTab={this.state.photoState}>
-                        <TabPane tabId="photo">
-                            {$imagePreview}
-                        </TabPane>
-                        <TabPane tabId="preview">
-                            <b>*Photo with selected blur applied will appear here*</b>
-                        </TabPane>
-                    </TabContent>
-                </p>
-                <p>
-                    {documentStateTabbuttons}
-                    <TabContent activeTab={this.state.documentState}>
-                        <TabPane tabId="write">
-                            <Form>
-                                <FormGroup>
-                                    <Label>Title</Label>
-                                    <Input type="text" id="photo_title_input" placeholder="title"
-                                        onChange={(event) => this.setState({ documentTitle: event.target.value })}></Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label>Content</Label>
-                                    <Input type="textarea" rows="10" id="photo_content_textarea" placeholder="content"
-                                        onChange={(event) => this.setState({ documentContent: event.target.value })}></Input>
-                                </FormGroup>
-                            </Form>
-                        </TabPane>
-                        <TabPane tabId="preview">
-                            <div className="preview">
-                            <div className="photoInfo">
-<br/>
-                            <Label>Title:</Label>
-                            <h1><div className="photoTitle">{this.state.documentTitle}</div></h1>
-                            <Label>Content:</Label>
-                            <MarkdownPreview value={this.state.documentContent} />
-                            </div>
-                            </div>
-                        </TabPane>
-                    </TabContent>
+                <Upperbar />
+                <div className="PhotoUpload">
+                    <br />
+                    <h1>Photo Upload</h1>
+                    <br />
+                    <p>
+                        <div className="FileUpload">
+                            <Input type="file" name="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
+                        </div>
+                        <br />
+                        {photoStateTabbuttons}
+                        <TabContent activeTab={this.state.photoState}>
+                            <TabPane tabId="photo">
+                                {$imagePreview}
+                            </TabPane>
+                            <TabPane tabId="preview">
+                                <b>*Photo with selected blur applied will appear here*</b>
+                            </TabPane>
+                        </TabContent>
+                    </p>
+                    <p>
+                        {documentStateTabbuttons}
+                        <TabContent activeTab={this.state.documentState}>
+                            <TabPane tabId="write">
+                                <Form>
+                                    <FormGroup>
+                                        <Label>Title</Label>
+                                        <Input type="text" id="photo_title_input" placeholder="title"
+                                            onChange={(event) => this.setState({ documentTitle: event.target.value })}></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Content</Label>
+                                        <Input type="textarea" rows="10" id="photo_content_textarea" placeholder="content"
+                                            onChange={(event) => this.setState({ documentContent: event.target.value })}></Input>
+                                    </FormGroup>
+                                </Form>
+                            </TabPane>
+                            <TabPane tabId="preview">
+                                <div className="preview">
+                                    <div className="photoInfo">
+                                        <br />
+                                        <Label>Title:</Label>
+                                        <h1><div className="photoTitle">{this.state.documentTitle}</div></h1>
+                                        <Label>Content:</Label>
+                                        <MarkdownPreview value={this.state.documentContent} />
+                                    </div>
+                                </div>
+                            </TabPane>
+                        </TabContent>
                     </p>
                     <ButtonGroup>
                         <Button type="button" id="document_confirm_button" disabled={!this.state.documentTitle || !this.state.documentContent}
@@ -145,7 +145,7 @@ class PhotoUpload extends Component {
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>
                     </ButtonGroup>
 
-                            </div>
+                </div>
             </div>
         )
     }
