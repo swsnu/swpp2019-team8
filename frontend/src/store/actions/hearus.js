@@ -125,17 +125,17 @@ export const postPetitionComment = (comment) => {
     };
 };
 
-export const putPetitionVote_ = (petition_id) => {
+export const putPetitionVote_ = (petition) => {
     return {
         type: actionTypes.PUT_PETITION_VOTE,
-        targetID: petition_id,
+        target: petition,
     }
 }
 
 export const putPetitionVote = (petition_id) => {
     return dispatch => {
         return axios.put('/api/hearus/petition/' + petition_id + '/')
-            .then(res => dispatch(putPetitionVote_(petition_id)));
+            .then(res => dispatch(putPetitionVote_(res.data)));
     }
 }
 

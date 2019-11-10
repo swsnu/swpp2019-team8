@@ -27,25 +27,4 @@ describe('HearUs Reducer', () => {
             },
         });
     });
-
-    it(`should put petition vote`, () => {
-        const stubPetition = { id: 1, votes: 0 };
-        const stubInitialState = {
-            petition_list: [stubPetition],
-        }
-        let newState = reducer(stubInitialState, {
-            type: actionTypes.PUT_PETITION_VOTE,
-            targetID: 0,
-        });
-        expect(newState).toEqual({
-            petition_list: [undefined],
-        });
-        newState = reducer(stubInitialState, {
-            type: actionTypes.PUT_PETITION_VOTE,
-            targetID: 1,
-        });
-        expect(newState).toEqual({
-            petition_list: [{ ...stubPetition, votes: 1 }],
-        });
-    });
 });
