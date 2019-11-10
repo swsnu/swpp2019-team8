@@ -25,6 +25,7 @@ class PetitionDetail extends Component {
 
     onClickCommentConfirmButton = () => {
         this.props.onStorePetitionComment(this.props.match.params.petition_id, this.state.comment);
+        this.props.onPetitionVote(this.props.match.params.petition_id);
     }
 
     onClickPetitionCancelButton = () => {
@@ -119,8 +120,9 @@ class PetitionDetail extends Component {
                             <Button type="button" id="more-statistics-button">More Statistics..</Button>
                             <br /><br />
                         </div>
-
                     </div>
+
+                    <h3 className="Reply_area_agree">Votes <span>{votes}</span></h3>
 
                     <div className="Reply_area_write">
                         <textarea id="tw_contents" style={{ width: 700 }}
@@ -157,6 +159,8 @@ export const mapDispatchToProps = dispatch => {
             dispatch(actionCreators.getPetitionComments(petition_id)),
         onStorePetitionComment: (petition_id, comment) =>
             dispatch(actionCreators.postPetitionComment({ petition_id: petition_id, comment: comment })),
+        onPetitionVote: petition_id =>
+            dispatch(actionCreators.putPetitionVote(petition_id)),
     }
 }
 

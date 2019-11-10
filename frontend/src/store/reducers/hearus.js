@@ -35,6 +35,9 @@ const hearusReducer = (state = initialState, action) => {
             };
             return { ...state, comment_list: state.comment_list.concat(newPetitionComment) };
         }
+        case actionTypes.PUT_PETITION_VOTE: {
+            return { ...state, selectedPetition: action.target };
+        }
 
         // Statistic에 해당하는 것은 아직 안 만듦
 

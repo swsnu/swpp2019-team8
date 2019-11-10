@@ -125,4 +125,18 @@ export const postPetitionComment = (comment) => {
     };
 };
 
+export const putPetitionVote_ = (petition) => {
+    return {
+        type: actionTypes.PUT_PETITION_VOTE,
+        target: petition,
+    }
+}
+
+export const putPetitionVote = (petition_id) => {
+    return dispatch => {
+        return axios.put('/api/hearus/petition/' + petition_id + '/')
+            .then(res => dispatch(putPetitionVote_(res.data)));
+    }
+}
+
 // Statistic에 해당하는 것은 아직 안 만듦

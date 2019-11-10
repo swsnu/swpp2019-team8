@@ -20,4 +20,5 @@ export const GET_PETITION_BY_TITLE = 'GET_PETITION_BY_TITLE';
 export const GET_MY_PETITIONS = 'GET_MY_PETITIONS';
 export const GET_PETITION_COMMENTS = 'GET_PETITION_COMMENTS';
 export const POST_PETITION_COMMENT = 'POST_PETITION_COMMENT';
+export const PUT_PETITION_VOTE = 'PUT_PETITION_VOTE';   // Wiki에 추가 필요
 // Statistic에 해당하는 것은 아직 안 만듦

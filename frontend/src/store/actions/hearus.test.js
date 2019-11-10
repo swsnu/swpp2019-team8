@@ -132,4 +132,21 @@ describe('ActionCreators', () => {
             done();
         });
     });
+
+    it(`'putPetitionVote' should increase number of votes correctly`, (done) => {
+        const spy = jest.spyOn(axios, 'put')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: null,
+                    }
+                    resolve(result);
+                });
+            })
+        store.dispatch(actionCreators.putPetitionVote()).then(() => {
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
 });
