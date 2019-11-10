@@ -266,12 +266,12 @@ class PhotoUpload extends Component {
                                     <FormGroup>
                                         <Label>Title</Label>
                                         <Input type="text" id="photo_title_input" placeholder="title"
-                                            onChange={(event) => this.setState({ documentTitle: event.target.value })}></Input>
+                                            onChange={(event) => this.setState({ photoTitle: event.target.value })}></Input>
                                     </FormGroup>
                                     <FormGroup>
                                         <Label>Content</Label>
                                         <Input type="textarea" rows="10" id="photo_content_textarea" placeholder="content"
-                                            onChange={(event) => this.setState({ documentContent: event.target.value })}></Input>
+                                            onChange={(event) => this.setState({ photoContent: event.target.value })}></Input>
                                     </FormGroup>
                                 </Form>
                             </TabPane>
@@ -280,16 +280,16 @@ class PhotoUpload extends Component {
                                     <div className="photoInfo">
                                         <br />
                                         <Label>Title:</Label>
-                                        <h1><div className="photoTitle">{this.state.documentTitle}</div></h1>
+                                        <h1><div className="photoTitle">{this.state.photoTitle}</div></h1>
                                         <Label>Content:</Label>
-                                        <MarkdownPreview value={this.state.documentContent} />
+                                        <MarkdownPreview value={this.state.photoContent} />
                                     </div>
                                 </div>
                             </TabPane>
                         </TabContent>
                     </p>
                     <ButtonGroup>
-                        <Button type="button" id="document_confirm_button" disabled={!this.state.documentTitle || !this.state.documentContent}
+                        <Button type="button" id="document_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent}
                             onClick={this.onClickPhotoConfirmButton}>Confirm</Button>
                         <Button type="button" id="document_cancel_button"
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>
