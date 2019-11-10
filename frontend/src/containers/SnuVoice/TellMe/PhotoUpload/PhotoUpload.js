@@ -289,9 +289,9 @@ class PhotoUpload extends Component {
                         </TabContent>
                     </div>
                     <ButtonGroup>
-                        <Button type="button" id="document_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent}
+                        <Button type="button" id="photo_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent}
                             onClick={this.onClickPhotoConfirmButton}>Confirm</Button>
-                        <Button type="button" id="document_cancel_button"
+                        <Button type="button" id="photo_cancel_button"
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>
                     </ButtonGroup>
 
