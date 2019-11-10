@@ -240,7 +240,7 @@ class PhotoUpload extends Component {
                     <br />
                     <h1>Photo Upload</h1>
                     <br />
-                    <p>
+                    <div>
                         <p>{this.state.message}</p>
                         <div className="FileUpload">
                             <Input type="file" name="photo_file_file"
@@ -257,8 +257,8 @@ class PhotoUpload extends Component {
                                 <b>*Photo with selected blur applied will appear here*</b>
                             </TabPane>
                         </TabContent>
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         {documentStateTabbuttons}
                         <TabContent activeTab={this.state.documentState}>
                             <TabPane tabId="write">
@@ -287,7 +287,7 @@ class PhotoUpload extends Component {
                                 </div>
                             </TabPane>
                         </TabContent>
-                    </p>
+                    </div>
                     <ButtonGroup>
                         <Button type="button" id="document_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent}
                             onClick={this.onClickPhotoConfirmButton}>Confirm</Button>
