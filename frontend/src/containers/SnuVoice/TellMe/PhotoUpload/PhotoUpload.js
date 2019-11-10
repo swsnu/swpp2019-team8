@@ -17,7 +17,11 @@ class PhotoUpload extends Component {
         photoFile: '',
         photoUrl: '',
         photoState: 'photo',
-        documentState: 'write'
+        documentState: 'write',
+        message: "Upload your Photo",
+        googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
+        canvasWidth: 209,
+        canvasHeight: 209,
     }
 
     onClickPhotoConfirmButton = () => {
@@ -39,15 +43,152 @@ class PhotoUpload extends Component {
     handlePhoto = (event) => {
         event.preventDefault();
 
-        let reader = new FileReader();
+        const reader = new FileReader();
         let file = event.target.files[0];
 
         reader.onloadend = () => {
             this.setState({ photoFile: file, photoUrl: reader.result });
+            const imageData = reader.result.split(",")[1];
+            const img = new Image();
+            img.src = reader.result;
+            img.onload = () => {
+                this.setState({
+                    message: "File uploading...",
+                });
+                this.fileUpload(imageData)
+                    .then((result) => {
+                        if (!!result.message) {
+                            this.setState({
+                                message: result.message,
+                            });
+                        }
+                        this.drawInCanvas(result.info);
+                    })
+                    .catch(() => {
+                        alert("Not Valid Google API Key Or Data");
+                    });
+            };
         }
 
         reader.readAsDataURL(file);
     }
+
+    fileUpload = (content) => {
+        return new Promise((resolve, reject) => {
+            const body = {
+                requests: [
+                    {
+                        image: {
+                            content,
+                        },
+                        features: [
+                            {
+                                type: "FACE_DETECTION",
+                            },
+                        ],
+                    },
+                ],
+            };
+            fetch(
+                `https://vision.googleapis.com/v1/images:annotate?key=${
+                this.state.googleKey
+                }`,
+                {
+                    method: "POST",
+                    headers: new Headers({
+                        Accept: "application/json",
+                    }),
+                    body: JSON.stringify(body),
+                },
+            )
+                .then(res => res.json())
+                .then(res => resolve(this.getPhotoInfo(res)))
+                .catch(() => reject(false));
+        });
+    };
+
+    getPhotoInfo = (data) => {
+        // 얼굴이 인식되지 않은 경우
+        if (data.responses.length === 0) {
+            return { message: "The face is not recognized." };
+        }
+        // 얼굴이 두 개 이상 인식된 경우
+        if (data.responses.length > 1) {
+            return { message: "Only photos with a single face will be accepted." };
+        }
+
+        const faceDetection = data.responses[0].faceAnnotations[0];
+        let topBound;
+        let bottomBound;
+        let leftBound;
+        let rightBound;
+        faceDetection.fdBoundingPoly.vertices.forEach((vertice) => {
+            if (!topBound || vertice.y < topBound) {
+                topBound = vertice.y;
+            }
+            if (!bottomBound || vertice.y > bottomBound) {
+                bottomBound = vertice.y;
+            }
+            if (!leftBound || vertice.x < leftBound) {
+                leftBound = vertice.x;
+            }
+            if (!rightBound || vertice.x > rightBound) {
+                rightBound = vertice.x;
+            }
+        });
+
+        this.setState({
+            canvasWidth: rightBound - leftBound,
+            canvasHeight: bottomBound - topBound,
+        });
+
+        return {
+            info: {
+                x: leftBound,
+                y: topBound,
+                width: rightBound - leftBound,
+                height: bottomBound - topBound,
+            },
+            message: "Photo Uploaded",
+        };
+    };
+
+    drawInCanvas = (photoInfo) => {
+        const canvas = this.refs.canvas;
+        const ctx = canvas.getContext("2d") || null;
+        const img = this.refs.image
+        if (!!ctx) {
+            // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
+            ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight);
+            if (!!photoInfo) {
+                const { x, y, width, height } = photoInfo;
+                const ratio = this.state.canvasWidth / width;
+                // 만약 배경이 투명한 이미지를 올릴 경우 배경과 분리되어 보이지 않을 가능성이 있어 하얀색 사각형을 먼저 배경에 그려줍니다.
+                ctx.fillStyle = "#fff";
+                ctx.fillRect(
+                    x * -1 * ratio,
+                    y * -1 * ratio,
+                    img.width * ratio,
+                    img.height * ratio,
+                );
+                // 이제 업로드된 이미지를 캔버스에 렌더링 합니다.
+                ctx.drawImage(
+                    img,
+                    x,
+                    y,
+                    width,
+                    height,
+                    0,
+                    0,
+                    Math.round(width * ratio),
+                    Math.round(height * ratio),
+                );
+            } else {
+                // 좌표값이 없을 경우 (0, 0)부터 이미지를 렌더링 합니다.
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+            }
+        }
+    };
 
     render() {
         let photoStateTabbuttons = (
@@ -83,7 +224,7 @@ class PhotoUpload extends Component {
             </Nav>
         );
 
-        let $imagePreview = (this.state.photoUrl) ? (<img src={this.state.photoUrl} />) :
+        let $imagePreview = (this.state.photoUrl) ? (<img ref="image" src={this.state.photoUrl} />) :
             (<div className="noPhoto">There is no image to preview</div>);
 
         return (
@@ -94,6 +235,7 @@ class PhotoUpload extends Component {
                     <h1>Photo Upload</h1>
                     <br />
                     <p>
+                        <p>{this.state.message}</p>
                         <div className="FileUpload">
                             <Input type="file" name="photo_file_file"
                                 onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" />
@@ -102,6 +244,7 @@ class PhotoUpload extends Component {
                         {photoStateTabbuttons}
                         <TabContent activeTab={this.state.photoState}>
                             <TabPane tabId="photo">
+                                <canvas ref="canvas" width={this.state.canvasWidth} height={this.state.canvasHeight} />
                                 {$imagePreview}
                             </TabPane>
                             <TabPane tabId="preview">
