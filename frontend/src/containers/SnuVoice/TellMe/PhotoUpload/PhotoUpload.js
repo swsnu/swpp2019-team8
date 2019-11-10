@@ -24,6 +24,12 @@ class PhotoUpload extends Component {
         canvasHeight: 209,
     }
 
+    constructor(props) {
+        super(props);
+        this.refCanvas = React.createRef();
+        this.refImg = React.createRef();
+    }
+
     onClickPhotoConfirmButton = () => {
         // confirm
     }
@@ -57,7 +63,7 @@ class PhotoUpload extends Component {
                 });
                 this.fileUpload(imageData)
                     .then((result) => {
-                        if (!!result.message) {
+                        if (result.message) {
                             this.setState({
                                 message: result.message,
                             });
@@ -154,13 +160,13 @@ class PhotoUpload extends Component {
     };
 
     drawInCanvas = (photoInfo) => {
-        const canvas = this.refs.canvas;
+        const canvas = this.refCanvas.current;
         const ctx = canvas.getContext("2d") || null;
-        const img = this.refs.image
-        if (!!ctx) {
+        const img = this.refImg.current;
+        if (ctx) {
             // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
             ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight);
-            if (!!photoInfo) {
+            if (photoInfo) {
                 const { x, y, width, height } = photoInfo;
                 const ratio = this.state.canvasWidth / width;
                 // 만약 배경이 투명한 이미지를 올릴 경우 배경과 분리되어 보이지 않을 가능성이 있어 하얀색 사각형을 먼저 배경에 그려줍니다.
@@ -224,7 +230,7 @@ class PhotoUpload extends Component {
             </Nav>
         );
 
-        let $imagePreview = (this.state.photoUrl) ? (<img ref="image" src={this.state.photoUrl} />) :
+        let $imagePreview = (this.state.photoUrl) ? (<img ref={this.refImg} src={this.state.photoUrl} />) :
             (<div className="noPhoto">There is no image to preview</div>);
 
         return (
@@ -244,7 +250,7 @@ class PhotoUpload extends Component {
                         {photoStateTabbuttons}
                         <TabContent activeTab={this.state.photoState}>
                             <TabPane tabId="photo">
-                                <canvas ref="canvas" width={this.state.canvasWidth} height={this.state.canvasHeight} />
+                                <canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />
                                 {$imagePreview}
                             </TabPane>
                             <TabPane tabId="preview">
