@@ -35,8 +35,8 @@ describe('Axios User test', () => {
     })
     afterEach(() => { jest.clearAllMocks() })
 
-    it('signUp should done correctly', (done) => {
-        const spy = jest.spyOn(axios, 'post')
+    it('signUp should done correctly', async (done) => {
+        let spy = jest.spyOn(axios, 'post')
             .mockImplementation((url) => {
                 return new Promise((resolve, reject) => {
                     const result = {
@@ -46,13 +46,24 @@ describe('Axios User test', () => {
                     resolve(result);
                 })
             })
-        store.dispatch(actionCreators.postSignUp(stubUser)).then(() => {
-            const newState = store.getState();
-            expect(newState.usr).toStrictEqual(blank);
-            expect(spy).toHaveBeenCalledTimes(1);
-            done();
-        })
+        store.dispatch(actionCreators.postSignUp(stubUser))
+            .then(() => {
+                const newState = store.getState();
+                expect(newState.usr).toStrictEqual(blank);
+                expect(spy).toHaveBeenCalledTimes(2);
+                done();
+            })
             .catch()
+        spy = jest.spyOn(axios, 'post')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                })
+            })
+        await store.dispatch(actionCreators.postSignUp(stubUser)).catch()
+        expect(true).toBe(true)
+        done()
+
     })
 
     it('signIn should done correctly', (done) => {
@@ -80,9 +91,9 @@ describe('Axios User test', () => {
             .mockImplementation((url) => {
                 return new Promise((resolve, reject) => {
                     reject();
-                })
+                }).catch()
             })
-        await store.dispatch(actionCreators.postSignIn(stubUser))
+        await store.dispatch(actionCreators.postSignIn(stubUser)).catch()
         const newState = store.getState();
         expect(newState.usr.selectedUser).toStrictEqual('');
         expect(spy).toHaveBeenCalledTimes(1);
@@ -112,39 +123,66 @@ describe('Axios User test', () => {
 
 
 
-    it('getUser by email should fetch User correctly', (done) => {
-
+    it('getUser by email should fetch User correctly', async (done) => {
         store.dispatch(actionCreators.getUserByEmail(stubUser.email))
             .then(() => {
                 const newState = store.getState();
                 expect(newState.usr.selectedUser).toBe(stubUser.selectedUser);
-                expect(spyGetUser).toHaveBeenCalledTimes(1);
+                expect(spyGetUser).toHaveBeenCalledTimes(2);
                 done();
             })
             .catch()
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                }).catch()
+            })
+        await store.dispatch(actionCreators.getUserByEmail(stubUser.email)).catch()
+        expect(true).toBe(true)
+        done()
     });
 
-    it('getUser by id should fetch User correctly', (done) => {
+    it('getUser by id should fetch User correctly', async (done) => {
 
         store.dispatch(actionCreators.getUserByUserId(stubUser.selectedUser.id))
             .then(() => {
-                expect(spyGetUser).toHaveBeenCalledTimes(1);
+                expect(spyGetUser).toHaveBeenCalledTimes(2);
                 done();
             })
             .catch()
+
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                }).catch()
+            })
+        await store.dispatch(actionCreators.getUserByUserId(stubUser.selectedUser.id)).catch()
+        expect(true).toBe(true)
+        done()
     });
 
-    it('getUser by studentId should fetch User correctly', (done) => {
+    it('getUser by studentId should fetch User correctly', async (done) => {
 
         store.dispatch(actionCreators.getUserByStudentId(stubUser.selectedUser.studentId))
             .then(() => {
-                expect(spyGetUser).toHaveBeenCalledTimes(1);
+                expect(spyGetUser).toHaveBeenCalledTimes(2);
                 done();
             })
             .catch()
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                }).catch()
+            })
+        await store.dispatch(actionCreators.getUserByStudentId(stubUser.selectedUser.studentId)).catch()
+        expect(true).toBe(true)
+        done()
     });
 
-    it('getUser by nickname should fetch User correctly', (done) => {
+    it('getUser by nickname should fetch User correctly', async (done) => {
 
         store.dispatch(actionCreators.getUserByNickname(stubUser.selectedUser.nickname))
             .then(() => {
@@ -153,9 +191,19 @@ describe('Axios User test', () => {
                 done();
             })
             .catch()
+
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                }).catch()
+            })
+        await store.dispatch(actionCreators.getUserByNickname(stubUser.selectedUser.nickname)).catch()
+        expect(true).toBe(true)
+        done()
     });
 
-    it('checkDuplicate shoudl work', (done) => {
+    it('checkDuplicate shoudl work', async (done) => {
         let spy = jest.spyOn(axios, 'get')
             .mockImplementation((url) => {
                 return new Promise((resolve, reject) => {
@@ -218,6 +266,23 @@ describe('Axios User test', () => {
                 done();
             })
             .catch()
+
+    })
+
+    it('should Duplicate catch work', async (done) => {
+        let spy = jest.spyOn(axios, 'get')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                })
+            })
+        await store.dispatch(actionCreators.checkEmailDuplicate('hi')).catch()
+        expect(true).toBe(true)
+        await store.dispatch(actionCreators.checkNicknameDuplicate()).catch()
+        expect(true).toBe(true)
+        await store.dispatch(actionCreators.checkStudentIdDuplicate()).catch()
+        expect(true).toBe(true)
+        done()
     })
 
     it('should get verifyCode work', (done) => {
@@ -265,9 +330,9 @@ describe('Axios User test', () => {
             .mockImplementation((url) => {
                 return new Promise((resolve, reject) => {
                     reject();
-                })
+                }).catch()
             })
-        await store.dispatch(actionCreators.getVerifyCode('hi'))
+        await store.dispatch(actionCreators.getVerifyCode('hi')).catch()
 
         const newState = store.getState();
         expect(newState.usr.verifyCode).toBe('');

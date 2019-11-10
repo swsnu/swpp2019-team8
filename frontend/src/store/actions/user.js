@@ -12,7 +12,8 @@ export const postSignUp = (user) => {
         return axios.post('/api/user/signup/', user)
             .then(res => {
                 dispatch(postSignUp_());
-            });
+            })
+            .catch(e => {});
     };
 };
 
@@ -30,8 +31,12 @@ export const postSignIn = (user) => {
             .then(res => {
                 dispatch(postSignIn_(res.data));
             })
-            .catch(res => {
-                dispatch({ type: actionTypes.POST_SIGN_IN, selectedUser: '', signIn: false })
+            .catch((e) => {
+                dispatch({
+                    type: actionTypes.POST_SIGN_IN,
+                    selectedUser: '',
+                    signIn: false
+                })
             });
     };
 };
@@ -48,6 +53,7 @@ export const getSignOut = () => {
             .then(res => {
                 dispatch(getSignOut_());
             })
+            .catch(e => {})
     };
 };
 
@@ -63,7 +69,8 @@ export const getUserByUserId = (userId) => {
         return axios.get('/api/user/userId/' + userId + '/')
             .then(res => {
                 dispatch(getUser_(res.data))
-            });
+            })
+            .catch(e => {});
     }
 }
 
@@ -72,7 +79,8 @@ export const getUserByEmail = (email) => {
         return axios.get('/api/user/email/' + email + '/')
             .then(res => {
                 dispatch(getUser_(res.data));
-            });
+            })
+            .catch(e => {});
     };
 };
 
@@ -81,7 +89,8 @@ export const getUserByStudentId = (studentId) => {
         return axios.get('/api/user/studentId/' + studentId + '/')
             .then(res => {
                 dispatch(getUser_(res.data))
-            });
+            })
+            .catch(e => {});
     };
 };
 
@@ -90,7 +99,8 @@ export const getUserByNickname = (nickname) => {
         return axios.get('/api/user/nickname/' + nickname + '/')
             .then(res => {
                 dispatch(getUser_(res.data))
-            });
+            })
+            .catch(e => {});
         // TODO
     };
 };
@@ -108,10 +118,10 @@ export const getVerifyCode = (email) => {
             .then(res => {
                 dispatch(getVerifyCode_(res.data))
             })
-            .catch(() => {
+            .catch((e) => {
                 dispatch({
-                    type:actionTypes.GET_VERIFY_CODE,
-                    verifyCode : ''
+                    type: actionTypes.GET_VERIFY_CODE,
+                    verifyCode: ''
                 })
             })
     }
@@ -130,6 +140,7 @@ export const checkEmailDuplicate = (email) => {
             .then(res => {
                 dispatch(checkEmailDuplicate_(res.data))
             })
+            .catch(e => {})
     }
 }
 
@@ -146,6 +157,7 @@ export const checkNicknameDuplicate = (nickname) => {
             .then(res => {
                 dispatch(checkNicknameDuplicate_(res.data))
             })
+            .catch(e => {})
     }
 }
 
@@ -162,5 +174,6 @@ export const checkStudentIdDuplicate = (studentId) => {
             .then(res => {
                 dispatch(checkStudentIdDuplicate_(res.data))
             })
+            .catch(e => {})
     }
 }
