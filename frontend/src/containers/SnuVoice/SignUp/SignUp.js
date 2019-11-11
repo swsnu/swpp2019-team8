@@ -24,11 +24,14 @@ class SignUp extends Component {
     email: "",
     verifyCode: "",
     password: "",
-    passwordConfirm: "",
+    passwordConfirm: "",    
     nickname: "",
     studentId: "",
     selectedDepartment: "all",
     selectedMajor: "", // ex) 컴퓨터공학부...
+    selectedGender : "",
+    selectedStatus : "",
+    selectedStudentStatus : "",
     genderRadio: {
       male: false,
       female: false,
@@ -67,7 +70,7 @@ class SignUp extends Component {
       agricultureAndLifeSciences: [{ value: 'agricultureAndLifeSciences' }],
       businessAdministration: [{ value: 'businessAdministration' }],
       education: [{ value: 'education' }],
-      engineering: [{ value: "engineering" }],
+      engineering: [{ value: '-' }, { value: "engineering" }],
       fineArts: [{ value: 'fineArts' }],
       humanities: [{ value: 'humanities' }],
       liberalStudies: [{ value: 'liberalStudies' }],
@@ -199,6 +202,15 @@ class SignUp extends Component {
         formFeedbackMessage.password = '영문자, 특수기호, 숫자를 포함한 8자 이상으로 설정해주십시오.'
       }
     }
+    if(event.target.value !== this.state.passwordConfirm && this.state.passwordConfirm !== '') {
+      inputResult.passwordConfirm = false;
+      inputInvalid.passwordConfirm = true;
+      formFeedbackMessage.passwordConfirm = '비밀번호와 일치하지 않습니다.'
+    } else if (this.state.passwordConfirm !== ''){
+      inputResult.passwordConfirm = true;
+      inputInvalid.passwordConfirm = false;
+      formFeedbackMessage.passwordConfirm = ''
+    }
     this.setState({
       password: event.target.value,
       checkInputInvalid: inputInvalid,
@@ -273,6 +285,7 @@ class SignUp extends Component {
     }
     this.setState({
       genderRadio: selectedGender,
+      selectedGender : event.target.value,
       checkInputResult: inputResult
     });
   };
@@ -288,6 +301,7 @@ class SignUp extends Component {
     }
     this.setState({
       statusRadio: selectedStatus,
+      selectedStatus : event.target.value,
       checkInputResult: inputResult,
     })
   };
@@ -338,6 +352,7 @@ class SignUp extends Component {
     }
     this.setState({
       studentRadio: selectedStudent,
+      selectedStudentStatus : event.target.value,
       checkInputResult: inputResult
     });
   };
@@ -366,17 +381,42 @@ class SignUp extends Component {
 
   onClickAgreeToTermsCheckBox = () => {
     let inputResult = this.state.checkInputResult;
-    inputResult.agreeToTerms = !inputResult.agreeToTerms;
+    inputResult.agreeToTerms = !this.state.checkInputResult.agreeToTerms;
     this.setState({ checkInputResult: inputResult });
   };
 
-  onClickVerifyButton = async () => { 
+  onClickVerifyButton = async () => {
     await this.props.getVerifyCode(this.state.email);
+    if(this.props.verifyCode === '') alert('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.')
+    else alert('메일로 인증번호를 발송하였습니다. 메일을 확인해 주시기 바랍니다.')
   };
 
   onClickSignUpConfirmButton = async () => { // 회원가입 확인 + 추가 구현 예정
     let inputResult = this.state.checkInputResult;
-    this.props.history.push("/");
+    let alertMessage = 'Please Check Your ';
+    for (let i in inputResult) {
+      if (inputResult[i] === false) alertMessage += i + ', ';
+    }
+    if (alertMessage.length === 18) {
+      let user = {
+        email: this.state.email,
+        password: this.state.password,
+        nickname: this.state.nickname,
+        gender: this.state.selectedGender,
+        status: this.state.selectedStatus,
+        student_id: this.state.studentId,
+        department: this.state.selectedDepartment,
+        major: this.state.selectedMajor,
+        student_status: this.state.selectedStudentStatus
+      }
+      await this.props.postSignUp(user);
+      alert('회원 가입이 완료되었습니다.')
+      this.props.history.push("/");
+    } else {
+      alertMessage.split(0, alertMessage-2);
+      alert(alertMessage)
+
+    }
   };
 
   onClickBackButton = () => {

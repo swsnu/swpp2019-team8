@@ -101,8 +101,8 @@ describe('<SignUp/>', () => {
         signUpComponent.setState({
             verifyCode: '123'
         })
-        await signUpComponent.onChangeVerifyCodeInput({ target: { value: '123' } })
-        expect(signUpComponent.state.verifyCode).toBe('123')
+        await signUpComponent.onChangeVerifyCodeInput({ target: { value: 123 } })
+        expect(signUpComponent.state.formFeedbackMessage.verifyCode).toBe('')
         await signUpComponent.onChangeVerifyCodeInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputInvalid.verifyCode).toBe(false)
         await signUpComponent.onChangeVerifyCodeInput({ target: { value: '12' } })
@@ -115,12 +115,20 @@ describe('<SignUp/>', () => {
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangePasswordInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputInvalid.password).toBe(false)
+        signUpComponent.setState({
+            passwordConfirm: '121111111113'
+        })
         await signUpComponent.onChangePasswordInput({ target: { value: '123' } })
         expect(signUpComponent.state.formFeedbackMessage.password).toBe('비밀번호가 너무 짧습니다. 8자 이상으로 설정해주십시오')
+        expect(signUpComponent.state.formFeedbackMessage.passwordConfirm).toBe('비밀번호와 일치하지 않습니다.')
         await signUpComponent.onChangePasswordInput({ target: { value: 'iluvswpp12!' } })
         expect(signUpComponent.state.checkInputResult.password).toBe(true)
+        signUpComponent.setState({
+            passwordConfirm: '121111111113'
+        })
         await signUpComponent.onChangePasswordInput({ target: { value: '121111111113' } })
         expect(signUpComponent.state.formFeedbackMessage.password).toBe('영문자, 특수기호, 숫자를 포함한 8자 이상으로 설정해주십시오.')
+        expect(signUpComponent.state.checkInputResult.passwordConfirm).toBe(true)
     })
 
     it('should onChangePasswordConfirmInput work', async () => {
@@ -162,6 +170,34 @@ describe('<SignUp/>', () => {
 
     })
 
+    it('should onChangework - 2', async () => {
+        let mockingState = {
+            verfiyCode: 123,
+            emailDuplicate: true,
+            nicknameDuplicate: true,
+            studentIdDuplicate: true
+        }
+        let remockStore = getMockStore(mockingState)
+        let mockSignUp = (
+            <Provider store={remockStore}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={SignUp} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        )
+        const component = mount(mockSignUp);
+        const signUpComponent = component.find(SignUp.WrappedComponent).instance()
+        await signUpComponent.onChangeStudentIdInput({ target: { value: '2018-15722' } })
+        await signUpComponent.onChangeEmailInput({ target: { value: 'dkwanm1@snu.ac.kr' } })
+        await signUpComponent.onChangeNicknameInput({ target: { value: '123' } })
+        expect(signUpComponent.state.formFeedbackMessage.studentId).toBe('이미 가입한 학번입니다.')
+        expect(signUpComponent.state.formFeedbackMessage.email).toBe('이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.')
+        expect(signUpComponent.state.formFeedbackMessage.nickname).toBe('이미 존재하는 닉네임입니다.')
+
+    })
+
     it('should selectWork', () => {
         const component = mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
@@ -185,20 +221,69 @@ describe('<SignUp/>', () => {
         expect(signUpComponent.state.checkInputResult.agreeToTerms).toBe(true)
     })
 
-    it('should onClickVerifyButton works', () => {
-        const component = mount(signUp);
+    it('should onClickVerifyButton works', async () => {
+        const spyAlert = jest.spyOn(window, 'alert')
+            .mockImplementation(() => { })
+        let mockingState = {
+            verifyCode: '',
+            emailDuplicate: true,
+            nicknameDuplicate: true,
+            studentIdDuplicate: true
+        }
+        let remockStore = getMockStore(mockingState)
+        let mockSignUp = (
+            <Provider store={remockStore}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={SignUp} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        )
+        const component = mount(mockSignUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
-        signUpComponent.onClickVerifyButton()
+        await signUpComponent.onClickVerifyButton()
         expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
+        expect(spyAlert).toHaveBeenCalledWith('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.')
 
-        
+
     })
 
-    it('should onClickSignUpConfirmButton worsk', async () => {
+    it('should onClickVerifyButton works - 2', async () => {
+        const spyAlert = jest.spyOn(window, 'alert')
+            .mockImplementation(() => { })
+        const component = mount(signUp);
+        const signUpComponent = component.find(SignUp.WrappedComponent).instance()
+        await signUpComponent.onClickVerifyButton()
+        expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
+        expect(spyAlert).toHaveBeenCalledWith('메일로 인증번호를 발송하였습니다. 메일을 확인해 주시기 바랍니다.')
+
+    })
+
+    it('should onClickSignUpConfirmButton worsk proper', async () => {
+        const spyAlert = jest.spyOn(window, 'alert')
+            .mockImplementation(() => { })
+        const component = mount(signUp);
+        const signUpComponent = component.find(SignUp.WrappedComponent).instance()
+        await signUpComponent.setState({
+            checkInputResult: {
+                hi: true
+            }
+        })
+        await signUpComponent.onClickSignUpConfirmButton()
+        expect(spySignUp).toHaveBeenCalledTimes(1)
+        expect(spyHistoryPush).toHaveBeenCalledWith('/')
+        expect(spyAlert).toHaveBeenCalledTimes(1)
+
+    })
+
+    it('should onClickSignUpConfirmButton worsk not proper', async () => {
+        const spyAlert = jest.spyOn(window, 'alert')
+            .mockImplementation(() => { })
         const component = mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickSignUpConfirmButton()
-        expect(spyHistoryPush).toHaveBeenCalledWith('/')
+        expect(spyAlert).toHaveBeenCalledTimes(1)
 
     })
 
