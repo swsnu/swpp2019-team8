@@ -7,6 +7,7 @@ export {
     getUserByEmail,
     getUserByStudentId,
     getUserByNickname,
+    checkSignIn,
     checkEmailDuplicate,
     checkNicknameDuplicate,
     checkStudentIdDuplicate
