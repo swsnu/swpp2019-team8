@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import * as actionCreator from '../../../store/actions/index'
+import * as actionCreator from '../../../../store/actions/index'
 
 import {
     Button,
@@ -16,17 +16,23 @@ export class SearchBar extends Component {
         searchInput: ''
     }
 
+    onKeyPress = event => {
+        if(event.key === 'Enter' ) this.onClickSearchConfirmButton()
+    }
+
     onChangeSearchInput = event => {
         this.setState({ searchInput: event.target.value });
     };
 
-    onClickSearchConfirmButton = () => {
+    onClickSearchConfirmButton = async () => {
         let toSearch = this.state.searchInput
-        for (var i = toSearch.length-1 ; i>=0; i--) {
-            if (toSearch[i] === ' ' ) break;
-            else toSearch.slice(0,i)
+        let input = toSearch;
+        for (var i = toSearch.length - 1; i >= 0; i--) {
+            if (toSearch[i] !== ' ') break;
+            else input = toSearch.slice(0, i)
         }
-        this.props.getDocumentByTitle(toSearch)
+        await this.props.getDocumentByTitle(input)
+        if(this.props.selectedDocument !== null) this.props.history.push('/tell_me/documents/' + this.props.selectedDocument.title)
     };
 
     onClickCreateButton = () => {
@@ -41,6 +47,7 @@ export class SearchBar extends Component {
                         type="text"
                         id="search_input"
                         autoFocus
+                        onKeyPress={this.onKeyPress}
                         onChange={this.onChangeSearchInput}
                     ></Input>
                     <InputGroupAddon addonType="append">
@@ -66,8 +73,14 @@ export const mapDispatchToProps = dispatch => {
     }
 }
 
+export const mapStateToProps = state => {
+    return {
+        selectedDocument : state.tm.selectedDocument,
+    }
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(withRouter(SearchBar));
 
