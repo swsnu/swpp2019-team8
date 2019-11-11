@@ -2,10 +2,14 @@ export {
     postSignUp,
     postSignIn,
     getSignOut,
+    getVerifyCode,
     getUserByUserId,
     getUserByEmail,
     getUserByStudentId,
     getUserByNickname,
+    checkEmailDuplicate,
+    checkNicknameDuplicate,
+    checkStudentIdDuplicate
 } from './user';
 
 export {

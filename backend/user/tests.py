@@ -93,8 +93,7 @@ class UserTestCase(TestCase):
         client = Client(enforce_csrf_checks=False)
 
         response = client.get('/api/user/email/dkwanm1@snu.ac.kr/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(43, len(response.content.decode()))
+        self.assertEqual(response.status_code, 404)
 
     def test_get_user_by_email_existing_user(self):
         client = Client(enforce_csrf_checks=False)
@@ -113,8 +112,7 @@ class UserTestCase(TestCase):
         client = Client(enforce_csrf_checks=False)
 
         response = client.get('/api/user/studentId/2018-11912/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(20, len(response.content.decode()))
+        self.assertEqual(response.status_code, 404)
 
     def test_get_user_by_studentId_existing_user(self):
         client = Client(enforce_csrf_checks=False)
@@ -133,8 +131,7 @@ class UserTestCase(TestCase):
         client = Client(enforce_csrf_checks=False)
         
         response = client.get('/api/user/nickname/hia/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(20, len(response.content.decode()))
+        self.assertEqual(response.status_code, 404)
 
     def test_get_user_by_nickname_existing_user(self):
         client = Client(enforce_csrf_checks=False)
@@ -148,3 +145,68 @@ class UserTestCase(TestCase):
         
         response = client.delete('/api/user/nickname/dkwanm1@naver.com/')
         self.assertEqual(response.status_code, 405)
+
+    def test_check_email_duplicate(self):
+        client = Client(enforce_csrf_checks=False)
+        
+        response = client.get('/api/user/check/email/dkwanm1@naver.com/')
+        self.assertIn('true', response.content.decode())
+
+        response = client.get('/api/user/check/email/dkwanm1@nave/')
+        self.assertIn('false', response.content.decode())
+
+        response = client.delete('/api/user/check/email/dkwanm1@naver.com/')
+        self.assertEqual(response.status_code, 405)
+
+    def test_check_nickname_duplicate(self):
+        client = Client(enforce_csrf_checks=False)
+        
+        response = client.get('/api/user/check/nickname/!/')
+        self.assertIn('true', response.content.decode())
+
+        response = client.get('/api/user/check/nickname/dkwanm1@nave/')
+        self.assertIn('false', response.content.decode())
+
+        response = client.delete('/api/user/check/nickname/dkwanm1@naver.com/')
+        self.assertEqual(response.status_code, 405)
+        
+    def test_check_student_id_duplicate(self):
+        client = Client(enforce_csrf_checks=False)
+        
+        response = client.get('/api/user/check/studentId/2018-15722/')
+        self.assertIn('true', response.content.decode())
+
+        response = client.get('/api/user/check/studentId/dkwanm1@nave/')
+        self.assertIn('false', response.content.decode())
+
+        response = client.delete('/api/user/check/studentId/dkwanm1@naver.com/')
+        self.assertEqual(response.status_code, 405)
+
+    def test_get_verifiy_code(self):
+        client = Client(enforce_csrf_checks=False)
+
+        response = client.get('/api/user/verifyCode/dkwanm1@naver.com/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/user/verifyCode/1123/')
+        self.assertEqual(response.status_code, 405)
+
+    def test_get_user_by_id(self):
+        client = Client(enforce_csrf_checks=False)
+
+        user1 = User.objects.create_user(email="dkwanm@naver.com", password="1", nickname="123", gender="MALE", status="1",
+                                 studentId="2018-15721", department="ENGINEERING", major="CSE", studentStatus="student")
+
+        response = client.get('/api/user/userId/' + str(user1.id) + '/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.get('/api/user/userId/123141/')
+        self.assertEqual(response.status_code, 404)
+
+        response = client.delete('/api/user/userId/123141/')
+        self.assertEqual(response.status_code, 405)
+
+
+
+
+

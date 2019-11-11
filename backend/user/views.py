@@ -67,85 +67,129 @@ def sign_out(request):
         return HttpResponseNotAllowed(['GET'])
 
 
+def get_verify_code(request, email):
+    if request.method == 'GET':
+        verifyCode = ""
+        for i in range(1, 6):
+            verifyCode += random.choice(string.digits)
+        email = EmailMessage(
+            '인증 메일입니다.',
+            '인증 번호는 ' + verifyCode + ' 입니다.',
+            to=[email]
+        )
+        email.send()
+        verifyCode_to_return = {
+            'verifyCode': verifyCode
+        }
+        return JsonResponse(verifyCode_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+
 def get_user_by_email(request, email):
     if request.method == 'GET':
-        selectedUser = User.objects.filter(email=email)
-        if selectedUser.count() == 0:
-            verifyCode = ""
-            for i in range(1, 6):
-                verifyCode += random.choice(string.digits)
-            email = EmailMessage(
-                '인증 메일입니다.',
-                '인증 번호는 ' + verifyCode + ' 입니다.',
-                to=['dkwanm1@snu.ac.kr']
-            )
-            email.send()
-
-            user_to_return = {
-                'selectedUser': '',
-                'verifyCode': verifyCode
-            }
-            return JsonResponse(user_to_return, status=200)
-        else:
-            user = model_to_dict(selectedUser[0])
-            user_to_return = {
-                'selectedUser': user,
-                'verifyCode': ''
-            }
-            return JsonResponse(user_to_return, status=200, safe=False)
+        try:
+            selectedUser = User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+        user = model_to_dict(selectedUser)
+        user_to_return = {
+            'selectedUser': user
+        }
+        return JsonResponse(user_to_return, status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
 
 def get_user_by_user_id(request, user_id):
     if request.method == 'GET':
-        selectedUser = User.objects.filter(id=user_id)
-        if selectedUser.count() == 0:
-            user_to_return = {
-                'selectedUser': ''
-            }
-            return JsonResponse(user_to_return, status=200, safe=False)
-        else:
-            user = model_to_dict(selectedUser[0])
-            user_to_return = {
-                'selectedUser': user
-            }
-            return JsonResponse(user_to_return, status=200, safe=False)
+        try:
+            selectedUser = User.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+        user = model_to_dict(selectedUser)
+        user_to_return = {
+            'selectedUser': user
+        }
+        return JsonResponse(user_to_return, status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
 
 def get_user_by_student_id(request, student_id):
     if request.method == 'GET':
-        selectedUser = User.objects.filter(studentId=student_id)
-        if selectedUser.count() == 0:
-            user_to_return = {
-                'selectedUser': ''
-            }
-            return JsonResponse(user_to_return, status=200, safe=False)
-        else:
-            user = model_to_dict(selectedUser[0])
-            user_to_return = {
-                'selectedUser': user
-            }
-            return JsonResponse(user_to_return, status=200, safe=False)
+        try:
+            selectedUser = User.objects.get(studentId=student_id)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+        user = model_to_dict(selectedUser)
+        user_to_return = {
+            'selectedUser': user
+        }
+        return JsonResponse(user_to_return, status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
 
 def get_user_by_nickname(request, nickname):
     if request.method == 'GET':
-        selectedUser = User.objects.filter(nickname=nickname)
-        if selectedUser.count() == 0:
-            user_to_return = {
-                'selectedUser': ''
-            }
-            return JsonResponse(user_to_return, status=200, safe=False)
-        else:
-            user = model_to_dict(selectedUser[0])
-            user_to_return = {
-                'selectedUser': user
-            }
-            return JsonResponse(user_to_return, status=200, safe=False)
+        try:
+            selectedUser = User.objects.get(nickname=nickname)
+        except ObjectDoesNotExist:
+            return HttpResponseNotFound()
+        user = model_to_dict(selectedUser)
+        user_to_return = {
+            'selectedUser': user
+        }
+        return JsonResponse(user_to_return, status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
+
+def check_email_duplicate(request, email):
+    if request.method == 'GET':
+        selectedUser = User.objects.filter(email=email)
+        if (selectedUser.count() == 0):
+            dict_to_return = {
+                'emailDuplicate' : False
+            }
+            return JsonResponse(dict_to_return, safe=False)
+        else:
+            dict_to_return = {
+                'emailDuplicate' : True
+            }
+            return JsonResponse(dict_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+def check_nickname_duplicate(request, nickname):
+    if request.method == 'GET':
+        selectedUser = User.objects.filter(nickname=nickname)
+        if (selectedUser.count() == 0):
+            dict_to_return = {
+                'nicknameDuplicate' : False
+            }
+            return JsonResponse(dict_to_return, safe=False)
+        else:
+            dict_to_return = {
+                'nicknameDuplicate' : True
+            }
+            return JsonResponse(dict_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET']) 
+
+def check_student_id_duplicate(request, student_id):
+    if request.method == 'GET':
+        selectedUser = User.objects.filter(studentId=student_id)
+        if (selectedUser.count() == 0):
+            dict_to_return = {
+                'studentIdDuplicate' : False
+            }
+            return JsonResponse(dict_to_return, safe=False)
+        else:
+            dict_to_return = {
+                'studentIdDuplicate' : True
+            }
+            return JsonResponse(dict_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])       
+
