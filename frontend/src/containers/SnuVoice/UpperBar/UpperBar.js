@@ -10,16 +10,17 @@ import {
     Modal,
     ModalBody,
     ModalHeader,
-    ModalFooter
+    ModalFooter,
+    FormText
 } from 'reactstrap';
 
 export class UpperBar extends Component {
     state = {
         email: '',
         password: '',
-        signIn: false,
         location: '',
         modal: false,
+        feedBackMessage: ''
     }
 
     //Set modal (sign in window)
@@ -27,6 +28,10 @@ export class UpperBar extends Component {
         this.setState({ modal: !this.state.modal })
     }
 
+    onKeyPress = (event) => {
+        if (event.key === 'Enter') this.onClickSignInButton()
+    }
+    
     onClickCrossOverButton = () => {
         if (this.state.location === 'tell_me') {
             this.props.history.push('/hear_us');
@@ -40,9 +45,14 @@ export class UpperBar extends Component {
     }
 
     //NOT the sign-in button in navbar, but sign-in button in the modal (popup)
-    onClickSignInButton = () => {
-        this.toggleModal();
-        this.props.postSignIn(this.state.email, this.state.password);
+    onClickSignInButton = async () => {
+        await this.props.postSignIn(this.state.email, this.state.password);
+        if (this.props.signIn === true) {
+            this.toggleModal();
+            this.setState({ feedBackMessage: '' })
+        } else {
+            this.setState({ feedBackMessage: '이메일이나 비밀번호를 확인해주십시오.' })
+        }
     }
 
     onClickSignOutButton = () => {
@@ -50,16 +60,13 @@ export class UpperBar extends Component {
     }
 
     componentDidMount = () => {
-        if (window.localStorage.getItem('userId') !== null) {
-            this.props.getUserByUserId(parseInt(window.localStorage.getItem('userId')))
-        }
+        this.props.checkSignIn();
         if (/^http:\/\/localhost:3000\/tell_me/.exec(window.location.href)) {
             this.setState({ location: 'tell_me' });
         } else if (/^http:\/\/localhost:3000\/hear_us/.exec(window.location.href)) {
             this.setState({ location: 'hear_us' });
         }
     }
-
     render() {
         let crossover = null;
         let upperBar = null;
@@ -98,8 +105,8 @@ export class UpperBar extends Component {
                 </nav>
             );
         }
-
         return (
+
             <div className="UpperBar">
                 {upperBar}
                 <Modal isOpen={this.state.modal} toggle={this.toggleModal} className="SignInModal">
@@ -107,9 +114,12 @@ export class UpperBar extends Component {
                         Welcome to SNU VOICE
                     </ModalHeader>
                     <ModalBody>
-                        <Input type="email" id="email_input" placeholder="SNU MAIL"
+                        <FormText color="danger" size="12">
+                            {this.state.feedBackMessage}
+                        </FormText>
+                        <Input type="email" id="email_input" placeholder="SNU MAIL" onKeyPress={this.onKeyPress}
                             onChange={(event) => this.setState({ email: event.target.value })}></Input>
-                        <Input type="password" id="password_input" placeholder="PASSWORD"
+                        <Input type="password" id="password_input" placeholder="PASSWORD" onKeyPress={this.onKeyPress}
                             onChange={(event) => this.setState({ password: event.target.value })}></Input>
                     </ModalBody>
                     <ModalFooter>
@@ -124,6 +134,8 @@ export class UpperBar extends Component {
 
 export const mapDispatchToProps = dispatch => {
     return {
+        checkSignIn: () =>
+            dispatch(actionCreator.checkSignIn()),
         postSignIn: (email, password) =>
             dispatch(actionCreator.postSignIn({ email: email, password: password })),
         getSignOut: () =>
