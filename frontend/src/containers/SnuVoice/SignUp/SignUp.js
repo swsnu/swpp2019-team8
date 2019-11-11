@@ -413,7 +413,7 @@ class SignUp extends Component {
       alert('회원 가입이 완료되었습니다.')
       this.props.history.push("/");
     } else {
-      alertMessage.slice(0, alertMessage.length-2);
+      alertMessage = alertMessage.slice(0, alertMessage.length-2);
       alert(alertMessage)
 
     }
