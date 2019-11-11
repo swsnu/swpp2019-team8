@@ -11,7 +11,7 @@ export {
 export {
     postDocument,
     getDocument,
-    // putDocument,
+    putDocument,
     // postPhoto,
     // getPhoto,
     // putPhoto,

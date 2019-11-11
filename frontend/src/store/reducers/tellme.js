@@ -18,9 +18,16 @@ const tellmeReducer = (state = initialState, action) => {
         case actionTypes.GET_DOCUMENT: {
             return { ...state, selectedDocument: action.target };
         }
-        // case actionTypes.PUT_DOCUMENT: {
-        //     return state;   // TODO
-        // }
+        case actionTypes.PUT_DOCUMENT: {
+            for(var i in state.documents)
+            {
+                if(state.documents[i].title === action.target)
+                {
+                    state.documents[i].content = action.content;
+                }
+            }
+             return state;   // TODO
+        }
         // case actionTypes.POST_PHOTO: {
         //     return state;   // TODO
         // }

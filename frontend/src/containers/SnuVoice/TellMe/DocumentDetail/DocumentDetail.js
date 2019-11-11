@@ -20,6 +20,10 @@ class DocumentDetail extends Component {
         this.props.history.push("/tell_me");
     };
 
+    onClickDocumentEditButton = () => {
+        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/edit');
+    }
+
     render() {
         let title = '';
         let content = '';

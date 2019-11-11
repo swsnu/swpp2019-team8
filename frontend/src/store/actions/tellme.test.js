@@ -32,6 +32,24 @@ describe('ActionCreators', () => {
         });
     });
 
+    it(`'putDocument' should post document correctly`, (done) => {
+        const spy = jest.spyOn(axios, 'put')
+            .mockImplementation((url, tm) => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 201,
+                        data: stubDocument,
+                    };
+                    resolve(result);
+                });
+            })
+
+        store.dispatch(actionCreators.putDocument(stubDocument)).then(() => {
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
     it(`'getDocument' should fetch document correctly`, (done) => {
         const spy = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
