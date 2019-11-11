@@ -3,24 +3,51 @@ import classnames from 'classnames';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Button, ButtonGroup, Input, TabContent, TabPane, Nav, NavItem, NavLink, FormGroup, Label, Form } from 'reactstrap';
+import {
+    Button,
+    ButtonGroup,
+    Input,
+    TabContent,
+    TabPane,
+    Nav,
+    NavItem,
+    NavLink,
+    FormGroup,
+    Label,
+    Form
+} from "reactstrap";
 import { MarkdownPreview } from 'react-marked-markdown';
 
+import Upperbar from "../../../UpperBar/UpperBar";
+import "./DocumentEdit.css";
+
+import * as actionCreators from "../../../../../store/actions/index";
+
 class DocumentEdit extends Component {
+
     state = {
-        documentTitle: '',
         documentContent: '',
         documentState: 'write',
     }
 
+    componentDidMount = async () => {
+        await this.props.onGetDocument(this.props.match.params.document_title);
+        this.setState({
+            documentContent: this.props.selectedDocument.content
+        })
+    }
+
 
     onClickDocumentConfirmButton = () => {
-        //confirm
+        this.props.onEditDocument(
+            this.props.match.params.document_title,
+            this.state.documentContent
+        );
     }
 
     onClickDocumentCancelButton = () => {
         //제안: alert("변경 사항은 저장되지 않습니다..이런거")
-        this.props.history.push('/tell_me/' + this.props.history.params.id);
+        this.props.history.push('/tell_me/' + this.props.match.params.document_title);
     }
 
     onClickPhotoButton = () => {
@@ -32,6 +59,10 @@ class DocumentEdit extends Component {
     }
 
     render() {
+        let content = '';
+        if (this.props.selectedDocument) {
+            content = this.props.selectedDocument.content;
+        }
         let editStateTabbuttons = (
             <Nav tabs>
                 <NavItem>
@@ -41,7 +72,7 @@ class DocumentEdit extends Component {
                         </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink className={classnames({ active: this.state.petitionState === 'preview' })}
+                    <NavLink className={classnames({ active: this.state.documentState === 'preview' })}
                         id="preview_tab_button" onClick={() => this.onClickTabButton('preview')}>
                         Preview
                         </NavLink>
@@ -49,42 +80,100 @@ class DocumentEdit extends Component {
             </Nav>
         )
         return (
-            <div className="DocumentEdit">
-                <h1>DocumentEdit</h1>
-                <Button type="button" id="photo_button"
-                    onClick={this.onClickPhotoButton}>Upload Photo</Button>
-                {editStateTabbuttons}
-                <TabContent activeTab={this.state.documentState}>
-                    <TabPane tabId='write'>
-                        <Form>
-                            <FormGroup>
-                                <Label>Title</Label>
-                                <Input type="text" id="document_title_input" placeholder="title"
-                                    onChange={(event) => this.setState({ documentTitle: event.target.value })}></Input>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Content</Label>
-                                <Input type="textarea" id="document_content_textarea" placeholder="content"
-                                    onChange={(event) => this.setState({ documentContent: event.target.value })}></Input>
-                            </FormGroup>
-                        </Form>
-                    </TabPane>
-                    <TabPane tabId='preview'>
-                        <Label>Title</Label>
-                        <h1>{this.state.documentTitle}</h1>
-                        <Label>Content</Label>
-                        <MarkdownPreview value={ this.state.documentContent}/>
-                    </TabPane>
-                </TabContent>
-                <ButtonGroup>
-                    <Button type="button" id="document_confirm_button"
-                        onClick={this.onClickDocumentConfirmButton}>Confirm</Button>
-                    <Button type="button" id="document_cancel_button"
-                        onClick={this.onClickDocumentCancelButton}>Cancel</Button>
-                </ButtonGroup>
+            <div>
+                <Upperbar />
+                <div className="DocumentEdit">
+                    <br />
+                    <h1 className="pageTitle">Document Edit</h1>
+                    <Button
+                        type="button"
+                        id="photo_button"
+                        className="photoButton"
+                        onClick={this.onClickPhotoButton}
+                    >
+                        Upload Photo
+                    </Button>
+                    <br />
+                    {editStateTabbuttons}
+                    <br />
+                    <TabContent activeTab={this.state.documentState}>
+                        <TabPane tabId='write' className="inputTab">
+                            <br />
+                            <h6>Title:</h6>
+                            <h1>
+                            <div className="title">{this.props.match.params.document_title}</div>
+                            </h1>
+                            <br />
+                            <Form>
+                                <FormGroup>
+                                    <h4>Content</h4>
+                                    <Input
+                                        type="textarea"
+                                        rows="20"
+                                        id="document_content_textarea"
+                                        placeholder="content"
+                                        defaultValue={content}
+                                        onChange={event =>
+                                            this.setState({ documentContent: event.target.value })
+                                        }
+                                    ></Input>
+                                </FormGroup>
+                            </Form>
+                        </TabPane>
+                        <TabPane tabId='preview'>
+                            <div className="preview">
+                                <div className="document">
+                                    <br />
+                                    <h6>Title:</h6>
+
+                                    <h1>
+                                        <div className="title">{this.props.match.params.document_title}</div>
+                                    </h1>
+                                    <br />
+                                    <h6>Content:</h6>
+                                    <MarkdownPreview value={this.state.documentContent} />
+                                </div>
+                            </div>
+                        </TabPane>
+                    </TabContent>
+                    <ButtonGroup>
+                        <Button
+                            type="button"
+                            id="document_confirm_button"
+                            disabled={
+                                !this.state.documentContent
+                            }
+                            onClick={this.onClickDocumentConfirmButton}
+                        >
+                            Confirm
+                        </Button>
+                        <Button
+                            type="button"
+                            id="document_cancel_button"
+                            onClick={this.onClickDocumentCancelButton}
+                        >
+                            Cancel
+                    </Button>
+                    </ButtonGroup>
+                </div>
             </div>
-        )
+        );
     }
 }
 
-export default connect(null, null)(withRouter(DocumentEdit));
+export const mapDispatchToProps = (dispatch) => {
+    return {
+        onEditDocument: (target, content) =>
+            dispatch(actionCreators.putDocument({ target: target, content: content })),
+        onGetDocument: document_title =>
+            dispatch(actionCreators.getDocument(document_title)),
+    }
+}
+
+export const mapStateToProps = state => {
+    return {
+        selectedDocument: state.tm.selectedDocument,
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DocumentEdit));

@@ -38,8 +38,24 @@ def document_title(request, document_title):
         response_dict = {'title': document_specific.title,
                          'content': document_specific.content}
         return JsonResponse(response_dict)
+    elif request.method == 'PUT':
+        try:
+            req_data = json.loads(request.body.decode())
+            document_target = req_data['target']
+            document_content = req_data['content']
+        except (KeyError, JSONDecodeError) as e:
+            return HttpResponseBadRequest()
+        try:
+            document = Document.objects.get(title=document_target)
+        except Document.DoesNotExist:
+            return HttpResponse(status=404)
+        document.content = document_content
+        document.save()
+        response_dict = {'title': document.title,
+                         'content': document.content}
+        return JsonResponse(response_dict, status=201)
     else:
-        return HttpResponseNotAllowed(['GET'])
+        return HttpResponseNotAllowed(['GET','PUT'])
 
 
 def debates_by_document(request, document_title):

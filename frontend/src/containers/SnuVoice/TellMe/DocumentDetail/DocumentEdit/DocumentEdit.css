@@ -1,0 +1,38 @@
+.DocumentEdit {
+    background-color: #3779c4;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.pageTitle {
+    color: white !important;
+}
+
+.photoButton {
+    float: right;
+}
+
+.preview {
+    background-color: white;
+    min-height: 400px;
+}
+
+.title {
+    color: black;
+    text-align: left;
+}
+
+h2, h3, h4, h6 {
+    color: black;
+}
+
+.inputTab {
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.document {
+    color: black !important;
+    text-align: left;
+    padding-left: 5%; 
+}
