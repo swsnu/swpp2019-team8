@@ -132,3 +132,5 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'user.User'
 
 CSRF_COOKIE_NAME = "csrftoken"
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

@@ -129,26 +129,26 @@ class UserTestCase(TestCase):
 
     def test_get_user_by_nickname(self):
         client = Client(enforce_csrf_checks=False)
-        
+
         response = client.get('/api/user/nickname/hia/')
         self.assertEqual(response.status_code, 404)
 
     def test_get_user_by_nickname_existing_user(self):
         client = Client(enforce_csrf_checks=False)
-        
+
         response = client.get('/api/user/nickname/!/')
         self.assertEqual(response.status_code, 200)
         self.assertIn('2018-15722', response.content.decode())
 
     def test_get_user_by_nickname_not_allowed(self):
         client = Client(enforce_csrf_checks=False)
-        
+
         response = client.delete('/api/user/nickname/dkwanm1@naver.com/')
         self.assertEqual(response.status_code, 405)
 
     def test_check_email_duplicate(self):
         client = Client(enforce_csrf_checks=False)
-        
+
         response = client.get('/api/user/check/email/dkwanm1@naver.com/')
         self.assertIn('true', response.content.decode())
 
@@ -160,7 +160,7 @@ class UserTestCase(TestCase):
 
     def test_check_nickname_duplicate(self):
         client = Client(enforce_csrf_checks=False)
-        
+
         response = client.get('/api/user/check/nickname/!/')
         self.assertIn('true', response.content.decode())
 
@@ -169,17 +169,18 @@ class UserTestCase(TestCase):
 
         response = client.delete('/api/user/check/nickname/dkwanm1@naver.com/')
         self.assertEqual(response.status_code, 405)
-        
+
     def test_check_student_id_duplicate(self):
         client = Client(enforce_csrf_checks=False)
-        
+
         response = client.get('/api/user/check/studentId/2018-15722/')
         self.assertIn('true', response.content.decode())
 
         response = client.get('/api/user/check/studentId/dkwanm1@nave/')
         self.assertIn('false', response.content.decode())
 
-        response = client.delete('/api/user/check/studentId/dkwanm1@naver.com/')
+        response = client.delete(
+            '/api/user/check/studentId/dkwanm1@naver.com/')
         self.assertEqual(response.status_code, 405)
 
     def test_get_verifiy_code(self):
@@ -195,7 +196,7 @@ class UserTestCase(TestCase):
         client = Client(enforce_csrf_checks=False)
 
         user1 = User.objects.create_user(email="dkwanm@naver.com", password="1", nickname="123", gender="MALE", status="1",
-                                 studentId="2018-15721", department="ENGINEERING", major="CSE", studentStatus="student")
+                                         studentId="2018-15721", department="ENGINEERING", major="CSE", studentStatus="student")
 
         response = client.get('/api/user/userId/' + str(user1.id) + '/')
         self.assertEqual(response.status_code, 200)
@@ -206,7 +207,17 @@ class UserTestCase(TestCase):
         response = client.delete('/api/user/userId/123141/')
         self.assertEqual(response.status_code, 405)
 
+    def test_check_sign(self):
+        client = Client(enforce_csrf_checks=False)
 
+        response = client.get('/api/user/check/signin/')
+        self.assertIn('false', response.content.decode())
 
+        response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
+                               content_type='application/json')
+                               
+        response = client.get('/api/user/check/signin/')
+        self.assertIn('true', response.content.decode())
 
-
+        response = client.delete('/api/user/check/signin/')
+        self.assertEqual(response.status_code, 405)
