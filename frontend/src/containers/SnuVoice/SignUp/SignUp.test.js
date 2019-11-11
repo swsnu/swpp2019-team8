@@ -222,8 +222,6 @@ describe('<SignUp/>', () => {
     })
 
     it('should onClickVerifyButton works', async () => {
-        const spyAlert = jest.spyOn(window, 'alert')
-            .mockImplementation(() => { })
         let mockingState = {
             verifyCode: '',
             emailDuplicate: true,
@@ -244,25 +242,20 @@ describe('<SignUp/>', () => {
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickVerifyButton()
         expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
-        expect(spyAlert).toHaveBeenCalledWith('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.')
-
+        expect(signUpComponent.state.verifyModalMessage).toBe('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.')
 
     })
 
     it('should onClickVerifyButton works - 2', async () => {
-        const spyAlert = jest.spyOn(window, 'alert')
-            .mockImplementation(() => { })
         const component = mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickVerifyButton()
         expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
-        expect(spyAlert).toHaveBeenCalledWith('메일로 인증번호를 발송하였습니다. 메일을 확인해 주시기 바랍니다.')
+        expect(signUpComponent.state.verifyModalMessage).toBe('메일로 인증번호를 발송하였습니다.\n메일을 확인해 주시기 바랍니다.')
 
     })
 
     it('should onClickSignUpConfirmButton worsk proper', async () => {
-        const spyAlert = jest.spyOn(window, 'alert')
-            .mockImplementation(() => { })
         const component = mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.setState({
@@ -272,19 +265,27 @@ describe('<SignUp/>', () => {
         })
         await signUpComponent.onClickSignUpConfirmButton()
         expect(spySignUp).toHaveBeenCalledTimes(1)
-        expect(spyHistoryPush).toHaveBeenCalledWith('/')
-        expect(spyAlert).toHaveBeenCalledTimes(1)
+
 
     })
 
     it('should onClickSignUpConfirmButton worsk not proper', async () => {
-        const spyAlert = jest.spyOn(window, 'alert')
-            .mockImplementation(() => { })
         const component = mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickSignUpConfirmButton()
-        expect(spyAlert).toHaveBeenCalledTimes(1)
+        expect(signUpComponent.state.confirmModalMessage).toBe('다시 한 번 확인해주시기 바랍니다.')
 
+    })
+
+    it('should toggleModal work', () => {
+        const component = mount(signUp);
+        const signUpComponent = component.find(SignUp.WrappedComponent).instance()
+        signUpComponent.setState({
+            confirmModal : true,
+            confirmModalMessage : '회원 가입이 완료되었습니다.'
+        })
+        signUpComponent.toggleConfirmModal()
+        expect(spyHistoryPush).toHaveBeenCalledWith('/')
     })
 
 

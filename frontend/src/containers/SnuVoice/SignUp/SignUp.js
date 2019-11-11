@@ -14,7 +14,10 @@ import {
   FormFeedback,
   Col,
   Row,
-  Container
+  Container,
+  Modal,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
@@ -24,14 +27,14 @@ class SignUp extends Component {
     email: "",
     verifyCode: "",
     password: "",
-    passwordConfirm: "",    
+    passwordConfirm: "",
     nickname: "",
     studentId: "",
     selectedDepartment: "all",
     selectedMajor: "", // ex) 컴퓨터공학부...
-    selectedGender : "",
-    selectedStatus : "",
-    selectedStudentStatus : "",
+    selectedGender: "",
+    selectedStatus: "",
+    selectedStudentStatus: "",
     genderRadio: {
       male: false,
       female: false,
@@ -111,8 +114,23 @@ class SignUp extends Component {
       nickname: '',
       studentId: ''
     },
+    verifyModal: false,
+    verifyModalMessage: '',
+    confirmModal: false,
+    confirmModalMessage: '',
 
   };
+
+  toggleVerifyModal = () => {
+    this.setState({ verifyModal: !this.state.verifyModal })
+  }
+
+  toggleConfirmModal = () => {
+    if (this.state.confirmModal === true && this.state.confirmModalMessage === '회원 가입이 완료되었습니다.') {
+      this.props.history.push('/')
+    }
+      this.setState({ confirmModal: !this.state.confirmModal })
+  }
 
   onChangeEmailInput = async (event) => {
     let email = event.target.value;
@@ -202,11 +220,11 @@ class SignUp extends Component {
         formFeedbackMessage.password = '영문자, 특수기호, 숫자를 포함한 8자 이상으로 설정해주십시오.'
       }
     }
-    if(event.target.value !== this.state.passwordConfirm && this.state.passwordConfirm !== '') {
+    if (event.target.value !== this.state.passwordConfirm && this.state.passwordConfirm !== '') {
       inputResult.passwordConfirm = false;
       inputInvalid.passwordConfirm = true;
       formFeedbackMessage.passwordConfirm = '비밀번호와 일치하지 않습니다.'
-    } else if (this.state.passwordConfirm !== ''){
+    } else if (this.state.passwordConfirm !== '') {
       inputResult.passwordConfirm = true;
       inputInvalid.passwordConfirm = false;
       formFeedbackMessage.passwordConfirm = ''
@@ -285,7 +303,7 @@ class SignUp extends Component {
     }
     this.setState({
       genderRadio: selectedGender,
-      selectedGender : event.target.value,
+      selectedGender: event.target.value,
       checkInputResult: inputResult
     });
   };
@@ -301,7 +319,7 @@ class SignUp extends Component {
     }
     this.setState({
       statusRadio: selectedStatus,
-      selectedStatus : event.target.value,
+      selectedStatus: event.target.value,
       checkInputResult: inputResult,
     })
   };
@@ -352,7 +370,7 @@ class SignUp extends Component {
     }
     this.setState({
       studentRadio: selectedStudent,
-      selectedStudentStatus : event.target.value,
+      selectedStudentStatus: event.target.value,
       checkInputResult: inputResult
     });
   };
@@ -387,17 +405,22 @@ class SignUp extends Component {
 
   onClickVerifyButton = async () => {
     await this.props.getVerifyCode(this.state.email);
-    if(this.props.verifyCode === '') alert('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.')
-    else alert('메일로 인증번호를 발송하였습니다. 메일을 확인해 주시기 바랍니다.')
+    if (this.props.verifyCode === '') {
+      this.setState({ verifyModalMessage: '메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.' })
+    }
+    else {
+      this.setState({ verifyModalMessage: '메일로 인증번호를 발송하였습니다.\n메일을 확인해 주시기 바랍니다.' })
+    }
+    this.toggleVerifyModal();
   };
 
   onClickSignUpConfirmButton = async () => { // 회원가입 확인 + 추가 구현 예정
     let inputResult = this.state.checkInputResult;
-    let alertMessage = 'Please Check Your ';
+    let signUp = true;
     for (let i in inputResult) {
-      if (inputResult[i] === false) alertMessage += i + ', ';
+      if (inputResult[i] === false) signUp = false;
     }
-    if (alertMessage.length === 18) {
+    if (signUp === true) {
       let user = {
         email: this.state.email,
         password: this.state.password,
@@ -410,13 +433,11 @@ class SignUp extends Component {
         student_status: this.state.selectedStudentStatus
       }
       await this.props.postSignUp(user);
-      alert('회원 가입이 완료되었습니다.')
-      this.props.history.push("/");
+      this.setState({ confirmModalMessage: '회원 가입이 완료되었습니다.' })
     } else {
-      alertMessage = alertMessage.slice(0, alertMessage.length-2);
-      alert(alertMessage)
-
+      this.setState({ confirmModalMessage: '다시 한 번 확인해주시기 바랍니다.' })
     }
+    this.toggleConfirmModal();
   };
 
   onClickBackButton = () => {
@@ -502,6 +523,22 @@ class SignUp extends Component {
       <div className="SignUp">
         <UpperBar />
         <h1>Sign Up</h1>
+        <Modal isOpen={this.state.verifyModal} toggle={this.toggleVerifyModal} className="VerifyModal">
+          <ModalBody>
+            {this.state.verifyModalMessage}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={this.toggleVerifyModal}>확인</Button>
+          </ModalFooter>
+        </Modal>
+        <Modal isOpen={this.state.confirmModal} toggle={this.toggleConfirmModal} className="ConfirmModal">
+          <ModalBody>
+            {this.state.confirmModalMessage}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={this.toggleConfirmModal}>확인</Button>
+          </ModalFooter>
+        </Modal>
         <Container>
           <Form>
             <textarea rows="5" cols="80" defaultValue={terms}>
