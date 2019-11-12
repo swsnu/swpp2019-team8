@@ -17,7 +17,7 @@ export class SearchBar extends Component {
     }
 
     onKeyPress = event => {
-        if(event.key === 'Enter' ) this.onClickSearchConfirmButton()
+        if (event.key === 'Enter') this.onClickSearchConfirmButton()
     }
 
     onChangeSearchInput = event => {
@@ -32,7 +32,7 @@ export class SearchBar extends Component {
             else input = toSearch.slice(0, i)
         }
         await this.props.getDocumentByTitle(input)
-        if(this.props.selectedDocument !== null) this.props.history.push('/tell_me/documents/' + this.props.selectedDocument.title)
+        if (this.props.selectedDocument !== null) this.props.history.push('/tell_me/documents/' + this.props.selectedDocument.title)
     };
 
     onClickCreateButton = () => {
@@ -60,6 +60,7 @@ export class SearchBar extends Component {
               </Button>
                     </InputGroupAddon>
                 </InputGroup>
+
             </div>
         )
     }
@@ -75,7 +76,7 @@ export const mapDispatchToProps = dispatch => {
 
 export const mapStateToProps = state => {
     return {
-        selectedDocument : state.tm.selectedDocument,
+        selectedDocument: state.tm.selectedDocument,
     }
 }
 
