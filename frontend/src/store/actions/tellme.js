@@ -32,12 +32,12 @@ export const getDocument_ = (document) => {
 export const getDocument = (document_title) => {
     return dispatch => {
         return axios.get('/api/tellme/document/' + document_title + '/')
-            .then(res =>  {
+            .then(res => {
                 dispatch(getDocument_(res.data))
-            //    dispatch(push('/tell_me/documents/' + res.data.title))
+                //    dispatch(push('/tell_me/documents/' + res.data.title))
             })
             .catch(e => {
-                dispatch({ TYPE : actionTypes.GET_DOCUMENT, target : null})
+                dispatch({ type: actionTypes.GET_DOCUMENT, target: null })
                 dispatch(push('/tell_me/search_fail'))
             })
 
@@ -55,8 +55,8 @@ export const putDocument_ = (document) => {
 
 export const putDocument = (document) => {
     return dispatch => {
-        return axios.put('/api/tellme/document/' + document.target + '/',document)
-            .then(res =>  {
+        return axios.put('/api/tellme/document/' + document.target + '/', document)
+            .then(res => {
                 dispatch(putDocument_(res.data))
                 dispatch(push('/tell_me/documents/' + res.data.title))
             })
