@@ -9,7 +9,6 @@ import datetime
 from user.models import User
 from .models import Document, Photo, Debate, DebateComment
 
-
 def document(request):
     if request.method == 'POST':
         try:
@@ -56,6 +55,15 @@ def document_title(request, document_title):
         return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['GET','PUT'])
+
+def photo(request):
+    if request.method == 'POST':
+        photo = Photo(photo=request.FILES['file'], title=request.POST['title'], content=request.POST['content'])
+        photo.save()
+        return HttpResponse(status=201)
+    else:
+        return HttpResponseNotAllowed(['POST'])
+
 
 
 def debates_by_document(request, document_title):

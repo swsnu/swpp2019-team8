@@ -63,12 +63,12 @@ describe('<DocumentEdit />', () => {
     });
 
     it(`should call 'onClickDocumentCancelButton'`, () => {
-        const spyHistoryPush = jest.spyOn(history, 'push')
+        const spyHistoryPush = jest.spyOn(history, 'goBack')
             .mockImplementation(path => { });
         const component = mount(documentEdit);
         const wrapper = component.find('#document_cancel_button').at(0);
         wrapper.simulate('click');
-        expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/undefined');//must to fix
+        expect(spyHistoryPush).toHaveBeenCalledTimes(1);//must to fix
     });
 
     it(`should call 'onClickPhotoButton'`, () => {
