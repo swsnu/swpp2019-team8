@@ -20,7 +20,7 @@ export {
     // postPhoto,
     // getPhoto,
     // putPhoto,
-    // getDebates,
+    getDebates,
     // postDebate,
     // getDebate,
     // getDebateComments,

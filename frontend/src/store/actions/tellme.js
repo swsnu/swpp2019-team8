@@ -63,10 +63,25 @@ export const putDocument = (document) => {
             .catch(e => {
                 console.log(e);
             })
+        };
     };
-};
-
-
+    
+    export const getDebates_ = (document) => {
+        return {
+            type: actionTypes.GET_DEBATES,
+            target: document,
+        };
+    };
+    
+    export const getDebates = (document_title) => {
+        return dispatch => {
+            return axios.get('/api/tellme/document/' + document_title + '/debate')
+                .then(res => {
+                    dispatch(getDebates_(res.data))
+                })
+        };
+    };
+    
 /*
 export const postPhoto_ = (TODO) => {
     return {
@@ -112,20 +127,8 @@ export const putPhoto = (TODO) => {
 };
 */
 
-/*
-export const getDebates_ = (TODO) => {
-    return {
-        type: actionTypes.GET_DEBATES,
-        // TODO
-    };
-};
 
-export const getDebates = (TODO) => {
-    return dispatch => {
-        // TODO
-    };
-};
-*/
+
 
 /*
 export const postDebate_ = (TODO) => {
