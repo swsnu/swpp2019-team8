@@ -341,6 +341,44 @@ describe('Axios User test', () => {
 
     })
 
+    it('should checkSignIn corrextly', (done) => {
+        let spy = jest.spyOn(axios, 'get')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: {
+                            signIn: true
+                        }
+                    }
+                    resolve(result);
+                })
+            })
+        store.dispatch(actionCreators.checkSignIn())
+            .then(() => {
+                const newState = store.getState();
+                expect(newState.usr.signIn).toBe(true);
+                expect(spy).toHaveBeenCalledTimes(1)
+                done();
+            })
+            .catch()
+
+    })
+
+    it('should checkSignIn corrextly', async (done) => {
+        let spy = jest.spyOn(axios, 'get')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                }).catch()
+            })
+        await store.dispatch(actionCreators.checkSignIn())
+            .catch()
+        expect(true).toBe(true)
+        done()
+
+    })
+
 
 
 

@@ -5,21 +5,13 @@ import { withRouter } from "react-router";
 import { Button, Input, InputGroup, InputGroupAddon } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
+import SearchBar from './SearchBar/SearchBar';
 import * as actionCreator from '../../../store/actions/index'
 
 import "./TellMe.css";
 
 class TellMe extends Component {
   state = {
-    search: ""
-  };
-
-  onChangeSearchInput = event => {
-    this.setState({ search: event.target.value });
-  };
-
-  onClickSearchConfirmButton = () => {
-    this.props.getDocumentByTitle(this.state.search)
   };
 
   onClickCreateButton = () => {
@@ -39,23 +31,7 @@ class TellMe extends Component {
             </h6>
           </div>
           <div className="SearchBar">
-            <InputGroup>
-              <Input
-                type="text"
-                id="search_input"
-                autoFocus
-                onChange={this.onChangeSearchInput}
-              ></Input>
-              <InputGroupAddon addonType="append">
-                <Button
-                  type="button"
-                  id="search_confirm_button"
-                  onClick={this.onClickSearchConfirmButton}
-                >
-                  Search
-              </Button>
-              </InputGroupAddon>
-            </InputGroup>
+            <SearchBar />
           </div>
           <br />
           <div />
@@ -91,15 +67,9 @@ class TellMe extends Component {
   }
 }
 
-export const mapDispatchToProps = dispatch => {
-  return {
-    getDocumentByTitle: (title) =>
-      dispatch(actionCreator.getDocument(title))
-  }
-}
 
 export default connect(
   null,
-  mapDispatchToProps
+  null
 )(withRouter(TellMe));
 

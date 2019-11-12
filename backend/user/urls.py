@@ -9,6 +9,7 @@ urlpatterns = [
     path('userId/<int:user_id>/', views.get_user_by_user_id),
     path('email/<str:email>/', views.get_user_by_email),
     path('studentId/<str:student_id>/', views.get_user_by_student_id),
+    path('check/signin/',views.check_signin),
     path('nickname/<str:nickname>/', views.get_user_by_nickname),
     path('check/email/<str:email>/', views.check_email_duplicate),
     path('check/studentId/<str:student_id>/',views.check_student_id_duplicate),

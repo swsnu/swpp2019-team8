@@ -5,6 +5,7 @@ import { withRouter } from "react-router";
 import { Button, Input, InputGroup, InputGroupAddon, Table } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
+import SearchBar from './SearchBar/SearchBar';
 import Category from "../../../components/Category/category";
 import Petition from "../../../components/Petition/petition";
 import * as actionCreator from '../../../store/actions/index'
@@ -13,26 +14,7 @@ import "./HearUs.css";
 
 export class HearUs extends Component {
   state = {
-    search: "",
     selectedCategory: 'All'
-  };
-
-  onChangeSearchInput = event => {
-    this.setState({ search: event.target.value });
-  };
-
-  onClickSearchConfirmButton = () =>  {
-    // 백엔드 구현이후 추가 예정
-    window.sessionStorage.setItem('petitionSearch', this.state.search)
-    this.props.history.push("/hear_us/search");
-  };
-
-  onClickCreateButton = () => {
-    this.props.history.push("/hear_us/create");
-  };
-
-  onClickMyPetitionButton = () => {
-    this.props.history.push("/hear_us/my_petition/" + this.props.selectedUser.id);
   };
 
   onClickCategoryButton = event => {
@@ -165,41 +147,8 @@ export class HearUs extends Component {
           <div className="HearUs">
             <h1>Hear Us</h1>
             <br />
-            <InputGroup>
-              <Input
-                type="text"
-                id="search_input"
-                autoFocus
-                onChange={this.onChangeSearchInput}
-              ></Input>
-              <InputGroupAddon addonType="append">
-                <Button
-                  type="button"
-                  id="search_confirm_button"
-                  onClick={this.onClickSearchConfirmButton}
-                >
-                  Search
-              </Button>
-              </InputGroupAddon>
-            </InputGroup>
           </div>
-          <br />
-          <div className="UserOptions">
-            <Button
-              type="button"
-              id="create_button"
-              onClick={this.onClickCreateButton}
-            >
-              NEW
-          </Button>
-            <Button
-              type="button"
-              id="my_petition_button"
-              onClick={this.onClickMyPetitionButton}
-            >
-              MINE
-          </Button>
-          </div>
+          <SearchBar/>
           <br></br><br />
           <div className="Category">{category}</div>
           <br /><br /><br />
