@@ -88,38 +88,6 @@ describe('<HearUs/>', () => {
         expect(historyMock.push).toHaveBeenCalledTimes(1)
     })
         
-
-    it('should myPetiion button work', () => {        
-        const component = shallow(<HearUs {...props} history={historyMock}/>)
-        const myPetitionButton = component.find('#my_petition_button')
-        myPetitionButton.simulate('click')
-        expect(historyMock.push).toHaveBeenCalledWith('/hear_us/my_petition/1')
-    })
-
-    it('should create button work', () => {
-        const component = shallow(<HearUs {...props} history={historyMock}/>)
-        const createButton = component.find('#create_button')
-        createButton.simulate('click')
-        expect(historyMock.push).toHaveBeenCalledWith('/hear_us/create')
-    })
-
-    it('should serachConfirm button work', () => {
-        Storage.prototype.setItem = jest.fn(() => { })
-        const component = shallow(<HearUs {...props} history={historyMock}/>)
-        const searchConfirmButton = component.find('#search_confirm_button')
-        searchConfirmButton.simulate('click')
-        expect(historyMock.push).toHaveBeenCalledWith('/hear_us/search')
-    })
-
-    it('should searchInput change work', () => {
-        Storage.prototype.setItem = jest.fn(() => { })
-        let temp = '123'
-        const component = shallow(<HearUs {...props}/>)
-        const searchInput = component.find('#search_input')
-        searchInput.simulate('change', { target: { value: temp } })
-        expect(component.instance().state.search).toBe(temp)
-    })
-
     it('should make list well', () => {
         const component = shallow(<HearUs {...props}/>)
         const petitionList = component.find('Petition')

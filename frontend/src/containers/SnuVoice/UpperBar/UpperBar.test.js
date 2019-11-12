@@ -11,9 +11,10 @@ describe('<UpperBar/>', () => {
         props = {
             selectedUser: '',
             signIn: false,
+            checkSignIn: mocked,
             postSignIn: mocked,
             getSignOut: mocked,
-            getUserByUserId : mocked
+            getUserByUserId: mocked
         }
     })
 
@@ -102,52 +103,70 @@ describe('<UpperBar/>', () => {
         expect(historyMock.push).toHaveBeenCalledTimes(0);
     })
 
-    it('onClickSignInButton works', () => {
+    it('onClickSignInButton works', async () => {
         const component = shallow(<UpperBar {...props} />)
         component.instance().toggleModal = mocked;
-        component.instance().onClickSignInButton();
+        await component.instance().onClickSignInButton();
+        expect(mocked).toHaveBeenCalledTimes(1);
+        expect(component.instance().state.feedBackMessage).toBe('이메일이나 비밀번호를 확인해주십시오.')
+    })
+
+    it('onClickSignInButton works- 2', async () => {
+        const component = shallow(<UpperBar {...props} signIn={true} />)
+        component.instance().toggleModal = mocked;
+        await component.instance().onClickSignInButton();
         expect(mocked).toHaveBeenCalledTimes(2);
+        expect(component.instance().state.feedBackMessage).toBe('')
     })
 
-    it('componeneDidMount works in tell_me and chekcs logIn', () => {
-        Storage.prototype.getItem = jest.fn(() => {return null})
+    it('componeneDidMount works in tell_me and chekcs logIn', async () => {
         global.window = Object.create(window);
         Object.defineProperty(window, 'location', {
             writable: true,
             value: {
-                href : 'http://localhost:3000/tell_me'
+                href: 'http://localhost:3000/tell_me'
             }
-          });
-        const component = mount(<UpperBar {...props} />)
+        });
+        let component;
+        component = await mount(<UpperBar {...props} />)
         expect(component.instance().state.location).toBe('tell_me')
-        expect(mocked).toHaveBeenCalledTimes(0)
+        expect(mocked).toHaveBeenCalledTimes(1)
     })
 
-    it('componeneDidMount works in hear_us', () => {
-        Storage.prototype.getItem = jest.fn(() => {return '1'})
+    it('componeneDidMount works in hear_us', async () => {
         global.window = Object.create(window);
         Object.defineProperty(window, 'location', {
             writable: true,
             value: {
-                href : 'http://localhost:3000/hear_us'
+                href: 'http://localhost:3000/hear_us'
             }
-          });
-        const component = mount(<UpperBar {...props} />)
+        });
+        let component;
+        component = await mount(<UpperBar {...props} />)
         expect(component.instance().state.location).toBe('hear_us')
         expect(mocked).toHaveBeenCalledTimes(1)
     })
 
-    it('componeneDidMount works in main', () => {
-        Storage.prototype.getItem = jest.fn(() => {return '1'})
+    it('componeneDidMount works in main', async () => {
         global.window = Object.create(window);
         Object.defineProperty(window, 'location', {
             writable: true,
             value: {
-                href : 'http://localhost:3000/'
+                href: 'http://localhost:3000/'
             }
-          });
-        const component = mount(<UpperBar {...props} />)
+        });
+        let component;
+        component = await mount(<UpperBar {...props} />)
         expect(component.instance().state.location).toBe('')
+        expect(mocked).toHaveBeenCalledTimes(1)
+    })
+
+    it('should onKeyPress work', () => {
+        const component = shallow(<UpperBar {...props} />)
+        component.instance().onClickSignInButton = mocked
+        component.instance().onKeyPress({ key: 'Enter' })
+        expect(mocked).toHaveBeenCalledTimes(1)
+        component.instance().onKeyPress({ key: 'Entr' })
         expect(mocked).toHaveBeenCalledTimes(1)
     })
 
@@ -164,6 +183,11 @@ describe('<UpperBar/> : Dispatch to Props', () => {
     })
 
     afterEach(() => jest.clearAllMocks())
+
+    it('test postSignIn', () => {
+        mapDispatchToProps(dispatch).checkSignIn();
+        expect(dispatch).toHaveBeenCalledTimes(1);
+    })
 
     it('test postSignIn', () => {
         mapDispatchToProps(dispatch).postSignIn();

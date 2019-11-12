@@ -127,6 +127,22 @@ export const getVerifyCode = (email) => {
     }
 }
 
+export const checkSignIn_ = (response) => {
+    return {
+        type: actionTypes.CHECK_SIGN_IN,
+        signIn : response.signIn
+    }
+}
+
+export const checkSignIn = () => {
+    return dispatch => {
+        return axios.get('/api/user/check/signin/')
+        .then(res => {
+            dispatch(checkSignIn_(res.data))
+        })
+        .catch(e => {})
+    }
+}
 export const checkEmailDuplicate_ = (response) => {
     return {
         type: actionTypes.CHECK_EMAIL_DUPLICATE,

@@ -191,5 +191,20 @@ def check_student_id_duplicate(request, student_id):
             }
             return JsonResponse(dict_to_return, safe=False)
     else:
-        return HttpResponseNotAllowed(['GET'])       
+        return HttpResponseNotAllowed(['GET'])  
+
+def check_signin(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            json_to_return = {
+                'signIn' : True
+            }
+            return JsonResponse(json_to_return, safe=False)
+        else:
+            json_to_return = {
+                'signIn' : False
+            }
+            return JsonResponse(json_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
 

@@ -46,7 +46,6 @@ describe('user reducer', () => {
     })
 
     it('should getUser not logged In', () => {
-        Storage.prototype.getItem = jest.fn(() => { return null })
         const newState = userReducer(undefined, {
             type: actionTypes.GET_USER,
             selectedUser: '123',
@@ -67,7 +66,6 @@ describe('user reducer', () => {
 
 
     it('should getUser not logged In', () => {
-        Storage.prototype.getItem = jest.fn(() => { return '1' })
         const newState = userReducer(undefined, {
             type: actionTypes.GET_USER,
             selectedUser: '123',
@@ -76,7 +74,7 @@ describe('user reducer', () => {
         expect(newState).toEqual({
             selectedUser: '123',
             verifyCode: '',
-            signIn: true,
+            signIn: false,
             emailDuplicate: false,
             nicknameDuplicate: false,
             studentIdDuplicate: false
@@ -144,12 +142,27 @@ describe('user reducer', () => {
     it('should getVerifyCode works', () => {
         let newState = userReducer(undefined, {
             type: actionTypes.GET_VERIFY_CODE,
-            verifyCode : 123,
+            verifyCode: 123,
         })
         expect(newState).toEqual({
             selectedUser: '',
-            verifyCode : 123,
-            signIn : false,
+            verifyCode: 123,
+            signIn: false,
+            emailDuplicate: false,
+            nicknameDuplicate: false,
+            studentIdDuplicate: false
+        })
+    })
+
+    it('should checkSignIn works', () => {
+        let newState = userReducer(undefined, {
+            type: actionTypes.CHECK_SIGN_IN,
+            signIn : true,
+        })
+        expect(newState).toEqual({
+            selectedUser: '',
+            verifyCode : '',
+            signIn : true,
             emailDuplicate : false,
             nicknameDuplicate : false,
             studentIdDuplicate : false

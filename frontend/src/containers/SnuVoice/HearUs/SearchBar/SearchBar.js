@@ -15,17 +15,22 @@ export class SearchBar extends Component {
         serachInput: '',
     }
 
+    onKeyPress = (event) => {
+        if (event.key === 'Enter') this.onClickSearchConfirmButton();
+    }
+
     onChangeSearchInput = event => {
         this.setState({ searchInput: event.target.value });
     };
 
     onClickSearchConfirmButton = () => {
         let toSearch = this.state.searchInput
+        let input = toSearch;
         for (var i = toSearch.length - 1; i >= 0; i--) {
-            if (toSearch[i] === ' ') break;
-            else toSearch.slice(0, i)
+            if (toSearch[i] !== ' ') break;
+            else input = toSearch.slice(0, i)
         }
-        window.sessionStorage.setItem('petitionSearch', toSearch)
+        window.sessionStorage.setItem('petitionSearch', input)
         this.props.history.push('/hear_us/search')
     }
 
@@ -38,10 +43,21 @@ export class SearchBar extends Component {
     }
 
     render() {
+        let buttons = '';
+        if (this.props.signIn === true) {
+            buttons = (
+                <div className="userOptions">
+                    <Button type="button" id="create_button"
+                        onClick={this.onClickCreateButton}>NEW</Button>
+                    <Button type="button" id="my_petition_button"
+                        onClick={this.onClickMyPetitionButton}>MINE</Button>
+                </div>
+            )
+        }
         return (
             <div>
                 <InputGroup className="searchBar">
-                    <Input type="text" id="search_input" autoFocus
+                    <Input type="text" id="search_input" autoFocus onKeyPress={this.onKeyPress}
                         onChange={this.onChangeSearchInput}></Input>
                     <InputGroupAddon addonType="append">
                         <Button type="button" id="search_confirm_button"
@@ -49,18 +65,20 @@ export class SearchBar extends Component {
                     </InputGroupAddon>
                 </InputGroup>
                 <br />
-                <div className="userOptions">
-                    <Button type="button" id="create_button"
-                        onClick={this.onClickCreateButton}>NEW</Button>
-                    <Button type="button" id="my_petition_button"
-                        onClick={this.onClickMyPetitionButton}>MINE</Button>
-                </div>
+                {buttons}
             </div >
         )
     }
 }
 
+export const mapStateToProps = state => {
+    return {
+        selectedUser: state.usr.selectedUser,
+        signIn: state.usr.signIn
+    }
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     null
 )(withRouter(SearchBar));

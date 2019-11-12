@@ -29,8 +29,6 @@ describe('<TellMe/>', () => {
         )
         spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(() => { })
-        spyGetDocumentByTitle = jest.spyOn(actionCreator, 'getDocument')
-            .mockImplementation((title) => { return dispatch => { }; })
     })
 
     afterEach(() => { jest.clearAllMocks() })
@@ -47,18 +45,6 @@ describe('<TellMe/>', () => {
         const searchButton = component.find('#search_confirm_button').at(0)
         createButton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/create')
-        searchButton.simulate('click')
-        expect(spyGetDocumentByTitle).toHaveBeenCalledTimes(1)
     })
-
-    it('should searchInput works', () => {
-        const component = mount(tellMe)
-        const searchInput = component.find('#search_input').at(0)
-        const tellMeComponent = component.find(TellMe.WrappedComponent).instance();
-        let temp = '2';
-        searchInput.simulate('change', { target: { value: temp } })
-        expect(tellMeComponent.state.search).toBe(temp)
-    })
-
 
 })

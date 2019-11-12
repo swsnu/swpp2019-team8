@@ -37,6 +37,7 @@ export const getDocument = (document_title) => {
             //    dispatch(push('/tell_me/documents/' + res.data.title))
             })
             .catch(e => {
+                dispatch({ TYPE : actionTypes.GET_DOCUMENT, target : null})
                 dispatch(push('/tell_me/search_fail'))
             })
 
