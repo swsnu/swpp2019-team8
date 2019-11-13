@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-const DebateList = (props) => {
+function DebateList(props) {
     return (
         <div>
-            <Link>Hi</Link>
+            <p>
+                {props.debate.title} | {props.debate.author}
+            </p>
         </div>
     )
 }

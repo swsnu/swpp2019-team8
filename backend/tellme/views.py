@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.contrib.auth import authenticate
+from django.forms.models import model_to_dict
 
 import json
 from json import JSONDecodeError
@@ -85,7 +86,7 @@ def debates_by_document(request, document_title):
                             title=debate_title, content=debate_content)
         new_debate.save()
 
-        return HttpResponse(status=201)
+        return JsonResponse(model_to_dict(new_debate), status=201)
 
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])

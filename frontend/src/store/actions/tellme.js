@@ -82,110 +82,113 @@ export const putDocument = (document) => {
         };
     };
     
-/*
-export const postPhoto_ = (TODO) => {
-    return {
-        type: actionTypes.POST_PHOTO,
-        // TODO
+    export const postDebate_ = (debate) => {
+        return {
+            type: actionTypes.POST_DEBATE,
+            id: debate.id,
+            title: debate.title,
+            content: debate.content,
+            document: debate.document_title,
+        };
     };
-};
-
-export const postPhoto = (TODO) => {
-    return dispatch => {
-        // TODO
+    
+    export const postDebate = (selectedDocument, debate) => {
+        return dispatch => {
+            return axios.post('/api/tellme/document/' + selectedDocument.title + '/debate/', debate)
+                .then(res => {
+                    dispatch(postDebate_(res.data));
+                    dispatch(push('/tell_me/documents/' + selectedDocument.title + '/debates/' + res.data.id));
+                })
+        };
     };
-};
-*/
-
-/*
-export const getPhoto_ = (TODO) => {
-    return {
-        type: actionTypes.GET_PHOTO,
-        // TODO
+    
+    
+    /*
+    export const getDebate_ = (TODO) => {
+        return {
+            type: actionTypes.GET_DEBATE,
+            // TODO
+        };
     };
-};
-
-export const getPhoto = (TODO) => {
-    return dispatch => {
-        // TODO
+    
+    export const getDebate = (TODO) => {
+        return dispatch => {
+            // TODO
+        };
     };
-};
-*/
-
-/*
-export const putPhoto_ = (TODO) => {
-    return {
-        type: actionTypes.PUT_PHOTO,
-        // TODO
+    */
+   
+   /*
+   export const getDebateComments_ = (TODO) => {
+       return {
+           type: actionTypes.GET_DEBATE_COMMENTS,
+           // TODO
+        };
     };
-};
-
-export const putPhoto = (TODO) => {
-    return dispatch => {
-        // TODO
+    
+    export const getDebateComments = (TODO) => {
+        return dispatch => {
+            // TODO
+        };
     };
-};
-*/
-
-
-
-
-/*
-export const postDebate_ = (TODO) => {
-    return {
-        type: actionTypes.POST_DEBATE,
-        // TODO
+    */
+   
+   /*
+   export const postDebateComment_ = (TODO) => {
+       return {
+           type: actionTypes.POST_DEBATE_COMMENT,
+           // TODO
+        };
     };
-};
-
-export const postDebate = (TODO) => {
-    return dispatch => {
-        // TODO
+    
+    export const postDebateComment = (TODO) => {
+        return dispatch => {
+            // TODO
+        };
     };
-};
-*/
-
-/*
-export const getDebate_ = (TODO) => {
-    return {
-        type: actionTypes.GET_DEBATE,
-        // TODO
-    };
-};
-
-export const getDebate = (TODO) => {
-    return dispatch => {
-        // TODO
-    };
-};
-*/
-
-/*
-export const getDebateComments_ = (TODO) => {
-    return {
-        type: actionTypes.GET_DEBATE_COMMENTS,
-        // TODO
-    };
-};
-
-export const getDebateComments = (TODO) => {
-    return dispatch => {
-        // TODO
-    };
-};
-*/
-
-/*
-export const postDebateComment_ = (TODO) => {
-    return {
-        type: actionTypes.POST_DEBATE_COMMENT,
-        // TODO
-    };
-};
-
-export const postDebateComment = (TODO) => {
-    return dispatch => {
-        // TODO
-    };
-};
-*/
+    */
+   
+    /*
+   export const postPhoto_ = (TODO) => {
+       return {
+           type: actionTypes.POST_PHOTO,
+           // TODO
+       };
+   };
+   
+   export const postPhoto = (TODO) => {
+       return dispatch => {
+           // TODO
+       };
+   };
+   */
+   
+   /*
+   export const getPhoto_ = (TODO) => {
+       return {
+           type: actionTypes.GET_PHOTO,
+           // TODO
+       };
+   };
+   
+   export const getPhoto = (TODO) => {
+       return dispatch => {
+           // TODO
+       };
+   };
+   */
+   
+   /*
+   export const putPhoto_ = (TODO) => {
+       return {
+           type: actionTypes.PUT_PHOTO,
+           // TODO
+       };
+   };
+   
+   export const putPhoto = (TODO) => {
+       return dispatch => {
+           // TODO
+       };
+   };
+   */

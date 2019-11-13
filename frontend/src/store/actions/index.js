@@ -21,7 +21,7 @@ export {
     // getPhoto,
     // putPhoto,
     getDebates,
-    // postDebate,
+    postDebate,
     // getDebate,
     // getDebateComments,
     // postDebateComment,
