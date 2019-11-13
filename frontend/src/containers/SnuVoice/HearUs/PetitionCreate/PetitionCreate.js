@@ -53,7 +53,7 @@ class PetitionCreate extends Component {
         this.state.petitionLinkList.splice(event.target.value, 1);
         this.forceUpdate();
     }
-
+/*
     onClickTagAddButton = () => {
         this.state.petitionTagList.push(this.state.petitionTag);
         this.setState({ petitionTag: '' });
@@ -64,18 +64,18 @@ class PetitionCreate extends Component {
         this.state.petitionTagList.splice(event.target.value, 1);
         this.forceUpdate();
     }
-
+*/
     onClickPetitionConfirmButton = () => {
-        //Todo: title중복
+        //Tag 주석처리
         let retLink = '';
-        let retTag = '';
+        //let retTag = '';
         for (var i in this.state.petitionLinkList) {
             retLink += this.state.petitionLinkList[i] + ' ';
         }
-        for (var j in this.state.petitionTag) {
+        /*for (var j in this.state.petitionTag) {
             retTag += this.state.petitionTagList[j] + ' ';
-        }
-        this.props.onStorePetition(this.state.petitionTitle, this.state.petitionContent, this.state.selectedCategory, retTag, retLink);
+        }*/
+        this.props.onStorePetition(this.state.petitionTitle, this.state.petitionContent, this.state.selectedCategory, /*retTag ,*/ retLink);
     }
 
     onClickPetitionCancelButton = () => {
@@ -93,7 +93,7 @@ class PetitionCreate extends Component {
                 </div>
             );
         });
-        const tag_list = this.state.petitionTagList.map((tag, i) => {
+        /*const tag_list = this.state.petitionTagList.map((tag, i) => {
             return (
                 <div className="TagList" key={i}>
                     {tag}
@@ -101,7 +101,7 @@ class PetitionCreate extends Component {
                         onClick={this.onClickTagDeleteButton}>Delete Tag</Button>
                 </div>
             );
-        });
+        });*/
         const category_list = this.state.categoryList.map((v, i) => {
             return (
                 <option key={i} value={v.value} label={v.value}></option>
@@ -185,8 +185,8 @@ class PetitionCreate extends Component {
 
 export const mapDispatchToProps = dispatch => {
     return {
-        onStorePetition: (title, content, category, tag, link) =>
-            dispatch(actionCreators.postPetition({ title: title, content: content, category: category, tag: tag, link: link })),
+        onStorePetition: (title, content, category, /*tag,*/ link) =>
+            dispatch(actionCreators.postPetition({ title: title, content: content, category: category, /*tag: tag,*/ link: link })),
     }
 }
 

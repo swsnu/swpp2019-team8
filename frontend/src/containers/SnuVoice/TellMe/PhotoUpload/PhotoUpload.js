@@ -111,7 +111,7 @@ class PhotoUpload extends Component {
                 <h1>Photo Upload</h1>
                 <br/>
                     <div className="FileUpload">
-                        <Input type="file" name="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
+                        <Input type="file" id="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
                     </div>
                     <br/>
                     {photoStateTabbuttons}
