@@ -90,6 +90,7 @@ describe('<PetitionCreate />', () => {
         expect(petitionCreateInstance.state.selectedCategory).toEqual("human rights");
     })
 
+    
     it('should expect cancelbutton', () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
