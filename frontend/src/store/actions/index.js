@@ -23,8 +23,8 @@ export {
     getDebates,
     postDebate,
     getDebate,
-    // getDebateComments,
-    // postDebateComment,
+    getDebateComments,
+    postDebateComment,
 } from './tellme';
 
 export {

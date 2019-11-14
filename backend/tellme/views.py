@@ -116,12 +116,12 @@ def debate_comments(request, debate_id):
         debate_comment_list = [
             comment for comment in DebateComment.objects.filter(debate=debate_id).values()]
             
-        response = {
-            'debateDocumentTitle' : debate.document.title,
-            'debateTitle' : debate.title,
-            'commentList' : debate_comment_list
-        }
-        return JsonResponse(response, safe=False, status=200)
+        # response = {
+        #     'debateDocumentTitle' : debate.document.title,
+        #     'debateTitle' : debate.title,
+        #     'commentList' : debate_comment_list
+        # }
+        return JsonResponse(debate_comment_list, safe=False, status=200)
 
     elif request.method == 'POST':
         if not request.user.is_authenticated:

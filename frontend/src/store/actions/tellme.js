@@ -102,8 +102,6 @@ export const putDocument = (document) => {
         };
     };
     
-    
-    
     export const getDebate_ = (debate) => {
         return {
             type: actionTypes.GET_DEBATE,
@@ -118,32 +116,30 @@ export const putDocument = (document) => {
                     dispatch(getDebate_(res.data))
                 })
         };
-    };
-    
-   
+    }; 
    
    export const getDebateComments_ = (comments) => {
        return {
            type: actionTypes.GET_DEBATE_COMMENTS,
-           commentList: comments
+           commentList: comments,
         };
     };
     
     export const getDebateComments = (debate_id) => {
         return dispatch => {
-            return axios.get('/api/tellme/debate/' + debate_id + '/')
+            return axios.get('/api/tellme/debate/' + debate_id)
                 .then(res => {
                     dispatch(getDebateComments_(res.data))
                 })
         };
     };
-    
-   
-   
-   export const postDebateComment_ = (TODO) => {
+     
+   export const postDebateComment_ = (comment) => {
        return {
            type: actionTypes.POST_DEBATE_COMMENT,
-           // TODO
+           id: comment.id,
+           comment: comment.comment,
+           debate: comment.debate,
         };
     };
     

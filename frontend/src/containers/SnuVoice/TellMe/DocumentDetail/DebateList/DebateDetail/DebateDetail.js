@@ -18,25 +18,41 @@ class DebateDetail extends Component {
     componentDidMount = async () => {
         await this.props.onGetDocument(this.props.match.params.document_title);
         this.props.onGetDebate(this.props.selectedDocument, this.props.match.params.debate_id);
+        this.props.onGetDebateComments(this.props.match.params.debate_id);
     }
 
     onClickCommentConfirmButton = () => {
-        //TODO
+        this.props.onPostDebateComment(
+            this.state.comment,
+            this.state.selectedDebate.id
+        )
     }
 
     render() {
         let documentTitle = '';
         let debateTitle = '';
         let debateContent = '';
-
+        
         if (this.props.selectedDocument) {
             documentTitle = this.props.selectedDocument.title;
         }
-
+        
         if (this.props.selectedDebate) {
             debateTitle = this.props.selectedDebate.title;
             debateContent = this.props.selectedDebate.content;
         }
+        
+        let debateCommentList;
+        debateCommentList = (
+            this.props.debateComments.map(comment => {
+                return <DebateComments
+                key = {comment.id}
+                id = {comment.id}
+                comment = {comment.comment}
+                author = {comment.author}
+                />
+            })
+        );
 
         return (
             <div>
@@ -57,11 +73,14 @@ class DebateDetail extends Component {
             </h4>
             <br/>
             {debateContent}
-            <br/>
+            <br/><br/>
+            {debateCommentList}
+            
             <Input 
                 type="textarea" 
                 id="debate_new_comment_textarea"
-                placeholder="Enter debate comment"/>
+                placeholder="Enter debate comment"
+                onChange = {(event) => this.setState({ comment: event.target.value })}/>
             <Button
                 id="debate_comment_confirm_button">CONFIRM</Button>
                 </div>
@@ -75,6 +94,7 @@ export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
         selectedDebate: state.tm.selectedDebate,
+        debateComments: state.tm.debateComments,
     }
 }
 
@@ -85,6 +105,12 @@ export const mapDispatchToProps = dispatch => {
    
         onGetDebate: (selectedDocument, debate_id) =>
             dispatch(actionCreators.getDebate(selectedDocument.title, debate_id)),
+    
+        onGetDebateComments: ( debate_id ) =>
+            dispatch(actionCreators.getDebateComments(debate_id)),
+    
+        onPostDebateComment: (comment, debate_id) =>
+            dispatch(actionCreators.postDebateComment(comment, debate_id)),
     }
 }
 
