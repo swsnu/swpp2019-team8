@@ -66,10 +66,10 @@ export const putDocument = (document) => {
         };
     };
     
-    export const getDebates_ = (document) => {
+    export const getDebates_ = (debates) => {
         return {
             type: actionTypes.GET_DEBATES,
-            target: document,
+            debateList: debates,
         };
     };
     
@@ -103,20 +103,23 @@ export const putDocument = (document) => {
     };
     
     
-    /*
-    export const getDebate_ = (TODO) => {
+    
+    export const getDebate_ = (debate) => {
         return {
             type: actionTypes.GET_DEBATE,
-            // TODO
+            target: debate,
         };
     };
     
-    export const getDebate = (TODO) => {
+    export const getDebate = (document_title, debate_id) => {
         return dispatch => {
-            // TODO
+            return axios.get('/api/tellme/document/' + document_title + '/debate/' + debate_id)
+                .then(res => {
+                    dispatch(getDebate_(res.data))
+                })
         };
     };
-    */
+    
    
    /*
    export const getDebateComments_ = (TODO) => {

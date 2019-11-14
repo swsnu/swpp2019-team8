@@ -22,7 +22,7 @@ export {
     // putPhoto,
     getDebates,
     postDebate,
-    // getDebate,
+    getDebate,
     // getDebateComments,
     // postDebateComment,
 } from './tellme';

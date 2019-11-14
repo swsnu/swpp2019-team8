@@ -64,7 +64,7 @@ export const mapStateToProps = state => {
 
 export const mapDispatchToProps = dispatch => {
     return {
-        onCreateDebate: (selectedDocument,debateTitle, debateContent) =>
+        onCreateDebate: (selectedDocument, debateTitle, debateContent) =>
             dispatch(actionCreators.postDebate(selectedDocument,{ title: debateTitle, content: debateContent})),
     }
 }
