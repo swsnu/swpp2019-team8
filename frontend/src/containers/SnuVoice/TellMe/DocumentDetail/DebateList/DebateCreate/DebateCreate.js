@@ -19,7 +19,7 @@ class DebateCreate extends Component {
         
     }
 
-    onClickConfirmButton = () => {
+    onClickDebateConfirmButton = () => {
         this.props.onCreateDebate(
             this.props.selectedDocument,
             this.state.debateTitle,
@@ -49,7 +49,10 @@ class DebateCreate extends Component {
                 <br />
                 <Button 
                     id="debate_confirm_button"
-                    onClick={this.onClickConfirmButton}>CONFIRM</Button>
+                    onClick={this.onClickDebateConfirmButton}>CONFIRM</Button>
+                
+                <Button
+                    id="onClickDebateCancelButton">Cancel</Button>
                     </div>
             </div>
         )

@@ -121,22 +121,25 @@ export const putDocument = (document) => {
     };
     
    
-   /*
-   export const getDebateComments_ = (TODO) => {
+   
+   export const getDebateComments_ = (comments) => {
        return {
            type: actionTypes.GET_DEBATE_COMMENTS,
-           // TODO
+           commentList: comments
         };
     };
     
-    export const getDebateComments = (TODO) => {
+    export const getDebateComments = (debate_id) => {
         return dispatch => {
-            // TODO
+            return axios.get('/api/tellme/debate/' + debate_id + '/')
+                .then(res => {
+                    dispatch(getDebateComments_(res.data))
+                })
         };
     };
-    */
+    
    
-   /*
+   
    export const postDebateComment_ = (TODO) => {
        return {
            type: actionTypes.POST_DEBATE_COMMENT,
@@ -144,12 +147,15 @@ export const putDocument = (document) => {
         };
     };
     
-    export const postDebateComment = (TODO) => {
+    export const postDebateComment = (comment, debate_id) => {
         return dispatch => {
-            // TODO
+            return axios.post('/api/tellme/debate/' + debate_id + '/', comment)
+                .then(res => {
+                    dispatch(postDebateComment_(res.data));
+                })
         };
     };
-    */
+    
    
     /*
    export const postPhoto_ = (TODO) => {

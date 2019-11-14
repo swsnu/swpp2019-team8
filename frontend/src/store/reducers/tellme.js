@@ -3,8 +3,11 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     documents: [],
     selectedDocument: null,
+
     debates: [],
     selectedDebate: null,
+
+    debateComments: [],
 };
 
 const tellmeReducer = (state = initialState, action) => {
@@ -57,12 +60,18 @@ const tellmeReducer = (state = initialState, action) => {
             return {...state, selectedDebate: action.target};   // TODO
         }
 
-        // case actionTypes.GET_DEBATE_COMMENTS: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.POST_DEBATE_COMMENT: {
-        //     return state;   // TODO
-        // }
+        case actionTypes.GET_DEBATE_COMMENTS: {
+            return {...state, debateComments: action.commentList};   // TODO
+        }
+        
+        case actionTypes.POST_DEBATE_COMMENT: {
+            const newDebateComment = {
+                id: action.id,
+                content: action.content
+            }
+            return {...state, debateComments: state.debateComments.concat(newDebateComment)};   // TODO
+        }
+
         default:
             break;
     }

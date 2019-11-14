@@ -15,15 +15,23 @@ class DebateDetail extends Component {
         comment: '',
     }
 
-
-    componentDidMount() {
-        this.props.onGetDebate(this.props.selectedDocument, this.props.selectedDebate.id);
+    componentDidMount = async () => {
+        await this.props.onGetDocument(this.props.match.params.document_title);
+        this.props.onGetDebate(this.props.selectedDocument, this.props.match.params.debate_id);
     }
 
+    onClickCommentConfirmButton = () => {
+        //TODO
+    }
 
     render() {
+        let documentTitle = '';
         let debateTitle = '';
         let debateContent = '';
+
+        if (this.props.selectedDocument) {
+            documentTitle = this.props.selectedDocument.title;
+        }
 
         if (this.props.selectedDebate) {
             debateTitle = this.props.selectedDebate.title;
@@ -39,15 +47,23 @@ class DebateDetail extends Component {
             <div>
                 <h1>DebateDetail</h1>
             </div>
+                <h3>
+                {documentTitle}
+                </h3>
+            <br/>
+            <h4 id="debate_title_text">
             {debateTitle}
+
+            </h4>
             <br/>
             {debateContent}
             <br/>
             <Input 
                 type="textarea" 
-                id="debate_content_textarea"
+                id="debate_new_comment_textarea"
                 placeholder="Enter debate comment"/>
-            <Button>CONFIRM</Button>
+            <Button
+                id="debate_comment_confirm_button">CONFIRM</Button>
                 </div>
                 </div>
         </div>
@@ -64,6 +80,9 @@ export const mapStateToProps = state => {
 
 export const mapDispatchToProps = dispatch => {
     return {
+        onGetDocument: document_title =>
+            dispatch(actionCreators.getDocument(document_title)),
+   
         onGetDebate: (selectedDocument, debate_id) =>
             dispatch(actionCreators.getDebate(selectedDocument.title, debate_id)),
     }

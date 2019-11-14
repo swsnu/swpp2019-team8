@@ -11,14 +11,15 @@ import Upperbar from '../../../UpperBar/UpperBar';
 
 class DebateList extends Component {
     componentDidMount() {
+        this.props.onGetDocument(this.props.match.params.document_title);
         this.props.onGetDebates(this.props.match.params.document_title);
     }
 
-    onClickDetailButton = (event) => {
-        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + "/debates/" + this.props.match.params.debate.id);
+    onClickDebateTitleButton = (event) => {
+        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + "/debates/" + event.target.value);
     }
 
-    onClickCreateButton = (event) => {
+    onClickNewDebateButton = () => {
         this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + "/debates/create");
     }
 
@@ -41,7 +42,7 @@ class DebateList extends Component {
                 author = {debate.author}
                 title = {debate.title}
                 content = {debate.content}
-                onClick = {this.onClickDetailButton}
+                onClick = {this.onClickDebateTitleButton}
                 />
             })
         );
@@ -53,10 +54,12 @@ class DebateList extends Component {
 
                 <div className="DebateList">
                     <h1>Debate List</h1>
-                    <h3>{documentTitle}</h3>
+                    <h3 id="document_title_text">{documentTitle}</h3>
                     {debateList}
                 </div>
-                <Button onClick={this.onClickCreateButton}>NEW</Button>
+                <Button 
+                    onClick={this.onClickNewDebateButton}
+                    id="new_debate_button">NEW</Button>
             </div>
             </div>
         )
@@ -67,11 +70,15 @@ export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
         debates: state.tm.debates,
+        selectedDebate: state.tm.selectedDebate
     }
 }
 
 export const mapDispatchToProps = dispatch => {
     return {
+        onGetDocument: (document_title) =>
+            dispatch(actionCreators.getDocument(document_title)),
+   
         onGetDebates: (document_title) =>
             dispatch(actionCreators.getDebates(document_title)),
     }
