@@ -28,8 +28,17 @@ def sign_up(request):
             new_student_status = json.loads(body)['student_status']
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        User.objects.create_user(email=new_email, password=new_password, nickname=new_nickname, gender=new_gender, status=new_status,
-                                 studentId=new_student_id, department=new_department, major=new_major, studentStatus=new_student_status)
+        new_user = {
+            'password': new_password,
+            'nickname': new_nickname,
+            'gender': new_gender,
+            'status': new_status,
+            'studentId': new_student_id,
+            'department': new_department,
+            'major': new_major,
+            'studentStatus': new_student_status
+        }
+        User.objects.create_user(email=new_email, new_user=new_user)
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
@@ -71,7 +80,7 @@ def get_verify_code(request, email):
     if request.method == 'GET':
         verify_code = ""
         for i in range(1, 6):
-            verify_code += str(random.randint(0,9))
+            verify_code += str(random.randint(0, 9))
             i = i + 1
         email = EmailMessage(
             '인증 메일입니다.',
@@ -146,66 +155,69 @@ def get_user_by_nickname(request, nickname):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+
 def check_email_duplicate(request, email):
     if request.method == 'GET':
         selected_user = User.objects.filter(email=email)
         if (selected_user.count() == 0):
             dict_to_return = {
-                'emailDuplicate' : False
+                'emailDuplicate': False
             }
             return JsonResponse(dict_to_return, safe=False)
         else:
             dict_to_return = {
-                'emailDuplicate' : True
+                'emailDuplicate': True
             }
             return JsonResponse(dict_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
+
 
 def check_nickname_duplicate(request, nickname):
     if request.method == 'GET':
         selected_user = User.objects.filter(nickname=nickname)
         if (selected_user.count() == 0):
             dict_to_return = {
-                'nicknameDuplicate' : False
+                'nicknameDuplicate': False
             }
             return JsonResponse(dict_to_return, safe=False)
         else:
             dict_to_return = {
-                'nicknameDuplicate' : True
+                'nicknameDuplicate': True
             }
             return JsonResponse(dict_to_return, safe=False)
     else:
-        return HttpResponseNotAllowed(['GET']) 
+        return HttpResponseNotAllowed(['GET'])
+
 
 def check_student_id_duplicate(request, student_id):
     if request.method == 'GET':
         selected_user = User.objects.filter(studentId=student_id)
         if (selected_user.count() == 0):
             dict_to_return = {
-                'studentIdDuplicate' : False
+                'studentIdDuplicate': False
             }
             return JsonResponse(dict_to_return, safe=False)
         else:
             dict_to_return = {
-                'studentIdDuplicate' : True
+                'studentIdDuplicate': True
             }
             return JsonResponse(dict_to_return, safe=False)
     else:
-        return HttpResponseNotAllowed(['GET'])  
+        return HttpResponseNotAllowed(['GET'])
+
 
 def check_signin(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             json_to_return = {
-                'signIn' : True
+                'signIn': True
             }
             return JsonResponse(json_to_return, safe=False)
         else:
             json_to_return = {
-                'signIn' : False
+                'signIn': False
             }
             return JsonResponse(json_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
-
