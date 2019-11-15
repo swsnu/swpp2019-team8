@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { Button, Input, InputGroup, InputGroupAddon, Table } from "reactstrap";
+import { Button, Table } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
 import SearchBar from './SearchBar/SearchBar';
@@ -64,10 +64,10 @@ export class HearUs extends Component {
                 <Petition
                   key={petition.id}
                   id={petition.id}
-                  state={petition.status}
-                  title={petition.title}
                   category={petition.category}
                   dueDate={petition.end_date}
+                  state={petition.status}
+                  title={petition.title}
                   votes={petition.votes}
                   onClick={this.onClickDetailButton}
                 />
@@ -85,9 +85,9 @@ export class HearUs extends Component {
                 id={petition.id}
                 state={petition.status}
                 title={petition.title}
+                votes={petition.votes}
                 category={petition.category}
                 dueDate={petition.end_date}
-                votes={petition.votes}
                 onClick={this.onClickDetailButton}
               />
             )
@@ -125,11 +125,11 @@ export class HearUs extends Component {
                 <Petition
                   key={petition.id}
                   id={petition.id}
-                  state={petition.status}
-                  title={petition.title}
                   category={petition.category}
                   dueDate={petition.end_date}
                   votes={petition.votes}
+                  state={petition.status}
+                  title={petition.title}
                   onClick={this.onClickDetailButton}
                 />
               )
@@ -148,7 +148,7 @@ export class HearUs extends Component {
             <h1>Hear Us</h1>
             <br />
           </div>
-          <SearchBar/>
+          <SearchBar />
           <br></br><br />
           <div className="Category">{category}</div>
           <br /><br /><br />

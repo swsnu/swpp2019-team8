@@ -5,7 +5,7 @@ const initialState = {
     selectedDocument: null,
 };
 
-const tellmeReducer = (state = initialState, action) => {
+const tellme = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.POST_DOCUMENT: {
             const newDocument = {
@@ -58,4 +58,4 @@ const tellmeReducer = (state = initialState, action) => {
     return state;
 };
 
-export default tellmeReducer;
+export default tellme;

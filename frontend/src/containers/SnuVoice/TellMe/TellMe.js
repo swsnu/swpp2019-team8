@@ -2,11 +2,10 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { Button, Input, InputGroup, InputGroupAddon } from "reactstrap";
+import { Button } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
 import SearchBar from './SearchBar/SearchBar';
-import * as actionCreator from '../../../store/actions/index'
 
 import "./TellMe.css";
 

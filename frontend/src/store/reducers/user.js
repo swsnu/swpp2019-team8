@@ -9,7 +9,7 @@ const initialState = {
     studentIdDuplicate: false,
 };
 
-const userReducer = (state = initialState, action) => {
+const user = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.POST_SIGN_UP:
             return { selectedUser: '', verifyCode: '', signIn: false }
@@ -35,4 +35,4 @@ const userReducer = (state = initialState, action) => {
     return { ...state };
 };
 
-export default userReducer;
+export default user;
