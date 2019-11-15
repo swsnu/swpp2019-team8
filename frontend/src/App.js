@@ -18,7 +18,6 @@ import DebateDetail from './containers/SnuVoice/TellMe/DocumentDetail/DebateList
 import HearUs from './containers/SnuVoice/HearUs/HearUs';
 import MyPetition from './containers/SnuVoice/HearUs/MyPetition/MyPetition';
 import PetitionList from './containers/SnuVoice/HearUs/PetitionList/PetitionList';
-import PetitionSearch from './containers/SnuVoice/HearUs/PetitionSearch/PetitionSearch';
 import PetitionCreate from './containers/SnuVoice/HearUs/PetitionCreate/PetitionCreate';
 import PetitionDetail from './containers/SnuVoice/HearUs/PetitionDetail/PetitionDetail';
 import PetitionStatistic from './containers/SnuVoice/HearUs/PetitionDetail/PetitionStatistic/PetitionStatistic';

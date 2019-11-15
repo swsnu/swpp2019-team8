@@ -159,8 +159,8 @@ class PetitionList extends Component {
                             <Petition
                                 key={petition.id}
                                 id={petition.id}
-                                state={petition.status}
                                 title={petition.title}
+                                state={petition.status}
                                 category={petition.category}
                                 dueDate={petition.end_date}
                                 votes={petition.votes}
@@ -178,10 +178,10 @@ class PetitionList extends Component {
                             <Petition
                                 key={petition.id}
                                 id={petition.id}
-                                state={petition.status}
-                                title={petition.title}
                                 category={petition.category}
                                 dueDate={petition.end_date}
+                                state={petition.status}
+                                title={petition.title}
                                 votes={petition.votes}
                                 onClick={this.onClickDetailButton}
                             />

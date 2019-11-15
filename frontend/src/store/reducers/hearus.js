@@ -6,7 +6,11 @@ const initialState = {
     comment_list: [],
 };
 
-const hearusReducer = (state = initialState, action) => {
+
+const hearus = (prevState, action) => {
+    let state;
+    if (prevState === undefined) state = initialState;
+    else state = prevState;
     switch (action.type) {
         case actionTypes.POST_PETITION: {
             const newPetition = {
@@ -47,4 +51,4 @@ const hearusReducer = (state = initialState, action) => {
     return state;
 };
 
-export default hearusReducer;
+export default hearus;
