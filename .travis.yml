@@ -30,12 +30,12 @@ matrix:
         - coverage run --source="." manage.py test
         - coverage xml
         - cd ..
-        - sonar-scanner
       after_success:
         - cd frontend
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
         - cd ../backend
         - coveralls --merge=../frontned/coverage.json
+        - sonar-scanner
       dist: xenial
       addons:
         sonarcloud:
