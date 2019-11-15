@@ -11,14 +11,14 @@ matrix:
         yarn: true
         pip: true
       node_js:
-        - "10" # node_js version
+        - '10' # node_js version
       python: 
-        - "3.6"
+        - '3.6'
       install: # Script to run before install
         - cd frontend
-        - yarn install
-        - yarn add coveralls
-        - yarn add coveralls-lcov
+        - npm install
+        - npm install coveralls
+        - gem install coveralls-lcov
         - cd ../backend
         - pip install -r rquirements.txt
         - cd..
