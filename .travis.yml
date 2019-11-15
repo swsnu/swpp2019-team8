@@ -34,7 +34,7 @@ matrix:
         - cd frontend
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
         - cd ../backend
-        - coveralls --merge=../frontned/coverage.json
+        - coveralls --merge=../frontend/coverage.json
         - cd ..
         - sonar-scanner
         - coveralls
