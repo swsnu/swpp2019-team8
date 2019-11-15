@@ -35,6 +35,7 @@ matrix:
         - coveralls-lcov -v -n coverage/lcov.info > coverage.json
         - cd ../backend
         - coveralls --merge=../frontned/coverage.json
+        - cd ..
         - sonar-scanner
       dist: xenial
       addons:
