@@ -24,7 +24,9 @@ matrix:
         - cd ..
       before_script:
         - cd backend
-        - python manage.py makemigrations user hearus tellme
+        - python manage.py makemigrations user
+        - python manage.py makemigrations hearus
+        - python manage.py makemigrations tellme
         - python manage.py migrate
       script: # Script to test your build
         - cd frontend
