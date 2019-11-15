@@ -21,7 +21,7 @@ matrix:
         - gem install coveralls-lcov
         - cd ../backend
         - pip install -r requirements.txt
-        - cd..
+        - cd ..
       before_script:
         - cd backend
         - python manage.py makemigrations user hearus tellme
