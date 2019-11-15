@@ -9,8 +9,10 @@ const initialState = {
     studentIdDuplicate: false,
 };
 
-const user = (state, action) => {
-    if (state === undefined) state = initialState;
+const user = (prevState, action) => {
+    let state;
+    if (prevState === undefined) state = initialState;
+    else state = prevState;
     switch (action.type) {
         case actionTypes.POST_SIGN_UP:
             return { selectedUser: '', verifyCode: '', signIn: false }

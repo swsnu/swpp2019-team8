@@ -7,8 +7,10 @@ const initialState = {
 };
 
 
-const hearus = (state, action) => {
-    if (state === undefined) state = initialState;
+const hearus = (prevState, action) => {
+    let state;
+    if (prevState === undefined) state = initialState;
+    else state = prevState;
     switch (action.type) {
         case actionTypes.POST_PETITION: {
             const newPetition = {
