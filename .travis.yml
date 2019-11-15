@@ -28,3 +28,28 @@ matrix:
       after_success:
         - sonar-scanner
         - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+        - coveralls-lcov -v -n coverage/lcov.info > coverage.json
+
+      - language: python
+      python: 3.7.4
+       env:
+              - COVERALLS_PARALLEL=true
+      addons:
+        sonarcloud:
+          organization: "swsnu"
+          token:
+            secure: "VMZrMqxJ5Z62z/pc87eX8ZmTQujRfbSW796DAQBSzgIx0QgauD9XlGIK5XdKSIMTmENe7dnI1PTRklQjDsksycxF5dKy+X6ILZ1nFJUNxcaUQqkEECpH5SAu6PNCnXWl3gIQ4kfPpxyO5HM0eGOCLyQELV+vdo7avVuIW2GVP/FtR2HkCQ3lfeiCXKi70CNRnn95LikjCPkMZHdin8LK26fCJziJH+AgcsA57MsP6zVNk+Hr8aVEishPgpzE57GnN8T1FeYMn8otJJO1q6PX0yjbQZI2xelCknHJB4P72Qvq744G+jDJhayUfLzjoKTWVATXBYaeAEV6l3HW7P4dXc8Sm2UYdCM3ZrSZZFT7VCjiLhGEgHAtpXHSdnAlQPdhHrg6Ceej/x19eZLS+peCBFuLmI24GJDGrBykhJaJNHc2/Yjnj3gShKEdRVgOJGXkNvZIvDnu7Ogk1H/uph3lg+YXdYtBuHPKNczERTZgCa/EBq4iUhh8u9Qytv1/FrKd4xNjl7hPB6oqxOZb1a/15sYzZXB3C/HK05yzY7AZOwC2YgH7K73ZzJpZq0130h3VU7hWXnbblkOsXKfYamZrK4+DvlL3sIeMqJwCyIMkmcRS2p3IDTjfWNg6uT1tKq9rypKR4eIpXnhMX+hU3hgeGKwCA/D1iKyk0nSyEQuI2WM="
+      before_install:
+        - cd back
+      install:
+        - pip install coverage
+        - pip install coveralls
+      before_script:
+        - python manage.py makemigrations user hearus tellme
+        - python manage.py migrate
+      script:
+        - coverage run --branch --source="." manage.py test
+        - coverage xml
+        - sonar-scanner
+      after_success:
+        - coveralls
