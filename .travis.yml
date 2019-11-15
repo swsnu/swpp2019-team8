@@ -25,6 +25,6 @@ matrix:
       script: # Script to test your build
         - ./node_modules/.bin/eslint src
         - yarn test --coverage --watchAll=false
-      after_success:
         - sonar-scanner
+      after_success:
         - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
