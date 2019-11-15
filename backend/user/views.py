@@ -48,9 +48,9 @@ def sign_in(request):
             return HttpResponse(status=401)
         else:
             login(request, user)
-            selectedUser = User.objects.get(email=user_email)
+            selected_user = User.objects.get(email=user_email)
             user_to_return = {
-                'selectedUser': model_to_dict(selectedUser)
+                'selectedUser': model_to_dict(selected_user)
             }
             return JsonResponse(user_to_return, status=201, safe=False)
     else:
@@ -69,19 +69,19 @@ def sign_out(request):
 
 def get_verify_code(request, email):
     if request.method == 'GET':
-        verifyCode = ""
+        verify_code = ""
         for i in range(1, 6):
-            verifyCode += random.choice(string.digits)
+            verify_code += random.randint(0,9)
         email = EmailMessage(
             '인증 메일입니다.',
-            '인증 번호는 ' + verifyCode + ' 입니다.',
+            '인증 번호는 ' + verify_code + ' 입니다.',
             to=[email]
         )
         email.send()
-        verifyCode_to_return = {
-            'verifyCode': verifyCode
+        verify_code_to_return = {
+            'verifyCode': verify_code
         }
-        return JsonResponse(verifyCode_to_return, safe=False)
+        return JsonResponse(verify_code_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
@@ -89,10 +89,10 @@ def get_verify_code(request, email):
 def get_user_by_email(request, email):
     if request.method == 'GET':
         try:
-            selectedUser = User.objects.get(email=email)
+            selected_user = User.objects.get(email=email)
         except ObjectDoesNotExist:
             return HttpResponseNotFound()
-        user = model_to_dict(selectedUser)
+        user = model_to_dict(selected_user)
         user_to_return = {
             'selectedUser': user
         }
