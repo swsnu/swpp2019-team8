@@ -37,6 +37,7 @@ matrix:
         - coveralls --merge=../frontned/coverage.json
         - cd ..
         - sonar-scanner
+        - coveralls
       dist: xenial
       addons:
         sonarcloud:
