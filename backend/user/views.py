@@ -72,6 +72,7 @@ def get_verify_code(request, email):
         verify_code = ""
         for i in range(1, 6):
             verify_code += str(random.randint(0,9))
+            i = i + 1
         email = EmailMessage(
             '인증 메일입니다.',
             '인증 번호는 ' + verify_code + ' 입니다.',
