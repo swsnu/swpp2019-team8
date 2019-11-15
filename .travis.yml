@@ -16,8 +16,8 @@ matrix:
         - '3.6'
       install: # Script to run before install
         - cd frontend
-        - npm install
-        - npm install coveralls
+        - yarn
+        - yarn install coveralls
         - gem install coveralls-lcov
         - cd ../backend
         - pip install -r requirements.txt
