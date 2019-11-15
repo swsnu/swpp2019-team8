@@ -42,8 +42,7 @@ matrix:
       before_install:
         - cd back
       install:
-        - pip install coverage
-        - pip install coveralls
+        - pip install -r requirements.tx
       before_script:
         - python manage.py makemigrations user hearus tellme
         - python manage.py migrate
