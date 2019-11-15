@@ -46,7 +46,7 @@ class HearusTestCase(TestCase):
         self.assertEqual(223,len(response.content.decode()))
         response = client.get('/api/hearus/petition/3/')
         self.assertEqual(response.status_code, 404)
-        response = client.put('/api/hearus/petition/1/')
+        response = client.delete('/api/hearus/petition/1/')
         self.assertEqual(response.status_code, 405)
 
     def test_petition_userid(self):

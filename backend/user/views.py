@@ -17,19 +17,19 @@ def sign_up(request):
     if request.method == 'POST':
         try:
             body = request.body.decode()
-            newEmail = json.loads(body)['email']
-            newPassowrd = json.loads(body)['password']
-            newNickname = json.loads(body)['nickname']
-            newGender = json.loads(body)['gender']
-            newStatus = json.loads(body)['status']
-            newStudentId = json.loads(body)['student_id']
-            newDepartment = json.loads(body)['department']
-            newMajor = json.loads(body)['major']
-            newStudentStatus = json.loads(body)['student_status']
+            new_email = json.loads(body)['email']
+            new_password = json.loads(body)['password']
+            new_nickname = json.loads(body)['nickname']
+            new_gender = json.loads(body)['gender']
+            new_status = json.loads(body)['status']
+            new_student_id = json.loads(body)['student_id']
+            new_department = json.loads(body)['department']
+            new_major = json.loads(body)['major']
+            new_student_status = json.loads(body)['student_status']
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        User.objects.create_user(email=newEmail, password=newPassowrd, nickname=newNickname, gender=newGender, status=newStatus,
-                                 studentId=newStudentId, department=newDepartment, major=newMajor, studentStatus=newStudentStatus)
+        User.objects.create_user(email=new_email, password=new_password, nickname=new_nickname, gender=new_gender, status=new_status,
+                                 studentId=new_student_id, department=new_department, major=new_major, studentStatus=new_student_status)
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
@@ -39,18 +39,18 @@ def sign_in(request):
     if request.method == 'POST':
         try:
             body = request.body.decode()
-            userEmail = json.loads(body)['email']
-            userPassword = json.loads(body)['password']
+            user_email = json.loads(body)['email']
+            user_password = json.loads(body)['password']
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        user = authenticate(email=userEmail, password=userPassword)
+        user = authenticate(email=user_email, password=user_password)
         if user is None:
             return HttpResponse(status=401)
         else:
             login(request, user)
-            selectedUser = User.objects.get(email=userEmail)
+            selected_user = User.objects.get(email=user_email)
             user_to_return = {
-                'selectedUser': model_to_dict(selectedUser)
+                'selectedUser': model_to_dict(selected_user)
             }
             return JsonResponse(user_to_return, status=201, safe=False)
     else:
@@ -69,19 +69,20 @@ def sign_out(request):
 
 def get_verify_code(request, email):
     if request.method == 'GET':
-        verifyCode = ""
+        verify_code = ""
         for i in range(1, 6):
-            verifyCode += random.choice(string.digits)
+            verify_code += str(random.randint(0,9))
+            i = i + 1
         email = EmailMessage(
             '인증 메일입니다.',
-            '인증 번호는 ' + verifyCode + ' 입니다.',
+            '인증 번호는 ' + verify_code + ' 입니다.',
             to=[email]
         )
         email.send()
-        verifyCode_to_return = {
-            'verifyCode': verifyCode
+        verify_code_to_return = {
+            'verifyCode': verify_code
         }
-        return JsonResponse(verifyCode_to_return, safe=False)
+        return JsonResponse(verify_code_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
@@ -89,10 +90,10 @@ def get_verify_code(request, email):
 def get_user_by_email(request, email):
     if request.method == 'GET':
         try:
-            selectedUser = User.objects.get(email=email)
+            selected_user = User.objects.get(email=email)
         except ObjectDoesNotExist:
             return HttpResponseNotFound()
-        user = model_to_dict(selectedUser)
+        user = model_to_dict(selected_user)
         user_to_return = {
             'selectedUser': user
         }
@@ -104,10 +105,10 @@ def get_user_by_email(request, email):
 def get_user_by_user_id(request, user_id):
     if request.method == 'GET':
         try:
-            selectedUser = User.objects.get(id=user_id)
+            selected_user = User.objects.get(id=user_id)
         except ObjectDoesNotExist:
             return HttpResponseNotFound()
-        user = model_to_dict(selectedUser)
+        user = model_to_dict(selected_user)
         user_to_return = {
             'selectedUser': user
         }
@@ -119,10 +120,10 @@ def get_user_by_user_id(request, user_id):
 def get_user_by_student_id(request, student_id):
     if request.method == 'GET':
         try:
-            selectedUser = User.objects.get(studentId=student_id)
+            selected_user = User.objects.get(studentId=student_id)
         except ObjectDoesNotExist:
             return HttpResponseNotFound()
-        user = model_to_dict(selectedUser)
+        user = model_to_dict(selected_user)
         user_to_return = {
             'selectedUser': user
         }
@@ -134,10 +135,10 @@ def get_user_by_student_id(request, student_id):
 def get_user_by_nickname(request, nickname):
     if request.method == 'GET':
         try:
-            selectedUser = User.objects.get(nickname=nickname)
+            selected_user = User.objects.get(nickname=nickname)
         except ObjectDoesNotExist:
             return HttpResponseNotFound()
-        user = model_to_dict(selectedUser)
+        user = model_to_dict(selected_user)
         user_to_return = {
             'selectedUser': user
         }
@@ -147,8 +148,8 @@ def get_user_by_nickname(request, nickname):
 
 def check_email_duplicate(request, email):
     if request.method == 'GET':
-        selectedUser = User.objects.filter(email=email)
-        if (selectedUser.count() == 0):
+        selected_user = User.objects.filter(email=email)
+        if (selected_user.count() == 0):
             dict_to_return = {
                 'emailDuplicate' : False
             }
@@ -163,8 +164,8 @@ def check_email_duplicate(request, email):
 
 def check_nickname_duplicate(request, nickname):
     if request.method == 'GET':
-        selectedUser = User.objects.filter(nickname=nickname)
-        if (selectedUser.count() == 0):
+        selected_user = User.objects.filter(nickname=nickname)
+        if (selected_user.count() == 0):
             dict_to_return = {
                 'nicknameDuplicate' : False
             }
@@ -179,8 +180,8 @@ def check_nickname_duplicate(request, nickname):
 
 def check_student_id_duplicate(request, student_id):
     if request.method == 'GET':
-        selectedUser = User.objects.filter(studentId=student_id)
-        if (selectedUser.count() == 0):
+        selected_user = User.objects.filter(studentId=student_id)
+        if (selected_user.count() == 0):
             dict_to_return = {
                 'studentIdDuplicate' : False
             }
