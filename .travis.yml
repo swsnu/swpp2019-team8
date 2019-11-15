@@ -22,12 +22,6 @@ matrix:
         - cd ../backend
         - pip install -r requirements.txt
         - cd ..
-      before_script:
-        - cd backend
-        - python3 manage.py makemigrations user
-        - python3 manage.py makemigrations hearus
-        - python3 manage.py makemigrations tellme
-        - python3 manage.py migrate
       script: # Script to test your build
         - cd frontend
         - ./node_modules/.bin/eslint src
