@@ -17,7 +17,7 @@ matrix:
       install: # Script to run before install
         - cd frontend
         - yarn
-        - yarn install coveralls
+        - yarn add coveralls
         - gem install coveralls-lcov
         - cd ../backend
         - pip install -r requirements.txt
