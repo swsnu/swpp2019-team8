@@ -8,8 +8,17 @@ import json
 
 class UserTestCase(TestCase):
     def setUp(self):
-        User.objects.create_user(email="dkwanm1@naver.com", password="1", nickname="!", gender="MALE", status="1",
-                                 studentId="2018-15722", department="ENGINEERING", major="CSE", studentStatus="student")
+        new_user = {
+            'password': "1",
+            'nickname': "!",
+            'gender': "MALE",
+            'status': "1",
+            'studentId': "2018-15722",
+            'department': "ENGINEERING",
+            'major': "CSE",
+            'studentStatus': "student"
+        }
+        User.objects.create_user(email="dkwanm1@naver.com", new_user=new_user)
 
     def test_sign_up(self):
         client = Client(enforce_csrf_checks=False)
@@ -195,8 +204,19 @@ class UserTestCase(TestCase):
     def test_get_user_by_id(self):
         client = Client(enforce_csrf_checks=False)
 
-        user1 = User.objects.create_user(email="dkwanm@naver.com", password="1", nickname="123", gender="MALE", status="1",
-                                         studentId="2018-15721", department="ENGINEERING", major="CSE", studentStatus="student")
+        new_users = {
+            'password': "1",
+            'nickname': "123",
+            'gender': "MALE",
+            'status': "1",
+            'studentId': "2018-15721",
+            'department': "ENGINEERING",
+            'major': "CSE",
+            'studentStatus': "student"
+        }
+
+        user1 = User.objects.create_user(
+            email="dkwanm@naver.com", new_user=new_users)
 
         response = client.get('/api/user/userId/' + str(user1.id) + '/')
         self.assertEqual(response.status_code, 200)
@@ -215,7 +235,7 @@ class UserTestCase(TestCase):
 
         response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
                                content_type='application/json')
-                               
+
         response = client.get('/api/user/check/signin/')
         self.assertIn('true', response.content.decode())
 

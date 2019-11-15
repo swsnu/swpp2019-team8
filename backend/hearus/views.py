@@ -23,7 +23,6 @@ def petition(request):
             petition_content = json.loads(body)['content']
             petition_category = json.loads(body)['category']
             petition_link = json.loads(body)['link']  # array?
-            #petition_tag = json.loads(body)['tag']  # array?
             petition_start_date = timezone.now()
             petition_end_date = petition_start_date + timedelta(days=30)
         except (KeyError, JSONDecodeError) as e:
