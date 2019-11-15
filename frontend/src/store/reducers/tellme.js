@@ -5,7 +5,8 @@ const initialState = {
     selectedDocument: null,
 };
 
-const tellme = (state = initialState, action) => {
+const tellme = (state, action) => {
+    if (state === undefined) state = initialState;
     switch (action.type) {
         case actionTypes.POST_DOCUMENT: {
             const newDocument = {
