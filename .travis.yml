@@ -49,7 +49,6 @@ matrix:
         - python manage.py migrate
       script:
         - coverage run --branch --source="." manage.py test
-        - coverage xml
-        - sonar-scanner
+        - coverage report
       after_success:
         - coveralls
