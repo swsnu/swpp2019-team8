@@ -6,7 +6,11 @@ const initialState = {
     comment_list: [],
 };
 
-const hearus = (state = initialState, action) => {
+
+const hearus = (prevState, action) => {
+    let state;
+    if (prevState === undefined) state = initialState;
+    else state = prevState;
     switch (action.type) {
         case actionTypes.POST_PETITION: {
             const newPetition = {

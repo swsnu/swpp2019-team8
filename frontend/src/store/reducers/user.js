@@ -9,7 +9,10 @@ const initialState = {
     studentIdDuplicate: false,
 };
 
-const user = (state = initialState, action) => {
+const user = (prevState, action) => {
+    let state;
+    if (prevState === undefined) state = initialState;
+    else state = prevState;
     switch (action.type) {
         case actionTypes.POST_SIGN_UP:
             return { selectedUser: '', verifyCode: '', signIn: false }
@@ -18,7 +21,7 @@ const user = (state = initialState, action) => {
         case actionTypes.GET_SIGN_OUT:
             return { selectedUser: '', verifyCode: '', signIn: false }
         case actionTypes.GET_USER:
-            return { ...state, selectedUser: action.selectedUser}
+            return { ...state, selectedUser: action.selectedUser }
         case actionTypes.GET_VERIFY_CODE:
             return { ...state, verifyCode: action.verifyCode }
         case actionTypes.CHECK_SIGN_IN:
