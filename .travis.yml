@@ -20,7 +20,7 @@ matrix:
         - npm install coveralls
         - gem install coveralls-lcov
         - cd ../backend
-        - pip install -r rquirements.txt
+        - pip install -r requirements.txt
         - cd..
       before_script:
         - cd backend
