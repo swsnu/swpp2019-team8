@@ -17,19 +17,19 @@ def sign_up(request):
     if request.method == 'POST':
         try:
             body = request.body.decode()
-            newEmail = json.loads(body)['email']
-            newPassowrd = json.loads(body)['password']
-            newNickname = json.loads(body)['nickname']
-            newGender = json.loads(body)['gender']
-            newStatus = json.loads(body)['status']
-            newStudentId = json.loads(body)['student_id']
-            newDepartment = json.loads(body)['department']
-            newMajor = json.loads(body)['major']
-            newStudentStatus = json.loads(body)['student_status']
+            new_email = json.loads(body)['email']
+            new_password = json.loads(body)['password']
+            new_nickname = json.loads(body)['nickname']
+            new_gender = json.loads(body)['gender']
+            new_status = json.loads(body)['status']
+            new_student_id = json.loads(body)['student_id']
+            new_department = json.loads(body)['department']
+            new_major = json.loads(body)['major']
+            new_student_status = json.loads(body)['student_status']
         except (KeyError, json.JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        User.objects.create_user(email=newEmail, password=newPassowrd, nickname=newNickname, gender=newGender, status=newStatus,
-                                 studentId=newStudentId, department=newDepartment, major=newMajor, studentStatus=newStudentStatus)
+        User.objects.create_user(email=new_email, password=new_password, nickname=new_nickname, gender=new_gender, status=new_status,
+                                 studentId=new_student_id, department=new_department, major=new_major, studentStatus=new_student_status)
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
