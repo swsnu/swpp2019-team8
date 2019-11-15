@@ -329,7 +329,7 @@ class SignUp extends Component {
     let inputResult = this.state.checkInputResult;
     let inputInvalid = this.state.checkInputInvalid;
     let formFeedbackMessage = this.state.formFeedbackMessage;
-    if (/^[1-2][0-9]{3}-[0-9]{5}$/.exec(studentId)) {
+    if (/^[1-2]([0-9]){3}-([0-9]){5}$/.exec(studentId)) {
       await this.props.checkStudentIdDuplicate(studentId)
       if (this.props.studentIdDuplicate === true) {
         inputResult.studentId = false;
