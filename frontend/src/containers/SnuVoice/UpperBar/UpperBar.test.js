@@ -128,8 +128,9 @@ describe('<UpperBar/>', () => {
             }
         });
         let component;
-        component = await mount(<UpperBar {...props} />)
-        //expect(component.instance().state.location).toBe('tell_me')
+        component = mount(<UpperBar {...props} />)
+        component.instance().forceUpdate()
+        expect(component.instance().state.location).toBe('tell_me')
         expect(mocked).toHaveBeenCalledTimes(1)
     })
 
@@ -142,8 +143,9 @@ describe('<UpperBar/>', () => {
             }
         });
         let component;
-        component = await mount(<UpperBar {...props} />)
-        //expect(component.instance().state.location).toBe('hear_us')
+        component = mount(<UpperBar {...props} />)
+        component.instance().forceUpdate()
+        expect(component.instance().state.location).toBe('hear_us')
         expect(mocked).toHaveBeenCalledTimes(1)
     })
 
