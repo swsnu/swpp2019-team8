@@ -13,7 +13,6 @@ import {
   NavItem,
   NavLink,
   FormGroup,
-  Label,
   Form
 } from "reactstrap";
 import { MarkdownPreview } from "react-marked-markdown";

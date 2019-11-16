@@ -13,7 +13,6 @@ import {
     NavItem,
     NavLink,
     FormGroup,
-    Label,
     Form
 } from "reactstrap";
 import { MarkdownPreview } from 'react-marked-markdown';
@@ -47,7 +46,7 @@ class DocumentEdit extends Component {
 
     onClickDocumentCancelButton = () => {
         //제안: alert("변경 사항은 저장되지 않습니다..이런거")
-        this.props.history.push('/tell_me/' + this.props.match.params.document_title);
+        this.props.history.goBack();
     }
 
     onClickPhotoButton = () => {

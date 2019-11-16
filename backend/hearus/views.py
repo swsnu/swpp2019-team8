@@ -23,13 +23,20 @@ def petition(request):
             petition_content = json.loads(body)['content']
             petition_category = json.loads(body)['category']
             petition_link = json.loads(body)['link']  # array?
-            petition_tag = json.loads(body)['tag']  # array?
             petition_start_date = timezone.now()
             petition_end_date = petition_start_date + timedelta(days=30)
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        petition = Petition(author=request.user, title=petition_title, content=petition_content, category=petition_category,
-                            link=petition_link, tag=petition_tag, start_date=petition_start_date, end_date=petition_end_date, votes=0, status=0)
+        petition = Petition(author=request.user, 
+                            title=petition_title, 
+                            content=petition_content, 
+                            category=petition_category,
+                            link=petition_link, 
+                            tag='', #tag 
+                            start_date=petition_start_date, 
+                            end_date=petition_end_date, 
+                            votes=0, 
+                            status='ongoing')
         print(petition_start_date)
         petition.save()
         response_dict = model_to_dict(petition)

@@ -10,7 +10,10 @@ const initialState = {
     debateComments: [],
 };
 
-const tellmeReducer = (state = initialState, action) => {
+const tellme = (prevState, action) => {
+    let state;
+    if (prevState === undefined) state = initialState;
+    else state = prevState
     switch (action.type) {
         case actionTypes.POST_DOCUMENT: {
             const newDocument = {
@@ -79,4 +82,4 @@ const tellmeReducer = (state = initialState, action) => {
     return state;
 };
 
-export default tellmeReducer;
+export default tellme;

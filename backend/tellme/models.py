@@ -7,7 +7,7 @@ class Document(models.Model):
     content = models.TextField()
 
 class Photo(models.Model):
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to="media/%Y/%m/%d")
     title = models.CharField(max_length=64)
     content = models.TextField()
 

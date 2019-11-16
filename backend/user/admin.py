@@ -22,13 +22,11 @@ class UserAdmin(BaseUserAdmin):
         ('Permissons', {'fields': ('is_admin',)})
     )
 
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password', 'nickname', 'gender', 'status',
-                       'studentId', 'department', 'major', 'studentStatus')
-        })
-    )
+    add_fieldsets = (None, {
+        'classes': ('wide',),
+        'fields': ('email', 'password', 'nickname', 'gender', 'status',
+                   'studentId', 'department', 'major', 'studentStatus')
+    })
 
     search_fields = ('email',)
     ordering = ('email',)

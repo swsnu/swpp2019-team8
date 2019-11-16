@@ -69,4 +69,19 @@ describe('ActionCreators', () => {
             done();
         });
     });
+
+    it(`'getDocument' should work well`, async (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    reject()
+                });
+            });
+
+        await store.dispatch(actionCreators.getDocument())
+
+        const newState = store.getState();
+        expect(newState.tm.selectedDocument).toBe(null);
+        done()
+    });
 });

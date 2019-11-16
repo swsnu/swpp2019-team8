@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import axios from 'axios';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -14,18 +15,34 @@ class PhotoUpload extends Component {
     state = {
         photoTitle: '',
         photoContent: '',
-        photoFile: '',
-        photoUrl: '',
+        photoFile: null,
+        photoUrl: null,
         photoState: 'photo',
         documentState: 'write'
     }
 
     onClickPhotoConfirmButton = () => {
-        // confirm
+        const formData = new FormData();
+        formData.append('file', this.state.photoFile, this.state.photoFile.name);
+        formData.append('title', this.state.photoTitle);
+        formData.append('content', this.state.photoContent);
+        axios.post(
+            '/api/tellme/photo/',
+            formData,
+            {
+                headers: { 'content-type': 'multipart/form-data' }
+            })
+            .then(() => {
+                console.log("hurray");
+            })
+            .catch(e => {
+                console.log(e);
+            })
+        //url 전송
     }
 
     onClickPhotoCancelButton = () => {
-        this.props.history.push('/tell_me/create');
+        this.props.history.goBack();
     }
 
     onClickPhotoTabButton = (event) => {
@@ -93,9 +110,8 @@ class PhotoUpload extends Component {
                 <br/>
                 <h1>Photo Upload</h1>
                 <br/>
-                <p>
                     <div className="FileUpload">
-                        <Input type="file" name="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
+                        <Input type="file" id="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
                     </div>
                     <br/>
                     {photoStateTabbuttons}
@@ -107,8 +123,6 @@ class PhotoUpload extends Component {
                             <b>*Photo with selected blur applied will appear here*</b>
                         </TabPane>
                     </TabContent>
-                </p>
-                <p>
                     {documentStateTabbuttons}
                     <TabContent activeTab={this.state.documentState}>
                         <TabPane tabId="write">
@@ -116,12 +130,12 @@ class PhotoUpload extends Component {
                                 <FormGroup>
                                     <Label>Title</Label>
                                     <Input type="text" id="photo_title_input" placeholder="title"
-                                        onChange={(event) => this.setState({ documentTitle: event.target.value })}></Input>
+                                        onChange={(event) => this.setState({ photoTitle: event.target.value })}></Input>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>Content</Label>
                                     <Input type="textarea" rows="10" id="photo_content_textarea" placeholder="content"
-                                        onChange={(event) => this.setState({ documentContent: event.target.value })}></Input>
+                                        onChange={(event) => this.setState({ photoContent: event.target.value })}></Input>
                                 </FormGroup>
                             </Form>
                         </TabPane>
@@ -130,16 +144,15 @@ class PhotoUpload extends Component {
                             <div className="photoInfo">
 <br/>
                             <Label>Title:</Label>
-                            <h1><div className="photoTitle">{this.state.documentTitle}</div></h1>
+                            <h1><div className="photoTitle">{this.state.photoTitle}</div></h1>
                             <Label>Content:</Label>
-                            <MarkdownPreview value={this.state.documentContent} />
+                            <MarkdownPreview value={this.state.photoContent} />
                             </div>
                             </div>
                         </TabPane>
                     </TabContent>
-                    </p>
                     <ButtonGroup>
-                        <Button type="button" id="document_confirm_button" disabled={!this.state.documentTitle || !this.state.documentContent}
+                        <Button type="button" id="document_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent}
                             onClick={this.onClickPhotoConfirmButton}>Confirm</Button>
                         <Button type="button" id="document_cancel_button"
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>
@@ -150,5 +163,6 @@ class PhotoUpload extends Component {
         )
     }
 }
+
 
 export default connect(null, null)(withRouter(PhotoUpload));
