@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Button } from 'reactstrap';
 
-import Debate from '../../../../../components/Debate/debate';
+import Debate from '../../../../../components/Debate/debateList';
 import Upperbar from '../../../UpperBar/UpperBar';
 
 class DebateList extends Component {

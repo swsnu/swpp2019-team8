@@ -21,12 +21,12 @@ class DebateDetail extends Component {
         this.props.onGetDebateComments(this.props.match.params.debate_id);
     }
 
-    onClickCommentConfirmButton = () => {
-        this.props.onPostDebateComment(
-            this.state.comment,
-            this.state.selectedDebate.id
-        )
-    }
+    // onClickCommentConfirmButton = () => {
+    //     this.props.onPostDebateComment(
+    //         this.state.comment,
+    //         this.state.selectedDebate.id
+    //     )
+    // }
 
     render() {
         let documentTitle = '';
@@ -82,7 +82,8 @@ class DebateDetail extends Component {
                 placeholder="Enter debate comment"
                 onChange = {(event) => this.setState({ comment: event.target.value })}/>
             <Button
-                id="debate_comment_confirm_button">CONFIRM</Button>
+                id="debate_comment_confirm_button"
+                onClick={this.onClickCommentConfirmButton}>CONFIRM</Button>
                 </div>
                 </div>
         </div>
@@ -110,7 +111,7 @@ export const mapDispatchToProps = dispatch => {
             dispatch(actionCreators.getDebateComments(debate_id)),
     
         onPostDebateComment: (comment, debate_id) =>
-            dispatch(actionCreators.postDebateComment(comment, debate_id)),
+            dispatch(actionCreators.postDebateComment({ comment: comment, debate: debate_id }, debate_id)),
     }
 }
 

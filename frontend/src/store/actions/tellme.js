@@ -138,7 +138,7 @@ export const putDocument = (document) => {
        return {
            type: actionTypes.POST_DEBATE_COMMENT,
            id: comment.id,
-           comment: comment.comment,
+           content: comment.comment,
            debate: comment.debate,
         };
     };

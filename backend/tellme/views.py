@@ -140,7 +140,7 @@ def debate_comments(request, debate_id):
             debate=comment_debate, author=comment_author, comment=comment_content, date=comment_date)
         new_debate_comment.save()
 
-        return HttpResponse(status=201)
+        return JsonResponse(model_to_dict(new_debate_comment), status=201)
 
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])

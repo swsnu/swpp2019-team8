@@ -2,7 +2,7 @@ import React from 'react';
 // import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
-function DebateList(props) {
+function debateList(props) {
     return (
         <div>
             <p>
@@ -15,4 +15,4 @@ function DebateList(props) {
     )
 }
 
-export default DebateList
+export default debateList

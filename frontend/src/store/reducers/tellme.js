@@ -67,7 +67,8 @@ const tellmeReducer = (state = initialState, action) => {
         case actionTypes.POST_DEBATE_COMMENT: {
             const newDebateComment = {
                 id: action.id,
-                content: action.content
+                comment: action.comment,
+                debate: action.debate,
             }
             return {...state, debateComments: state.debateComments.concat(newDebateComment)};   // TODO
         }
