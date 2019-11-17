@@ -313,10 +313,6 @@ class SignUp extends Component {
   onChangeStatusRadioButton = event => {
     let inputResult = this.state.checkInputResult;
     let selectedStatus = this.state.statusRadio;
-    let studentId = this.state.studentId;
-    let selectedDepartment = this.state.selectedDepartment;
-    let selectedMajor = this.state.selectedMajor;
-    let selectedStudentStatus = this.state.studentStatus;
     for (let i in selectedStatus) {
       if (i === event.target.value) {
         inputResult.status = true;
@@ -328,30 +324,21 @@ class SignUp extends Component {
       inputResult.department = true;
       inputResult.major = true;
       inputResult.studentStatus = true;
-      studentId = '';
-      selectedDepartment = 'all';
-      selectedMajor = '-';
-      selectedStudentStatus = '';
     } else {
       inputResult.studentId = false;
       inputResult.department = false;
       inputResult.major = false;
       inputResult.studentStatus = false;
-      studentId = '';
-      selectedDepartment = 'all';
-      selectedMajor = '-';
-      selectedStudentStatus = '';
-
 
     }
     this.setState({
       statusRadio: selectedStatus,
       selectedStatus: event.target.value,
       checkInputResult: inputResult,
-      studentId : studentId,
-      selectedDepartment : selectedDepartment,
-      selectedMajor : selectedMajor,
-      selectedStudentStatus : selectedStudentStatus
+      studentId : '',
+      selectedDepartment : 'all',
+      selectedMajor : '-',
+      selectedStudentStatus : ''
     })
   };
 
