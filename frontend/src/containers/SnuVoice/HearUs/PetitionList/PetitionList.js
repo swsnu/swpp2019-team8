@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { Button, ButtonGroup, Input, InputGroup, InputGroupAddon, Table, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
 import UpperBar from '../../UpperBar/UpperBar'
+import SearchBar from '../SearchBar/SearchBar'
 import Petition from '../../../../components/Petition/petition'
 import Category from '../../../../components/Category/category'
 import * as actionCreator from '../../../../store/actions/index'
@@ -14,30 +15,11 @@ import './PetitionList.css';
 
 class PetitionList extends Component {
     state = {
-        search: '',
         petitionState: 'onGoing',
         petitionOrder: 'vote',
         listNumber: [1, 2, 3, 4, 5],
         selectedNumber: 1,
         selectedCategory: 'All',
-    }
-
-    onChangeSearchInput = (event) => {
-        this.setState({ search: event.target.value });
-    }
-
-    onClickSearchConfirmButton = () => {
-        window.sessionStorage.setItem('petitionSearch', this.state.search)
-        this.props.getPetitionByTitle(this.state.search)
-        this.props.history.push('/hear_us/search')
-    }
-
-    onClickCreateButton = () => {
-        this.props.history.push('/hear_us/create')
-    }
-
-    onClickMyPetitionButton = () => {
-        this.props.history.push('/hear_us/my_petition/' + this.props.selectedUser.id)
     }
 
     onClickPetitionTabButton = (event) => {
@@ -76,8 +58,8 @@ class PetitionList extends Component {
     }
 
     componentDidMount = () => {
-        if (window.sessionStorage.getItem('petitionSearch') === null) this.props.getAllPetitions()
-        else this.props.getPetitionByTitle(window.sessionStorage.getItem('petitionSearch'))
+        if (this.props.match.params.petition_title === undefined) this.props.getAllPetitions()
+        else this.props.getPetitionByTitle(this.props.match.params.petition_title)
     }
 
 
@@ -211,23 +193,9 @@ class PetitionList extends Component {
                         <h1>Hear Us</h1>
                         <h4>Petition List</h4>
                         <br />
-                        <InputGroup className="searchBar">
-                            <Input type="text" id="search_input" autoFocus
-                                onChange={this.onChangeSearchInput}></Input>
-                            <InputGroupAddon addonType="append">
-                                <Button type="button" id="search_confirm_button"
-                                    onClick={this.onClickSearchConfirmButton}>Search</Button>
-                            </InputGroupAddon>
-                        </InputGroup>
+                        <SearchBar/>
                     </div>
                     <br />
-                    <div className="userOptions">
-
-                        <Button type="button" id="create_button"
-                            onClick={this.onClickCreateButton}>NEW</Button>
-                        <Button type="button" id="my_petition_button"
-                            onClick={this.onClickMyPetitionButton}>MINE</Button>
-                    </div>
                     {petitionStateTabButtons}
                     <TabContent activeTab={this.state.petitionState}>
                         <TabPane tabId='onGoing'>

@@ -10,6 +10,11 @@ import { getMockStore } from '../../../../test-utils/mocks'
 import * as actionCreator from '../../../../store/actions/hearus'
 
 const stubInitialState = {
+    match : {
+        params : {
+            petition_title : "!@3"
+        }
+    },
     selectedUser: {
         id: '1'
     },
@@ -149,43 +154,7 @@ describe('<PetitionList />', () => {
         expect(top.length).toBe(1)
     })
 
-    it('should clickMyPetitionButton works', () => {
-        const spyHistoryPush = jest.spyOn(history, 'push')
-            .mockImplementation(path => { });
-        const component = mount(petitionList)
-        const myPetiton = component.find('#my_petition_button').at(0)
-        myPetiton.simulate('click')
-        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/my_petition/1')
-    })
-
-    it('should clickCreateButton works', async () => {
-        const spyHistoryPush = jest.spyOn(history, 'push')
-            .mockImplementation(path => { });
-        const component = await mount(petitionList)
-        const create = component.find('#create_button').at(0)
-        create.simulate('click')
-        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/create')
-    })
-
-    it('should searchButton works', async () => {
-        const spyHistoryPush = jest.spyOn(history, 'push')
-            .mockImplementation(path => { });
-        Storage.prototype.setItem = jest.fn(() => { })
-        const component = await mount(petitionList)
-        const searchButton = component.find('#search_confirm_button').at(0)
-        searchButton.simulate('click')
-        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/search')
-    })
-
-    it('should searchInput works', async () => {
-        let temp = '1';
-        const component = await mount(petitionList);
-        const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
-        const searchInput = component.find('#search_input').at(0)
-        searchInput.simulate('change', { target: { value: temp } })
-        expect(petitionListComponent.state.search).toBe(temp)
-    })
-
+    
     it('should list_prev_button works', async () => {
         const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
@@ -316,9 +285,8 @@ describe('<PetitionList />', () => {
     })
 
     it('should componentDidMount works', async () => {
-        Storage.prototype.getItem = jest.fn((temp) => {return 1})
         const component = await mount(petitionList);
-        expect(spyGetPetitionByTitle).toHaveBeenCalledTimes(1);
+        expect(spyGetAllPetition).toHaveBeenCalledTimes(1);
 
     })
 
