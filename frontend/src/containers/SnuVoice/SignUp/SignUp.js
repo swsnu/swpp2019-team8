@@ -30,7 +30,7 @@ class SignUp extends Component {
     passwordConfirm: "",
     nickname: "",
     studentId: "",
-    selectedDepartment: "all",
+    selectedDepartment: "-",
     selectedMajor: "", // ex) 컴퓨터공학부...
     selectedGender: "",
     selectedStatus: "",
@@ -76,8 +76,10 @@ class SignUp extends Component {
       engineering: [{ value: '-' }, { value: "engineering" }],
       fineArts: [{ value: 'fineArts' }],
       humanities: [{ value: 'humanities' }],
+      humanEcology: [{ value : 'humanEcology'}],
       liberalStudies: [{ value: 'liberalStudies' }],
       medicine: [{ value: 'medicine' }],
+      music: [{ value : 'music'}],
       naturalSciences: [{ value: 'naturalSciences' }],
       nursing: [{ value: 'nursing' }],
       socialSciences: [{ value: 'socialSciences' }],
@@ -311,16 +313,45 @@ class SignUp extends Component {
   onChangeStatusRadioButton = event => {
     let inputResult = this.state.checkInputResult;
     let selectedStatus = this.state.statusRadio;
+    let studentId = this.state.studentId;
+    let selectedDepartment = this.state.selectedDepartment;
+    let selectedMajor = this.state.selectedMajor;
+    let selectedStudentStatus = this.state.studentStatus;
     for (let i in selectedStatus) {
       if (i === event.target.value) {
         inputResult.status = true;
         selectedStatus[i] = event.target.checked;
       } else selectedStatus[i] = false;
     }
+    if (selectedStatus.student === false) {
+      inputResult.studentId = true;
+      inputResult.department = true;
+      inputResult.major = true;
+      inputResult.studentStatus = true;
+      studentId = '';
+      selectedDepartment = 'all';
+      selectedMajor = '-';
+      selectedStudentStatus = '';
+    } else {
+      inputResult.studentId = false;
+      inputResult.department = false;
+      inputResult.major = false;
+      inputResult.studentStatus = false;
+      studentId = '';
+      selectedDepartment = 'all';
+      selectedMajor = '-';
+      selectedStudentStatus = '';
+
+
+    }
     this.setState({
       statusRadio: selectedStatus,
       selectedStatus: event.target.value,
       checkInputResult: inputResult,
+      studentId : studentId,
+      selectedDepartment : selectedDepartment,
+      selectedMajor : selectedMajor,
+      selectedStudentStatus : selectedStudentStatus
     })
   };
 
@@ -379,7 +410,10 @@ class SignUp extends Component {
     let inputResult = this.state.checkInputResult;
     if (event.target.value !== 'all') {
       inputResult.department = true;
-    } else inputResult.department = false;
+    } else {
+      inputResult.department = false;
+      inputResult.major = false;
+    }
     this.setState({
       selectedDepartment: event.target.value,
       checkInputResult: inputResult
