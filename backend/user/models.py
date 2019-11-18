@@ -5,38 +5,36 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, nickname=None, gender=None, status=None,
-                    studentId=None, department=None, major=None, studentStatus=None):
+    def create_user(self, email, new_user=None):
         if not email:
             raise ValueError("Users must have an email address")
 
         user = self.model(
             email=self.normalize_email(email),
-            nickname=nickname,
-            gender=gender,
-            status=status,
-            studentId=studentId,
-            department=department,
-            major=major,
-            studentStatus=studentStatus
+            nickname=new_user['nickname'],
+            gender=new_user['gender'],
+            status=new_user['status'],
+            studentId=new_user['studentId'],
+            department=new_user['department'],
+            major=new_user['major'],
+            studentStatus=new_user['studentStatus']
         )
 
-        user.set_password(password)
+        user.set_password(new_user['password'])
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, nickname=None, gender=None, status=None,
-                         studentId=None, department=None, major=None, studentStatus=None):
+    def create_superuser(self, email, new_user=None):
         user = self.create_user(
             email,
-            password=password,
-            nickname=nickname,
-            gender=gender,
-            status=status,
-            studentId=studentId,
-            department=department,
-            major=major,
-            studentStatus=studentStatus
+            password=new_user['password'],
+            nickname=new_user['nickname'],
+            gender=new_user['gender'],
+            status=new_user['status'],
+            studentId=new_user['studentId'],
+            department=new_user['department'],
+            major=new_user['major'],
+            studentStatus=new_user['studentStatus']
         )
 
         user.is_admin = True
