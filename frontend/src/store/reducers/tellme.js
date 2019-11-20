@@ -3,6 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     documents: [],
     selectedDocument: null,
+    titleDocuments : [],
+    contentDocuments : []
 };
 
 const tellme = (prevState, action) => {
@@ -19,7 +21,11 @@ const tellme = (prevState, action) => {
             return { ...state, documents: state.documents.concat(newDocument) };
         }
         case actionTypes.GET_DOCUMENT: {
-            return { ...state, selectedDocument: action.target };
+            if (action.unique === true) {
+                return { ...state, selectedDocument: action.selectedDocument, titleDocuments : [], contentDocuments : [] };
+            } else {
+                return { ...state, selectedDocument : null, titleDocuments : action.titleDocuments, contentDocuments : action.contentDocuments}
+            }
         }
         case actionTypes.PUT_DOCUMENT: {
             for(var i in state.documents)
@@ -30,7 +36,7 @@ const tellme = (prevState, action) => {
                 }
             }
              return state;   // TODO
-        }
+        }   
         // case actionTypes.POST_PHOTO: {
         //     return state;   // TODO
         // }
