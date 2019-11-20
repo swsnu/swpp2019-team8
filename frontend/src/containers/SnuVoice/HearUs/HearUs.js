@@ -77,22 +77,24 @@ export class HearUs extends Component {
 
       );
       deadlineList = (
-        this.props.petitionList.map((petition, i) => {
-          if (i < 5) {
-            return (
-              <Petition
-                key={petition.id}
-                id={petition.id}
-                state={petition.status}
-                title={petition.title}
-                votes={petition.votes}
-                category={petition.category}
-                dueDate={petition.end_date}
-                onClick={this.onClickDetailButton}
-              />
-            )
-          }
-        })
+        this.props.petitionList
+          .sort((a, b) => a.start_date > b.start_date ? -1 : a.start_date < b.start_date ? 1 : 0)
+          .map((petition, i) => {
+            if (i < 5) {
+              return (
+                <Petition
+                  key={petition.id}
+                  id={petition.id}
+                  state={petition.status}
+                  title={petition.title}
+                  votes={petition.votes}
+                  category={petition.category}
+                  dueDate={petition.end_date}
+                  onClick={this.onClickDetailButton}
+                />
+              )
+            }
+          })
       );
     } else {
       voteList = (
@@ -118,7 +120,8 @@ export class HearUs extends Component {
       );
       deadlineList = (
         this.props.petitionList
-          .filter(petition => petition.category === this.state.selectedCategory)
+        .filter(petition => petition.category === this.state.selectedCategory)
+        .sort((a, b) => a.start_date > b.start_date ? -1 : a.start_date < b.start_date ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
               return (
