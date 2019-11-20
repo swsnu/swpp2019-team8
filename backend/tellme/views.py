@@ -33,26 +33,26 @@ def document(request):
 
 def document_title(request, document_title):
     if request.method == 'GET':
-        selectedDocument = [document for document in Document.objects.filter(
+        selected_document = [document for document in Document.objects.filter(
             title__istartswith=document_title, title__iendswith=document_title).values()]
         unique = False
-        for i in selectedDocument:
+        for i in selected_document:
             if len(document_title) == len(i['title']):
                 unique = True
         if unique == True:
             response_dict = {
-                'selectedDocument': selectedDocument[0],
+                'selectedDocument': selected_document[0],
                 'unique': True
             }
             return JsonResponse(response_dict, safe=False)
         else:
-            selectedDocument = [document for document in Document.objects.filter(
+            selected_document = [document for document in Document.objects.filter(
                 title__icontains=document_title).values()]
             content_list = [document for document in Document.objects.filter(
                 content__icontains=document_title).values()]
             response_dict = {
                 'unique': False,
-                'titleDocuments': selectedDocument,
+                'titleDocuments': selected_document,
                 'contentDocuments': content_list
             }
             return JsonResponse(response_dict, safe=False)
