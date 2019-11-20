@@ -92,6 +92,9 @@ describe('<SearchBar/>', () => {
         searchBarComponent.onClickSearchConfirmButton = mocked
         searchBarComponent.onKeyPress({ key: 'Entr' })
         expect(mocked).toHaveBeenCalledTimes(0)
+        searchBarComponent.setState({
+            searchInput : '123'
+        })
         searchBarComponent.onKeyPress({ key: 'Enter' })
         expect(mocked).toHaveBeenCalledTimes(1)
 

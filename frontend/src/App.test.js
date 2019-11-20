@@ -1,7 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme'
 import App from './App';
 
-it('renders without crashing', () => {
-expect(true).toBe(true);
+describe('<App/>', () => {
+    it('should render without erros', () => {
+        const component = shallow(<App />);
+        const wrapper = component.find('.App');
+        expect(wrapper.length).toBe(1);
+    })
 });
