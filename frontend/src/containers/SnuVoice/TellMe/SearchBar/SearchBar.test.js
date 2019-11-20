@@ -82,7 +82,7 @@ describe('<SearchBar/>', () => {
         const component = mount(searchBar)
         const searchBarComponent = component.find(SearchBar.WrappedComponent).instance()
         await searchBarComponent.onClickSearchConfirmButton()
-        expect(spyHistoryPush).toHaveBeenCalledTimes(0)
+        expect(spyHistoryPush).toHaveBeenCalledTimes(1)
     })
 
     it('should onClickConfirmButton work', async () => {

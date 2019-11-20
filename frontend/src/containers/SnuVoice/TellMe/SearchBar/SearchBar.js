@@ -33,6 +33,7 @@ export class SearchBar extends Component {
         }
         await this.props.getDocumentByTitle(input)
         if (this.props.selectedDocument !== null) this.props.history.push('/tell_me/documents/' + this.props.selectedDocument.title)
+        else this.props.history.push('tell_me/search_fail/' + input)
     };
 
     onClickCreateButton = () => {
