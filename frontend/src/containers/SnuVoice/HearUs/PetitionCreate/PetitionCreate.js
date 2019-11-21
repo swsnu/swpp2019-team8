@@ -113,7 +113,7 @@ class PetitionCreate extends Component {
                 <div className="PetitionCreate">
                     <Form>
                         <b><br />
-                            <h1>New Petition</h1>
+                            <h1>Create New Petition</h1>
                             <br />
                             <div className="inputTop">
                                 <Input type="textarea" id="petition_terms_textarea" placeholder="content" readOnly

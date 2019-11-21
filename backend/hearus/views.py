@@ -36,9 +36,10 @@ def petition(request):
                             start_date=petition_start_date, 
                             end_date=petition_end_date, 
                             votes=0, 
-                            status='ongoing')
+                            status='preliminary')
         print(petition_start_date)
         petition.save()
+        petition.temp()
         response_dict = model_to_dict(petition)
         return JsonResponse(response_dict, status=201)
     else:

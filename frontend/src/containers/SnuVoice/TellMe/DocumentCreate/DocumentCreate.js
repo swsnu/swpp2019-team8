@@ -96,7 +96,7 @@ class DocumentCreate extends Component {
         <div className="DocumentCreate">
           <br />
 
-          <h1 className="pageTitle">Document Create</h1>
+          <h1 className="pageTitle">Create New Document</h1>
 
           <Button
             type="button"
