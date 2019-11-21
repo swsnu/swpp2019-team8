@@ -23,21 +23,24 @@ class Petition(models.Model):
 
     def temp(self):
         threading.Timer(86400, self.check_ongoing).start()
-        threading.Timer(1814400, self.check_end).start()
+        threading.Timer(1900800, self.check_end).start()
 
     def check_ongoing(self):
-        if (self.status == 'preliminary'):
-            if (self.votes >= 5):
-                self.status = 'ongoing'
+        petition = Petition.objects.get(id = self.id)
+        if (petition.status == 'preliminary'):
+            if (petition.votes >= 5):
+                petition.status = 'ongoing'
                 #petition visible하게 만듬
             else:
-                self.status = 'fail'
+                petition.status = 'fail'
         else:
             pass
+        print(petition.status)
     
     def check_end(self):
-        if(self.status == 'ongoing'):
-            self.status = 'end'
+        petition = Petition.objects.get(id = self.id)
+        if(petition.status == 'ongoing'):
+            petition.status = 'end'
 
 
 class PetitionComment(models.Model):
