@@ -1,14 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotAllowed, JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseForbidden, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth import authenticate
 from django.forms.models import model_to_dict
 
 import json
-from json import JSONDecodeError
 import datetime
+from json import JSONDecodeError
+from django.forms.models import model_to_dict
+
 
 from user.models import User
 from .models import Document, Photo, Debate, DebateComment
+
 
 def document(request):
     if request.method == 'POST':
@@ -21,7 +24,7 @@ def document(request):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         document = Document(title=document_title, content=document_content)
-        document.save()
+        document.save() 
         response_dict = {'id': document.id,
                          'title': document.title, 'content': document.content}
         return JsonResponse(response_dict, status=201)
@@ -31,13 +34,29 @@ def document(request):
 
 def document_title(request, document_title):
     if request.method == 'GET':
-        try:
-            document_specific = Document.objects.get(title=document_title)
-        except Document.DoesNotExist:
-            return HttpResponse(status=404)
-        response_dict = {'title': document_specific.title,
-                         'content': document_specific.content}
-        return JsonResponse(response_dict)
+        selected_document = [document for document in Document.objects.filter(
+            title__istartswith=document_title, title__iendswith=document_title).values()]
+        unique = False
+        for i in selected_document:
+            if len(document_title) == len(i['title']):
+                unique = True
+        if unique == True:
+            response_dict = {
+                'selectedDocument': selected_document[0],
+                'unique': True
+            }
+            return JsonResponse(response_dict, safe=False)
+        else:
+            selected_document = [document for document in Document.objects.filter(
+                title__icontains=document_title).values()]
+            content_list = [document for document in Document.objects.filter(
+                content__icontains=document_title).values()]
+            response_dict = {
+                'unique': False,
+                'titleDocuments': selected_document,
+                'contentDocuments': content_list
+            }
+            return JsonResponse(response_dict, safe=False)
     elif request.method == 'PUT':
         try:
             req_data = json.loads(request.body.decode())
@@ -55,16 +74,17 @@ def document_title(request, document_title):
                          'content': document.content}
         return JsonResponse(response_dict, status=201)
     else:
-        return HttpResponseNotAllowed(['GET','PUT'])
+        return HttpResponseNotAllowed(['GET', 'PUT'])
+
 
 def photo(request):
     if request.method == 'POST':
-        photo = Photo(photo=request.FILES['file'], title=request.POST['title'], content=request.POST['content'])
+        photo = Photo(
+            photo=request.FILES['file'], title=request.POST['title'], content=request.POST['content'])
         photo.save()
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
-
 
 
 def debates_by_document(request, document_title):
@@ -74,13 +94,14 @@ def debates_by_document(request, document_title):
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        debate_list_by_document = [debate for debate in Debate.objects.filter(document=debate_document).values()]
+        debate_list_by_document = [debate for debate in Debate.objects.filter(
+            document=debate_document).values()]
         return JsonResponse(debate_list_by_document, safe=False, status=200)
 
     elif request.method == 'POST':
         if not request.user.is_authenticated:
             return HttpResponse(status=401)
-    
+
         try:
             req_data = json.loads(request.body.decode())
             debate_title = req_data['title']
@@ -101,7 +122,7 @@ def debates_by_document(request, document_title):
 
 
 def debate_get(request, document_title, debate_id):
-    if request.method=='GET':
+    if request.method == 'GET':
         try:
             debate = Debate.objects.get(id=debate_id)
         except Debate.DoesNotExist:
@@ -123,13 +144,12 @@ def debate_comments(request, debate_id):
     if request.method == 'GET':
         debate_comment_list = [
             comment for comment in DebateComment.objects.filter(debate=debate_id).values()]
-            
-        # response = {
-        #     'debateDocumentTitle' : debate.document.title,
-        #     'debateTitle' : debate.title,
-        #     'commentList' : debate_comment_list
-        # }
-        return JsonResponse(debate_comment_list, safe=False, status=200)
+        response = {
+            'debateDocumentTitle': debate.document.title,
+            'debateTitle': debate.title,
+            'commentList': debate_comment_list
+        }
+        return JsonResponse(response, safe=False, status=200)
 
     elif request.method == 'POST':
         if not request.user.is_authenticated:
