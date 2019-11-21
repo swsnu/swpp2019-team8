@@ -17,8 +17,8 @@ class DebateDetail extends Component {
 
     componentDidMount = async () => {
         await this.props.onGetDocument(this.props.match.params.document_title);
-        this.props.onGetDebate(this.props.selectedDocument, this.props.match.params.debate_id);
         this.props.onGetDebateComments(this.props.match.params.debate_id);
+        this.props.onGetDebate(this.props.selectedDocument, this.props.match.params.debate_id);
     }
 
     onClickCommentConfirmButton = () => {
@@ -42,7 +42,7 @@ class DebateDetail extends Component {
             debateContent = this.props.selectedDebate.content;
         }
         
-        let debateCommentList;
+        let debateCommentList = [];
         debateCommentList = (
             this.props.debateComments.map(comment => {
                 return <DebateComments
