@@ -210,12 +210,16 @@ def check_student_id_duplicate(request, student_id):
 def check_signin(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
+            selected_user = User.objects.get(id=request.user.id)
+            user_dict = model_to_dict(selected_user)
             json_to_return = {
+                'selectedUser' : user_dict,
                 'signIn': True
             }
             return JsonResponse(json_to_return, safe=False)
         else:
             json_to_return = {
+                'selectedUser' : '',
                 'signIn': False
             }
             return JsonResponse(json_to_return, safe=False)

@@ -157,10 +157,11 @@ describe('user reducer', () => {
     it('should checkSignIn works', () => {
         let newState = userReducer(undefined, {
             type: actionTypes.CHECK_SIGN_IN,
+            selectedUser : '1',
             signIn : true,
         })
         expect(newState).toEqual({
-            selectedUser: '',
+            selectedUser: '1',
             verifyCode : '',
             signIn : true,
             emailDuplicate : false,

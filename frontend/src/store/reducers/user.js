@@ -25,7 +25,7 @@ const user = (prevState, action) => {
         case actionTypes.GET_VERIFY_CODE:
             return { ...state, verifyCode: action.verifyCode }
         case actionTypes.CHECK_SIGN_IN:
-            return { ...state, signIn: action.signIn }
+            return { ...state ,selectedUser : action.selectedUser, signIn: action.signIn }
         case actionTypes.CHECK_EMAIL_DUPLICATE:
             return { ...state, emailDuplicate: action.emailDuplicate }
         case actionTypes.CHECK_NICKNAME_DUPLICATE:
