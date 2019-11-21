@@ -13,7 +13,8 @@ import {
   NavItem,
   NavLink,
   FormGroup,
-  Form
+  Form,
+  FormText,
 } from "reactstrap";
 import { MarkdownPreview } from "react-marked-markdown";
 
@@ -26,14 +27,26 @@ class DocumentCreate extends Component {
   state = {
     documentTitle: "",
     documentContent: "",
-    documentState: "write"
+    documentState: "write",
+    formFeedbackMessage: {
+      title: "",
+    }
   };
 
-  onClickDocumentConfirmButton = () => {
-    this.props.onStoreDocument(
+  onClickDocumentConfirmButton = async () => {
+    let message = this.state.formFeedbackMessage;
+    await this.props.onStoreDocument(
       this.state.documentTitle,
       this.state.documentContent
     );
+    console.log(this.props.documentDuplicate)
+    if (this.props.documentDuplicate) {
+      message.title = "Title already exist.";
+    } else {
+      message.title = "";
+    }
+
+    this.setState({ formFeedbackMessage: message })
   };
 
   onClickDocumentCancelButton = () => {
@@ -82,8 +95,8 @@ class DocumentCreate extends Component {
         <Upperbar />
         <div className="DocumentCreate">
           <br />
-          
-            <h1 className="pageTitle">Document Create</h1>
+
+          <h1 className="pageTitle">Document Create</h1>
 
           <Button
             type="button"
@@ -95,7 +108,7 @@ class DocumentCreate extends Component {
           </Button>
           <br />
           {createStateTabbuttons}
-          <br/>
+          <br />
           <TabContent activeTab={this.state.documentState}>
             <TabPane tabId="write" className="inputTab">
               <Form>
@@ -109,8 +122,11 @@ class DocumentCreate extends Component {
                       this.setState({ documentTitle: event.target.value })
                     }
                   ></Input>
+                  <FormText color="danger">
+                    {this.state.formFeedbackMessage.title}
+                  </FormText>
                 </FormGroup>
-                <br/>
+                <br />
                 <FormGroup>
                   <h4>Content</h4>
                   <Input
@@ -167,6 +183,12 @@ class DocumentCreate extends Component {
   }
 }
 
+export const mapStateToProps = state => {
+  return {
+    documentDuplicate: state.tm.documentDuplicate,
+  }
+}
+
 export const mapDispatchToProps = dispatch => {
   return {
     onStoreDocument: (title, content) =>
@@ -175,6 +197,6 @@ export const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(DocumentCreate));
