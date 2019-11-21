@@ -32,7 +32,7 @@ export {
     getAllPetitions,
     getPetition,
     getPetitionByTitle,
-    // getMyPetitions,
+    getMyPetitions,
     getPetitionComments,
     postPetitionComment,
     putPetitionVote,       // Wiki에 추가 필요
