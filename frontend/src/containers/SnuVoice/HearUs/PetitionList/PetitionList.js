@@ -15,7 +15,7 @@ import './PetitionList.css';
 
 class PetitionList extends Component {
     state = {
-        petitionState: 'onGoing',
+        petitionState: 'ongoing',
         petitionOrder: 'vote',
         listNumber: [1, 2, 3, 4, 5],
         selectedNumber: 1,
@@ -83,8 +83,8 @@ class PetitionList extends Component {
         let petitionStateTabButtons = (
             <Nav tabs>
                 <NavItem>
-                    <NavLink className={classnames({ active: this.state.petitionState === 'onGoing' })}
-                        id="ongoing_petition_button" onClick={() => this.onClickPetitionTabButton('onGoing')}>
+                    <NavLink className={classnames({ active: this.state.petitionState === 'ongoing' })}
+                        id="ongoing_petition_button" onClick={() => this.onClickPetitionTabButton('ongoing')}>
                         Ongoing
                         </NavLink>
                 </NavItem>
@@ -198,7 +198,7 @@ class PetitionList extends Component {
                     <br />
                     {petitionStateTabButtons}
                     <TabContent activeTab={this.state.petitionState}>
-                        <TabPane tabId='onGoing'>
+                        <TabPane tabId='ongoing'>
                             <br />
                             <div className="tableButtons1">
                                 {petitionOrderButtons}<br />
