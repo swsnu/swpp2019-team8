@@ -112,7 +112,7 @@ class PetitionList extends Component {
                     <Button type="button" id="list_number_buttons" key={i} value={number}
                         onClick={this.onClickListNumberButton}>{number}</Button>
                 );
-            }
+            } else return undefined;
 
         });
 
@@ -149,7 +149,7 @@ class PetitionList extends Component {
                                 onClick={this.onClickDetailButton}
                             />
                         )
-                    }
+                    } else return undefined;
                 })
         } else {
             sortedPetitionList = petitionList
@@ -168,7 +168,7 @@ class PetitionList extends Component {
                                 onClick={this.onClickDetailButton}
                             />
                         )
-                    }
+                    } else return undefined;
                 })
 
         }

@@ -71,7 +71,7 @@ export class HearUs extends Component {
                   onClick={this.onClickDetailButton}
                 />
               )
-            }
+            } else return undefined;
           })
 
       );
@@ -92,7 +92,7 @@ export class HearUs extends Component {
                   onClick={this.onClickDetailButton}
                 />
               )
-            }
+            } else return undefined;
           })
       );
     } else {
@@ -114,7 +114,7 @@ export class HearUs extends Component {
                   onClick={this.onClickDetailButton}
                 />
               )
-            }
+            } else return undefined;
           })
       );
       deadlineList = (
@@ -135,7 +135,7 @@ export class HearUs extends Component {
                   onClick={this.onClickDetailButton}
                 />
               )
-            }
+            } else return undefined;
           })
       );
 
