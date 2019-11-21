@@ -13,7 +13,7 @@ describe('<HearUs/>', () => {
             petitionList: [
                 {
                     id: 1,
-                    status: 'OnGoing',
+                    status: 'ongoing',
                     title: 'Iluvswpp',
                     category: 'welfare',
                     end_date: '2019-12-07',
@@ -98,7 +98,7 @@ describe('<HearUs/>', () => {
     it('should make list well', () => {
         const component = shallow(<HearUs {...props}/>)
         const petitionList = component.find('Petition')
-        expect(petitionList.length).toBe(10)
+        expect(petitionList.length).toBe(2)
     })
 
     it('should make list well', () => {
@@ -106,7 +106,7 @@ describe('<HearUs/>', () => {
         component.instance().setState({ selectedCategory : 'human rights'})
         component.instance().forceUpdate()
         const petitionList = component.find('Petition')
-        expect(petitionList.length).toBe(10)
+        expect(petitionList.length).toBe(0)
     })
 
     it ('should onClickDetailButton works', () => {
@@ -153,7 +153,7 @@ describe('mapStateToProps', () => {
                 petition_list: [
                     {
                         id: 1,
-                        status: 'OnGoing',
+                        status: 'ongoing',
                         title: 'Iluvswpp',
                         category: 'welfare',
                         end_date: '2019-12-07',
