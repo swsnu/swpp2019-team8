@@ -12,11 +12,11 @@ import {
 
 export class SearchBar extends Component {
     state = {
-        serachInput: '',
+        searchInput: '',
     }
 
     onKeyPress = (event) => {
-        if (event.key === 'Enter') this.onClickSearchConfirmButton();
+        if (event.key === 'Enter' && this.state.searchInput !== '') this.onClickSearchConfirmButton();
     }
 
     onChangeSearchInput = event => {
@@ -30,8 +30,7 @@ export class SearchBar extends Component {
             if (toSearch[i] !== ' ') break;
             else input = toSearch.slice(0, i)
         }
-        window.sessionStorage.setItem('petitionSearch', input)
-        this.props.history.push('/hear_us/search')
+        this.props.history.push('/hear_us/search/' + input)
     }
 
     onClickCreateButton = () => {
@@ -57,10 +56,12 @@ export class SearchBar extends Component {
         return (
             <div>
                 <InputGroup className="searchBar">
-                    <Input type="text" id="search_input" autoFocus onKeyPress={this.onKeyPress}
+                    <Input type="text" id="search_input" autoFocus
+                        onKeyPress={this.onKeyPress}
                         onChange={this.onChangeSearchInput}></Input>
                     <InputGroupAddon addonType="append">
                         <Button type="button" id="search_confirm_button"
+                            disabled={this.state.searchInput === '' || this.state.searchInput === undefined}
                             onClick={this.onClickSearchConfirmButton}>Search</Button>
                     </InputGroupAddon>
                 </InputGroup>

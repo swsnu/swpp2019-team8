@@ -348,6 +348,7 @@ describe('Axios User test', () => {
                     const result = {
                         status: 200,
                         data: {
+                            selectedUser : '1',
                             signIn: true
                         }
                     }
@@ -357,6 +358,7 @@ describe('Axios User test', () => {
         store.dispatch(actionCreators.checkSignIn())
             .then(() => {
                 const newState = store.getState();
+                expect(newState.usr.selectedUser).toBe('1')
                 expect(newState.usr.signIn).toBe(true);
                 expect(spy).toHaveBeenCalledTimes(1)
                 done();

@@ -86,7 +86,7 @@ describe('<SearchBar />', () => {
         searchInput.simulate('change', { target: { value: '12   ' } })
         expect(searchBarInstance.state.searchInput).toBe('12   ')
         searchButton.simulate('click')
-        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/search')
+        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/search/12')
     })
 
     it('should onKeyPress works', () => {
@@ -96,6 +96,9 @@ describe('<SearchBar />', () => {
         searchBarInstance.onClickSearchConfirmButton = mocked;
         searchBarInstance.onKeyPress({ key: '123' })
         expect(mocked).toHaveBeenCalledTimes(0)
+        searchBarInstance.setState({
+            searchInput : '123'
+        })
         searchBarInstance.onKeyPress({ key: 'Enter' })
         expect(mocked).toHaveBeenCalledTimes(1)
     })

@@ -17,7 +17,7 @@ export class SearchBar extends Component {
     }
 
     onKeyPress = event => {
-        if (event.key === 'Enter') this.onClickSearchConfirmButton()
+        if (event.key === 'Enter' && this.state.searchInput !== '') this.onClickSearchConfirmButton()
     }
 
     onChangeSearchInput = event => {
@@ -33,6 +33,7 @@ export class SearchBar extends Component {
         }
         await this.props.getDocumentByTitle(input)
         if (this.props.selectedDocument !== null) this.props.history.push('/tell_me/documents/' + this.props.selectedDocument.title)
+        else this.props.history.push('/tell_me/search_fail/' + input)
     };
 
     onClickCreateButton = () => {
@@ -55,6 +56,7 @@ export class SearchBar extends Component {
                             type="button"
                             id="search_confirm_button"
                             onClick={this.onClickSearchConfirmButton}
+                            disabled={this.state.searchInput === '' || this.state.searchInput === undefined}
                         >
                             Search
               </Button>
