@@ -13,6 +13,8 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: null,
+            titleDocuments: [],
+            contentDocuments: []
         });
     });
 
@@ -26,18 +28,42 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [stubDocument],
             selectedDocument: null,
+            titleDocuments: [],
+            contentDocuments: []
         });
     });
 
-    it(`should get document`, () => {
+    it(`should get document unique`, () => {
         const stubSelectedDocument = { id: 1, title: 'title', content: 'content' };
         const newState = reducer(undefined, {
             type: actionTypes.GET_DOCUMENT,
-            target: stubSelectedDocument,
+            unique: true,
+            selectedDocument: stubSelectedDocument,
+            titleDocuments: stubSelectedDocument,    //for search fail
+            contentDocuments: stubSelectedDocument
         });
         expect(newState).toEqual({
             documents: [],
             selectedDocument: stubSelectedDocument,
+            titleDocuments: [],
+            contentDocuments: []
+        });
+    });
+
+    it(`should get document not unique`, () => {
+        const stubSelectedDocument = { id: 1, title: 'title', content: 'content' };
+        const newState = reducer(undefined, {
+            type: actionTypes.GET_DOCUMENT,
+            unique: false,
+            selectedDocument: stubSelectedDocument,
+            titleDocuments: stubSelectedDocument,    //for search fail
+            contentDocuments: stubSelectedDocument
+        });
+        expect(newState).toEqual({
+            documents: [],
+            selectedDocument: null,
+            titleDocuments: stubSelectedDocument,
+            contentDocuments: stubSelectedDocument
         });
     });
 })

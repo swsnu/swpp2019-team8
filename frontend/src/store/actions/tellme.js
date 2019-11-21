@@ -22,10 +22,13 @@ export const postDocument = (document) => {
     };
 };
 
-export const getDocument_ = (document) => {
+export const getDocument_ = (response) => {
     return {
         type: actionTypes.GET_DOCUMENT,
-        target: document,
+        unique : response.unique,
+        selectedDocument: response.selectedDocument,
+        titleDocuments: response.titleDocuments,    //for search fail
+        contentDocuments : response.contentDocuments
     };
 };
 
@@ -33,12 +36,10 @@ export const getDocument = (document_title) => {
     return dispatch => {
         return axios.get('/api/tellme/document/' + document_title + '/')
             .then(res => {
-                dispatch(getDocument_(res.data))
-                //    dispatch(push('/tell_me/documents/' + res.data.title))
+                    dispatch(getDocument_(res.data))
             })
             .catch(e => {
-                dispatch({ type: actionTypes.GET_DOCUMENT, target: null })
-                dispatch(push('/tell_me/search_fail'))
+                //console.log(e)
             })
 
     };
@@ -61,7 +62,7 @@ export const putDocument = (document) => {
                 dispatch(push('/tell_me/documents/' + res.data.title))
             })
             .catch(e => {
-                console.log(e);
+                //console.log(e);
             })
     };
 };

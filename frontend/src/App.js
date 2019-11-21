@@ -31,7 +31,7 @@ function App(props) {
           <Route path='/sign_up' exact component={SignUp} />
           <Route path='/tell_me' exact component={TellMe} />
           <Route path='/tell_me/photo' exact component={PhotoUpload} />
-          <Route path='/tell_me/search_fail' exact component={DocumentSearchFail} />
+          <Route path='/tell_me/search_fail/:document_title' exact component={DocumentSearchFail} />
           <Route path='/tell_me/create' exact component={DocumentCreate} />
           <Route path='/tell_me/documents/:document_title' exact component={DocumentDetail} />
           <Route path='/tell_me/documents/:document_title/edit' exact component={DocumentEdit} />
