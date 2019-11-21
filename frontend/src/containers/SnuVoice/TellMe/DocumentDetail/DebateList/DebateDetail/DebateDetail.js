@@ -21,12 +21,12 @@ class DebateDetail extends Component {
         this.props.onGetDebateComments(this.props.match.params.debate_id);
     }
 
-    // onClickCommentConfirmButton = () => {
-    //     this.props.onPostDebateComment(
-    //         this.state.comment,
-    //         this.state.selectedDebate.id
-    //     )
-    // }
+    onClickCommentConfirmButton = () => {
+        this.props.onPostDebateComment(
+            this.state.comment,
+            this.props.match.params.debate_id
+        )
+    }
 
     render() {
         let documentTitle = '';
@@ -50,6 +50,7 @@ class DebateDetail extends Component {
                 id = {comment.id}
                 comment = {comment.comment}
                 author = {comment.author}
+                date = {comment.date}
                 />
             })
         );
