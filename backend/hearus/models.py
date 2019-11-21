@@ -30,9 +30,10 @@ class Petition(models.Model):
         if (petition.status == 'preliminary'):
             if (petition.votes >= 5):
                 petition.status = 'ongoing'
-                #petition visible하게 만듬
+                petition.save()
             else:
                 petition.status = 'fail'
+                petition.save()
         else:
             pass
         print(petition.status)
