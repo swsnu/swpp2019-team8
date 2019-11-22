@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 
 import * as actionCreators from '../../../../store/actions/index';
 
@@ -16,6 +16,8 @@ class PetitionDetail extends Component {
     state = {
         isSelected: false,
         comment: '',
+        listNumber: [1, 2, 3, 4, 5],
+        selectedNumber: 1,
     }
 
     componentDidMount = async () => {
@@ -31,6 +33,24 @@ class PetitionDetail extends Component {
 
     onClickPetitionCancelButton = () => {
         this.props.history.push('/hear_us');
+    }
+
+    onClickListPrevButton = () => {
+        const numbers = this.state.listNumber.map(listNumber => listNumber - 5);
+        if (numbers[0] > 0) {
+            this.setState({ listNumber: numbers, selectedNumber: numbers[0] });
+        }
+    }
+
+    onClickListNumberButton = (event) => {
+        this.setState({ selectedNumber: event.target.value })
+    }
+
+    onClickListNextButton = () => {
+        const numbers = this.state.listNumber.map(listNumber => listNumber + 5);
+        if (this.props.storedPetitionComments.length / 10 + 1 >= numbers[0]) {
+            this.setState({ listNumber: numbers, selectedNumber: numbers[0] });
+        }
     }
 
     render() {
@@ -63,27 +83,48 @@ class PetitionDetail extends Component {
 
         let comments = [];
         if (this.props.storedPetitionComments) {
-            comments = this.props.storedPetitionComments.map(com => {
+            comments = this.props.storedPetitionComments.map((com, i) => {
                 let date = null;
                 let time = null;
                 if (typeof com.date === 'string') {
                     date = com.date.substring(0, 10);
                     time = com.date.substring(11, 16);
                 }
-                return (
-                    <div key={com.id} className="Reply_Reply_list">
-                        <div className="Reply_Reply_contents">
-                            <div className="pv3_R_contents_head">
-                                {date + ' ' + time}
-                            </div>
-                            <div className="R_R_contents_txt">
-                                {com.comment}
+                if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
+                    return (
+                        <div key={com.id} className="Reply_Reply_list">
+                            <div className="Reply_Reply_contents">
+                                <div className="pv3_R_contents_head">
+                                    {date + ' ' + time}
+                                </div>
+                                <div className="R_R_contents_txt">
+                                    {com.comment}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                );
+                    );
+                }
             });
         }
+
+        let listNumbers = this.state.listNumber.map((number, i) => {
+            if (this.props.storedPetitionComments.length / 10 + 1 >= number) {
+                return (
+                    <Button type="button" id="list_number_buttons" key={i} value={number}
+                        onClick={this.onClickListNumberButton}>{number}</Button>
+                );
+            }
+        });
+
+        let listNumberButtons = (
+            <ButtonGroup>
+                <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1}
+                    onClick={this.onClickListPrevButton}>prev</Button>
+                {listNumbers}
+                <Button type="button" id="list_next_button" disabled={this.state.listNumber[0] + 5 > this.props.storedPetitionComments.length / 10 + 1}
+                    onClick={this.onClickListNextButton}>next</Button>
+            </ButtonGroup>
+        );
 
         return (
             <div>
@@ -144,6 +185,7 @@ class PetitionDetail extends Component {
                     <br /><br />
                     <div className="petitionsReply_Reply">
                         {comments}
+                        {listNumberButtons}
                     </div>
                 </div >
             </div >
