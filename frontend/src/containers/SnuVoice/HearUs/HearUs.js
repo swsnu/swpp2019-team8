@@ -32,7 +32,6 @@ export class HearUs extends Component {
   };
 
   componentDidMount = () => {
-    window.sessionStorage.removeItem('petitionSearch')
     this.props.getAllPetitions();
   }
 
@@ -57,6 +56,7 @@ export class HearUs extends Component {
     if (this.state.selectedCategory === 'All') {
       voteList = (
         this.props.petitionList
+          .filter(petition => petition.status === 'ongoing')
           .sort((a, b) => a.votes > b.votes ? -1 : a.votes < b.votes ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
@@ -72,12 +72,13 @@ export class HearUs extends Component {
                   onClick={this.onClickDetailButton}
                 />
               )
-            }
+            } else return undefined;
           })
 
       );
       deadlineList = (
         this.props.petitionList
+          .filter(petition => petition.status === 'ongoing')
           .sort((a, b) => a.start_date > b.start_date ? -1 : a.start_date < b.start_date ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
@@ -93,13 +94,13 @@ export class HearUs extends Component {
                   onClick={this.onClickDetailButton}
                 />
               )
-            }
+            } else return undefined;
           })
       );
     } else {
       voteList = (
         this.props.petitionList
-          .filter(petition => petition.category === this.state.selectedCategory)
+          .filter(petition => petition.category === this.state.selectedCategory && petition.status === 'ongoing')
           .sort((a, b) => a.votes > b.votes ? -1 : a.votes < b.votes ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
@@ -115,13 +116,13 @@ export class HearUs extends Component {
                   onClick={this.onClickDetailButton}
                 />
               )
-            }
+            } else return undefined;
           })
       );
       deadlineList = (
         this.props.petitionList
-        .filter(petition => petition.category === this.state.selectedCategory)
-        .sort((a, b) => a.start_date > b.start_date ? -1 : a.start_date < b.start_date ? 1 : 0)
+          .filter(petition => petition.category === this.state.selectedCategory && petition.status === 'ongoing')
+          .sort((a, b) => a.start_date > b.start_date ? -1 : a.start_date < b.start_date ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
               return (
@@ -136,7 +137,7 @@ export class HearUs extends Component {
                   onClick={this.onClickDetailButton}
                 />
               )
-            }
+            } else return undefined;
           })
       );
 

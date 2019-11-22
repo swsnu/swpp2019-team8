@@ -56,7 +56,12 @@ describe('ActionCreators', () => {
                 return new Promise((resolve, reject) => {
                     const result = {
                         status: 200,
-                        data: stubDocument,
+                        data: {
+                            unique : false,
+                            selectedDocument : stubDocument,
+                            titleDocuments : [1],
+                            contentDocuments : [1],
+                        },
                     };
                     resolve(result);
                 });
@@ -64,7 +69,9 @@ describe('ActionCreators', () => {
 
         store.dispatch(actionCreators.getDocument()).then(() => {
             const newState = store.getState();
-            expect(newState.tm.selectedDocument).toBe(stubDocument);
+            expect(newState.tm.selectedDocument).toBe(null);
+            expect(newState.tm.titleDocuments).toStrictEqual([1]);
+            expect(newState.tm.contentDocuments).toStrictEqual([1]);
             expect(spy).toHaveBeenCalledTimes(1);
             done();
         });

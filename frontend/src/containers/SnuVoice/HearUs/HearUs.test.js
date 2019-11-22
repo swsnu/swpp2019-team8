@@ -13,59 +13,66 @@ describe('<HearUs/>', () => {
             petitionList: [
                 {
                     id: 1,
-                    status: 'OnGoing',
+                    status: 'ongoing',
                     title: 'Iluvswpp',
                     category: 'welfare',
                     end_date: '2019-12-07',
+                    start_date: 1,
                     votes: 123
                 },
                 {
                     id: 2,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
+                    start_date: 32,
                     votes: 1
                 },
                 {
                     id: 3,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
-                    end_date: '2019-12-08',
+                    end_date: 123,
+                    start_date: 21,
                     votes: 1
                 },
                 {
                     id: 4,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
+                    start_date: 123,
                     votes: 125
                 },
                 {
                     id: 5,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
-                    votes: 125
+                    start_date: 1,
+                    votes: 125312
                 },
                 {
                     id: 6,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
-                    votes: 125
+                    start_date: 123,
+                    votes: 12
                 },
                 {
                     id: 7,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
-                    votes: 125
+                    start_date: 123,
+                    votes: 12
                 },
             ],
             selectedUser: { id: 1 },
@@ -97,6 +104,7 @@ describe('<HearUs/>', () => {
     it('should make list well', () => {
         const component = shallow(<HearUs {...props}/>)
         component.instance().setState({ selectedCategory : 'human rights'})
+        component.instance().forceUpdate()
         const petitionList = component.find('Petition')
         expect(petitionList.length).toBe(10)
     })
@@ -113,11 +121,12 @@ describe('<HearUs/>', () => {
         expect(component.instance().state.selectedCategory).toBe('1')
     })
 
-    // it('should componentDidMount Works', () => {
-    //     Storage.prototype.removeItem = mocked
-    //     const component = mount(hearUs)
-    //     expect(mocked).toHaveBeenCalledTimes(1)
-    // })
+    it('should componentDidMount Works', () => {
+        Storage.prototype.removeItem = mocked
+        const component = shallow(<HearUs {...props} history={historyMock}/>)
+        component.instance().componentDidMount();
+        expect(mocked).toHaveBeenCalledTimes(1)
+    })
 })
 
 describe('mapDispatchToProps', () => {
@@ -144,7 +153,7 @@ describe('mapStateToProps', () => {
                 petition_list: [
                     {
                         id: 1,
-                        status: 'OnGoing',
+                        status: 'ongoing',
                         title: 'Iluvswpp',
                         category: 'welfare',
                         end_date: '2019-12-07',

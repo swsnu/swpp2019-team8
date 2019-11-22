@@ -130,6 +130,7 @@ export const getVerifyCode = (email) => {
 export const checkSignIn_ = (response) => {
     return {
         type: actionTypes.CHECK_SIGN_IN,
+        selectedUser : response.selectedUser,
         signIn : response.signIn
     }
 }
