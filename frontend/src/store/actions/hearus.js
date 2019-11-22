@@ -81,20 +81,20 @@ export const getPetitionByTitle = (title) => {
     }
 }
 
-/*
-export const getMyPetitions_ = () => {
+
+export const getMyPetitions_ = (myPetitions) => {
     return {
         type: actionTypes.GET_MY_PETITIONS,
-        // TODO
+        myPetitionList: myPetitions
     };
 };
 
-export const getMyPetitions = () => {
+export const getMyPetitions = (user_id) => {
     return dispatch => {
-        // TODO
+        return axios.get('/api/hearus/petition/user/' + user_id + '/')
+            .then(res => dispatch(getMyPetitions_(res.data)));
     };
 };
-*/
 
 export const getPetitionComments_ = (comment_list) => {
     return {

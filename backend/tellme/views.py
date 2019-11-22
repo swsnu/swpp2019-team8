@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseForbidden, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth import authenticate
+from django.forms.models import model_to_dict
 
 import json
 import datetime
@@ -23,7 +24,7 @@ def document(request):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         document = Document(title=document_title, content=document_content)
-        document.save()
+        document.save() 
         response_dict = {'id': document.id,
                          'title': document.title, 'content': document.content}
         return JsonResponse(response_dict, status=201)
@@ -114,7 +115,7 @@ def debates_by_document(request, document_title):
                             title=debate_title, content=debate_content)
         new_debate.save()
 
-        return HttpResponse(status=201)
+        return JsonResponse(model_to_dict(new_debate), status=201)
 
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
@@ -143,7 +144,6 @@ def debate_comments(request, debate_id):
     if request.method == 'GET':
         debate_comment_list = [
             comment for comment in DebateComment.objects.filter(debate=debate_id).values()]
-
         response = {
             'debateDocumentTitle': debate.document.title,
             'debateTitle': debate.title,
@@ -168,7 +168,7 @@ def debate_comments(request, debate_id):
             debate=comment_debate, author=comment_author, comment=comment_content, date=comment_date)
         new_debate_comment.save()
 
-        return HttpResponse(status=201)
+        return JsonResponse(model_to_dict(new_debate_comment), status=201)
 
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
