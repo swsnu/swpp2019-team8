@@ -62,20 +62,22 @@ class PetitionDetail extends Component {
 
         let comments = [];
         if (this.props.storedPetitionComments) {
-            comments = this.props.storedPetitionComments.map(com => {
-                return (
-                    <div key={com.id} className="Reply_Reply_list">
-                        <div className="Reply_Reply_contents">
-                            <div className="pv3_R_contents_head">
-                                {com.date}
-                            </div>
-                            <div className="R_R_contents_txt">
-                                {com.comment}
+            comments = this.props.storedPetitionComments
+                .sort((a, b) => a.date > b.date ? -1 : a.date < b.date ? 1 : 0)
+                .map(com => {
+                    return (
+                        <div key={com.id} className="Reply_Reply_list">
+                            <div className="Reply_Reply_contents">
+                                <div className="pv3_R_contents_head">
+                                    {com.date}
+                                </div>
+                                <div className="R_R_contents_txt">
+                                    {com.comment}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                );
-            });
+                    );
+                });
         }
 
         return (
