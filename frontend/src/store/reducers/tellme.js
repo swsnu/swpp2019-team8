@@ -15,7 +15,7 @@ const initialState = {
 const tellme = (prevState, action) => {
     let state;
     if (prevState === undefined) state = initialState;
-    else state = prevState
+    else state = prevState;
     switch (action.type) {
         case actionTypes.POST_DOCUMENT: {
             const newDocument = {
@@ -57,12 +57,7 @@ const tellme = (prevState, action) => {
         }
 
         case actionTypes.POST_DEBATE: {
-            const newDebate = {
-                id: action.id,
-                title: action.title,
-                content: action.content,
-            };
-            return {...state, debates: state.debates.concat(newDebate)};   // TODO
+            return {...state};   // TODO
         }
 
         case actionTypes.GET_DEBATE: {
@@ -74,12 +69,7 @@ const tellme = (prevState, action) => {
         }
         
         case actionTypes.POST_DEBATE_COMMENT: {
-            const newDebateComment = {
-                id: action.id,
-                comment: action.comment,
-                debate: action.debate,
-            }
-            return {...state, debateComments: state.debateComments.concat(newDebateComment)};   // TODO
+            return {...state};   // TODO
         }
 
         default:
