@@ -70,7 +70,7 @@ class PetitionDetail extends Component {
                         <div key={com.id} className="Reply_Reply_list">
                             <div className="Reply_Reply_contents">
                                 <div className="pv3_R_contents_head">
-                                    {com.date}
+                                    {com.date.substring(0, 10) + ' ' + com.date.substring(11, 16)}
                                 </div>
                                 <div className="R_R_contents_txt">
                                     {com.comment}
