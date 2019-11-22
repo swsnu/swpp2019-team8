@@ -18,14 +18,14 @@ class PetitionDetail extends Component {
         comment: '',
     }
 
-    componentDidMount() {
-        this.props.onGetPetition(this.props.match.params.petition_id);
-        this.props.onGetPetitionComments(this.props.match.params.petition_id);
+    componentDidMount = async () => {
+        await this.props.onGetPetition(this.props.match.params.petition_id);
+        await this.props.onGetPetitionComments(this.props.match.params.petition_id);
     }
 
-    onClickCommentConfirmButton = () => {
-        this.props.onStorePetitionComment(this.props.match.params.petition_id, this.state.comment);
-        this.props.onPetitionVote(this.props.match.params.petition_id);
+    onClickCommentConfirmButton = async () => {
+        await this.props.onStorePetitionComment(this.props.match.params.petition_id, this.state.comment);
+        await this.props.onPetitionVote(this.props.match.params.petition_id);
     }
 
     onClickPetitionCancelButton = () => {
