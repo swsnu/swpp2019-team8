@@ -9,14 +9,14 @@ import { Button, Input } from 'reactstrap';
 import Upperbar from '../../../../UpperBar/UpperBar';
 
 
-class DebateCreate extends Component {
+export class DebateCreate extends Component {
     state={
         debateTitle: '',
         debateContent: '',
     }
 
     componentDidMount() {
-        
+        this.props.onGetDocument(this.props.match.params.document_title);
     }
 
     onClickDebateConfirmButton = () => {
@@ -67,6 +67,8 @@ export const mapStateToProps = state => {
 
 export const mapDispatchToProps = dispatch => {
     return {
+        onGetDocument: document_title =>
+            dispatch(actionCreators.getDocument(document_title)),
         onCreateDebate: (selectedDocument, debateTitle, debateContent) =>
             dispatch(actionCreators.postDebate(selectedDocument,{ title: debateTitle, content: debateContent})),
     }

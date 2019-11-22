@@ -9,7 +9,7 @@ import { Button } from 'reactstrap';
 import Debate from '../../../../../components/Debate/debateList';
 import Upperbar from '../../../UpperBar/UpperBar';
 
-class DebateList extends Component {
+export class DebateList extends Component {
     componentDidMount() {
         this.props.onGetDocument(this.props.match.params.document_title);
         this.props.onGetDebates(this.props.match.params.document_title);
@@ -37,11 +37,8 @@ class DebateList extends Component {
                 return <Debate
                 key = {debate.id}
                 id = {debate.id}
-                debate = {debate}
-                document = {debate.document}
                 author = {debate.author}
                 title = {debate.title}
-                content = {debate.content}
                 onClick = {this.onClickDebateTitleButton}
                 />
             })
@@ -69,8 +66,7 @@ class DebateList extends Component {
 export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
-        debates: state.tm.debates,
-        selectedDebate: state.tm.selectedDebate
+        debates: state.tm.debates
     }
 }
 
