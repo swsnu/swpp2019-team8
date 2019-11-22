@@ -66,11 +66,17 @@ class PetitionDetail extends Component {
             comments = this.props.storedPetitionComments
                 .sort((a, b) => a.date > b.date ? -1 : a.date < b.date ? 1 : 0)
                 .map(com => {
+                    let date = null;
+                    let time = null;
+                    if (typeof com.date === 'string') {
+                        date = com.date.substring(0, 10);
+                        time = com.date.substring(11, 16);
+                    }
                     return (
                         <div key={com.id} className="Reply_Reply_list">
                             <div className="Reply_Reply_contents">
                                 <div className="pv3_R_contents_head">
-                                    {com.date.substring(0, 10) + ' ' + com.date.substring(11, 16)}
+                                    {date + ' ' + time}
                                 </div>
                                 <div className="R_R_contents_txt">
                                     {com.comment}
