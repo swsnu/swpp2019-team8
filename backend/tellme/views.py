@@ -151,7 +151,7 @@ def debate_comments(request, debate_id):
 
     if request.method == 'GET':
         debate_comment_list = [
-            comment for comment in DebateComment.objects.select_related('author').filter(debate_id=debate_id)]
+            comment for comment in DebateComment.objects.select_related('author').filter(debate_id=debate.id)]
         response = []
         for i in debate_comment_list:
             response_dict = {
