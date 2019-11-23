@@ -132,4 +132,13 @@ describe('<PetitionDetail />', () => {
         wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us');
     });
+
+    it ('should onClickDownload csvbutton works', () => {
+        const spyGetCsvFile = jest.spyOn(actionCreators, 'getCsvFile')
+            .mockImplementation(petition_id => { return dispatch => { };});
+        const comment = mount(petitionDetail);
+        const wrapper = comment.find(PetitionDetail.WrappedComponent).instance();
+        wrapper.onClickDownloadCsvButton();
+        expect(spyGetCsvFile).toHaveBeenCalledTimes(1);
+    })
 });

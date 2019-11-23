@@ -12,6 +12,21 @@ from django.utils import timezone
 from datetime import timedelta
 import json
 
+# file dowonload
+import os
+import tempfile
+import zipfile
+from wsgiref.util import FileWrapper
+from django.conf import settings
+import mimetypes
+import chardet
+import codecs
+import io
+
+# handling csv file
+import pandas as pd
+import numpy as np
+
 
 def petition(request):
     if not request.user.is_authenticated:
@@ -27,18 +42,27 @@ def petition(request):
             petition_end_date = petition_start_date + timedelta(days=30)
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        petition = Petition(author=request.user, 
-                            title=petition_title, 
-                            content=petition_content, 
+        petition = Petition(author=request.user,
+                            title=petition_title,
+                            content=petition_content,
                             category=petition_category,
-                            link=petition_link, 
-                            tag='', #tag 
-                            start_date=petition_start_date, 
-                            end_date=petition_end_date, 
-                            votes=0, 
+                            link=petition_link,
+                            tag='',  # tag
+                            start_date=petition_start_date,
+                            end_date=petition_end_date,
+                            votes=0,
                             status='ongoing')
-        print(petition_start_date)
         petition.save()
+        df = pd.DataFrame({
+            'voteDate': [],
+            'status': [],
+            'degree': [],
+            'studentId': [],
+            'gender': [],
+            'department': [],
+            'major': []
+        })
+        df.to_csv('./stat/' + str(petition.id) + '.csv', encoding="utf-8")
         response_dict = model_to_dict(petition)
         return JsonResponse(response_dict, status=201)
     else:
@@ -112,9 +136,42 @@ def petition_comment(request, petition_id):
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
+        student_id = request.user.studentId[0:4]
+        stat = pd.read_csv('./stat/' + str(petition_id) + '.csv')
+        df = pd.DataFrame({
+            'voteDate': [str(comment_date.year) + '-' + str(comment_date.month) + '-' + str(comment_date.day)],
+            'status': [request.user.status],
+            'degree': [request.user.studentStatus],
+            'studentId': [student_id],
+            'gender': [request.user.gender],
+            'department': [request.user.department],
+            'major': [request.user.major]
+        })
+        index = ['voteDate', 'status', 'degree', 'studentId', 'gender', 'department', 'major']
+        df = stat.append(df, sort=False, ignore_index=True)
+        df.to_csv('./stat/' + str(petition_id) + '.csv', encoding="utf-8", 
+                    columns=index)
         response_dict = model_to_dict(comment)
         return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
+
+def downlaod_csv(request, petition_id):
+    if request.method == 'GET':
+        petition = Petition.objects.filter(id=petition_id).exists()
+        if petition == False:
+            return HttpResponseNotFound()
+        else:
+            filename = "./stat/" + str(petition_id) + '.csv'
+            dowanload_name = str(petition_id) + ".csv"
+            wrapper = FileWrapper(open(filename, encoding='utf-8'))
+            content_type = mimetypes.guess_type(filename)[0]
+            response = HttpResponse(wrapper, content_type=content_type)
+            del response['content-length']
+            response['content-disposition'] = "attachment; filename=%s" % dowanload_name
+            return response
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
 
 # Create your views here.

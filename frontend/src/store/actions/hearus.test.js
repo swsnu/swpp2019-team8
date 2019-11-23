@@ -149,4 +149,37 @@ describe('ActionCreators', () => {
             done();
         });
     });
+
+    it('getCsvFile works well', (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data : 123
+                    }
+                    resolve(result);
+                })
+            })
+        
+        store.dispatch(actionCreators.getCsvFile('1'))
+            .then(() => {
+                expect(spy).toHaveBeenCalledTimes(1)
+                done();
+            });
+    })
+
+    it('getCsvFile works well in error', async () => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                })
+            });
+
+        await store.dispatch(actionCreators.getCsvFile('1'));
+
+        expect(spy).toHaveBeenCalledTimes(1);
+
+    })
 });

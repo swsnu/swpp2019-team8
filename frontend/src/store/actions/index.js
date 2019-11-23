@@ -35,6 +35,6 @@ export {
     // getMyPetitions,
     getPetitionComments,
     postPetitionComment,
-    putPetitionVote,       // Wiki에 추가 필요
-    // Statistic에 해당하는 것은 아직 안 만듦
+    putPetitionVote,      // Wiki에 추가 필요
+    getCsvFile  // Statistic에 해당하는 것은 아직 안 만듦
 } from './hearus';
