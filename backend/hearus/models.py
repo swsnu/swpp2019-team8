@@ -29,7 +29,6 @@ class PetitionComment(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        unique=True
     )
     comment = models.TextField()
     date = models.DateTimeField()
