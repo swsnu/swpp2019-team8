@@ -5,6 +5,7 @@ from json import JSONDecodeError
 
 from .models import Petition, PetitionComment
 from user.models import User
+from .tasks import status_changer
 
 
 from django.forms.models import model_to_dict
@@ -37,9 +38,8 @@ def petition(request):
                             end_date=petition_end_date, 
                             votes=0, 
                             status='preliminary')
-        print(petition_start_date)
         petition.save()
-        petition.temp()
+        status_changer(petition.id)
         response_dict = model_to_dict(petition)
         return JsonResponse(response_dict, status=201)
     else:
@@ -113,6 +113,9 @@ def petition_comment(request, petition_id):
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
+        if(comment_petition.votes >=5 and comment_petition.status == "preliminary"):
+            comment_petition.status = "ongoing"
+            comment_petition.save()
         response_dict = model_to_dict(comment)
         return JsonResponse(response_dict, status=201)
     else:

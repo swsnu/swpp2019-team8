@@ -21,27 +21,30 @@ class Petition(models.Model):
     votes = models.IntegerField()
     status = models.TextField()
 
-    def temp(self):
-        threading.Timer(86400, self.check_ongoing).start()
-        threading.Timer(1900800, self.check_end).start()
 
-    def check_ongoing(self):
+    def state_changer(self):
+        fail_date = self.start_date + timedelta(days=1)
+        self.check_fail.apply_async((self), eta=fail_date)
+        end_date = self.start_date + timedelta(days=21)
+        self.check_end.apply_async((self), eta=end_date)
+
+
+    def check_fail(self):
         petition = Petition.objects.get(id = self.id)
         if (petition.status == 'preliminary'):
-            if (petition.votes >= 5):
-                petition.status = 'ongoing'
-                petition.save()
-            else:
-                petition.status = 'fail'
-                petition.save()
+            petition.status = 'fail'
+            petition.save()
         else:
             pass
         print(petition.status)
-    
+
     def check_end(self):
         petition = Petition.objects.get(id = self.id)
         if(petition.status == 'ongoing'):
             petition.status = 'end'
+            petition.save()
+        else:
+            pass
 
 
 class PetitionComment(models.Model):
