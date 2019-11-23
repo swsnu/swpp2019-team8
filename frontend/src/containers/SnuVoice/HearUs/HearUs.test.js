@@ -13,7 +13,7 @@ describe('<HearUs/>', () => {
             petitionList: [
                 {
                     id: 1,
-                    status: 'OnGoing',
+                    status: 'ongoing',
                     title: 'Iluvswpp',
                     category: 'welfare',
                     end_date: '2019-12-07',
@@ -22,7 +22,7 @@ describe('<HearUs/>', () => {
                 },
                 {
                     id: 2,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
@@ -31,7 +31,7 @@ describe('<HearUs/>', () => {
                 },
                 {
                     id: 3,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: 123,
@@ -40,7 +40,7 @@ describe('<HearUs/>', () => {
                 },
                 {
                     id: 4,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
@@ -49,30 +49,30 @@ describe('<HearUs/>', () => {
                 },
                 {
                     id: 5,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
                     start_date: 1,
-                    votes: 125
+                    votes: 125312
                 },
                 {
                     id: 6,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
                     start_date: 123,
-                    votes: 125
+                    votes: 12
                 },
                 {
                     id: 7,
-                    status: 'end',
+                    status: 'ongoing',
                     title: 'Ihateswpp',
                     category: 'human rights',
                     end_date: '2019-12-08',
                     start_date: 123,
-                    votes: 125
+                    votes: 12
                 },
             ],
             selectedUser: { id: 1 },
@@ -153,7 +153,7 @@ describe('mapStateToProps', () => {
                 petition_list: [
                     {
                         id: 1,
-                        status: 'OnGoing',
+                        status: 'ongoing',
                         title: 'Iluvswpp',
                         category: 'welfare',
                         end_date: '2019-12-07',

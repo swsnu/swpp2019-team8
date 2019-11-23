@@ -49,7 +49,7 @@ def petition(request):
 def petition_list(request):
     if request.method == 'GET':
         petition_list = [
-            petition for petition in Petition.objects.all().values().order_by('-start_date')]
+            petition for petition in Petition.objects.exclude(status="preliminary").values().order_by('-start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
@@ -57,7 +57,7 @@ def petition_list(request):
 
 def petition_serach_by_title(request, petition_title):
     if request.method == 'GET':
-        petition_list = [petition for petition in Petition.objects.filter(
+        petition_list = [petition for petition in Petition.objects.exclude(status="preliminary").filter(
             title__icontains=petition_title).values().order_by('start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
