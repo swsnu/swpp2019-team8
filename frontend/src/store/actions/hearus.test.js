@@ -151,6 +151,7 @@ describe('ActionCreators', () => {
     });
 
     it('getCsvFile works well', (done) => {
+        window.URL.createObjectURL = jest.fn();
         const spy = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
                 return new Promise((resolve, reject) => {
