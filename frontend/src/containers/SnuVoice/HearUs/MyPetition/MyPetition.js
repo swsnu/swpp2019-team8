@@ -23,11 +23,11 @@ class MyPetition extends Component {
 
   onClickDetailButton = (event) => {
     this.props.history.push('/hear_us/' + event.target.value)
-    }
+  }
 
-    onClickCategoryButton = (event) => {
-        this.setState({ selectedCategory: event.target.value })
-    }
+  onClickCategoryButton = (event) => {
+    this.setState({ selectedCategory: event.target.value })
+  }
 
   render() {
     let myPetitionList = this.props.petitionList.map(petition => {
@@ -51,19 +51,19 @@ class MyPetition extends Component {
         <div className="TopOfPage">
           <br />
           {/* <SearchBar/> */}
-    <h1>{this.props.selectedUser.nickname}'s Petitions</h1>
+          <h1>{this.props.selectedUser.nickname}`s Petitions</h1>
           <br />
           <Table hover>
-                <thead>
-                    <tr>
-                        <th>State</th>
-                        <th>Category</th>
-                        <th>Title</th>
-                        <th>due</th>
-                        <th>votes</th>
-                    </tr>
-                </thead>
-            </Table>
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Category</th>
+                <th>Title</th>
+                <th>due</th>
+                <th>votes</th>
+              </tr>
+            </thead>
+          </Table>
           {myPetitionList}
         </div>
       </div>
@@ -84,7 +84,7 @@ export const mapDispatchToProps = dispatch => {
       dispatch(actionCreator.getMyPetitions(user_id)),
 
     getCurrentUser: user_id =>
-        dispatch(actionCreator.getUserByUserId(user_id))
+      dispatch(actionCreator.getUserByUserId(user_id))
   };
 };
 
