@@ -1,5 +1,4 @@
 from django.test import TestCase, Client
-from unittest import mock
 from .models import Petition, PetitionComment
 from user.models import User
 from django.utils import timezone
