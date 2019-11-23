@@ -24,6 +24,8 @@ matrix:
         - pip install coveralls
         - cd ..
       script: # Script to test your build
+        - cd redis-stable
+        - redis-server
         - cd frontend
         - ./node_modules/.bin/eslint src
         - yarn test --coverage --watchAll=false
