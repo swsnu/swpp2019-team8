@@ -1,11 +1,32 @@
 import React from 'react';
-import { shallow } from 'enzyme'
-import App from './App';
+import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
 
-describe('<App/>', () => {
-    it('should render without erros', () => {
-        const component = shallow(<App />);
-        const wrapper = component.find('.App');
-        expect(wrapper.length).toBe(1);
+import App from './App';
+import { getMockStore } from './test-utils/mocks';
+import { history } from './store/store';
+
+const mockStore = getMockStore({});
+
+describe('App', () => {
+    let app;
+
+    beforeEach(() => {
+        app = (
+            <Provider store={mockStore}>
+                <App history={history} />
+            </Provider>
+        )
+    });
+
+    it('should render', () => {
+        const component = mount(app);
+        expect(component.find('.App').length).toBe(1);
+    });
+
+    it('should be redirected to error page', () => {
+        history.push('/aaa');
+        const component = mount(app);
+        expect(component.find('h1').text()).toBe('Not Found');
     })
 });
