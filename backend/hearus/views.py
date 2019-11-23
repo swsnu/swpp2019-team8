@@ -137,7 +137,8 @@ def petition_comment(request, petition_id):
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
         student_id = request.user.studentId[0:4]
-        stat = pd.read_csv('./stat/' + str(petition_id) + '.csv')
+        file_location = './stat/' + str(petition_id) + '.csv'
+        stat = pd.read_csv(file_location)
         df = pd.DataFrame({
             'voteDate': [str(comment_date.year) + '-' + str(comment_date.month) + '-' + str(comment_date.day)],
             'status': [request.user.status],
@@ -149,7 +150,7 @@ def petition_comment(request, petition_id):
         })
         index = ['voteDate', 'status', 'degree', 'studentId', 'gender', 'department', 'major']
         df = stat.append(df, sort=False, ignore_index=True)
-        df.to_csv('./stat/' + str(petition_id) + '.csv', encoding="utf-8", 
+        df.to_csv(file_location, encoding="utf-8", 
                     columns=index)
         response_dict = model_to_dict(comment)
         return JsonResponse(response_dict, status=201)
