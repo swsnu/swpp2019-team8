@@ -146,7 +146,7 @@ export const getCsvFile = (petition_id) => {
                 const url = window.URL.createObjectURL(new Blob([res.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', petition_id + '.csv', encodeURI='utf-8-sig');
+                link.setAttribute('download', petition_id + '.csv');
                 document.body.appendChild(link);
                 link.click();
             })
