@@ -1,0 +1,13 @@
+voteDate,status,degree,studentId,gender,department,major
+,,undergrad,,male,engineering,engineering
+,,undergrad,,male,engineering,engineering
+2019-11-18,,undergrad,,male,engineering,engineering
+2019-11-18,,undergrad,,male,engineering,engineering
+2019-11-18,1.0,1,123.0,1,11,1
+2019-11-18,1.0,1,123.0,1,11,1
+2019-11-18,1.0,1,123.0,1,11,1
+2019-11-18,1.0,1,123.0,1,11,1
+2019-11-18,1.0,1,123.0,1,11,1
+2019-11-18,1.0,1,123.0,1,11,1
+2019-11-19,1.0,1,123.0,1,11,1
+2019-11-19,1,1,123,1,11,1
