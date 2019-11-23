@@ -48,7 +48,7 @@ class PetitionDetail extends Component {
 
     onClickListNextButton = () => {
         const numbers = this.state.listNumber.map(listNumber => listNumber + 5);
-        if (this.props.storedPetitionComments.length / 10 + 1 >= numbers[0]) {
+        if (this.props.storedPetitionComments && this.props.storedPetitionComments.length / 10 + 1 >= numbers[0]) {
             this.setState({ listNumber: numbers, selectedNumber: numbers[0] });
         }
     }
@@ -108,7 +108,7 @@ class PetitionDetail extends Component {
         }
 
         let listNumbers = this.state.listNumber.map((number, i) => {
-            if (this.props.storedPetitionComments.length / 10 + 1 >= number) {
+            if (this.props.storedPetitionComments && this.props.storedPetitionComments.length / 10 + 1 >= number) {
                 return (
                     <Button type="button" id="list_number_buttons" key={i} value={number}
                         onClick={this.onClickListNumberButton}>{number}</Button>
@@ -121,7 +121,7 @@ class PetitionDetail extends Component {
                 <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1}
                     onClick={this.onClickListPrevButton}>prev</Button>
                 {listNumbers}
-                <Button type="button" id="list_next_button" disabled={this.state.listNumber[0] + 5 > this.props.storedPetitionComments.length / 10 + 1}
+                <Button type="button" id="list_next_button" disabled={this.props.storedPetitionComments && this.state.listNumber[0] + 5 > this.props.storedPetitionComments.length / 10 + 1}
                     onClick={this.onClickListNextButton}>next</Button>
             </ButtonGroup>
         );
