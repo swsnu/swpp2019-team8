@@ -10,6 +10,9 @@ import { history } from '../../../../store/store';
 import * as actionCreators from '../../../../store/actions/hearus';
 
 const stubInitialState = {
+    selectedUser: {
+        id: '1',
+    },
     selectedPetition: {
         title: 'SELECTED_PETITION_TEST_TITLE',
         content: 'SELECTED_PETITION_TEST_CONTENT',
