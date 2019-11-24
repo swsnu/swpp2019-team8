@@ -21,7 +21,7 @@ const stubInitialState = {
     petition_list: [
         {
             id: 1,
-            status: 'onGoing',
+            status: 'ongoing',
             title: 'Iluvswpp',
             category: 'welfare',
             start_date: '2019-12-07',
@@ -193,7 +193,7 @@ describe('<PetitionList />', () => {
         let petition = component.find('Petition')
         expect(petition.length).toBe(20)
         ongoingButton.simulate('click')
-        expect(petitionListComponent.state.petitionState).toBe('onGoing')
+        expect(petitionListComponent.state.petitionState).toBe('ongoing')
         petition = component.find('Petition')
         expect(petition.length).toBe(2)
     })
