@@ -31,6 +31,8 @@ const mockStore = getMockStore(stubInitialState);
 
 describe('<PetitionDetail />', () => {
     let petitionDetail;
+    const { reload } = window.location;
+
     beforeEach(() => {
         petitionDetail = (
             <Provider store={mockStore}>
@@ -41,6 +43,21 @@ describe('<PetitionDetail />', () => {
                 </ConnectedRouter>
             </Provider>
         );
+    });
+
+    beforeAll(() => {
+        Object.defineProperty(window.location, 'reload', {
+            configurable: false,
+        });
+        window.location.reload = jest.fn();
+    });
+
+    afterAll(() => {
+        window.location.reload = reload;
+    });
+
+    it('mocks reload function', () => {
+        expect(jest.isMockFunction(window.location.reload)).toBe(true);
     });
 
     it(`should render PetitionDetail`, () => {
@@ -131,5 +148,39 @@ describe('<PetitionDetail />', () => {
         const wrapper = component.find('#petition_cancel_button').at(0);
         wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us');
+    });
+
+    it(`should call 'onClickListPrevButton'`, () => {
+        const component = mount(petitionDetail);
+        const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
+        const wrapper = component.find('#list_prev_button').at(0);
+        wrapper.simulate('click');
+        expect(petitionCommentInstance.state.listNumber).toStrictEqual([1, 2, 3, 4, 5]);
+        petitionCommentInstance.setState({
+            listNumber: [6, 7, 8, 9, 10]
+        });
+        wrapper.simulate('click');
+        expect(petitionCommentInstance.state.listNumber).toStrictEqual([1, 2, 3, 4, 5]);
+    });
+
+    it(`should call 'onClickListNumberButton'`, () => {
+        const component = mount(petitionDetail);
+        const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
+        petitionCommentInstance.onClickListNumberButton({ target: { value: 23 } });
+        petitionCommentInstance.forceUpdate();
+        expect(petitionCommentInstance.state.selectedNumber).toBe(23);
+    });
+
+    it(`should call 'onClickListNextButton'`, () => {
+        const component = mount(petitionDetail);
+        const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
+        const wrapper = component.find('#list_next_button').at(0);
+        wrapper.simulate('click');
+        expect(petitionCommentInstance.state.listNumber).toStrictEqual([1, 2, 3, 4, 5]);
+        petitionCommentInstance.setState({
+            listNumber: [-11, -12, -13, -14, -15]
+        });
+        wrapper.simulate('click');
+        expect(petitionCommentInstance.state.listNumber).toStrictEqual([-6, -7, -8, -9, -10]);
     });
 });
