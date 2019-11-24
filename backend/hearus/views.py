@@ -28,9 +28,9 @@ def petition(request):
             petition_end_date = petition_start_date + timedelta(days=30)
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        petition = Petition(author=request.user, 
-                            title=petition_title, 
-                            content=petition_content, 
+        petition = Petition(author=request.user,
+                            title=petition_title,
+                            content=petition_content,
                             category=petition_category,
                             link=petition_link, 
                             tag='', #tag 
@@ -49,7 +49,7 @@ def petition(request):
 def petition_list(request):
     if request.method == 'GET':
         petition_list = [
-            petition for petition in Petition.objects.all().values().order_by('-start_date')]
+            petition for petition in Petition.objects.exclude(status="preliminary").values().order_by('-start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
@@ -57,7 +57,7 @@ def petition_list(request):
 
 def petition_serach_by_title(request, petition_title):
     if request.method == 'GET':
-        petition_list = [petition for petition in Petition.objects.filter(
+        petition_list = [petition for petition in Petition.objects.exclude(status="preliminary").filter(
             title__icontains=petition_title).values().order_by('start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
@@ -98,7 +98,7 @@ def petition_userid(request, user_id):
 def petition_comment(request, petition_id):
     if request.method == 'GET':
         comment_list = [comment for comment in PetitionComment.objects.filter(
-            petition=petition_id).values()]
+            petition=petition_id).values().order_by('-date')]
         return JsonResponse(comment_list, safe=False)
     elif request.method == 'POST':
         if not request.user.is_authenticated:
