@@ -1,5 +1,7 @@
 from django.test import TestCase, Client
 from .models import Petition, PetitionComment
+from .tasks import status_changer,check_fail,check_end
+from unittest.mock import patch
 from user.models import User
 from django.utils import timezone
 from datetime import timedelta
@@ -24,9 +26,27 @@ class HearusTestCase(TestCase):
         new_petition = Petition.objects.create(author=new_user, title="title", content="content", category="category", link="link", tag="tag",
                                  start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30), votes=2, status="preliminary")
         new_petition2 = Petition.objects.create(author=new_user, title="title2", content="content2", category="category", link="link2", tag="tag2",
-                                 start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30),votes=1, status="preliminary")
+                                 start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30),votes=1, status="ongoing")
         new_comment = PetitionComment.objects.create(author=new_user, petition=new_petition, comment="comment", date=timezone.now())
         
+    @patch('hearus.tasks.status_changer')
+    def test_status_changer(self,petition_id):
+        status_changer(petition_id=1)
+
+    @patch('hearus.tasks.check_fail')
+    def test_fail(self,petition_id):
+        petition = Petition.objects.get(id=1)
+        if(petition.status == 'preliminary'):
+            petition.status = 'fail'
+        self.assertEqual(petition.status, 'fail')
+
+    @patch('hearus.tasks.check_end')
+    def test_end(self,petition_id):
+        petition = Petition.objects.get(id=2)
+        if(petition.status == 'ongoing'):
+            petition.status = 'end'
+        self.assertEqual(petition.status, 'end')
+
     def test_petition(self):
         client = Client(enforce_csrf_checks=False)
         response = client.get('/api/hearus/petition/')
