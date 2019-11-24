@@ -60,6 +60,8 @@ describe('<UpperBar/>', () => {
         signIn.simulate('click')
         component.instance().forceUpdate()
         expect(component.instance().state.modal).toBe(true)
+        signIn.simulate('click')
+        expect(component.instance().state.modal).toBe(false)
     })
 
     it('click singUp Button', () => {
@@ -169,6 +171,8 @@ describe('<UpperBar/>', () => {
         component.instance().onKeyPress({ key: 'Entr' })
         expect(mocked).toHaveBeenCalledTimes(1)
     })
+
+
 
 
 

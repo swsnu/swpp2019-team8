@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import * as actionCreator from '../../../../store/actions/index';
 
 import {
     Button,
@@ -30,7 +31,8 @@ export class SearchBar extends Component {
             if (toSearch[i] !== ' ') break;
             else input = toSearch.slice(0, i)
         }
-        this.props.history.push('/hear_us/search/' + input)
+        this.props.history.push('/hear_us/search/' + input);
+        this.props.getPetitionByTitle(input);
     }
 
     onClickCreateButton = () => {
@@ -72,6 +74,13 @@ export class SearchBar extends Component {
     }
 }
 
+export const mapDispatchToProps = dispatch => {
+    return {
+        getPetitionByTitle: (title) =>
+            dispatch(actionCreator.getPetitionByTitle(title))
+    }
+}
+
 export const mapStateToProps = state => {
     return {
         selectedUser: state.usr.selectedUser,
@@ -81,5 +90,5 @@ export const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(withRouter(SearchBar));
