@@ -68,10 +68,8 @@ class PhotoUpload extends Component {
                                 message: result.message,
                             });
                         }
-                        this.drawInCanvas(result.info);
-                    })
-                    .catch(() => {
-                        alert("Not Valid Google API Key Or Data");
+                        console.log('num_faces: ' + result.num_faces);
+                        this.drawInCanvas(result.info[0]);
                     });
             };
         }
@@ -118,44 +116,50 @@ class PhotoUpload extends Component {
         if (data.responses.length === 0) {
             return { message: "The face is not recognized." };
         }
-        // 얼굴이 두 개 이상 인식된 경우
-        if (data.responses.length > 1) {
-            return { message: "Only photos with a single face will be accepted." };
-        }
 
-        const faceDetection = data.responses[0].faceAnnotations[0];
-        let topBound;
-        let bottomBound;
-        let leftBound;
-        let rightBound;
-        faceDetection.fdBoundingPoly.vertices.forEach((vertice) => {
-            if (!topBound || vertice.y < topBound) {
-                topBound = vertice.y;
-            }
-            if (!bottomBound || vertice.y > bottomBound) {
-                bottomBound = vertice.y;
-            }
-            if (!leftBound || vertice.x < leftBound) {
-                leftBound = vertice.x;
-            }
-            if (!rightBound || vertice.x > rightBound) {
-                rightBound = vertice.x;
-            }
-        });
+        console.log("**");
+        console.log(data.responses[0].faceAnnotations);
 
-        this.setState({
-            canvasWidth: rightBound - leftBound,
-            canvasHeight: bottomBound - topBound,
-        });
+        let info = [];
 
-        return {
-            info: {
+        for (let i = 0; i < data.responses[0].faceAnnotations.length; i++) {
+            let faceDetection = data.responses[0].faceAnnotations[i];
+            let topBound;
+            let bottomBound;
+            let leftBound;
+            let rightBound;
+            faceDetection.fdBoundingPoly.vertices.forEach((vertice) => {
+                if (!topBound || vertice.y < topBound) {
+                    topBound = vertice.y;
+                }
+                if (!bottomBound || vertice.y > bottomBound) {
+                    bottomBound = vertice.y;
+                }
+                if (!leftBound || vertice.x < leftBound) {
+                    leftBound = vertice.x;
+                }
+                if (!rightBound || vertice.x > rightBound) {
+                    rightBound = vertice.x;
+                }
+            });
+
+            this.setState({
+                canvasWidth: rightBound - leftBound,
+                canvasHeight: bottomBound - topBound,
+            });
+
+            info.push({
                 x: leftBound,
                 y: topBound,
                 width: rightBound - leftBound,
                 height: bottomBound - topBound,
-            },
+            });
+        }
+
+        return {
+            info: info,
             message: "Photo Uploaded",
+            num_faces: data.responses[0].faceAnnotations.length,
         };
     };
 
