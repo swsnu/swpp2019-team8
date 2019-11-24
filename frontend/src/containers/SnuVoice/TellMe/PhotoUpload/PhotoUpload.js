@@ -9,7 +9,6 @@ import { MarkdownPreview } from 'react-marked-markdown';
 import Upperbar from '../../UpperBar/UpperBar';
 
 import './PhotoUpload.css';
-import { checkStudentIdDuplicate } from '../../../../store/actions';
 
 class PhotoUpload extends Component {
     state = {
