@@ -63,7 +63,7 @@ class HearusTestCase(TestCase):
     def test_petition_list(self):
         client = Client(enforce_csrf_checks=False)
         response = client.get('/api/hearus/petition/petitions/')
-        self.assertEqual(2, len(response.content.decode()))
+        self.assertEqual(238, len(response.content.decode()))
         response = client.put('/api/hearus/petition/petitions/')
         self.assertEqual(response.status_code, 405)
 
