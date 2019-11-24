@@ -20,8 +20,8 @@ class PhotoUpload extends Component {
         documentState: 'write',
         message: "Upload your Photo",
         googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
-        canvasWidth: 209,
-        canvasHeight: 209,
+        canvasWidth: 100,
+        canvasHeight: 100,
     }
 
     constructor(props) {
@@ -69,7 +69,7 @@ class PhotoUpload extends Component {
                             });
                         }
                         console.log('num_faces: ' + result.num_faces);
-                        this.drawInCanvas(result.info[0]);
+                        this.drawInCanvas(result.info, result.num_faces);
                     });
             };
         }
@@ -143,10 +143,10 @@ class PhotoUpload extends Component {
                 }
             });
 
-            this.setState({
-                canvasWidth: rightBound - leftBound,
-                canvasHeight: bottomBound - topBound,
-            });
+            // this.setState({
+            //     canvasWidth: rightBound - leftBound,
+            //     canvasHeight: bottomBound - topBound,
+            // });
 
             info.push({
                 x: leftBound,
@@ -163,42 +163,27 @@ class PhotoUpload extends Component {
         };
     };
 
-    drawInCanvas = (photoInfo) => {
+    drawInCanvas = (photoInfo, n) => {
         const canvas = this.refCanvas.current;
-        const ctx = canvas.getContext("2d") || null;
+        const ctx = canvas.getContext("2d");
         const img = this.refImg.current;
-        if (ctx) {
-            // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
-            ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight);
-            if (photoInfo) {
-                const { x, y, width, height } = photoInfo;
-                const ratio = this.state.canvasWidth / width;
-                // 만약 배경이 투명한 이미지를 올릴 경우 배경과 분리되어 보이지 않을 가능성이 있어 하얀색 사각형을 먼저 배경에 그려줍니다.
-                ctx.fillStyle = "#fff";
-                ctx.fillRect(
-                    x * -1 * ratio,
-                    y * -1 * ratio,
-                    img.width * ratio,
-                    img.height * ratio,
-                );
-                // 이제 업로드된 이미지를 캔버스에 렌더링 합니다.
-                ctx.drawImage(
-                    img,
-                    x,
-                    y,
-                    width,
-                    height,
-                    0,
-                    0,
-                    Math.round(width * ratio),
-                    Math.round(height * ratio),
-                );
-            } else {
-                // 좌표값이 없을 경우 (0, 0)부터 이미지를 렌더링 합니다.
-                ctx.drawImage(img, 0, 0, img.width, img.height);
-            }
+
+        ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
+        ctx.drawImage(img, 0, 0);
+
+        for (let i = 0; i < n; i++) {
+            const { x, y, width, height } = photoInfo[i];
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(x, y, width, height);
         }
     };
+
+    onImgLoad = ({ target: img }) => {
+        this.setState({
+            canvasWidth: img.offsetWidth,
+            canvasHeight: img.offsetHeight,
+        });
+    }
 
     render() {
         let photoStateTabbuttons = (
@@ -234,7 +219,7 @@ class PhotoUpload extends Component {
             </Nav>
         );
 
-        let $imagePreview = (this.state.photoUrl) ? (<img ref={this.refImg} src={this.state.photoUrl} />) :
+        let $imagePreview = (this.state.photoUrl) ? (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />) :
             (<div className="noPhoto">There is no image to preview</div>);
 
         return (
