@@ -113,12 +113,13 @@ class PhotoUpload extends Component {
 
     getPhotoInfo = (data) => {
         // 얼굴이 인식되지 않은 경우
-        if (data.responses.length === 0) {
-            return { message: "The face is not recognized." };
+        if (typeof data.responses[0].faceAnnotations === "undefined") {
+            return {
+                info: [],
+                message: "The face is not recognized.",
+                num_faces: 0,
+            }
         }
-
-        console.log("**");
-        console.log(data.responses[0].faceAnnotations);
 
         let info = [];
 
@@ -142,11 +143,6 @@ class PhotoUpload extends Component {
                     rightBound = vertice.x;
                 }
             });
-
-            // this.setState({
-            //     canvasWidth: rightBound - leftBound,
-            //     canvasHeight: bottomBound - topBound,
-            // });
 
             info.push({
                 x: leftBound,
