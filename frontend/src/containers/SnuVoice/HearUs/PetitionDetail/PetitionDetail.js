@@ -176,7 +176,7 @@ class PetitionDetail extends Component {
                         <textarea id="tw_contents" style={{ width: 700 }}
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
-                            disabled={this.props.storedPetitionComments
+                            disabled={this.props.selectedUser && this.props.storedPetitionComments
                                 .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
