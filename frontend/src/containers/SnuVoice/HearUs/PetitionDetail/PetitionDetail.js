@@ -37,6 +37,7 @@ class PetitionDetail extends Component {
 
     onClickDownloadCsvButton = () => {
         this.props.onGetCsvFile(this.props.match.params.petition_id);
+    }
       
     onClickListPrevButton = () => {
         const numbers = this.state.listNumber.map(listNumber => listNumber - 5);
