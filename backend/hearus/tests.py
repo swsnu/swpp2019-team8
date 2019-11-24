@@ -35,16 +35,14 @@ class HearusTestCase(TestCase):
 
     @patch('hearus.tasks.check_fail')
     def test_fail(self,petition_id):
+        check_fail(petition_id=1)
         petition = Petition.objects.get(id=1)
-        if(petition.status == 'preliminary'):
-            petition.status = 'fail'
         self.assertEqual(petition.status, 'fail')
 
     @patch('hearus.tasks.check_end')
     def test_end(self,petition_id):
+        check_end(petition_id=2)
         petition = Petition.objects.get(id=2)
-        if(petition.status == 'ongoing'):
-            petition.status = 'end'
         self.assertEqual(petition.status, 'end')
 
     def test_petition(self):
@@ -69,6 +67,12 @@ class HearusTestCase(TestCase):
         response = client.put('/api/hearus/petition/petitions/')
         self.assertEqual(response.status_code, 405)
 
+    def test_petition_search_by_title(self):
+        client = Client(enforce_csrf_checks=False)
+        response = client.get('/api/hearus/petition/title/')
+        self.assertEqual(77,len(response.content.decode()))
+        response = client.delete('/api/hearus/petition/1/')
+        self.assertEqual(response.status_code, 405)
 
     def test_petition_petitionid(self):
         client = Client(enforce_csrf_checks=False)
