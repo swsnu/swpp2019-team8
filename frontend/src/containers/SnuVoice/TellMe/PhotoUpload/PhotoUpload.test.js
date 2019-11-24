@@ -61,6 +61,24 @@ describe('<PhotoUpload />', () => {
         expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/create');
     });
 
+    it(`should set state properly: 'photo' -> 'preview'`, () => {
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
+        photoUploadInstance.setState({ photoState: 'photo', });
+        const wrapper = component.find('#preview_photo_tab_button').at(0);
+        wrapper.simulate('click');
+        expect(photoUploadInstance.state.photoState).toEqual('preview');
+    });
+
+    it(`should set state properly: 'preview' -> 'photo'`, () => {
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
+        photoUploadInstance.setState({ photoState: 'preview', });
+        const wrapper = component.find('#edit_photo_tab_button').at(0);
+        wrapper.simulate('click');
+        expect(photoUploadInstance.state.photoState).toEqual('photo');
+    });
+
     it(`should set state properly: 'write' -> 'preview'`, () => {
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
@@ -78,4 +96,10 @@ describe('<PhotoUpload />', () => {
         wrapper.simulate('click');
         expect(photoUploadInstance.state.documentState).toEqual('write');
     });
+
+    it(`should upload photo`, () => {
+        // TODO
+        // 아래 참고해서 적용가능한건가..?
+        // https://github.com/testing-library/react-testing-library/issues/93
+    })
 });
