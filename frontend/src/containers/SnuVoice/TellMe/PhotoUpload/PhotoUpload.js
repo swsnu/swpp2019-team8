@@ -173,8 +173,11 @@ class PhotoUpload extends Component {
 
         for (let i = 0; i < n; i++) {
             const { x, y, width, height } = photoInfo[i];
-            ctx.fillStyle = "#fff";
-            ctx.fillRect(x, y, width, height);
+            ctx.beginPath();
+            ctx.lineWidth = "6";
+            ctx.strokeStyle = "red";
+            ctx.rect(x, y, width, height);
+            ctx.stroke();
         }
     };
 
