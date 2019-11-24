@@ -9,6 +9,7 @@ import { MarkdownPreview } from 'react-marked-markdown';
 import Upperbar from '../../UpperBar/UpperBar';
 
 import './PhotoUpload.css';
+import { checkStudentIdDuplicate } from '../../../../store/actions';
 
 class PhotoUpload extends Component {
     state = {
@@ -176,10 +177,29 @@ class PhotoUpload extends Component {
                 y = event.pageY - elemTop;
 
             // Collision detection between clicked offset and element.
-            elements.forEach(function (element) {
+            elements.forEach(function (element, index) {
                 if (y > element.top && y < element.top + element.height
                     && x > element.left && x < element.left + element.width) {
-                    alert('clicked an element');
+                    element.blur = !element.blur;
+                    if (element.blur === true) {
+                        ctx.filter = 'blur(4px)';
+                        ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
+                        ctx.filter = 'none';
+                        ctx.beginPath();
+                        ctx.lineWidth = "6";
+                        ctx.strokeStyle = element.color;
+                        ctx.rect(element.left, element.top, element.width, element.height);
+                        ctx.stroke();
+                    }
+                    else if (element.blur === false) {
+                        ctx.filter = 'none';
+                        ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
+                        ctx.beginPath();
+                        ctx.lineWidth = "6";
+                        ctx.strokeStyle = element.color;
+                        ctx.rect(element.left, element.top, element.width, element.height);
+                        ctx.stroke();
+                    }
                 }
             });
         }, false);
@@ -193,6 +213,7 @@ class PhotoUpload extends Component {
                 height: height,
                 left: x,
                 top: y,
+                blur: false,
             });
         }
 
