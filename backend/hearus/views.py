@@ -121,7 +121,7 @@ def petition_userid(request, user_id):
 def petition_comment(request, petition_id):
     if request.method == 'GET':
         comment_list = [comment for comment in PetitionComment.objects.filter(
-            petition=petition_id).values()]
+            petition=petition_id).values().order_by('-date')]
         return JsonResponse(comment_list, safe=False)
     elif request.method == 'POST':
         if not request.user.is_authenticated:
