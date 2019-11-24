@@ -167,14 +167,45 @@ class PhotoUpload extends Component {
         ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
         ctx.drawImage(img, 0, 0);
 
+        let elemLeft = canvas.offsetLeft;
+        let elemTop = canvas.offsetTop;
+        let elements = [];
+
+        canvas.addEventListener('click', function (event) {
+            var x = event.pageX - elemLeft,
+                y = event.pageY - elemTop;
+
+            // Collision detection between clicked offset and element.
+            elements.forEach(function (element) {
+                if (y > element.top && y < element.top + element.height
+                    && x > element.left && x < element.left + element.width) {
+                    alert('clicked an element');
+                }
+            });
+        }, false);
+
+        // Add element.
         for (let i = 0; i < n; i++) {
             const { x, y, width, height } = photoInfo[i];
-            ctx.beginPath();
-            ctx.lineWidth = "6";
-            ctx.strokeStyle = "red";
-            ctx.rect(x, y, width, height);
-            ctx.stroke();
+            elements.push({
+                color: 'red',
+                width: width,
+                height: height,
+                left: x,
+                top: y,
+            });
         }
+
+        // Render elements.
+        elements.forEach(function (element) {
+            for (let i = 0; i < n; i++) {
+                ctx.beginPath();
+                ctx.lineWidth = "6";
+                ctx.strokeStyle = element.color;
+                ctx.rect(element.left, element.top, element.width, element.height);
+                ctx.stroke();
+            }
+        });
     };
 
     onImgLoad = ({ target: img }) => {
