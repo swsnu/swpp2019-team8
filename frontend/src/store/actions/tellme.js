@@ -18,7 +18,8 @@ export const postDocument = (document) => {
             .then(res => {
                 dispatch(postDocument_(res.data));
                 dispatch(push('/tell_me/documents/' + res.data.title));
-            });
+            })
+            .catch(e => {})
     };
 };
 
@@ -80,16 +81,13 @@ export const putDocument = (document) => {
                 .then(res => {
                     dispatch(getDebates_(res.data))
                 })
+                .catch(e => {})
         };
     };
     
     export const postDebate_ = (debate) => {
         return {
-            type: actionTypes.POST_DEBATE,
-            id: debate.id,
-            title: debate.title,
-            content: debate.content,
-            document: debate.document_title,
+            type: actionTypes.POST_DEBATE
         };
     };
     
@@ -100,6 +98,7 @@ export const putDocument = (document) => {
                     dispatch(postDebate_(res.data));
                     dispatch(push('/tell_me/documents/' + selectedDocument.title + '/debates/' + res.data.id));
                 })
+                .catch(e => {})
         };
     };
     
@@ -116,6 +115,7 @@ export const putDocument = (document) => {
                 .then(res => {
                     dispatch(getDebate_(res.data))
                 })
+                .catch(e => {})
         };
     }; 
    
@@ -128,28 +128,29 @@ export const putDocument = (document) => {
     
     export const getDebateComments = (debate_id) => {
         return dispatch => {
-            return axios.get('/api/tellme/debate/' + debate_id)
+            return axios.get('/api/tellme/debate/' + debate_id + '/')
                 .then(res => {
                     dispatch(getDebateComments_(res.data))
                 })
+                .catch(e => {})
         };
     };
      
-   export const postDebateComment_ = (comment) => {
+   export const postDebateComment_ = (comments) => {
        return {
            type: actionTypes.POST_DEBATE_COMMENT,
-           id: comment.id,
-           content: comment.comment,
-           debate: comment.debate,
+           commentList: comments
         };
     };
     
     export const postDebateComment = (comment, debate_id) => {
+        
         return dispatch => {
             return axios.post('/api/tellme/debate/' + debate_id + '/', comment)
                 .then(res => {
                     dispatch(postDebateComment_(res.data));
                 })
+                .catch(e => {})
         };
     };
     
