@@ -21,28 +21,6 @@ class Petition(models.Model):
     votes = models.IntegerField()
     status = models.TextField()
 
-    def temp(self):
-        threading.Timer(86400, self.check_ongoing).start()
-        threading.Timer(1900800, self.check_end).start()
-
-    def check_ongoing(self):
-        petition = Petition.objects.get(id = self.id)
-        if (petition.status == 'preliminary'):
-            if (petition.votes >= 5):
-                petition.status = 'ongoing'
-                petition.save()
-            else:
-                petition.status = 'fail'
-                petition.save()
-        else:
-            pass
-        print(petition.status)
-    
-    def check_end(self):
-        petition = Petition.objects.get(id = self.id)
-        if(petition.status == 'ongoing'):
-            petition.status = 'end'
-
 
 class PetitionComment(models.Model):
     petition = models.ForeignKey(
