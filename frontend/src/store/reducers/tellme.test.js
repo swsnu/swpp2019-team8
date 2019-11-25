@@ -92,7 +92,7 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: null,
-
+            documentDuplicate: false,
             debates: [],
             selectedDebate: null,
             debateComments: [],
@@ -111,7 +111,7 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: null,
-
+            documentDuplicate: false,
             debates: [],
             selectedDebate: null,
             debateComments: [1, 2],
@@ -130,7 +130,7 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: null,
-
+            documentDuplicate: false,
             debates: [],
             selectedDebate: 1,
             debateComments: [],
@@ -149,7 +149,7 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: null,
-
+            documentDuplicate: false,
             debates: [],
             selectedDebate: null,
             debateComments: [],
@@ -168,7 +168,7 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: null,
-
+            documentDuplicate: false,
             debates: 1,
             selectedDebate: null,
             debateComments: [],
