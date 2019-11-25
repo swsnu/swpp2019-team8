@@ -25,13 +25,22 @@ export class UpperBar extends Component {
 
     //Set modal (sign in window)
     toggleModal = () => {
-        this.setState({ modal: !this.state.modal })
+        if (!this.state.modal) {
+            this.setState({ modal: !this.state.modal })
+        } else {
+            this.setState({
+                modal: !this.state.modal,
+                email: '',
+                password: '',
+                feedBackMessage: ''
+            })
+        }
     }
 
     onKeyPress = (event) => {
         if (event.key === 'Enter') this.onClickSignInButton()
     }
-    
+
     onClickCrossOverButton = () => {
         if (this.state.location === 'tell_me') {
             this.props.history.push('/hear_us');
@@ -117,9 +126,19 @@ export class UpperBar extends Component {
                         <FormText color="danger" size="12">
                             {this.state.feedBackMessage}
                         </FormText>
-                        <Input type="email" id="email_input" placeholder="SNU MAIL" onKeyPress={this.onKeyPress}
+                        <Input
+                            type="email"
+                            id="email_input"
+                            placeholder="SNU MAIL"
+                            value={this.state.email}
+                            onKeyPress={this.onKeyPress}
                             onChange={(event) => this.setState({ email: event.target.value })}></Input>
-                        <Input type="password" id="password_input" placeholder="PASSWORD" onKeyPress={this.onKeyPress}
+                        <Input
+                            type="password"
+                            id="password_input"
+                            placeholder="PASSWORD"
+                            value={this.state.password}
+                            onKeyPress={this.onKeyPress}
                             onChange={(event) => this.setState({ password: event.target.value })}></Input>
                     </ModalBody>
                     <ModalFooter>

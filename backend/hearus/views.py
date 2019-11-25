@@ -27,15 +27,15 @@ def petition(request):
             petition_end_date = petition_start_date + timedelta(days=30)
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        petition = Petition(author=request.user, 
-                            title=petition_title, 
-                            content=petition_content, 
+        petition = Petition(author=request.user,
+                            title=petition_title,
+                            content=petition_content,
                             category=petition_category,
-                            link=petition_link, 
-                            tag='', #tag 
-                            start_date=petition_start_date, 
-                            end_date=petition_end_date, 
-                            votes=0, 
+                            link=petition_link,
+                            tag='',  # tag
+                            start_date=petition_start_date,
+                            end_date=petition_end_date,
+                            votes=0,
                             status='ongoing')
         print(petition_start_date)
         petition.save()
@@ -97,7 +97,7 @@ def petition_userid(request, user_id):
 def petition_comment(request, petition_id):
     if request.method == 'GET':
         comment_list = [comment for comment in PetitionComment.objects.filter(
-            petition=petition_id).values()]
+            petition=petition_id).values().order_by('-date')]
         return JsonResponse(comment_list, safe=False)
     elif request.method == 'POST':
         if not request.user.is_authenticated:

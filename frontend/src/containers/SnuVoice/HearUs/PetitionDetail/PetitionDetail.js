@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 
 import * as actionCreators from '../../../../store/actions/index';
 
@@ -16,20 +16,41 @@ class PetitionDetail extends Component {
     state = {
         isSelected: false,
         comment: '',
+        listNumber: [1, 2, 3, 4, 5],
+        selectedNumber: 1,
     }
 
-    componentDidMount() {
-        this.props.onGetPetition(this.props.match.params.petition_id);
-        this.props.onGetPetitionComments(this.props.match.params.petition_id);
+    componentDidMount = async () => {
+        await this.props.onGetPetition(this.props.match.params.petition_id);
+        await this.props.onGetPetitionComments(this.props.match.params.petition_id);
     }
 
-    onClickCommentConfirmButton = () => {
-        this.props.onStorePetitionComment(this.props.match.params.petition_id, this.state.comment);
-        this.props.onPetitionVote(this.props.match.params.petition_id);
+    onClickCommentConfirmButton = async () => {
+        await this.props.onStorePetitionComment(this.props.match.params.petition_id, this.state.comment);
+        await this.props.onPetitionVote(this.props.match.params.petition_id);
+        window.location.reload(false);
     }
 
     onClickPetitionCancelButton = () => {
         this.props.history.push('/hear_us');
+    }
+
+    onClickListPrevButton = () => {
+        const numbers = this.state.listNumber.map(listNumber => listNumber - 5);
+        if (numbers[0] > 0) {
+            this.setState({ listNumber: numbers, selectedNumber: numbers[0] });
+        }
+    }
+
+    onClickListNumberButton = (event) => {
+        this.setState({ selectedNumber: event.target.value })
+    }
+
+    onClickListNextButton = () => {
+        const numbers = this.state.listNumber.map(listNumber => listNumber + 5);
+        if (this.props.storedPetitionComments && this.props.storedPetitionComments.length / 10 + 1 >= numbers[0]) {
+            this.setState({ listNumber: numbers, selectedNumber: numbers[0] });
+        }
     }
 
     render() {
@@ -62,21 +83,48 @@ class PetitionDetail extends Component {
 
         let comments = [];
         if (this.props.storedPetitionComments) {
-            comments = this.props.storedPetitionComments.map(com => {
-                return (
-                    <div key={com.id} className="Reply_Reply_list">
-                        <div className="Reply_Reply_contents">
-                            <div className="pv3_R_contents_head">
-                                {com.date}
-                            </div>
-                            <div className="R_R_contents_txt">
-                                {com.comment}
+            comments = this.props.storedPetitionComments.map((com, i) => {
+                let date = null;
+                let time = null;
+                if (typeof com.date === 'string') {
+                    date = com.date.substring(0, 10);
+                    time = com.date.substring(11, 16);
+                }
+                if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
+                    return (
+                        <div key={com.id} className="Reply_Reply_list">
+                            <div className="Reply_Reply_contents">
+                                <div className="pv3_R_contents_head">
+                                    {date + ' ' + time}
+                                </div>
+                                <div className="R_R_contents_txt">
+                                    {com.comment}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                );
+                    );
+                }
             });
         }
+
+        let listNumbers = this.state.listNumber.map((number, i) => {
+            if (this.props.storedPetitionComments && this.props.storedPetitionComments.length / 10 + 1 >= number) {
+                return (
+                    <Button type="button" id="list_number_buttons" key={i} value={number}
+                        onClick={this.onClickListNumberButton}>{number}</Button>
+                );
+            }
+        });
+
+        let listNumberButtons = (
+            <ButtonGroup>
+                <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1}
+                    onClick={this.onClickListPrevButton}>prev</Button>
+                {listNumbers}
+                <Button type="button" id="list_next_button" disabled={this.props.storedPetitionComments && this.state.listNumber[0] + 5 > this.props.storedPetitionComments.length / 10 + 1}
+                    onClick={this.onClickListNextButton}>next</Button>
+            </ButtonGroup>
+        );
 
         return (
             <div>
@@ -128,6 +176,8 @@ class PetitionDetail extends Component {
                         <textarea id="tw_contents" style={{ width: 700 }}
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
+                            disabled={this.props.selectedUser && this.props.storedPetitionComments
+                                .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 
@@ -137,6 +187,7 @@ class PetitionDetail extends Component {
                     <br /><br />
                     <div className="petitionsReply_Reply">
                         {comments}
+                        {listNumberButtons}
                     </div>
                 </div >
             </div >
@@ -146,6 +197,7 @@ class PetitionDetail extends Component {
 
 export const mapStateToProps = state => {
     return {
+        selectedUser: state.usr.selectedUser,
         selectedPetition: state.hu.selectedPetition,
         storedPetitionComments: state.hu.comment_list,
     }
