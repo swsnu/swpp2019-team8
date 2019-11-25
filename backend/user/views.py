@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, HttpResponseNotFound, JsonResponse
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.decorators.cache import cache_page
 
 import json
 import string
@@ -11,7 +12,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
 from django.core.mail import EmailMessage
 # Create your views here.
-
 
 def sign_up(request):
     if request.method == 'POST':
@@ -158,8 +158,8 @@ def get_user_by_nickname(request, nickname):
 
 def check_email_duplicate(request, email):
     if request.method == 'GET':
-        selected_user = User.objects.filter(email=email)
-        if (selected_user.count() == 0):
+        selected_user = User.objects.filter(email=email).exists()
+        if selected_user == False:
             dict_to_return = {
                 'emailDuplicate': False
             }
@@ -175,8 +175,8 @@ def check_email_duplicate(request, email):
 
 def check_nickname_duplicate(request, nickname):
     if request.method == 'GET':
-        selected_user = User.objects.filter(nickname=nickname)
-        if (selected_user.count() == 0):
+        selected_user = User.objects.filter(nickname=nickname).exists()
+        if selected_user == False:
             dict_to_return = {
                 'nicknameDuplicate': False
             }
@@ -192,8 +192,8 @@ def check_nickname_duplicate(request, nickname):
 
 def check_student_id_duplicate(request, student_id):
     if request.method == 'GET':
-        selected_user = User.objects.filter(studentId=student_id)
-        if (selected_user.count() == 0):
+        selected_user = User.objects.filter(studentId=student_id).exists()
+        if selected_user == False:
             dict_to_return = {
                 'studentIdDuplicate': False
             }
@@ -206,14 +206,14 @@ def check_student_id_duplicate(request, student_id):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-
 def check_signin(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            selected_user = User.objects.get(id=request.user.id)
-            user_dict = model_to_dict(selected_user)
             json_to_return = {
-                'selectedUser' : user_dict,
+                'selectedUser' : {
+                    'id' : request.user.id,
+                    'nickname': request.user.nickname
+                },
                 'signIn': True
             }
             return JsonResponse(json_to_return, safe=False)
