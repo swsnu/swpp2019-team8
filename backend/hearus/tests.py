@@ -26,9 +26,9 @@ class HearusTestCase(TestCase):
         new_user = User.objects.create_user(
             email="dkwanm1@naver.com", new_user=new_use)
         new_petition = Petition.objects.create(author=new_user, title="title", content="content", category="category", link="link", tag="tag",
-                                 start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30), votes=2, status="preliminary")
+                                 start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30), votes=2, status="preliminary", url="1")
         new_petition2 = Petition.objects.create(author=new_user, title="title2", content="content2", category="category", link="link2", tag="tag2",
-                                 start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30),votes=1, status="ongoing")
+                                 start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30),votes=1, status="ongoing", url="2")
         new_comment = PetitionComment.objects.create(author=new_user, petition=new_petition, comment="comment", date=timezone.now())
         
     @patch('hearus.tasks.status_changer')
@@ -65,21 +65,21 @@ class HearusTestCase(TestCase):
     def test_petition_list(self):
         client = Client(enforce_csrf_checks=False)
         response = client.get('/api/hearus/petition/petitions/')
-        self.assertEqual(238, len(response.content.decode()))
+        self.assertEqual(250, len(response.content.decode()))
         response = client.put('/api/hearus/petition/petitions/')
         self.assertEqual(response.status_code, 405)
 
     def test_petition_search_by_title(self):
         client = Client(enforce_csrf_checks=False)
-        response = client.get('/api/hearus/petition/title/')
-        self.assertEqual(77,len(response.content.decode()))
-        response = client.delete('/api/hearus/petition/1/')
+        response = client.get('/api/hearus/petition/petition_title/title2/')
+        self.assertEqual(250,len(response.content.decode()))
+        response = client.delete('/api/hearus/petition/petition_title/title2/')
         self.assertEqual(response.status_code, 405)
 
-    def test_petition_petitionid(self):
+    def test_petition_petitionurl(self):
         client = Client(enforce_csrf_checks=False)
         response = client.get('/api/hearus/petition/1/')
-        self.assertEqual(233,len(response.content.decode()))
+        self.assertEqual(245,len(response.content.decode()))
         response = client.get('/api/hearus/petition/3/')
         self.assertEqual(response.status_code, 404)
         response = client.delete('/api/hearus/petition/1/')
@@ -88,7 +88,7 @@ class HearusTestCase(TestCase):
     def test_petition_userid(self):
         client = Client(enforce_csrf_checks=False)
         response = client.get('/api/hearus/petition/user/1/')
-        self.assertEqual(238,len(response.content.decode()))
+        self.assertEqual(250,len(response.content.decode()))
         response = client.put('/api/hearus/petition/user/1/')
         self.assertEqual(response.status_code, 405)
 

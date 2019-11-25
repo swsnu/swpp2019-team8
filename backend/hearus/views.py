@@ -6,6 +6,7 @@ from json import JSONDecodeError
 from .models import Petition, PetitionComment
 from user.models import User
 from .tasks import status_changer
+from secrets import token_urlsafe
 
 
 from django.forms.models import model_to_dict
@@ -43,6 +44,7 @@ def petition(request):
             petition_end_date = petition_start_date + timedelta(days=30)
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
+        petition_url = token_urlsafe(10)
         petition = Petition(author=request.user,
                             title=petition_title,
                             content=petition_content,
@@ -52,7 +54,8 @@ def petition(request):
                             start_date=petition_start_date,
                             end_date=petition_end_date,
                             votes=0,
-                            status='preliminary')
+                            status='preliminary',
+                            url=petition_url)
         petition.save()
         status_changer(petition.id)
         df = pd.DataFrame({
@@ -89,10 +92,10 @@ def petition_serach_by_title(request, petition_title):
         return HttpResponseNotAllowed(['GET'])
 
 
-def petition_petitionid(request, petition_id):
+def petition_petitionurl(request, petition_url):
     if request.method == 'GET':
         try:
-            petition = Petition.objects.get(id=petition_id)
+            petition = Petition.objects.get(url=petition_url)
         except Petition.DoesNotExist:
             return HttpResponse(status=404)
         ret_petition = model_to_dict(petition)
@@ -100,7 +103,7 @@ def petition_petitionid(request, petition_id):
     # put: 1.votes++ 2.change status
     elif request.method == 'PUT':
         try:
-            petition = Petition.objects.get(id=petition_id)
+            petition = Petition.objects.get(url=petition_url)
         except Petition.DoesNotExist:
             return HttpResponse(status=404)
         petition.votes = petition.votes + 1
@@ -120,10 +123,11 @@ def petition_userid(request, user_id):
         return HttpResponseNotAllowed(['GET'])
 
 
-def petition_comment(request, petition_id):
+def petition_comment(request, petition_url):
     if request.method == 'GET':
+        comment_petition = Petition.objects.get(url=petition_url)
         comment_list = [comment for comment in PetitionComment.objects.filter(
-            petition=petition_id).values().order_by('-date')]
+            petition=comment_petition.id).values().order_by('-date')]
         return JsonResponse(comment_list, safe=False)
     elif request.method == 'POST':
         if not request.user.is_authenticated:
@@ -134,7 +138,7 @@ def petition_comment(request, petition_id):
             comment_date = timezone.now()
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        comment_petition = Petition.objects.get(id=petition_id)
+        comment_petition = Petition.objects.get(url=petition_url)
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
@@ -142,7 +146,7 @@ def petition_comment(request, petition_id):
             comment_petition.status = "ongoing"
             comment_petition.save()
         student_id = request.user.studentId[0:4]
-        file_location = './stat/' + str(petition_id) + '.csv'
+        file_location = './stat/' + str(comment_petition.id) + '.csv'
         stat = pd.read_csv(file_location)
         df = pd.DataFrame({
             'voteDate': [str(comment_date.year) + '-' + str(comment_date.month) + '-' + str(comment_date.day)],
@@ -162,14 +166,15 @@ def petition_comment(request, petition_id):
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-def downlaod_csv(request, petition_id):
+def downlaod_csv(request, petition_url):
     if request.method == 'GET':
-        petition = Petition.objects.filter(id=petition_id).exists()
+        petition = Petition.objects.filter(url=petition_url).exists()
         if petition == False:
             return HttpResponseNotFound()
         else:
-            filename = "./stat/" + str(petition_id) + '.csv'
-            dowanload_name = str(petition_id) + ".csv"
+            csvpet = Petition.objects.get(url=petition_url)
+            filename = "./stat/" + str(csvpet.id) + '.csv'
+            dowanload_name = str(csvpet.id) + ".csv"
             wrapper = FileWrapper(open(filename, encoding='utf-8'))
             content_type = mimetypes.guess_type(filename)[0]
             response = HttpResponse(wrapper, content_type=content_type)
