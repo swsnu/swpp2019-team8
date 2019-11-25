@@ -16,9 +16,9 @@ class MyPetition extends Component {
     selectedCategory: "All"
   }
 
-  componentDidMount = () => {
-    this.props.getCurrentUser(this.props.selectedUser.id);
-    this.props.getPetitionByUser(this.props.selectedUser.id);
+  componentDidMount = async () => {
+    await this.props.getCurrentUser(this.props.selectedUser.id);
+    await this.props.getPetitionByUser(this.props.selectedUser.id);
   }
 
   onClickDetailButton = (event) => {
