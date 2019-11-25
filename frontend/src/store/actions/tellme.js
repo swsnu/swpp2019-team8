@@ -9,6 +9,7 @@ export const postDocument_ = (document) => {
         id: document.id,
         title: document.title,
         content: document.content,
+        documentDuplicate: document.documentDuplicate,
     };
 };
 
@@ -17,7 +18,7 @@ export const postDocument = (document) => {
         return axios.post('/api/tellme/document/', document)
             .then(res => {
                 dispatch(postDocument_(res.data));
-                dispatch(push('/tell_me/documents/' + res.data.title));
+                if(!res.data.documentDuplicate) dispatch(push('/tell_me/documents/' + res.data.title));
             });
     };
 };

@@ -147,4 +147,7 @@ CSRF_COOKIE_NAME = "csrftoken"
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 SESSION_CACHE_ALIAS = 'default'
+
