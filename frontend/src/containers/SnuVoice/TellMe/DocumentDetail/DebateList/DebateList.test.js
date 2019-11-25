@@ -45,7 +45,7 @@ describe('<DebateList /> ', () => {
 
     afterEach(() => jest.clearAllMocks())
 
-    it('should render without erros', () => {
+    it('should render without errors', () => {
         const component = shallow(<DebateList {...props} />)
         const top = component.find('.TopOfPage')
         expect(top.length).toBe(1)

@@ -11,7 +11,8 @@ import Category from "../../../../components/Category/category";
 import * as actionCreator from "../../../../store/actions/index";
 import SearchBar from "../SearchBar/SearchBar";
 
-class MyPetition extends Component {
+
+export class MyPetition extends Component {
   state = {
     selectedCategory: "All"
   }
@@ -25,16 +26,16 @@ class MyPetition extends Component {
     this.props.history.push('/hear_us/' + event.target.value)
   }
 
-  onClickCategoryButton = (event) => {
-    this.setState({ selectedCategory: event.target.value })
-  }
+  // onClickCategoryButton = (event) => {
+  //   this.setState({ selectedCategory: event.target.value })
+  // }
 
   render() {
     let myPetitionList = this.props.petitionList.map(petition => {
       return (
         <Petition
-          key={petition.id}
-          id={petition.id}
+        id={petition.id}
+        key={petition.id}
           title={petition.title}
           state={petition.status}
           category={petition.category}
@@ -46,9 +47,9 @@ class MyPetition extends Component {
     });
 
     return (
-      <div>
-        <Upperbar />
         <div className="TopOfPage">
+        <Upperbar />
+      <div className="MyPetition">
           <br />
           {/* <SearchBar/> */}
           <h1>{this.props.selectedUser.nickname}`s Petitions</h1>
@@ -73,8 +74,8 @@ class MyPetition extends Component {
 
 export const mapStateToProps = state => {
   return {
+    selectedUser: state.usr.selectedUser,
     petitionList: state.hu.petition_list,
-    selectedUser: state.usr.selectedUser
   };
 };
 
