@@ -46,7 +46,6 @@ describe('<DebateDetail/>', () => {
                     debate_id: "1"
                 }
             }
-
         }
     })
 
@@ -58,6 +57,20 @@ describe('<DebateDetail/>', () => {
         expect(top.length).toBe(1);
     })
 
+    it('render documentTitle as empty if selectedDocument does not exist', () => {
+        const component = shallow(<DebateDetail selectedDocument={false} debateComments={[]}/>);
+        let wrapper = component.find(".documentTitle");
+        expect(wrapper.text()).toEqual("");
+    })
+
+    it('render debate title and content as empty if selectedDebate does not exist', () => {
+        const component = shallow(<DebateDetail selectedDebate={false} debateComments={[]}/>);
+        let wrapper = component.find(".debateContent");
+        expect(wrapper.text()).toEqual("");
+        wrapper = component.find("#debate_title_text");
+        expect(wrapper.text()).toEqual("");
+    })
+
     it('should input, button works errors', async () => {
         const component = shallow(<DebateDetail {...props} />);
         const newInput = component.find("#debate_new_comment_textarea");
@@ -66,7 +79,6 @@ describe('<DebateDetail/>', () => {
         await comment.simulate('click');
         expect(mocked).toHaveBeenCalledTimes(2);
         expect(component.instance().state.comment).toBe('');
-        
     })
 
     it ('should componentDidMountWorks', async () => {

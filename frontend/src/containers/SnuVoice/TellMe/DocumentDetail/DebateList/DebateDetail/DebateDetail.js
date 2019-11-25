@@ -66,7 +66,7 @@ export class DebateDetail extends Component {
                         <div>
                             <h1>DebateDetail</h1>
                         </div>
-                        <h3>
+                        <h3 className="documentTitle">
                             {documentTitle}
                         </h3>
                         <br />
@@ -75,9 +75,14 @@ export class DebateDetail extends Component {
 
                         </h4>
                         <br />
+                        <div className="debateContent">
                         {debateContent}
+                        </div>
                         <br /><br />
+                        <div className="debateCommentList">
+                            
                         {debateCommentList}
+                        </div>
 
                         <Input
                             type="textarea"
