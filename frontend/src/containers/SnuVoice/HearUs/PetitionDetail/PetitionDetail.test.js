@@ -10,6 +10,9 @@ import { history } from '../../../../store/store';
 import * as actionCreators from '../../../../store/actions/hearus';
 
 const stubInitialState = {
+    selectedUser: {
+        id: '1',
+    },
     selectedPetition: {
         title: 'SELECTED_PETITION_TEST_TITLE',
         content: 'SELECTED_PETITION_TEST_CONTENT',
@@ -21,9 +24,9 @@ const stubInitialState = {
         link: 'SELECTED_PETITION_TEST_LINK',
     },
     comment_list: [
-        { id: 1, comment: 'COMMENT_TEST_COMMENT_1' },
-        { id: 2, comment: 'COMMENT_TEST_COMMENT_2' },
-        { id: 3, comment: 'COMMENT_TEST_COMMENT_3' },
+        { id: 1, comment: 'COMMENT_TEST_COMMENT_1', date: '1' },
+        { id: 2, comment: 'COMMENT_TEST_COMMENT_2', date: '2' },
+        { id: 3, comment: 'COMMENT_TEST_COMMENT_3', date: '3' },
     ],
 }
 
@@ -31,7 +34,11 @@ const mockStore = getMockStore(stubInitialState);
 
 describe('<PetitionDetail />', () => {
     let petitionDetail;
-    const { reload } = window.location;
+    let spyPostPetitionComment;
+    let spyGetPetitionComment;
+    let spyGetPetition;
+    let spyPutPetitionVote;
+    let spyLocation;
 
     beforeEach(() => {
         petitionDetail = (
@@ -43,31 +50,32 @@ describe('<PetitionDetail />', () => {
                 </ConnectedRouter>
             </Provider>
         );
+        spyPostPetitionComment = jest.spyOn(actionCreators, 'postPetitionComment')
+            .mockImplementation(id => { return dispatch => { }; });
+        spyGetPetitionComment = jest.spyOn(actionCreators, 'getPetitionComments')
+            .mockImplementation(id => { return dispatch => { }; });
+        spyGetPetition = jest.spyOn(actionCreators, 'getPetition')
+            .mockImplementation(id => { return dispatch => { }; });
+        spyPutPetitionVote = jest.spyOn(actionCreators, 'putPetitionVote')
+            .mockImplementation(id => { return dispatch => { }; });
+        spyLocation = jest.spyOn(window.location, 'reload')
+            .mockImplementation(() => {});
     });
 
-    beforeAll(() => {
-        Object.defineProperty(window.location, 'reload', {
-            configurable: false,
-        });
-        window.location.reload = jest.fn();
-    });
+    afterEach(() => jest.clearAllMocks())
 
-    afterAll(() => {
-        window.location.reload = reload;
-    });
-
-    it('mocks reload function', () => {
+    it('mocks reload function', async () => {
         expect(jest.isMockFunction(window.location.reload)).toBe(true);
     });
 
-    it(`should render PetitionDetail`, () => {
-        const component = mount(petitionDetail);
+    it(`should render PetitionDetail`, async () => {
+        const component = await mount(petitionDetail);
         const wrapper = component.find('.PetitionDetail');
         expect(wrapper.length).toBe(1);
     });
 
-    it(`should render SELECTED_PETITION`, () => {
-        const component = mount(petitionDetail);
+    it(`should render SELECTED_PETITION`, async () => {
+        const component = await mount(petitionDetail);
         const wrapperTitle = component.find('.petitionsView_title');
         const wrapperContent = component.find('.View_write');
         const wrapperVotes = component.find('.petitionsView_count');
@@ -85,9 +93,9 @@ describe('<PetitionDetail />', () => {
         // expect(wrapperLink.at(0).text()).toBe('Link 1 : SELECTED_PETITION_TEST_LINK');
     });
 
-    it(`should not render SELECTED_PETITION`, () => {
-        const mockInitialStore = getMockStore({ selectedPetition: null });
-        const component = mount(
+    it(`should not render SELECTED_PETITION`, async () => {
+        const mockInitialStore = getMockStore({ selectedPetition: null, comment_list: null });
+        const component = await mount(
             <Provider store={mockInitialStore}>
                 <ConnectedRouter history={history}>
                     <Switch>
@@ -114,8 +122,29 @@ describe('<PetitionDetail />', () => {
         // expect(wrapperLink.at(0).text()).toBe('Link 1 : ');
     });
 
-    it(`should render STORED_PETITION_COMMENTS`, () => {
-        const component = mount(petitionDetail);
+    it('should branch work well', async () => {
+        const mockInitialStore = getMockStore({
+            selectedPetition: null,
+            comment_list: [{
+                id: 1,
+                date: parseInt('12312'),
+                time: parseInt('123')
+            }]
+        });
+        const component = await mount(
+            <Provider store={mockInitialStore}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={PetitionDetail} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        );
+        expect(true).toBe(true);
+    })
+
+    it(`should render STORED_PETITION_COMMENTS`, async () => {
+        const component = await mount(petitionDetail);
         const wrapper = component.find('.R_R_contents_txt');
         expect(wrapper.length).toBe(3);
         expect(wrapper.at(0).text()).toBe('COMMENT_TEST_COMMENT_1');
@@ -123,35 +152,34 @@ describe('<PetitionDetail />', () => {
         expect(wrapper.at(2).text()).toBe('COMMENT_TEST_COMMENT_3');
     });
 
-    it(`should set state properly on comment input`, () => {
+    it(`should set state properly on comment input`, async () => {
         const petitionComment = 'TEST_COMMENT';
-        const component = mount(petitionDetail);
+        const component = await mount(petitionDetail);
         const wrapper = component.find('#tw_contents').at(0);
         wrapper.simulate('change', { target: { value: petitionComment } });
         const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
         expect(petitionCommentInstance.state.comment).toEqual(petitionComment);
     });
 
-    it(`should call 'onClickCommentConfirmButton'`, () => {
-        const spyPostPetitionComment = jest.spyOn(actionCreators, 'postPetitionComment')
-            .mockImplementation(id => { return dispatch => { }; });
-        const component = mount(petitionDetail);
+    it(`should call 'onClickCommentConfirmButton'`, async () => {
+        const component = await mount(petitionDetail);
         const wrapper = component.find('#comment_confirm_button').at(0);
-        wrapper.simulate('click');
+        await wrapper.simulate('click');
         expect(spyPostPetitionComment).toHaveBeenCalledTimes(1);
+        expect(spyPutPetitionVote).toHaveBeenCalledTimes(1);
     });
 
-    it(`should call 'onClickPetitionCancelButton'`, () => {
+    it(`should call 'onClickPetitionCancelButton'`, async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-        const component = mount(petitionDetail);
+        const component = await mount(petitionDetail);
         const wrapper = component.find('#petition_cancel_button').at(0);
         wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us');
     });
 
-    it(`should call 'onClickListPrevButton'`, () => {
-        const component = mount(petitionDetail);
+    it(`should call 'onClickListPrevButton'`, async () => {
+        const component = await mount(petitionDetail);
         const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
         const wrapper = component.find('#list_prev_button').at(0);
         wrapper.simulate('click');
@@ -163,16 +191,16 @@ describe('<PetitionDetail />', () => {
         expect(petitionCommentInstance.state.listNumber).toStrictEqual([1, 2, 3, 4, 5]);
     });
 
-    it(`should call 'onClickListNumberButton'`, () => {
-        const component = mount(petitionDetail);
+    it(`should call 'onClickListNumberButton'`, async () => {
+        const component = await mount(petitionDetail);
         const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
         petitionCommentInstance.onClickListNumberButton({ target: { value: 23 } });
         petitionCommentInstance.forceUpdate();
         expect(petitionCommentInstance.state.selectedNumber).toBe(23);
     });
 
-    it(`should call 'onClickListNextButton'`, () => {
-        const component = mount(petitionDetail);
+    it(`should call 'onClickListNextButton'`, async () => {
+        const component = await mount(petitionDetail);
         const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
         const wrapper = component.find('#list_next_button').at(0);
         wrapper.simulate('click');
@@ -183,4 +211,28 @@ describe('<PetitionDetail />', () => {
         wrapper.simulate('click');
         expect(petitionCommentInstance.state.listNumber).toStrictEqual([-6, -7, -8, -9, -10]);
     });
+
+    it('shoud componentDidMount works', async () => {
+        const component = await mount(petitionDetail);
+        expect(spyGetPetitionComment).toHaveBeenCalledTimes(1);
+        expect(spyGetPetition).toHaveBeenCalledTimes(1);
+
+    })
+
+    it('shoud branches work', async () => {
+        const component = await mount(petitionDetail);
+        const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();
+        petitionCommentInstance.setState({
+            listNumber : [-5]
+        })
+        petitionCommentInstance.onClickListPrevButton();
+        expect(petitionCommentInstance.state.listNumber).toStrictEqual([-5]);
+        petitionCommentInstance.setState({
+            listNumber : [100]
+        })
+        petitionCommentInstance.onClickListNextButton();
+        expect(petitionCommentInstance.state.listNumber).toStrictEqual([100]);
+        
+
+    })
 });

@@ -84,6 +84,16 @@ DATABASES = {
     }
 }
 
+CACHES : {
+    'default' : {
+        'BACKEND': 'djagno_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -134,7 +144,10 @@ AUTH_USER_MODEL = 'user.User'
 
 CSRF_COOKIE_NAME = "csrftoken"
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+SESSION_CACHE_ALIAS = 'default'
+
