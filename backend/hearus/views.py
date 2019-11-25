@@ -54,7 +54,7 @@ def petition(request):
                             votes=0,
                             status='preliminary')
         petition.save()
-        status.changer(petition.id)
+        status_changer(petition.id)
         df = pd.DataFrame({
             'voteDate': [],
             'status': [],
