@@ -13,6 +13,7 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: null,
+            documentDuplicate: false,
             titleDocuments: [],
             contentDocuments: []
         });
@@ -24,9 +25,11 @@ describe('TellMe Reducer', () => {
             id: stubDocument.id,
             title: stubDocument.title,
             content: stubDocument.content,
+            documentDuplicate: false, 
         });
         expect(newState).toEqual({
-            documents: [stubDocument],
+            documents: [],
+            documentDuplicate: false,
             selectedDocument: null,
             titleDocuments: [],
             contentDocuments: []
@@ -45,6 +48,7 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: stubSelectedDocument,
+            documentDuplicate: false,
             titleDocuments: [],
             contentDocuments: []
         });
@@ -62,6 +66,7 @@ describe('TellMe Reducer', () => {
         expect(newState).toEqual({
             documents: [],
             selectedDocument: null,
+            documentDuplicate: false,
             titleDocuments: stubSelectedDocument,
             contentDocuments: stubSelectedDocument
         });

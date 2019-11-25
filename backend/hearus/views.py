@@ -5,6 +5,7 @@ from json import JSONDecodeError
 
 from .models import Petition, PetitionComment
 from user.models import User
+from .tasks import status_changer
 
 
 from django.forms.models import model_to_dict
@@ -51,8 +52,9 @@ def petition(request):
                             start_date=petition_start_date,
                             end_date=petition_end_date,
                             votes=0,
-                            status='ongoing')
+                            status='preliminary')
         petition.save()
+        status.changer(petition.id)
         df = pd.DataFrame({
             'voteDate': [],
             'status': [],
@@ -136,6 +138,9 @@ def petition_comment(request, petition_id):
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
+        if(comment_petition.votes >=5 and comment_petition.status == "preliminary"):
+            comment_petition.status = "ongoing"
+            comment_petition.save()
         student_id = request.user.studentId[0:4]
         file_location = './stat/' + str(petition_id) + '.csv'
         stat = pd.read_csv(file_location)
