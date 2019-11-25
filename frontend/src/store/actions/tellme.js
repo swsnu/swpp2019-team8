@@ -19,7 +19,8 @@ export const postDocument = (document) => {
             .then(res => {
                 dispatch(postDocument_(res.data));
                 if(!res.data.documentDuplicate) dispatch(push('/tell_me/documents/' + res.data.title));
-            });
+            })
+            .catch(e => {});
     };
 };
 
