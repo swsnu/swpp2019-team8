@@ -2,6 +2,9 @@ sudo: required
 notifications:
   slack: swpp-team8:NPIs4kBcXYNcBwa9Z5TIrkk0
 
+services:
+  - redis-server
+
 matrix:
   include:
     - language: 

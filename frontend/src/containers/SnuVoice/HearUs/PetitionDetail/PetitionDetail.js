@@ -35,6 +35,10 @@ class PetitionDetail extends Component {
         this.props.history.push('/hear_us');
     }
 
+    onClickDownloadCsvButton = () => {
+        this.props.onGetCsvFile(this.props.match.params.petition_id);
+    }
+      
     onClickListPrevButton = () => {
         const numbers = this.state.listNumber.map(listNumber => listNumber - 5);
         if (numbers[0] > 0) {
@@ -172,6 +176,8 @@ class PetitionDetail extends Component {
 
                     <h3 className="Reply_area_agree">Votes <span>{votes}</span></h3>
 
+                    <Button id="download_csv_button"
+                        onClick={this.onClickDownloadCsvButton}>Download</Button>
                     <div className="Reply_area_write">
                         <textarea id="tw_contents" style={{ width: 700 }}
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
@@ -213,6 +219,8 @@ export const mapDispatchToProps = dispatch => {
             dispatch(actionCreators.postPetitionComment({ petition_id: petition_id, comment: comment })),
         onPetitionVote: petition_id =>
             dispatch(actionCreators.putPetitionVote(petition_id)),
+        onGetCsvFile: petition_id =>
+            dispatch(actionCreators.getCsvFile(petition_id))
     }
 }
 

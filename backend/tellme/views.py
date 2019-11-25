@@ -23,11 +23,24 @@ def document(request):
                 return HttpResponseBadRequest()
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        document = Document(title=document_title, content=document_content)
-        document.save()
-        response_dict = {'id': document.id,
-                         'title': document.title, 'content': document.content}
-        return JsonResponse(response_dict, status=201)
+        #unique check
+        exist_document = [document for document in Document.objects.filter(
+            title__istartswith=document_title, title__iendswith=document_title).values()]
+        unique = False
+        for i in exist_document:
+            if(len(document_title) == len(i['title'])):
+                unique = True
+        if unique == True:
+            response_dict = {
+                'documentDuplicate' : True
+            }
+            return JsonResponse(response_dict, safe=False)
+        else:
+            document = Document(title=document_title, content=document_content)
+            document.save()
+            response_dict = {'documentDuplicate' : False, 'id': document.id,
+                            'title': document.title, 'content': document.content}
+            return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
 

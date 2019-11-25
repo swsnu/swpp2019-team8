@@ -139,4 +139,19 @@ export const putPetitionVote = (petition_id) => {
     }
 }
 
+export const getCsvFile = (petition_id) => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/' + petition_id + '/download/', { responseType: 'blob'})
+            .then(res => {
+                const url = window.URL.createObjectURL(new Blob([res.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', petition_id + '.csv');
+                document.body.appendChild(link);
+                link.click();
+            })
+            .catch((e) => {})
+    }
+}
+
 // Statistic에 해당하는 것은 아직 안 만듦

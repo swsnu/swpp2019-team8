@@ -8,7 +8,8 @@ const initialState = {
     selectedDebate: null,
     debateComments: [],
     titleDocuments : [],
-    contentDocuments : []
+    contentDocuments : [],
+    documentDuplicate : false,
 };
 
 const tellme = (prevState, action) => {
@@ -17,12 +18,7 @@ const tellme = (prevState, action) => {
     else state = prevState;
     switch (action.type) {
         case actionTypes.POST_DOCUMENT: {
-            const newDocument = {
-                id: action.id,
-                title: action.title,
-                content: action.content,
-            };
-            return { ...state, documents: state.documents.concat(newDocument) };
+            return {...state, documentDuplicate: action.documentDuplicate};
         }
         case actionTypes.GET_DOCUMENT: {
             if (action.unique === true) {
@@ -39,11 +35,8 @@ const tellme = (prevState, action) => {
                     state.documents[i].content = action.content;
                 }
             }
-             return state;   // TODO
+             return state;  
         }   
-        // case actionTypes.POST_PHOTO: {
-        //     return state;   // TODO
-        // }
         // case actionTypes.GET_PHOTO: {
         //     return state;   // TODO
         // }
