@@ -11,7 +11,7 @@ const Petition = (props) => {
                 <tr>
                     <th scope="row">{props.state}</th>
                     <td>{props.category}</td>
-                    <td><Button type="button" id="petition_title_button" value={props.id}
+                    <td><Button type="button" id="petition_title_button" value={props.url}
                         onClick={props.onClick}>{props.title}</Button>
                     </td>
                     <td>{dueDate}</td>
