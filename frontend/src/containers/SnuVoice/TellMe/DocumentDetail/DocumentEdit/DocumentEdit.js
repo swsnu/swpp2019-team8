@@ -89,7 +89,7 @@ class DocumentEdit extends Component {
                 html: true,
                 typographer: true,
                 highlight: function (str, lang) {
-                    this.highlightCode(str, lang);
+                    return highlightCode(str, lang);
                 }
             });
             markdownHtml = md.render(this.state.documentContent);
