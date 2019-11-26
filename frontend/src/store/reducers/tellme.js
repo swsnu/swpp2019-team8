@@ -3,6 +3,10 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     documents: [],
     selectedDocument: null,
+
+    debates: [],
+    selectedDebate: null,
+    debateComments: [],
     titleDocuments : [],
     contentDocuments : [],
     documentDuplicate : false,
@@ -11,7 +15,7 @@ const initialState = {
 const tellme = (prevState, action) => {
     let state;
     if (prevState === undefined) state = initialState;
-    else state = prevState
+    else state = prevState;
     switch (action.type) {
         case actionTypes.POST_DOCUMENT: {
             return {...state, documentDuplicate: action.documentDuplicate};
@@ -39,21 +43,27 @@ const tellme = (prevState, action) => {
         // case actionTypes.PUT_PHOTO: {
         //     return state;   // TODO
         // }
-        // case actionTypes.GET_DEBATES: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.POST_DEBATE: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.GET_DEBATE: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.GET_DEBATE_COMMENTS: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.POST_DEBATE_COMMENT: {
-        //     return state;   // TODO
-        // }
+
+        case actionTypes.GET_DEBATES: {
+            return {...state, debates: action.debateList};   // TODO
+        }
+
+        case actionTypes.POST_DEBATE: {
+            return {...state};   // TODO
+        }
+
+        case actionTypes.GET_DEBATE: {
+            return {...state, selectedDebate: action.target};   // TODO
+        }
+
+        case actionTypes.GET_DEBATE_COMMENTS: {
+            return {...state, debateComments: action.commentList};   // TODO
+        }
+        
+        case actionTypes.POST_DEBATE_COMMENT: {
+            return {...state};   // TODO
+        }
+
         default:
             break;
     }

@@ -24,6 +24,10 @@ class DocumentDetail extends Component {
         this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/edit');
     }
 
+    onClickDocumentDebateButton = () => {
+        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/debates');
+    }
+
     render() {
         let title = '';
         let content = '';
@@ -59,7 +63,10 @@ class DocumentDetail extends Component {
                         >
                             Edit
                         </Button>
-                        <Button className="debateButton">Debate</Button>
+                        <Button 
+                            className="debateButton"
+                            onClick={this.onClickDocumentDebateButton}
+                            >Debate</Button>
                     </div>
                 </div>
             </div>

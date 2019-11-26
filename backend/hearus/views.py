@@ -117,7 +117,7 @@ def petition_petitionurl(request, petition_url):
 def petition_userid(request, user_id):
     if request.method == 'GET':
         ret_petition = [
-            petition for petition in Petition.objects.filter(id=user_id).values()]
+            petition for petition in Petition.objects.filter(author_id=user_id).values('id', 'status', 'title', 'votes', 'category', 'end_date')]
         return JsonResponse(ret_petition, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
