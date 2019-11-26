@@ -12,7 +12,7 @@ import * as actionCreators from '../../../../store/actions/tellme';
 import hljs from 'highlight.js';
 
 const stubInitialState = {
-    documentDuplicate : true
+    documentDuplicate: true
 };
 
 const mockStore = getMockStore(stubInitialState);
@@ -78,18 +78,18 @@ describe('<DocumentCreate />', () => {
         const spyPostDocument = jest.spyOn(actionCreators, 'postDocument')
             .mockImplementation(td => { return dispatch => { }; });
         let mockIn = {
-            documentDuplicate : false
+            documentDuplicate: false
         }
         let mockStores = getMockStore(mockIn);
         documentCreate = (
-                <Provider store={mockStores}>
-                    <ConnectedRouter history={history}>
-                        <Switch>
-                            <Route path='/' exact component={DocumentCreate} />
-                        </Switch>
-                    </ConnectedRouter>
-                </Provider>
-            );
+            <Provider store={mockStores}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={DocumentCreate} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        );
         const component = mount(documentCreate);
         const documentCreateInstance = component.find(DocumentCreate.WrappedComponent).instance()
         documentCreateInstance.setState({
@@ -122,7 +122,7 @@ describe('<DocumentCreate />', () => {
     it(`should set state properly: 'write' -> 'preview'`, () => {
         const component = mount(documentCreate);
         const documentCreateInstance = component.find(DocumentCreate.WrappedComponent).instance()
-        documentCreateInstance.setState({ 
+        documentCreateInstance.setState({
             documentState: 'write',
         });
         const wrapper = component.find('#preview_tab_button').at(0);
@@ -149,11 +149,11 @@ describe('highLightCode', () => {
 
     beforeEach(() => {
         spyGetLang = jest.spyOn(hljs, 'getLanguage')
-            .mockImplementation(id => {return true ;})
+            .mockImplementation(id => { return true; })
         spyHighLight = jest.spyOn(hljs, 'highlight')
-            .mockImplementation(() => {})
+            .mockImplementation(() => { })
         spyAuto = jest.spyOn(hljs, 'highlightAuto')
-            .mockImplementation(() => {})
+            .mockImplementation(() => { })
     })
 
     afterEach(() => jest.clearAllMocks())
@@ -167,7 +167,7 @@ describe('highLightCode', () => {
 
     it('should work at error', () => {
         spyGetLang = jest.spyOn(hljs, 'getLanguage')
-            .mockImplementation(id => {return false ;})
+            .mockImplementation(id => { return false; })
         highlightCode('1,', '1');
         expect(spyHighLight).toHaveBeenCalledTimes(0);
     })

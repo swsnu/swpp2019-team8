@@ -33,7 +33,7 @@ class DocumentDetail extends Component {
         let content = '';
         let markdownHtml = '';
 
-        
+
 
         if (this.props.selectedDocument) {
             title = this.props.selectedDocument.title;
@@ -98,16 +98,16 @@ export const mapDispatchToProps = dispatch => {
 
 export function highlightCode(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(lang, str).value;
-      } catch (err) { }
+        try {
+            return hljs.highlight(lang, str).value;
+        } catch (err) { console.log(err) }
     }
-  
+
     try {
-      return hljs.highlightAuto(str).value;
-    } catch (err) { }
-  
+        return hljs.highlightAuto(str).value;
+    } catch (err) { console.log(err) }
+
     return ''; // use external default escaping
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DocumentDetail));
