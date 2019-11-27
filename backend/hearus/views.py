@@ -5,7 +5,7 @@ from json import JSONDecodeError
 
 from .models import Petition, PetitionComment
 from user.models import User
-from .tasks import status_changer
+from .tasks import status_changer, plot_graph
 from secrets import token_urlsafe
 
 
@@ -58,6 +58,13 @@ def petition(request):
                             url=petition_url)
         petition.save()
         status_changer(petition.id)
+        try:
+            if not(os.path.isdir('./media/graph/'+str(petition.id))):
+                os.makedirs(os.path.join('./media/graph/'+str(petition.id)))
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                print("Failed to create directory!!!!!")
+                raise
         df = pd.DataFrame({
             'voteDate': [],
             'status': [],
@@ -96,6 +103,7 @@ def petition_petitionurl(request, petition_url):
     if request.method == 'GET':
         try:
             petition = Petition.objects.get(url=petition_url)
+            plot_graph(1)
         except Petition.DoesNotExist:
             return HttpResponse(status=404)
         ret_petition = model_to_dict(petition)
@@ -183,6 +191,5 @@ def downlaod_csv(request, petition_url):
             return response
     else:
         return HttpResponseNotAllowed(['GET'])
-
 
 # Create your views here.

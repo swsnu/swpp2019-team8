@@ -61,6 +61,7 @@ class PetitionDetail extends Component {
         let title = '';
         let content = '';
         let votes = '';
+        let status = '';
         let category = '';
         let start_date = '';
         let end_date = '';
@@ -71,6 +72,7 @@ class PetitionDetail extends Component {
             content = this.props.selectedPetition.content;
             votes = this.props.selectedPetition.votes;
             category = this.props.selectedPetition.category;
+            status = this.props.selectedPetition.status;
             start_date = this.props.selectedPetition.start_date.substring(0, 10);
             end_date = this.props.selectedPetition.end_date.substring(0, 10);
             link = this.props.selectedPetition.link.split(' ');
@@ -142,6 +144,7 @@ class PetitionDetail extends Component {
                             <h2 className="petitionsView_title"><b>{title}</b></h2>
                             <br />
                             <p className="petitionsView_count">Votes: [ {votes} ]</p>
+                            <p className="petitionStatus_count">Status: [ {status} ]</p>
                             <div className="petitionsView_info">
                                 <Row className="petitionsView_info_list">
                                     <Col>
