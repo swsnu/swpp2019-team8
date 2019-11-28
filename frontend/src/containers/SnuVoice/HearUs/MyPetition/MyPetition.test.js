@@ -41,7 +41,7 @@ describe('<MyPetition />', () => {
     it('should componentDidMount work when signIn is true', async () => {
         const component = shallow(<MyPetition {...props} signIn={true} history={mockHistory}/>)
         await component.instance().componentDidMount()
-        expect(mock).toHaveBeenCalledTimes(2)
+        expect(mock).toHaveBeenCalledTimes(3)
     })
 
     it('should onClickDetailButton work', () => {
@@ -51,11 +51,17 @@ describe('<MyPetition />', () => {
 
     })
 
-    it('should render without error when signIn is true', () => {
-        const component = shallow(<MyPetition {...props} history={mockHistory}/>)
-        component.instance().componentDidMount()
-        expect(mockHistory.push).toHaveBeenCalledWith('/hear_us')
+    it('should ngOnInit work', async () => {
+        const component = shallow(<MyPetition {...props} history={mockHistory} />);
+        await component.instance().ngOnInit()
+        expect(mockHistory.push).toHaveBeenCalledTimes(2)
     })
+
+    // it('should render without error when signIn is true', () => {
+    //     const component = shallow(<MyPetition {...props} history={mockHistory}/>)
+    //     component.instance().componentDidMount()
+    //     expect(mockHistory.push).toHaveBeenCalledWith('/hear_us')
+    // })
 
     it('should render without error when signIn is false', () => {
         const component = shallow(<MyPetition {...props} signIn={false}/>)

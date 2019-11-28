@@ -35,11 +35,11 @@ export class MyPetition extends Component {
   //   this.setState({ selectedCategory: event.target.value })
   // }
 
-  ngOnInit = () => {
+  ngOnInit = async () => {
+    await this.props.getCurrentUser();
     if(!this.props.signIn) {
       this.props.history.push("/hear_us");
     }
-
   }
 
   render() {
