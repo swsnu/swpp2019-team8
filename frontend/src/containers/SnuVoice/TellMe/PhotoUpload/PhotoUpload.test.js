@@ -62,24 +62,6 @@ describe('<PhotoUpload />', () => {
         expect(spyHistoryPush).toHaveBeenCalledTimes(1);
     });
 
-    it(`should set state properly: 'photo' -> 'preview'`, () => {
-        const component = mount(photoUpload);
-        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
-        photoUploadInstance.setState({ photoState: 'photo', });
-        const wrapper = component.find('#preview_photo_tab_button').at(0);
-        wrapper.simulate('click');
-        expect(photoUploadInstance.state.photoState).toEqual('preview');
-    });
-
-    it(`should set state properly: 'preview' -> 'photo'`, () => {
-        const component = mount(photoUpload);
-        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
-        photoUploadInstance.setState({ photoState: 'preview', });
-        const wrapper = component.find('#edit_photo_tab_button').at(0);
-        wrapper.simulate('click');
-        expect(photoUploadInstance.state.photoState).toEqual('photo');
-    });
-
     it(`should set state properly: 'write' -> 'preview'`, () => {
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()

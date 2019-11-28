@@ -18,7 +18,6 @@ class PhotoUpload extends Component {
         photoFile: null,
         photoFileName: null,
         photoUrl: null,
-        photoState: 'photo',
         documentState: 'write',
         message: "Upload your Photo",
         googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
@@ -83,10 +82,6 @@ class PhotoUpload extends Component {
 
     onClickPhotoCancelButton = () => {
         this.props.history.goBack();
-    }
-
-    onClickPhotoTabButton = (event) => {
-        this.setState({ photoState: event });
     }
 
     onClickContentTabButton = (event) => {
