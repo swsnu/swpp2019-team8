@@ -18,7 +18,8 @@ describe('TellMe Reducer', () => {
             contentDocuments: [],
             debateComments: [],
             debates: [],
-            selectedDebate: null
+            selectedDebate: null,
+            documentConflict: false,
         });
     });
 
@@ -38,7 +39,8 @@ describe('TellMe Reducer', () => {
             contentDocuments: [],
             debateComments: [],
             debates: [],
-            selectedDebate: null
+            selectedDebate: null,
+            documentConflict: false,
         });
     });
 
@@ -59,7 +61,8 @@ describe('TellMe Reducer', () => {
             contentDocuments: [],
             debateComments: [],
             debates: [],
-            selectedDebate: null
+            selectedDebate: null,
+            documentConflict: false,
         });
     });
 
@@ -80,7 +83,8 @@ describe('TellMe Reducer', () => {
             contentDocuments: stubSelectedDocument,
             debateComments: [],
             debates: [],
-            selectedDebate: null
+            selectedDebate: null,
+            documentConflict: false,
         });
     });
 
@@ -97,8 +101,8 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
         })
     });
 
@@ -116,8 +120,8 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             debateComments: [1, 2],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
         })
     });
 
@@ -135,8 +139,8 @@ describe('TellMe Reducer', () => {
             selectedDebate: 1,
             debateComments: [],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
         })
     });
 
@@ -154,8 +158,8 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
         })
     })
 
@@ -173,8 +177,8 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
         })
     })
 

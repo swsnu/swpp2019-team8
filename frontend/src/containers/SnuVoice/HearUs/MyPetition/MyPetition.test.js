@@ -26,13 +26,20 @@ describe('<MyPetition />', () => {
             ],
             getPetitionByUser: mock,
             getCurrentUser: mock,
+            signIn: false,
         };
     });
 
     afterEach(() => jest.clearAllMocks());
 
-    it('should componentDidMount work', async () => {
-        const component = shallow(<MyPetition {...props} />)
+    it('should componentDidMount work when signIn is false', async () => {
+        const component = shallow(<MyPetition {...props} history={mockHistory} />)
+        await component.instance().componentDidMount()
+        expect(mockHistory.push).toHaveBeenCalledWith('/hear_us')
+    })
+
+    it('should componentDidMount work when signIn is true', async () => {
+        const component = shallow(<MyPetition {...props} signIn={true} history={mockHistory}/>)
         await component.instance().componentDidMount()
         expect(mock).toHaveBeenCalledTimes(2)
     })
@@ -44,8 +51,14 @@ describe('<MyPetition />', () => {
 
     })
 
-    it('should render without error', () => {
-        const component = shallow(<MyPetition {...props}/>)
+    it('should render without error when signIn is true', () => {
+        const component = shallow(<MyPetition {...props} history={mockHistory}/>)
+        component.instance().componentDidMount()
+        expect(mockHistory.push).toHaveBeenCalledWith('/hear_us')
+    })
+
+    it('should render without error when signIn is false', () => {
+        const component = shallow(<MyPetition {...props} signIn={false}/>)
         const body = component.find('.MyPetition')
         expect(body.length).toBe(1)
     })

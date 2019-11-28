@@ -6,6 +6,7 @@ import { DebateCreate, mapDispatchToProps, mapStateToProps } from './DebateCreat
 describe('<DebateCreate />', () => {
     let props;
     let mocked = jest.fn();
+    let mockHistory = { push: jest.fn() };
 
     beforeEach(() => {
         props = {
@@ -14,11 +15,13 @@ describe('<DebateCreate />', () => {
             },
             onGetDocument: mocked,
             onCreateDebate: mocked,
+            onCheckSignIn: mocked,
             match : {
                 params : {
                     document_title : "123"
                 }
-            }
+            },
+            signIn: false,
         }
     })
 
@@ -41,13 +44,22 @@ describe('<DebateCreate />', () => {
 
     })
 
-    it('should fuctions works', () => {
-        const componenet = shallow(<DebateCreate {...props}/>);
-        componenet.instance().onClickDebateConfirmButton();
+    it('should onClickDebateConfirm works', () => {
+        const component = shallow(<DebateCreate {...props}/>);
+        component.instance().onClickDebateConfirmButton();
         expect(mocked).toHaveBeenCalledTimes(1);
-        componenet.instance().componentDidMount();
-        expect(mocked).toHaveBeenCalledWith("123");
+    })
 
+    it('componentDidMount when user is signed in', async () => {
+        const component = shallow(<DebateCreate {...props} signIn={true}/>);
+        await component.instance().componentDidMount();
+        expect(mocked).toHaveBeenCalledTimes(2);
+    })
+
+    it('componentDidMount when user is not signed in', async () => {
+        const component = shallow(<DebateCreate {...props} history={mockHistory}/>);
+        await component.instance().componentDidMount();
+        expect(mockHistory.push).toHaveBeenCalledWith('/tell_me/documents/123/debates');
     })
 
 })
@@ -56,10 +68,14 @@ describe ('mapStateToProps', () => {
     it('test props', () => {
         const initialState = {
             tm : {
-                selectedDocument : 1
+                selectedDocument : 1,
+            },
+            usr : {
+                signIn : false,
             }
         }
         expect(mapStateToProps(initialState).selectedDocument).toBe(1);
+        expect(mapStateToProps(initialState).signIn).toBe(false);
     })
 })
 
@@ -77,5 +93,7 @@ describe ('mapDescribeToProps', () => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         mapDispatchToProps(dispatch).onCreateDebate();
         expect(dispatch).toHaveBeenCalledTimes(2);
+        mapDispatchToProps(dispatch).onCheckSignIn();
+        expect(dispatch).toHaveBeenCalledTimes(3);
     })
 })

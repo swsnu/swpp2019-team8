@@ -23,7 +23,7 @@ export class MyPetition extends Component {
       this.props.getPetitionByUser(this.props.selectedUser.id);
     } else {
       alert("You must be logged in to see your petitions")
-      this.props.history.push("/");
+      this.props.history.push('/hear_us');
     }
   }
 
@@ -35,7 +35,16 @@ export class MyPetition extends Component {
   //   this.setState({ selectedCategory: event.target.value })
   // }
 
+  ngOnInit = () => {
+    if(!this.props.signIn) {
+      this.props.history.push("/hear_us");
+    }
+
+  }
+
   render() {
+    this.ngOnInit();
+
     let myPetitionList = this.props.petitionList.map(petition => {
       return (
         <Petition

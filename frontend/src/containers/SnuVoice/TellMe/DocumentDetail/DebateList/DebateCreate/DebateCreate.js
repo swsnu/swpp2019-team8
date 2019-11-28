@@ -23,7 +23,6 @@ export class DebateCreate extends Component {
             alert("You must be logged in to create a new debate")
             this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/debates');
         }
-        
     }
 
     onClickDebateConfirmButton = () => {
