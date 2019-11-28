@@ -45,7 +45,16 @@ class PhotoUpload extends Component {
             if (element.blur === true) {
                 let blurAmount = element.width / 10;
                 ctx.filter = `blur(${blurAmount}px)`;
-                ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
+                ctx.drawImage(
+                    img,
+                    element.left + blurAmount / 10,
+                    element.top + blurAmount / 10,
+                    element.width - blurAmount / 5,
+                    element.height - blurAmount / 5,
+                    element.left + blurAmount / 10,
+                    element.top + blurAmount / 10,
+                    element.width - blurAmount / 5,
+                    element.height - blurAmount / 5);
                 ctx.filter = 'none';
             }
         });
@@ -219,6 +228,7 @@ class PhotoUpload extends Component {
                 if (y > element.top && y < element.top + element.height
                     && x > element.left && x < element.left + element.width) {
                     element.blur = !element.blur;
+                    console.log(index + 'clicked!');
                 }
             });
 
@@ -229,7 +239,16 @@ class PhotoUpload extends Component {
                 if (element.blur == true) {
                     let blurAmount = element.width / 10;
                     ctx.filter = `blur(${blurAmount}px)`;
-                    ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
+                    ctx.drawImage(
+                        img,
+                        element.left + blurAmount / 10,
+                        element.top + blurAmount / 10,
+                        element.width - blurAmount / 5,
+                        element.height - blurAmount / 5,
+                        element.left + blurAmount / 10,
+                        element.top + blurAmount / 10,
+                        element.width - blurAmount / 5,
+                        element.height - blurAmount / 5);
                     ctx.filter = 'none';
                 }
             });
@@ -279,22 +298,6 @@ class PhotoUpload extends Component {
     }
 
     render() {
-        let photoStateTabbuttons = (
-            <Nav tabs>
-                <NavItem>
-                    <NavLink className={classnames({ active: this.state.photoState === 'photo' })}
-                        id="edit_photo_tab_button" onClick={() => this.onClickPhotoTabButton('photo')}>
-                        Photo
-                        </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className={classnames({ active: this.state.photoState === 'preview' })}
-                        id="preview_photo_tab_button" onClick={() => this.onClickPhotoTabButton('preview')}>
-                        Preview
-                        </NavLink>
-                </NavItem>
-            </Nav>
-        );
         let documentStateTabbuttons = (
             <Nav tabs>
                 <NavItem>
@@ -329,16 +332,8 @@ class PhotoUpload extends Component {
                                 onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" />
                         </div>
                         <br />
-                        {photoStateTabbuttons}
-                        <TabContent activeTab={this.state.photoState}>
-                            <TabPane tabId="photo">
-                                <canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />
-                                {$imagePreview}
-                            </TabPane>
-                            <TabPane tabId="preview">
-                                <b>*Photo with selected blur applied will appear here*</b>
-                            </TabPane>
-                        </TabContent>
+                        <canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />
+                        {$imagePreview}
                     </div>
                     <div>
                         {documentStateTabbuttons}
