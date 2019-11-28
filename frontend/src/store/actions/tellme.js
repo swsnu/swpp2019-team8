@@ -154,6 +154,24 @@ export const putDocument = (document) => {
                 .catch(e => {})
         };
     };
+
+       
+   export const getPhoto_ = (photo) => {
+    return {
+        type: actionTypes.GET_PHOTO,
+        photo : photo
+    };
+    };
+
+    export const getPhoto = (photo_title) => {
+        return dispatch => {
+            return axios.get('/api/tellme/photo/' + photo_title + '/')
+                .then(res => {
+                    dispatch(getPhoto_(res.data))
+                })
+                .catch(e => {})
+        };
+    };
     
    
     /*
@@ -171,20 +189,8 @@ export const putDocument = (document) => {
    };
    */
    
-   /*
-   export const getPhoto_ = (TODO) => {
-       return {
-           type: actionTypes.GET_PHOTO,
-           // TODO
-       };
-   };
+
    
-   export const getPhoto = (TODO) => {
-       return dispatch => {
-           // TODO
-       };
-   };
-   */
    
    /*
    export const putPhoto_ = (TODO) => {

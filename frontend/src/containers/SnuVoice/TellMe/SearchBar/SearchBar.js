@@ -31,9 +31,21 @@ export class SearchBar extends Component {
             if (toSearch[i] !== ' ') break;
             else input = toSearch.slice(0, i)
         }
-        await this.props.getDocumentByTitle(input)
-        if (this.props.selectedDocument !== null) this.props.history.push('/tell_me/documents/' + this.props.selectedDocument.title)
-        else this.props.history.push('/tell_me/search_fail/' + input)
+        if (input === '' ) return;
+        if (/.jpeg$/.exec(input) || /.jpg$/.exec(input) || /.png$/.exec(input) || /.bmp$/.exec(input)){
+            await this.props.getPhoto(input)
+            if (this.props.selectedPhoto !== null) {
+                this.props.history.push('/tell_me/photo/' + input)
+                return;
+            }
+        } else {
+            await this.props.getDocumentByTitle(input)
+            if (this.props.selectedDocument !== null)  {
+                this.props.history.push('/tell_me/documents/' + input)
+                return;
+            }
+        }
+        this.props.history.push('/tell_me/search_fail/' + input)
     };
 
     onClickCreateButton = () => {
@@ -72,13 +84,16 @@ export class SearchBar extends Component {
 export const mapDispatchToProps = dispatch => {
     return {
         getDocumentByTitle: (title) =>
-            dispatch(actionCreator.getDocument(title))
+            dispatch(actionCreator.getDocument(title)),
+        getPhoto: (photo_title) =>
+            dispatch(actionCreator.getPhoto(photo_title))
     }
 }
 
 export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
+        selectedPhoto: state.tm.selectedPhoto
     }
 }
 

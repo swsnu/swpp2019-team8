@@ -13,7 +13,8 @@ describe('<SearchBar/>', () => {
     const stubInitialState = {
         selectedDocument: {
             title: '123'
-        }
+        },
+        selectedPhoto : 1
     }
 
     const mockStore = getMockStore(stubInitialState)
@@ -22,6 +23,7 @@ describe('<SearchBar/>', () => {
     let searchBar;
     let spyGetDocument;
     let spyHistoryPush;
+    let spyGetPhoto;
 
     beforeEach(() => {
         searchBar = (
@@ -37,6 +39,8 @@ describe('<SearchBar/>', () => {
             .mockImplementation(() => { return dispatch => { } })
         spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(() => { })
+        spyGetPhoto = jest.spyOn(actionCreator, 'getPhoto')
+            .mockImplementation(() => {return dispatch => { }})
     })
 
     afterEach(() => { jest.clearAllMocks() })
@@ -62,12 +66,18 @@ describe('<SearchBar/>', () => {
         })
         await searchBarComponent.onClickSearchConfirmButton()
         expect(spyGetDocument).toHaveBeenCalledWith('hi')
-        expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/documents/123')
+        expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/documents/hi')
+        searchBarComponent.setState({
+            searchInput: 'hi.jpg'
+        })
+        await searchBarComponent.onClickSearchConfirmButton()
+        expect(spyHistoryPush).toHaveBeenCalledTimes(2)
     })
 
     it('should onClickConfirmButton work', async () => {
         let mockState = {
-            selectedDocument: null
+            selectedDocument: null,
+            selectedPhoto: null,
         }
         let remockStore = getMockStore(mockState)
         searchBar = (
@@ -81,8 +91,21 @@ describe('<SearchBar/>', () => {
         )
         const component = mount(searchBar)
         const searchBarComponent = component.find(SearchBar.WrappedComponent).instance()
+        searchBarComponent.setState({
+            searchInput : "hi.jpg"
+        })
         await searchBarComponent.onClickSearchConfirmButton()
-        expect(spyHistoryPush).toHaveBeenCalledTimes(1)
+        expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/search_fail/hi.jpg')
+        searchBarComponent.setState({
+            searchInput : "hi"
+        })
+        await searchBarComponent.onClickSearchConfirmButton()
+        expect(spyHistoryPush).toHaveBeenCalledTimes(2)
+        searchBarComponent.setState({
+            searchInput : "            "
+        })
+        await searchBarComponent.onClickSearchConfirmButton()
+        expect(spyHistoryPush).toHaveBeenCalledTimes(2)
     })
 
     it('should onClickConfirmButton work', async () => {

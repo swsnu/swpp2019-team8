@@ -3,13 +3,14 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     documents: [],
     selectedDocument: null,
+    selectedPhoto: null,
 
     debates: [],
     selectedDebate: null,
     debateComments: [],
-    titleDocuments : [],
-    contentDocuments : [],
-    documentDuplicate : false,
+    titleDocuments: [],
+    contentDocuments: [],
+    documentDuplicate: false,
 };
 
 const tellme = (prevState, action) => {
@@ -18,50 +19,44 @@ const tellme = (prevState, action) => {
     else state = prevState;
     switch (action.type) {
         case actionTypes.POST_DOCUMENT: {
-            return {...state, documentDuplicate: action.documentDuplicate};
+            return { ...state, documentDuplicate: action.documentDuplicate };
         }
         case actionTypes.GET_DOCUMENT: {
             if (action.unique === true) {
-                return { ...state, selectedDocument: action.selectedDocument, titleDocuments : [], contentDocuments : [] };
+                return { ...state, selectedDocument: action.selectedDocument, titleDocuments: [], contentDocuments: [] };
             } else {
-                return { ...state, selectedDocument : null, titleDocuments : action.titleDocuments, contentDocuments : action.contentDocuments}
+                return { ...state, selectedDocument: null, titleDocuments: action.titleDocuments, contentDocuments: action.contentDocuments }
             }
         }
         case actionTypes.PUT_DOCUMENT: {
-            for(var i in state.documents)
-            {
-                if(state.documents[i].title === action.target)
-                {
-                    state.documents[i].content = action.content;
-                }
-            }
-             return state;  
-        }   
-        // case actionTypes.GET_PHOTO: {
-        //     return state;   // TODO
-        // }
+            return { ...state };
+        }
+        case actionTypes.GET_PHOTO: {
+
+            return { ...state, selectedPhoto: action.photo };   // TODO
+        }
         // case actionTypes.PUT_PHOTO: {
         //     return state;   // TODO
         // }
 
         case actionTypes.GET_DEBATES: {
-            return {...state, debates: action.debateList};   // TODO
+            return { ...state, debates: action.debateList };   // TODO
         }
 
         case actionTypes.POST_DEBATE: {
-            return {...state};   // TODO
+            return { ...state };   // TODO
         }
 
         case actionTypes.GET_DEBATE: {
-            return {...state, selectedDebate: action.target};   // TODO
+            return { ...state, selectedDebate: action.target };   // TODO
         }
 
         case actionTypes.GET_DEBATE_COMMENTS: {
-            return {...state, debateComments: action.commentList};   // TODO
+            return { ...state, debateComments: action.commentList };   // TODO
         }
-        
+
         case actionTypes.POST_DEBATE_COMMENT: {
-            return {...state};   // TODO
+            return { ...state };   // TODO
         }
 
         default:
