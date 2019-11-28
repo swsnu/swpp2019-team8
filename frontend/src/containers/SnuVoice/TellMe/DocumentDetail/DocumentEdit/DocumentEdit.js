@@ -98,8 +98,8 @@ class DocumentEdit extends Component {
       };
 
     render() {
-        let content = '';
         let current ="";
+        let content = '';
         let markdownHtml = '';
         if (this.props.selectedDocument) {
             content = this.state.newDocumentContent;
@@ -144,7 +144,8 @@ class DocumentEdit extends Component {
             });
             markdownHtml = md.render(content);
         }
-        return (
+
+  return (
             <div>
                 <Upperbar />
                 <div className="DocumentEdit">
