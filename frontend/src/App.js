@@ -39,11 +39,11 @@ function App(props) {
           <Route path='/tell_me/documents/:document_title/debates/create' exact component={DebateCreate} />
           <Route path='/tell_me/documents/:document_title/debates/:debate_id' exact component={DebateDetail} />
           <Route path='/hear_us' exact component={HearUs} />
-          <Route path='/hear_us/my_petition/:user_id' exact component={MyPetition} />
+          <Route path='/hear_us/my_petition' exact component={MyPetition} />
           <Route path='/hear_us/petitions' exact component={PetitionList} />
           <Route path='/hear_us/search/:petition_title' exact component={PetitionList} />
           <Route path='/hear_us/create' exact component={PetitionCreate} />
-          <Route path='/hear_us/:petition_url' exact component={PetitionDetail} />
+          <Route path='/hear_us/petition/:petition_url' exact component={PetitionDetail} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >

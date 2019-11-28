@@ -35,7 +35,7 @@ class PetitionList extends Component {
     }
 
     onClickDetailButton = (event) => {
-        this.props.history.push('/hear_us/' + event.target.value)
+        this.props.history.push('/hear_us/petition/' + event.target.value)
     }
 
     onClickListPrevButton = () => {
