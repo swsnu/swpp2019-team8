@@ -24,6 +24,7 @@ class PhotoUpload extends Component {
         googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
         canvasWidth: 100,
         canvasHeight: 100,
+        blurElements: [],
     }
 
     constructor(props) {
@@ -33,23 +34,40 @@ class PhotoUpload extends Component {
     }
 
     onClickPhotoConfirmButton = () => {
-        const formData = new FormData();
-        formData.append('file', this.state.photoFile, this.state.photoFileName);
-        formData.append('title', this.state.photoTitle);
-        formData.append('content', this.state.photoContent);
-        axios.post(
-            '/api/tellme/photo/',
-            formData,
-            {
-                headers: { 'content-type': 'multipart/form-data' }
-            })
-            .then(() => {
-                console.log("hurray");
-            })
-            .catch(e => {
-                console.log(e);
-            })
-        //url 전송
+        const canvas = this.refCanvas.current;
+        const ctx = canvas.getContext("2d");
+        const img = this.refImg.current;
+
+        ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
+        ctx.drawImage(img, 0, 0);
+
+        this.state.blurElements.forEach(function (element, index) {
+            if (element.blur === true) {
+                ctx.filter = 'blur(20px)';
+                ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
+            }
+        });
+
+        const this_tmp = this;
+
+        canvas.toBlob(function (blob) {
+            const formData = new FormData();
+            formData.append('file', blob, this_tmp.state.photoFileName);
+            formData.append('title', this_tmp.state.photoTitle);
+            formData.append('content', this_tmp.state.photoContent);
+            axios.post(
+                '/api/tellme/photo/',
+                formData,
+                {
+                    headers: { 'content-type': 'multipart/form-data' }
+                })
+                .then(() => {
+                    console.log("hurray");
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        });
     }
 
     onClickPhotoCancelButton = () => {
@@ -187,7 +205,6 @@ class PhotoUpload extends Component {
 
         let elemLeft = canvas.offsetLeft;
         let elemTop = canvas.offsetTop;
-        let elements = [];
 
         const this_tmp = this;
 
@@ -196,7 +213,7 @@ class PhotoUpload extends Component {
                 y = event.pageY - elemTop;
 
             // Collision detection between clicked offset and element.
-            elements.forEach(function (element, index) {
+            this_tmp.state.blurElements.forEach(function (element, index) {
                 if (y > element.top && y < element.top + element.height
                     && x > element.left && x < element.left + element.width) {
                     element.blur = !element.blur;
@@ -219,26 +236,25 @@ class PhotoUpload extends Component {
                     }
                 }
             });
-            canvas.toBlob(function (blob) {
-                this_tmp.setState({ photoFile: blob });
-            });
         }, false);
 
         // Add element.
         for (let i = 0; i < n; i++) {
             const { x, y, width, height } = photoInfo[i];
-            elements.push({
-                color: 'red',
-                width: width,
-                height: height,
-                left: x,
-                top: y,
-                blur: false,
+            this.setState({
+                blurElements: this.state.blurElements.concat({
+                    color: 'red',
+                    width: width,
+                    height: height,
+                    left: x,
+                    top: y,
+                    blur: false,
+                })
             });
         }
 
         // Render elements.
-        elements.forEach(function (element) {
+        this.state.blurElements.forEach(function (element) {
             for (let i = 0; i < n; i++) {
                 ctx.beginPath();
                 ctx.strokeStyle = element.color;
