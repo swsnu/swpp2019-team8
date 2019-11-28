@@ -59,7 +59,7 @@ export const getPetition_ = (petition) => {
 
 export const getPetition = (petition_url) => {
     return dispatch => {
-        return axios.get('/api/hearus/petition/' + petition_url)
+        return axios.get('/api/hearus/petition/' + petition_url + '/')
             .then(res => dispatch(getPetition_(res.data)));
     }
 }
@@ -155,4 +155,10 @@ export const getCsvFile = (petition_url) => {
     }
 }
 
+export const getDrawGraph = (petition_url) => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/' + petition_url + '/graph/')
+            .catch((e) => {})
+    }
+}
 // Statistic에 해당하는 것은 아직 안 만듦

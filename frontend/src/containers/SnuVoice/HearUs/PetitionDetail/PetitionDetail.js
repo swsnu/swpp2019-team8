@@ -38,7 +38,7 @@ class PetitionDetail extends Component {
     onClickDownloadCsvButton = () => {
         this.props.onGetCsvFile(this.props.match.params.petition_url);
     }
-      
+
     onClickListPrevButton = () => {
         const numbers = this.state.listNumber.map(listNumber => listNumber - 5);
         if (numbers[0] > 0) {
@@ -55,6 +55,11 @@ class PetitionDetail extends Component {
         if (this.props.storedPetitionComments && this.props.storedPetitionComments.length / 10 + 1 >= numbers[0]) {
             this.setState({ listNumber: numbers, selectedNumber: numbers[0] });
         }
+    }
+
+    onClickDrawGraphButton = () => {
+        this.props.onDrawGraph(this.props.match.params.petition_url);
+        window.location.reload(false);
     }
 
     render() {
@@ -132,6 +137,12 @@ class PetitionDetail extends Component {
             </ButtonGroup>
         );
 
+        let graphSrc = "http://localhost:8000/api/tellme/media/graph/ex/";
+        if (this.props.selectedPetition) {
+            if (this.props.selectedPetition.status === 'ongoing' || this.props.selectedPetition.status === 'end')
+                graphSrc = "http://localhost:8000/api/tellme/media/graph/" + this.props.selectedPetition.id;
+        }
+
         return (
             <div>
                 <UpperBar />
@@ -171,8 +182,12 @@ class PetitionDetail extends Component {
 
                         <div className="petitionsView_statistic">
                             <br /><br />
-                            <img src={demoGraph} style={{ width: 450 }} />
-                            <Button type="button" id="more-statistics-button">More Statistics..</Button>
+                            <img src={graphSrc + "/trend.jpg"} style={{ width: 450 }} />
+                            <img src={graphSrc + "/gender.jpg"} style={{ width: 450 }} />
+                            <img src={graphSrc + "/department.jpg"} style={{ width: 450 }} />
+                            <img src={graphSrc + "/studentId.jpg"} style={{ width: 450 }} />
+                            <Button type="button" id="more-statistics-button" onClick={this.onClickDrawGraphButton}>More Statistics..</Button>
+                            <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition's graphs when this petition's state becomes ongoing.</h6>
                             <br /><br />
                         </div>
                     </div>
@@ -224,7 +239,9 @@ export const mapDispatchToProps = dispatch => {
         onPetitionVote: petition_url =>
             dispatch(actionCreators.putPetitionVote(petition_url)),
         onGetCsvFile: petition_url =>
-            dispatch(actionCreators.getCsvFile(petition_url))
+            dispatch(actionCreators.getCsvFile(petition_url)),
+        onDrawGraph: petition_url =>
+            dispatch(actionCreators.getDrawGraph(petition_url))
     }
 }
 

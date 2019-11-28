@@ -20,7 +20,7 @@ const hearus = (prevState, action) => {
                 link: action.link,
                 tag: action.tag,
             };
-            return { ...state, petition_list: state.petition_list.concat(newPetition) };
+            return state;
         }
         case actionTypes.GET_ALL_PETITIONS:
             return { ...state, petition_list: action.petitionList };   // TODO

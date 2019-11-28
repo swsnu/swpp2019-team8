@@ -58,13 +58,6 @@ def petition(request):
                             url=petition_url)
         petition.save()
         status_changer(petition.id)
-        try:
-            if not(os.path.isdir('./media/graph/'+str(petition.id))):
-                os.makedirs(os.path.join('./media/graph/'+str(petition.id)))
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                print("Failed to create directory!!!!!")
-                raise
         df = pd.DataFrame({
             'voteDate': [],
             'status': [],
@@ -103,7 +96,6 @@ def petition_petitionurl(request, petition_url):
     if request.method == 'GET':
         try:
             petition = Petition.objects.get(url=petition_url)
-            plot_graph(1)
         except Petition.DoesNotExist:
             return HttpResponse(status=404)
         ret_petition = model_to_dict(petition)
@@ -150,9 +142,17 @@ def petition_comment(request, petition_url):
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
-        if(comment_petition.votes >=5 and comment_petition.status == "preliminary"):
+        if(comment_petition.votes >=4 and comment_petition.status == "preliminary"):
             comment_petition.status = "ongoing"
             comment_petition.save()
+            try:
+                if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
+                    os.makedirs(os.path.join('./media/graph/'+str(comment_petition.id)))
+            except OSError as e:
+                if e.errno != errno.EEXIST:
+                    print("Failed to create directory!!!!!")
+                    raise
+            plot_graph(comment_petition.id)
         student_id = request.user.studentId[0:4]
         file_location = './stat/' + str(comment_petition.id) + '.csv'
         stat = pd.read_csv(file_location)
@@ -191,5 +191,17 @@ def downlaod_csv(request, petition_url):
             return response
     else:
         return HttpResponseNotAllowed(['GET'])
+
+def draw_graph(request, petition_url):
+    if request.method == 'GET':
+        try:
+            petition = Petition.objects.get(url=petition_url)
+        except Petition.DoesNotExist:
+            return HttpResponse(status=404)
+        plot_graph(petition.id)
+        return HttpResponse(status=201)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+        
 
 # Create your views here.
