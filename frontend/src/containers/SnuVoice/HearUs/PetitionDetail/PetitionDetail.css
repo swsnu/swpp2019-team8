@@ -19,7 +19,7 @@
     min-height: 800px;
     background-color: white;
     color: black;
-
+    white-space: pre-line;
 }
 
 h4 {

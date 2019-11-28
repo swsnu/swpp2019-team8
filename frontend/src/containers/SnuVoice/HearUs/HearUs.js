@@ -63,7 +63,7 @@ export class HearUs extends Component {
               return (
                 <Petition
                   key={petition.id}
-                  id={petition.id}
+                  url={petition.url}
                   category={petition.category}
                   dueDate={petition.end_date}
                   state={petition.status}
@@ -85,7 +85,7 @@ export class HearUs extends Component {
               return (
                 <Petition
                   key={petition.id}
-                  id={petition.id}
+                  url={petition.url}
                   state={petition.status}
                   title={petition.title}
                   votes={petition.votes}
@@ -107,7 +107,7 @@ export class HearUs extends Component {
               return (
                 <Petition
                   key={petition.id}
-                  id={petition.id}
+                  url={petition.url}
                   state={petition.status}
                   title={petition.title}
                   category={petition.category}
@@ -128,7 +128,7 @@ export class HearUs extends Component {
               return (
                 <Petition
                   key={petition.id}
-                  id={petition.id}
+                  url={petition.url}
                   category={petition.category}
                   dueDate={petition.end_date}
                   votes={petition.votes}

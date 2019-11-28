@@ -13,9 +13,13 @@ import {
   NavItem,
   NavLink,
   FormGroup,
-  Form
+  Form,
+  FormText,
 } from "reactstrap";
-import { MarkdownPreview } from "react-marked-markdown";
+import { Remarkable } from 'remarkable';
+import hljs from 'highlight.js';
+
+import 'highlight.js/styles/atom-one-dark.css';
 
 import Upperbar from "../../UpperBar/UpperBar";
 import "./DocumentCreate.css";
@@ -26,14 +30,25 @@ class DocumentCreate extends Component {
   state = {
     documentTitle: "",
     documentContent: "",
-    documentState: "write"
+    documentState: "write",
+    formFeedbackMessage: {
+      title: "",
+    }
   };
 
-  onClickDocumentConfirmButton = () => {
-    this.props.onStoreDocument(
+  onClickDocumentConfirmButton = async () => {
+    let message = this.state.formFeedbackMessage;
+    await this.props.onStoreDocument(
       this.state.documentTitle,
       this.state.documentContent
     );
+    if (this.props.documentDuplicate) {
+      message.title = "Title already exist.";
+    } else {
+      message.title = "";
+    }
+
+    this.setState({ formFeedbackMessage: message })
   };
 
   onClickDocumentCancelButton = () => {
@@ -50,6 +65,8 @@ class DocumentCreate extends Component {
   };
 
   render() {
+    let markdownHtml;
+
     let createStateTabbuttons = (
       <Nav tabs>
         <NavItem>
@@ -77,13 +94,24 @@ class DocumentCreate extends Component {
       </Nav>
     );
 
+    if (this.state.documentState === 'preview') {
+      var md = new Remarkable('full', {
+        html: true,
+        typographer: true,
+        highlight: function (str, lang) {
+          return highlightCode(str, lang);
+        }
+      });
+      markdownHtml = md.render(this.state.documentContent);
+    }
+
     return (
       <div>
         <Upperbar />
         <div className="DocumentCreate">
           <br />
-          
-            <h1 className="pageTitle">Document Create</h1>
+
+          <h1 className="pageTitle">Create New Document</h1>
 
           <Button
             type="button"
@@ -95,7 +123,7 @@ class DocumentCreate extends Component {
           </Button>
           <br />
           {createStateTabbuttons}
-          <br/>
+          <br />
           <TabContent activeTab={this.state.documentState}>
             <TabPane tabId="write" className="inputTab">
               <Form>
@@ -109,8 +137,11 @@ class DocumentCreate extends Component {
                       this.setState({ documentTitle: event.target.value })
                     }
                   ></Input>
+                  <FormText color="danger">
+                    {this.state.formFeedbackMessage.title}
+                  </FormText>
                 </FormGroup>
-                <br/>
+                <br />
                 <FormGroup>
                   <h4>Content</h4>
                   <Input
@@ -136,7 +167,7 @@ class DocumentCreate extends Component {
                   </h1>
                   <br />
                   <h6>Content:</h6>
-                  <MarkdownPreview value={this.state.documentContent} />
+                  <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                 </div>
               </div>
             </TabPane>
@@ -167,6 +198,12 @@ class DocumentCreate extends Component {
   }
 }
 
+export const mapStateToProps = state => {
+  return {
+    documentDuplicate: state.tm.documentDuplicate,
+  }
+}
+
 export const mapDispatchToProps = dispatch => {
   return {
     onStoreDocument: (title, content) =>
@@ -174,7 +211,21 @@ export const mapDispatchToProps = dispatch => {
   };
 };
 
+export function highlightCode(str, lang) {
+  if (lang && hljs.getLanguage(lang)) {
+    try {
+      return hljs.highlight(lang, str).value;
+    } catch (err) { console.log(err) }
+  }
+
+  try {
+    return hljs.highlightAuto(str).value;
+  } catch (err) { console.log(err) }
+
+  return ''; // use external default escaping
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(DocumentCreate));

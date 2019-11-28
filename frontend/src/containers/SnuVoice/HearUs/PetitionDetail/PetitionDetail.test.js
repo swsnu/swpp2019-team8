@@ -22,12 +22,14 @@ const stubInitialState = {
         end_date: '0000-00-00T00:00:00.000',
         author: 1,
         link: 'SELECTED_PETITION_TEST_LINK',
+        url: 1,
     },
     comment_list: [
         { id: 1, comment: 'COMMENT_TEST_COMMENT_1', date: '1' },
         { id: 2, comment: 'COMMENT_TEST_COMMENT_2', date: '2' },
         { id: 3, comment: 'COMMENT_TEST_COMMENT_3', date: '3' },
     ],
+    signIn: true
 }
 
 const mockStore = getMockStore(stubInitialState);
@@ -178,6 +180,16 @@ describe('<PetitionDetail />', () => {
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us');
     });
 
+
+    it ('should onClickDownload csvbutton works', () => {
+        const spyGetCsvFile = jest.spyOn(actionCreators, 'getCsvFile')
+            .mockImplementation(petition_id => { return dispatch => { };});
+        const comment = mount(petitionDetail);
+        const wrapper = comment.find(PetitionDetail.WrappedComponent).instance();
+        wrapper.onClickDownloadCsvButton();
+        expect(spyGetCsvFile).toHaveBeenCalledTimes(1);
+    })
+  
     it(`should call 'onClickListPrevButton'`, async () => {
         const component = await mount(petitionDetail);
         const petitionCommentInstance = component.find(PetitionDetail.WrappedComponent).instance();

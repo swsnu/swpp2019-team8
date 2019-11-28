@@ -20,11 +20,11 @@ export {
     // postPhoto,
     // getPhoto,
     // putPhoto,
-    // getDebates,
-    // postDebate,
-    // getDebate,
-    // getDebateComments,
-    // postDebateComment,
+    getDebates,
+    postDebate,
+    getDebate,
+    getDebateComments,
+    postDebateComment,
 } from './tellme';
 
 export {
@@ -32,9 +32,9 @@ export {
     getAllPetitions,
     getPetition,
     getPetitionByTitle,
-    // getMyPetitions,
+    getMyPetitions,
     getPetitionComments,
     postPetitionComment,
-    putPetitionVote,       // Wiki에 추가 필요
-    // Statistic에 해당하는 것은 아직 안 만듦
+    putPetitionVote,      // Wiki에 추가 필요
+    getCsvFile  // Statistic에 해당하는 것은 아직 안 만듦
 } from './hearus';

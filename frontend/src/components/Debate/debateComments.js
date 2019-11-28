@@ -2,12 +2,12 @@ import React from 'react';
 
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
-const Debate = (props) => {
+const DebateComments = (props) => {
     return (
-        <ListGroup>
-            <ListGroupItem>Hi</ListGroupItem>
-        </ListGroup>
+            <p>
+                <ListGroupItem>{props.comment}  {props.author} {props.date}</ListGroupItem>
+            </p>
     )
 }
 
-export default Debate
+export default DebateComments

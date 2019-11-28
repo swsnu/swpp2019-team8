@@ -9,6 +9,7 @@ export const postDocument_ = (document) => {
         id: document.id,
         title: document.title,
         content: document.content,
+        documentDuplicate: document.documentDuplicate,
     };
 };
 
@@ -17,8 +18,9 @@ export const postDocument = (document) => {
         return axios.post('/api/tellme/document/', document)
             .then(res => {
                 dispatch(postDocument_(res.data));
-                dispatch(push('/tell_me/documents/' + res.data.title));
-            });
+                if(!res.data.documentDuplicate) dispatch(push('/tell_me/documents/' + res.data.title));
+            })
+            .catch(e => {});
     };
 };
 
@@ -64,126 +66,137 @@ export const putDocument = (document) => {
             .catch(e => {
                 //console.log(e);
             })
+        };
     };
-};
-
-
-/*
-export const postPhoto_ = (TODO) => {
-    return {
-        type: actionTypes.POST_PHOTO,
-        // TODO
+    
+    export const getDebates_ = (debates) => {
+        return {
+            type: actionTypes.GET_DEBATES,
+            debateList: debates,
+        };
     };
-};
-
-export const postPhoto = (TODO) => {
-    return dispatch => {
-        // TODO
+    
+    export const getDebates = (document_title) => {
+        return dispatch => {
+            return axios.get('/api/tellme/document/' + document_title + '/debate')
+                .then(res => {
+                    dispatch(getDebates_(res.data))
+                })
+                .catch(e => {})
+        };
     };
-};
-*/
-
-/*
-export const getPhoto_ = (TODO) => {
-    return {
-        type: actionTypes.GET_PHOTO,
-        // TODO
+    
+    export const postDebate_ = (debate) => {
+        return {
+            type: actionTypes.POST_DEBATE
+        };
     };
-};
-
-export const getPhoto = (TODO) => {
-    return dispatch => {
-        // TODO
+    
+    export const postDebate = (selectedDocument, debate) => {
+        return dispatch => {
+            return axios.post('/api/tellme/document/' + selectedDocument.title + '/debate/', debate)
+                .then(res => {
+                    dispatch(postDebate_(res.data));
+                    dispatch(push('/tell_me/documents/' + selectedDocument.title + '/debates/' + res.data.id));
+                })
+                .catch(e => {})
+        };
     };
-};
-*/
-
-/*
-export const putPhoto_ = (TODO) => {
-    return {
-        type: actionTypes.PUT_PHOTO,
-        // TODO
+    
+    export const getDebate_ = (debate) => {
+        return {
+            type: actionTypes.GET_DEBATE,
+            target: debate,
+        };
     };
-};
-
-export const putPhoto = (TODO) => {
-    return dispatch => {
-        // TODO
+    
+    export const getDebate = (document_title, debate_id) => {
+        return dispatch => {
+            return axios.get('/api/tellme/document/' + document_title + '/debate/' + debate_id)
+                .then(res => {
+                    dispatch(getDebate_(res.data))
+                })
+                .catch(e => {})
+        };
+    }; 
+   
+   export const getDebateComments_ = (comments) => {
+       return {
+           type: actionTypes.GET_DEBATE_COMMENTS,
+           commentList: comments,
+        };
     };
-};
-*/
-
-/*
-export const getDebates_ = (TODO) => {
-    return {
-        type: actionTypes.GET_DEBATES,
-        // TODO
+    
+    export const getDebateComments = (debate_id) => {
+        return dispatch => {
+            return axios.get('/api/tellme/debate/' + debate_id + '/')
+                .then(res => {
+                    dispatch(getDebateComments_(res.data))
+                })
+                .catch(e => {})
+        };
     };
-};
-
-export const getDebates = (TODO) => {
-    return dispatch => {
-        // TODO
+     
+   export const postDebateComment_ = (comments) => {
+       return {
+           type: actionTypes.POST_DEBATE_COMMENT,
+           commentList: comments
+        };
     };
-};
-*/
-
-/*
-export const postDebate_ = (TODO) => {
-    return {
-        type: actionTypes.POST_DEBATE,
-        // TODO
+    
+    export const postDebateComment = (comment, debate_id) => {
+        
+        return dispatch => {
+            return axios.post('/api/tellme/debate/' + debate_id + '/', comment)
+                .then(res => {
+                    dispatch(postDebateComment_(res.data));
+                })
+                .catch(e => {})
+        };
     };
-};
-
-export const postDebate = (TODO) => {
-    return dispatch => {
-        // TODO
-    };
-};
-*/
-
-/*
-export const getDebate_ = (TODO) => {
-    return {
-        type: actionTypes.GET_DEBATE,
-        // TODO
-    };
-};
-
-export const getDebate = (TODO) => {
-    return dispatch => {
-        // TODO
-    };
-};
-*/
-
-/*
-export const getDebateComments_ = (TODO) => {
-    return {
-        type: actionTypes.GET_DEBATE_COMMENTS,
-        // TODO
-    };
-};
-
-export const getDebateComments = (TODO) => {
-    return dispatch => {
-        // TODO
-    };
-};
-*/
-
-/*
-export const postDebateComment_ = (TODO) => {
-    return {
-        type: actionTypes.POST_DEBATE_COMMENT,
-        // TODO
-    };
-};
-
-export const postDebateComment = (TODO) => {
-    return dispatch => {
-        // TODO
-    };
-};
-*/
+    
+   
+    /*
+   export const postPhoto_ = (TODO) => {
+       return {
+           type: actionTypes.POST_PHOTO,
+           // TODO
+       };
+   };
+   
+   export const postPhoto = (TODO) => {
+       return dispatch => {
+           // TODO
+       };
+   };
+   */
+   
+   /*
+   export const getPhoto_ = (TODO) => {
+       return {
+           type: actionTypes.GET_PHOTO,
+           // TODO
+       };
+   };
+   
+   export const getPhoto = (TODO) => {
+       return dispatch => {
+           // TODO
+       };
+   };
+   */
+   
+   /*
+   export const putPhoto_ = (TODO) => {
+       return {
+           type: actionTypes.PUT_PHOTO,
+           // TODO
+       };
+   };
+   
+   export const putPhoto = (TODO) => {
+       return dispatch => {
+           // TODO
+       };
+   };
+   */

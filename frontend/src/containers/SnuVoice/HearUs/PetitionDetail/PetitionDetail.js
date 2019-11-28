@@ -22,13 +22,13 @@ class PetitionDetail extends Component {
     }
 
     componentDidMount = async () => {
-        await this.props.onGetPetition(this.props.match.params.petition_id);
-        await this.props.onGetPetitionComments(this.props.match.params.petition_id);
+        await this.props.onGetPetition(this.props.match.params.petition_url);
+        await this.props.onGetPetitionComments(this.props.match.params.petition_url);
     }
 
     onClickCommentConfirmButton = async () => {
-        await this.props.onStorePetitionComment(this.props.match.params.petition_id, this.state.comment);
-        await this.props.onPetitionVote(this.props.match.params.petition_id);
+        await this.props.onStorePetitionComment(this.props.match.params.petition_url, this.state.comment);
+        await this.props.onPetitionVote(this.props.match.params.petition_url);
         window.location.reload(false);
     }
 
@@ -36,6 +36,10 @@ class PetitionDetail extends Component {
         this.props.history.push('/hear_us');
     }
 
+    onClickDownloadCsvButton = () => {
+        this.props.onGetCsvFile(this.props.match.params.petition_url);
+    }
+      
     onClickListPrevButton = () => {
         const numbers = this.state.listNumber.map(listNumber => listNumber - 5);
         if (numbers[0] > 0) {
@@ -174,11 +178,13 @@ class PetitionDetail extends Component {
 
                     <h3 className="Reply_area_agree">Votes <span>{votes}</span></h3>
 
+                    <Button id="download_csv_button"
+                        onClick={this.onClickDownloadCsvButton}>Download</Button>
                     <div className="Reply_area_write">
                         <textarea id="tw_contents" style={{ width: 700 }}
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
-                            disabled={this.props.selectedUser && this.props.storedPetitionComments
+                            disabled={!this.props.signIn || this.props.storedPetitionComments
                                 .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
@@ -202,19 +208,22 @@ export const mapStateToProps = state => {
         selectedUser: state.usr.selectedUser,
         selectedPetition: state.hu.selectedPetition,
         storedPetitionComments: state.hu.comment_list,
+        signIn: state.usr.signIn
     }
 }
 
 export const mapDispatchToProps = dispatch => {
     return {
-        onGetPetition: petition_id =>
-            dispatch(actionCreators.getPetition(petition_id)),
-        onGetPetitionComments: petition_id =>
-            dispatch(actionCreators.getPetitionComments(petition_id)),
-        onStorePetitionComment: (petition_id, comment) =>
-            dispatch(actionCreators.postPetitionComment({ petition_id: petition_id, comment: comment })),
-        onPetitionVote: petition_id =>
-            dispatch(actionCreators.putPetitionVote(petition_id)),
+        onGetPetition: petition_url =>
+            dispatch(actionCreators.getPetition(petition_url)),
+        onGetPetitionComments: petition_url =>
+            dispatch(actionCreators.getPetitionComments(petition_url)),
+        onStorePetitionComment: (petition_url, comment) =>
+            dispatch(actionCreators.postPetitionComment({ petition_url: petition_url, comment: comment })),
+        onPetitionVote: petition_url =>
+            dispatch(actionCreators.putPetitionVote(petition_url)),
+        onGetCsvFile: petition_url =>
+            dispatch(actionCreators.getCsvFile(petition_url))
     }
 }
 

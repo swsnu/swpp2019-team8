@@ -43,8 +43,7 @@ function App(props) {
           <Route path='/hear_us/petitions' exact component={PetitionList} />
           <Route path='/hear_us/search/:petition_title' exact component={PetitionList} />
           <Route path='/hear_us/create' exact component={PetitionCreate} />
-          <Route path='/hear_us/:petition_id' exact component={PetitionDetail} />
-          <Route path='/hear_us/:petition_id/statistics' exact component={PetitionStatistic} />
+          <Route path='/hear_us/:petition_url' exact component={PetitionDetail} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >
