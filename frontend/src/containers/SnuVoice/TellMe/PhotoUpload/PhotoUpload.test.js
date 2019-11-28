@@ -125,14 +125,4 @@ describe('<PhotoUpload />', () => {
         expect(photoUploadInstance.state.canvasWidth).toEqual(500);
         expect(photoUploadInstance.state.canvasHeight).toEqual(500);
     });
-
-    it(`if photoUrl is null`, () => {
-        const component = mount(photoUpload);
-        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        photoUploadInstance.setState({
-            photoUrl: null
-        });
-        const wrapper = component.find('.noPhoto').at(0);
-        expect(wrapper.text()).toBe('There is no image to preview');
-    });
 });
