@@ -5,8 +5,11 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch } from 'react-router-dom';
 
 import DocumentDetail from './DocumentDetail';
+import { highlightCode } from './DocumentDetail';
 import { getMockStore } from '../../../../test-utils/mocks';
 import { history } from '../../../../store/store';
+
+import hljs from 'highlight.js';
 
 const stubInitialState = {
     selectedDocument: {
@@ -67,7 +70,42 @@ describe('<DocumentDetail />', () => {
             .mockImplementation(path => { });
         const component = mount(documentDetail);
         const wrapper = component.find('#document_cancel_button').at(0);
+        const edit = component.find('#document_edit_button').at(0);
         wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me');
+        edit.simulate('click');
+        expect(spyHistoryPush).toHaveBeenCalledTimes(2);
     });
 });
+
+describe('highLightCode', () => {
+    let spyGetLang;
+    let spyHighLight;
+    let spyAuto;
+
+    beforeEach(() => {
+        spyGetLang = jest.spyOn(hljs, 'getLanguage')
+            .mockImplementation(id => {return true ;})
+        spyHighLight = jest.spyOn(hljs, 'highlight')
+            .mockImplementation(() => {})
+        spyAuto = jest.spyOn(hljs, 'highlightAuto')
+            .mockImplementation(() => {})
+    })
+
+    afterEach(() => jest.clearAllMocks())
+
+    it('shoudl work', () => {
+        highlightCode('1,', '1');
+        expect(spyGetLang).toHaveBeenCalledTimes(1);
+        expect(spyHighLight).toHaveBeenCalledTimes(1);
+        expect(spyAuto).toHaveBeenCalledTimes(1);
+    })
+
+    it('should work at error', () => {
+        spyGetLang = jest.spyOn(hljs, 'getLanguage')
+            .mockImplementation(id => {return false ;})
+        highlightCode('1,', '1');
+        expect(spyHighLight).toHaveBeenCalledTimes(0);
+    })
+
+})

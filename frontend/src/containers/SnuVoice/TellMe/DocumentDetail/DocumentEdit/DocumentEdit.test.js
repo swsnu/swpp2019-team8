@@ -5,9 +5,11 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch } from 'react-router-dom';
 
 import DocumentEdit from './DocumentEdit';
+import { highlightCode } from './DocumentEdit';
 import { getMockStore } from '../../../../../test-utils/mocks';
 import { history } from '../../../../../store/store';
 import * as actionCreators from '../../../../../store/actions/tellme';
+import hljs from 'highlight.js';
 
 const stubInitialState = {
     selectedDocument: {
@@ -21,6 +23,7 @@ const mockStore = getMockStore(stubInitialState);
 
 describe('<DocumentEdit />', () => {
     let documentEdit;
+    let spyOnGetDocument;
 
     beforeEach(() => {
         documentEdit = (
@@ -32,10 +35,15 @@ describe('<DocumentEdit />', () => {
                 </ConnectedRouter>
             </Provider>
         );
+        spyOnGetDocument = jest.spyOn(actionCreators, 'getDocument')
+            .mockImplementation(td => { return dispatch => { }; });
     });
 
-    it(`should render DocumentEdit`, () => {
-        const component = mount(documentEdit);
+    afterEach(() => jest.clearAllMocks());
+
+    it(`should render DocumentEdit`, async () => {
+        const component = await mount(documentEdit);
+        expect(spyOnGetDocument).toHaveBeenCalledTimes(1);
         const wrapper = component.find('.DocumentEdit');
         expect(wrapper.length).toBe(1);
     });
@@ -91,5 +99,37 @@ describe('<DocumentEdit />', () => {
         wrapper.simulate('click');
         expect(documentEditInstance.state.documentState).toEqual('write');
     });
+
 })
 
+describe('highLightCode', () => {
+    let spyGetLang;
+    let spyHighLight;
+    let spyAuto;
+
+    beforeEach(() => {
+        spyGetLang = jest.spyOn(hljs, 'getLanguage')
+            .mockImplementation(id => { return true; })
+        spyHighLight = jest.spyOn(hljs, 'highlight')
+            .mockImplementation(() => { })
+        spyAuto = jest.spyOn(hljs, 'highlightAuto')
+            .mockImplementation(() => { })
+    })
+
+    afterEach(() => jest.clearAllMocks())
+
+    it('shoudl work', () => {
+        highlightCode('1,', '1');
+        expect(spyGetLang).toHaveBeenCalledTimes(1);
+        expect(spyHighLight).toHaveBeenCalledTimes(1);
+        expect(spyAuto).toHaveBeenCalledTimes(1);
+    })
+
+    it('should work at error', () => {
+        spyGetLang = jest.spyOn(hljs, 'getLanguage')
+            .mockImplementation(id => { return false; })
+        highlightCode('1,', '1');
+        expect(spyHighLight).toHaveBeenCalledTimes(0);
+    })
+
+})

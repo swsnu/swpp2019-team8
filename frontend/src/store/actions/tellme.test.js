@@ -57,10 +57,10 @@ describe('ActionCreators', () => {
                     const result = {
                         status: 200,
                         data: {
-                            unique : false,
-                            selectedDocument : stubDocument,
-                            titleDocuments : [1],
-                            contentDocuments : [1],
+                            unique: false,
+                            selectedDocument: stubDocument,
+                            titleDocuments: [1],
+                            contentDocuments: [1],
                         },
                     };
                     resolve(result);
@@ -81,7 +81,7 @@ describe('ActionCreators', () => {
         const spy = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
                 return new Promise((resolve, reject) => {
-                    reject()
+                    reject();
                 });
             });
 
@@ -91,4 +91,153 @@ describe('ActionCreators', () => {
         expect(newState.tm.selectedDocument).toBe(null);
         done()
     });
+
+    it('postDebateComment works', (done) => {
+        const spy = jest.spyOn(axios, 'post')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: 1
+                    };
+                    resolve(result);
+                })
+            })
+
+        store.dispatch(actionCreators.postDebateComment(1, 2)).then(() => {
+            const newState = store.getState();
+            expect(newState.tm.debates).toStrictEqual([]);
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    })
+
+    it('getDebateComment works', (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: 1
+                    };
+                    resolve(result);
+                })
+            })
+
+        store.dispatch(actionCreators.getDebateComments(1, 2)).then(() => {
+            const newState = store.getState();
+            expect(newState.tm.debateComments).toBe(1);
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    })
+
+
+    it('getDebate works', (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: 1
+                    };
+                    resolve(result);
+                })
+            })
+
+        store.dispatch(actionCreators.getDebate("!", "@")).then(() => {
+            const newState = store.getState();
+            expect(newState.tm.selectedDebate).toBe(1);
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
+    it('postDebate works', (done) => {
+        const spy = jest.spyOn(axios, 'post')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: {
+                            id: 1
+                        }
+                    };
+                    resolve(result);
+                })
+            })
+
+        store.dispatch(actionCreators.postDebate({ title: "!" }, 1)).then(() => {
+            const newState = store.getState();
+            expect(newState.tm.debateComments).toBe(1);
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
+    it('getDebates works', (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: 1
+                    };
+                    resolve(result);
+                })
+            })
+
+        store.dispatch(actionCreators.getDebates("!")).then(() => {
+            const newState = store.getState();
+            expect(newState.tm.debates).toBe(1);
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
+    it('should errors work', async () => {
+        const spyGet = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                })
+            })
+
+        const spyPost = jest.spyOn(axios, 'post')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                })
+            })
+
+        const spyPut = jest.spyOn(axios, 'put')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    reject();
+                })
+            })
+
+        await store.dispatch(actionCreators.postDocument());
+        expect(spyPost).toHaveBeenCalledTimes(1);
+        
+        await store.dispatch(actionCreators.putDocument({target : "1"}));
+        expect(spyPut).toHaveBeenCalledTimes(1);
+
+        await store.dispatch(actionCreators.getDebates("1"));
+        expect(spyGet).toHaveBeenCalledTimes(1);
+
+        await store.dispatch(actionCreators.postDebate({title : "1"}, 1));
+        expect(spyPost).toHaveBeenCalledTimes(2);
+
+        await store.dispatch(actionCreators.getDebate("1", "2"));
+        expect(spyGet).toHaveBeenCalledTimes(2);
+
+        await store.dispatch(actionCreators.getDebateComments("2"));
+        expect(spyGet).toHaveBeenCalledTimes(3);
+
+        await store.dispatch(actionCreators.postDebateComment("!", "2"));
+        expect(spyPost).toHaveBeenCalledTimes(3);
+
+
+    })
 });

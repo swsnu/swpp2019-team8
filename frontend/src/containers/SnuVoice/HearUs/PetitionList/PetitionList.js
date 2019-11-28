@@ -140,7 +140,7 @@ class PetitionList extends Component {
                         return (
                             <Petition
                                 key={petition.id}
-                                id={petition.id}
+                                url={petition.url}
                                 title={petition.title}
                                 state={petition.status}
                                 category={petition.category}
@@ -159,7 +159,7 @@ class PetitionList extends Component {
                         return (
                             <Petition
                                 key={petition.id}
-                                id={petition.id}
+                                url={petition.url}
                                 category={petition.category}
                                 dueDate={petition.end_date}
                                 state={petition.status}

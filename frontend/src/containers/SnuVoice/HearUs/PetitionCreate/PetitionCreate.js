@@ -13,15 +13,15 @@ class PetitionCreate extends Component {
         agreeToTerms: false,
         petitionTitle: '',
         categoryList: [
-            { value: 'All' },
-            { value: 'human rights' },
-            { value: 'welfare' },
-            { value: 'traffic' },
-            { value: 'education' },
-            { value: 'administration' },
-            { value: 'facility' },
+            { value: '-', label: '- Select Category -' },
+            { value: 'human rights', label : 'Human Rights' },
+            { value: 'welfare', label : 'Welfare' },
+            { value: 'traffic', label : 'Traffic' },
+            { value: 'education', label : 'Education' },
+            { value: 'administration', label : 'Administration' },
+            { value: 'facility', label : 'Facility' },
         ],
-        selectedCategory: 'All',
+        selectedCategory: '-',
         petitionContent: '',
         petitionLink: '',
         petitionLinkList: [
@@ -104,7 +104,7 @@ class PetitionCreate extends Component {
         });*/
         const category_list = this.state.categoryList.map((v, i) => {
             return (
-                <option key={i} value={v.value} label={v.value}></option>
+                <option key={i} value={v.value} label={v.label}></option>
             );
         });
         return (
@@ -113,7 +113,7 @@ class PetitionCreate extends Component {
                 <div className="PetitionCreate">
                     <Form>
                         <b><br />
-                            <h1>New Petition</h1>
+                            <h1>Create New Petition</h1>
                             <br />
                             <div className="inputTop">
                                 <Input type="textarea" id="petition_terms_textarea" placeholder="content" readOnly
@@ -171,7 +171,7 @@ class PetitionCreate extends Component {
                             <br /><br /><br />
                             <ButtonGroup className="buttons">
                                 <Button type="button" id="petition_confirm_button"
-                                    onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent || this.state.selectedCategory == 'All'}>CONFIRM</Button>
+                                    onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent || this.state.selectedCategory == '-'}>CONFIRM</Button>
                                 <Button type="button" id="petition_cancel_button"
                                     onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
                             </ButtonGroup>

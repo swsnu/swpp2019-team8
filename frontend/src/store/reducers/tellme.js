@@ -3,22 +3,22 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     documents: [],
     selectedDocument: null,
+
+    debates: [],
+    selectedDebate: null,
+    debateComments: [],
     titleDocuments : [],
-    contentDocuments : []
+    contentDocuments : [],
+    documentDuplicate : false,
 };
 
 const tellme = (prevState, action) => {
     let state;
     if (prevState === undefined) state = initialState;
-    else state = prevState
+    else state = prevState;
     switch (action.type) {
         case actionTypes.POST_DOCUMENT: {
-            const newDocument = {
-                id: action.id,
-                title: action.title,
-                content: action.content,
-            };
-            return { ...state, documents: state.documents.concat(newDocument) };
+            return {...state, documentDuplicate: action.documentDuplicate};
         }
         case actionTypes.GET_DOCUMENT: {
             if (action.unique === true) {
@@ -35,32 +35,35 @@ const tellme = (prevState, action) => {
                     state.documents[i].content = action.content;
                 }
             }
-             return state;   // TODO
+             return state;  
         }   
-        // case actionTypes.POST_PHOTO: {
-        //     return state;   // TODO
-        // }
         // case actionTypes.GET_PHOTO: {
         //     return state;   // TODO
         // }
         // case actionTypes.PUT_PHOTO: {
         //     return state;   // TODO
         // }
-        // case actionTypes.GET_DEBATES: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.POST_DEBATE: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.GET_DEBATE: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.GET_DEBATE_COMMENTS: {
-        //     return state;   // TODO
-        // }
-        // case actionTypes.POST_DEBATE_COMMENT: {
-        //     return state;   // TODO
-        // }
+
+        case actionTypes.GET_DEBATES: {
+            return {...state, debates: action.debateList};   // TODO
+        }
+
+        case actionTypes.POST_DEBATE: {
+            return {...state};   // TODO
+        }
+
+        case actionTypes.GET_DEBATE: {
+            return {...state, selectedDebate: action.target};   // TODO
+        }
+
+        case actionTypes.GET_DEBATE_COMMENTS: {
+            return {...state, debateComments: action.commentList};   // TODO
+        }
+        
+        case actionTypes.POST_DEBATE_COMMENT: {
+            return {...state};   // TODO
+        }
+
         default:
             break;
     }

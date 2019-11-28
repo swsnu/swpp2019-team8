@@ -12,6 +12,7 @@ export const postPetition_ = (petition) => {
         category: petition.category,
         tag: petition.tag,
         link: petition.link,
+        url: petition.url
     };
 };
 
@@ -19,7 +20,7 @@ export const postPetition = (petition) => {
     return dispatch => {
         return axios.post('/api/hearus/petition/', petition).then(res => {
             dispatch(postPetition_(res.data));
-            dispatch(push('/hear_us/' + res.data.id));
+            dispatch(push('/hear_us/' + res.data.url));
         })
             .catch(res => {
                 alert('post Petition Failed.')
@@ -56,9 +57,9 @@ export const getPetition_ = (petition) => {
     }
 }
 
-export const getPetition = (petition_id) => {
+export const getPetition = (petition_url) => {
     return dispatch => {
-        return axios.get('/api/hearus/petition/' + petition_id)
+        return axios.get('/api/hearus/petition/' + petition_url)
             .then(res => dispatch(getPetition_(res.data)));
     }
 }
@@ -81,20 +82,20 @@ export const getPetitionByTitle = (title) => {
     }
 }
 
-/*
-export const getMyPetitions_ = () => {
+
+export const getMyPetitions_ = (myPetitions) => {
     return {
         type: actionTypes.GET_MY_PETITIONS,
-        // TODO
+        myPetitionList: myPetitions
     };
 };
 
-export const getMyPetitions = () => {
+export const getMyPetitions = (user_id) => {
     return dispatch => {
-        // TODO
+        return axios.get('/api/hearus/petition/user/' + user_id + '/')
+            .then(res => dispatch(getMyPetitions_(res.data)));
     };
 };
-*/
 
 export const getPetitionComments_ = (comment_list) => {
     return {
@@ -103,9 +104,9 @@ export const getPetitionComments_ = (comment_list) => {
     };
 };
 
-export const getPetitionComments = (petition_id) => {
+export const getPetitionComments = (petition_url) => {
     return dispatch => {
-        return axios.get('/api/hearus/petition/' + petition_id + '/comment/')
+        return axios.get('/api/hearus/petition/' + petition_url + '/comment/')
             .then(res => dispatch(getPetitionComments_(res.data)));
     };
 };
@@ -120,7 +121,7 @@ export const postPetitionComment_ = (comment) => {
 
 export const postPetitionComment = (comment) => {
     return dispatch => {
-        return axios.post('/api/hearus/petition/' + comment.petition_id + '/comment/', comment)
+        return axios.post('/api/hearus/petition/' + comment.petition_url + '/comment/', comment)
             .then(res => dispatch(postPetitionComment_(res.data)));
     };
 };
@@ -132,10 +133,25 @@ export const putPetitionVote_ = (petition) => {
     }
 }
 
-export const putPetitionVote = (petition_id) => {
+export const putPetitionVote = (petition_url) => {
     return dispatch => {
-        return axios.put('/api/hearus/petition/' + petition_id + '/')
+        return axios.put('/api/hearus/petition/' + petition_url + '/')
             .then(res => dispatch(putPetitionVote_(res.data)));
+    }
+}
+
+export const getCsvFile = (petition_url) => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/' + petition_url + '/download/', { responseType: 'blob'})
+            .then(res => {
+                const url = window.URL.createObjectURL(new Blob([res.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'statistics.csv');
+                document.body.appendChild(link);
+                link.click();
+            })
+            .catch((e) => {})
     }
 }
 

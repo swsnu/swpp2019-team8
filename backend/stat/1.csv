@@ -1,0 +1,9 @@
+,voteDate,status,degree,studentId,gender,department,major
+0,2019-11-<built-in method date of datetime.datetime object at 0x000001A3E8C6E5D0>,student,undergrad,2018,male,engineering,engineering
+1,2019-11-<built-in method date of datetime.datetime object at 0x000001A3E8C4B8A0>,student,undergrad,2018,male,engineering,engineering
+2,2019-11-23,student,undergrad,2018,male,engineering,engineering
+3,2019-11-23,1,student,2018,MALE,ENGINEERING,CSE
+4,2019-11-23,1,student,2018,MALE,ENGINEERING,CSE
+5,2019-11-23,1,student,2018,MALE,ENGINEERING,CSE
+6,2019-11-23,1,student,2018,MALE,ENGINEERING,CSE
+7,2019-11-23,student,undergrad,2018,male,engineering,engineering
