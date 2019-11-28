@@ -8,11 +8,9 @@ import axios from 'axios';
 import PhotoUpload from './PhotoUpload';
 import { getMockStore } from '../../../../test-utils/mocks';
 import { history } from '../../../../store/store';
-import * as actionCreators from '../../../../store/actions/tellme';
 
 const stubInitialState = {
 };
-
 
 const mockStore = getMockStore(stubInitialState);
 
@@ -44,53 +42,22 @@ describe('<PhotoUpload />', () => {
         wrapper.simulate('change', { target: { value: photoTitle } });
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
         expect(photoUploadInstance.state.photoTitle).toEqual(photoTitle);
-        expect(photoUploadInstance.state.photoContent).toEqual('');
     });
 
-    it(`should set state properly on title input`, () => {
-        const photoContent = 'TEST_TITLE';
+    it(`should set state properly on content input`, () => {
+        const photoContent = 'TEST_CONTENT';
         const component = mount(photoUpload);
         const wrapper = component.find('#photo_content_textarea').at(0);
         wrapper.simulate('change', { target: { value: photoContent } });
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        expect(photoUploadInstance.state.photoTitle).toEqual('');
         expect(photoUploadInstance.state.photoContent).toEqual(photoContent);
     });
-    
-    it(`should set state properly on file input/ upload`, (done) => {
-        const spyPostphoto = jest.spyOn(axios,'post')
-        .mockImplementation((url, tm) => {
-            return new Promise((resolve, reject) => {
-                const result = {
-                    status: 201,
-                    data: stubFormdata,
-                };
-                resolve(result);
-            });
-        })
-        const photoFile = new File(['(⌐□_□)'], 'chucknorris.png', {type: 'image/png'});
-        const component = mount(photoUpload);
-        let wrapper = component.find('#photo_file_file').at(0);
-        wrapper.simulate('change', { target: { files: [photoFile] } });
-        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        expect(photoUploadInstance.state.photoFile).toEqual(null);
-        expect(photoUploadInstance.state.photoUrl).toEqual(null);
-        photoUploadInstance.setState({photoFile: photoFile, photoTitle: 'title', photoContent: 'content'});
-        const stubFormdata = new FormData();
-        stubFormdata.append('file', photoFile , photoFile.name);
-        stubFormdata.append('title', 'title');
-        stubFormdata.append('content', 'content');
-        wrapper = component.find('#document_confirm_button').at(0);
-        wrapper.simulate('click');
-        expect(spyPostphoto).toHaveBeenCalledTimes(1);
-        done();
-    });
-    
+
     it(`should call 'onClickPhotoCancelButton'`, () => {
         const spyHistoryPush = jest.spyOn(history, 'goBack')
             .mockImplementation(path => { });
         const component = mount(photoUpload);
-        const wrapper = component.find('#document_cancel_button').at(0);
+        const wrapper = component.find('#photo_cancel_button').at(0);
         wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledTimes(1);
     });
@@ -113,22 +80,49 @@ describe('<PhotoUpload />', () => {
         expect(photoUploadInstance.state.documentState).toEqual('write');
     });
 
-    it(`should set state properly: 'photo' -> 'preview'`, () => {
+    it(`should set state properly on file input/ upload`, (done) => {
+        let mocked = jest.fn();
+        const spyPostPhoto = jest.spyOn(axios, 'post')
+            .mockImplementation((url, tm) => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 201,
+                        data: stubFormdata,
+                    };
+                    resolve(result);
+                });
+            });
+        const photoFile = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
         const component = mount(photoUpload);
-        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
-        photoUploadInstance.setState({ phototState: 'photo', });
-        const wrapper = component.find('#preview_photo_tab_button').at(0);
+        let wrapper = component.find('#photo_file_file').at(0);
+        wrapper.simulate('change', { target: { files: [photoFile] } });
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.onClickPhotoConfirmButton = mocked;
+        expect(photoUploadInstance.state.photoFile).toEqual(null);
+        expect(photoUploadInstance.state.photoUrl).toEqual(null);
+        photoUploadInstance.setState({
+            photoFile: photoFile,
+            photoFileName: 'name',
+            photoTitle: 'title',
+            photoContent: 'content',
+            canvasWidth: 100,
+            canvasHeight: 100
+        });
+        const stubFormdata = new FormData();
+        stubFormdata.append('file', photoFile, 'name');
+        stubFormdata.append('title', 'title');
+        stubFormdata.append('content', 'content');
+        wrapper = component.find('#photo_confirm_button').at(0);
         wrapper.simulate('click');
-        expect(photoUploadInstance.state.photoState).toEqual('preview');
+        expect(mocked).toHaveBeenCalledTimes(1);
+        done();
     });
 
-    it(`should set state properly: 'preview' -> 'write'`, () => {
+    it(`should call 'onImgLoad'`, () => {
         const component = mount(photoUpload);
-        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
-        photoUploadInstance.setState({ photoState: 'preview', });
-        const wrapper = component.find('#edit_photo_tab_button').at(0);
-        wrapper.simulate('click');
-        expect(photoUploadInstance.state.photoState).toEqual('photo');
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.onImgLoad({ target: { offsetWidth: 500, offsetHeight: 500 } });
+        expect(photoUploadInstance.state.canvasWidth).toEqual(500);
+        expect(photoUploadInstance.state.canvasHeight).toEqual(500);
     });
-
 });

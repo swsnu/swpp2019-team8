@@ -8,6 +8,7 @@ import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 import * as actionCreators from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
+import SearchBar from '../../HearUs/SearchBar/SearchBar';
 import './PetitionDetail.css';
 
 import demoGraph from '../../../../img/demoGraph.png';
@@ -133,8 +134,9 @@ class PetitionDetail extends Component {
         return (
             <div>
                 <UpperBar />
-
                 <div className="PetitionDetail">
+                    <br /><br />
+                    <SearchBar />
                     <br /><br />
                     <div className="content">
                         <b><br />

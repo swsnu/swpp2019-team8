@@ -16,37 +16,72 @@ class PhotoUpload extends Component {
         photoTitle: '',
         photoContent: '',
         photoFile: null,
+        photoFileName: null,
         photoUrl: null,
-        photoState: 'photo',
-        documentState: 'write'
+        documentState: 'write',
+        message: "Upload your Photo",
+        googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
+        canvasWidth: 100,
+        canvasHeight: 100,
+        blurElements: [],
+    }
+
+    constructor(props) {
+        super(props);
+        this.refCanvas = React.createRef();
+        this.refImg = React.createRef();
     }
 
     onClickPhotoConfirmButton = () => {
-        const formData = new FormData();
-        formData.append('file', this.state.photoFile, this.state.photoFile.name);
-        formData.append('title', this.state.photoTitle);
-        formData.append('content', this.state.photoContent);
-        axios.post(
-            '/api/tellme/photo/',
-            formData,
-            {
-                headers: { 'content-type': 'multipart/form-data' }
-            })
-            .then(() => {
-                console.log("hurray");
-            })
-            .catch(e => {
-                console.log(e);
-            })
-        //url 전송
+        const canvas = this.refCanvas.current;
+        const ctx = canvas.getContext("2d");
+        const img = this.refImg.current;
+
+        ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
+        ctx.drawImage(img, 0, 0);
+
+        this.state.blurElements.forEach(function (element, index) {
+            if (element.blur === true) {
+                let blurAmount = element.width / 10;
+                ctx.filter = `blur(${blurAmount}px)`;
+                ctx.drawImage(
+                    img,
+                    element.left + blurAmount / 10,
+                    element.top + blurAmount / 10,
+                    element.width - blurAmount / 5,
+                    element.height - blurAmount / 5,
+                    element.left + blurAmount / 10,
+                    element.top + blurAmount / 10,
+                    element.width - blurAmount / 5,
+                    element.height - blurAmount / 5);
+                ctx.filter = 'none';
+            }
+        });
+
+        const this_tmp = this;
+
+        canvas.toBlob(function (blob) {
+            const formData = new FormData();
+            formData.append('file', blob, this_tmp.state.photoFileName);
+            formData.append('title', this_tmp.state.photoTitle);
+            formData.append('content', this_tmp.state.photoContent);
+            axios.post(
+                '/api/tellme/photo/',
+                formData,
+                {
+                    headers: { 'content-type': 'multipart/form-data' }
+                })
+                .then(() => {
+                    console.log("hurray");
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        });
     }
 
     onClickPhotoCancelButton = () => {
         this.props.history.goBack();
-    }
-
-    onClickPhotoTabButton = (event) => {
-        this.setState({ photoState: event });
     }
 
     onClickContentTabButton = (event) => {
@@ -56,33 +91,208 @@ class PhotoUpload extends Component {
     handlePhoto = (event) => {
         event.preventDefault();
 
-        let reader = new FileReader();
+        const reader = new FileReader();
         let file = event.target.files[0];
 
         reader.onloadend = () => {
-            this.setState({ photoFile: file, photoUrl: reader.result });
+            this.setState({ photoFile: file, photoFileName: file.name, photoUrl: reader.result, blurElements: [] });
+            const imageData = reader.result.split(",")[1];
+            const img = new Image();
+            img.src = reader.result;
+            img.onload = () => {
+                this.setState({
+                    message: "File uploading...",
+                });
+                this.fileUpload(imageData)
+                    .then((result) => {
+                        if (result.message) {
+                            this.setState({
+                                message: result.message,
+                            });
+                        }
+                        console.log('num_faces: ' + result.num_faces);
+                        this.drawInCanvas(result.info, result.num_faces);
+                    });
+            };
         }
 
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
+    }
+
+    fileUpload = (content) => {
+        return new Promise((resolve, reject) => {
+            const body = {
+                requests: [
+                    {
+                        image: {
+                            content,
+                        },
+                        features: [
+                            {
+                                type: "FACE_DETECTION",
+                            },
+                        ],
+                    },
+                ],
+            };
+            fetch(
+                `https://vision.googleapis.com/v1/images:annotate?key=${
+                this.state.googleKey
+                }`,
+                {
+                    method: "POST",
+                    headers: new Headers({
+                        Accept: "application/json",
+                    }),
+                    body: JSON.stringify(body),
+                },
+            )
+                .then(res => res.json())
+                .then(res => resolve(this.getPhotoInfo(res)))
+                .catch(() => reject(false));
+        });
+    };
+
+    getPhotoInfo = (data) => {
+        // 얼굴이 인식되지 않은 경우
+        if (typeof data.responses[0].faceAnnotations === "undefined") {
+            return {
+                info: [],
+                message: "The face is not recognized.",
+                num_faces: 0,
+            }
+        }
+
+        let info = [];
+
+        for (let i = 0; i < data.responses[0].faceAnnotations.length; i++) {
+            let faceDetection = data.responses[0].faceAnnotations[i];
+            let topBound;
+            let bottomBound;
+            let leftBound;
+            let rightBound;
+            faceDetection.fdBoundingPoly.vertices.forEach((vertice) => {
+                if (!topBound || vertice.y < topBound) {
+                    topBound = vertice.y;
+                }
+                if (!bottomBound || vertice.y > bottomBound) {
+                    bottomBound = vertice.y;
+                }
+                if (!leftBound || vertice.x < leftBound) {
+                    leftBound = vertice.x;
+                }
+                if (!rightBound || vertice.x > rightBound) {
+                    rightBound = vertice.x;
+                }
+            });
+
+            info.push({
+                x: leftBound,
+                y: topBound,
+                width: rightBound - leftBound,
+                height: bottomBound - topBound,
+            });
+        }
+
+        return {
+            info: info,
+            message: "Photo Uploaded",
+            num_faces: data.responses[0].faceAnnotations.length,
+        };
+    };
+
+    drawInCanvas = (photoInfo, n) => {
+        const canvas = this.refCanvas.current;
+        const ctx = canvas.getContext("2d");
+        const img = this.refImg.current;
+
+        ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
+        ctx.drawImage(img, 0, 0);
+
+        let elemLeft = canvas.offsetLeft;
+        let elemTop = canvas.offsetTop;
+
+        const this_tmp = this;
+
+        canvas.addEventListener('click', function (event) {
+            var x = event.pageX - elemLeft,
+                y = event.pageY - elemTop;
+
+            // Collision detection between clicked offset and element.
+            this_tmp.state.blurElements.forEach(function (element, index) {
+                if (y > element.top && y < element.top + element.height
+                    && x > element.left && x < element.left + element.width) {
+                    element.blur = !element.blur;
+                    console.log(index + 'clicked!');
+                }
+            });
+
+            ctx.clearRect(0, 0, this_tmp.state.canvasWidth, this_tmp.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
+            ctx.drawImage(img, 0, 0);
+
+            this_tmp.state.blurElements.forEach(function (element, index) {
+                if (element.blur) {
+                    let blurAmount = element.width / 10;
+                    ctx.filter = `blur(${blurAmount}px)`;
+                    ctx.drawImage(
+                        img,
+                        element.left + blurAmount / 10,
+                        element.top + blurAmount / 10,
+                        element.width - blurAmount / 5,
+                        element.height - blurAmount / 5,
+                        element.left + blurAmount / 10,
+                        element.top + blurAmount / 10,
+                        element.width - blurAmount / 5,
+                        element.height - blurAmount / 5);
+                    ctx.filter = 'none';
+                }
+            });
+
+            this_tmp.state.blurElements.forEach(function (element, index) {
+                ctx.beginPath();
+                ctx.strokeStyle = element.color;
+                ctx.rect(element.left, element.top, element.width, element.height);
+                ctx.stroke();
+            });
+        }, false);
+
+        // Add element.
+        for (let i = 0; i < n; i++) {
+            const { x, y, width, height } = photoInfo[i];
+            this.setState({
+                blurElements: this.state.blurElements.concat({
+                    color: 'red',
+                    width: width,
+                    height: height,
+                    left: x,
+                    top: y,
+                    blur: false,
+                })
+            });
+        }
+        console.log(this.state.canvasWidth);
+        console.log(this.state.canvasHeight);
+        console.log(this.state.blurElements);
+
+        // Render elements.
+        this.state.blurElements.forEach(function (element) {
+            for (let i = 0; i < n; i++) {
+                ctx.beginPath();
+                ctx.strokeStyle = element.color;
+                ctx.rect(element.left, element.top, element.width, element.height);
+                ctx.stroke();
+            }
+        });
+    };
+
+    onImgLoad = ({ target: img }) => {
+        this.setState({
+            canvasWidth: img.offsetWidth,
+            canvasHeight: img.offsetHeight,
+        });
     }
 
     render() {
-        let photoStateTabbuttons = (
-            <Nav tabs>
-                <NavItem>
-                    <NavLink className={classnames({ active: this.state.photoState === 'photo' })}
-                        id="edit_photo_tab_button" onClick={() => this.onClickPhotoTabButton('photo')}>
-                        Photo
-                        </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink className={classnames({ active: this.state.photoState === 'preview' })}
-                        id="preview_photo_tab_button" onClick={() => this.onClickPhotoTabButton('preview')}>
-                        Preview
-                        </NavLink>
-                </NavItem>
-            </Nav>
-        );
         let documentStateTabbuttons = (
             <Nav tabs>
                 <NavItem>
@@ -100,69 +310,67 @@ class PhotoUpload extends Component {
             </Nav>
         );
 
-        let $imagePreview = (this.state.photoUrl) ? (<img src={this.state.photoUrl} />) :
+        let $imagePreview = (this.state.photoUrl) ? (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />) :
             (<div className="noPhoto">There is no image to preview</div>);
 
         return (
             <div>
-                <Upperbar/>
-            <div className="PhotoUpload">
-                <br/>
-                <h1>Photo Upload</h1>
-                <br/>
-                    <div className="FileUpload">
-                        <Input type="file" id="photo_file_file" onChange={(event) => this.handlePhoto(event)} />
+                <Upperbar />
+                <div className="PhotoUpload">
+                    <br />
+                    <h1>Photo Upload</h1>
+                    <br />
+                    <div>
+                        <p>{this.state.message}</p>
+                        <div className="FileUpload">
+                            <Input type="file" id="photo_file_file"
+                                onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" />
+                        </div>
+                        <br />
+                        <canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />
+                        {$imagePreview}
                     </div>
-                    <br/>
-                    {photoStateTabbuttons}
-                    <TabContent activeTab={this.state.photoState}>
-                        <TabPane tabId="photo">
-                            {$imagePreview}
-                        </TabPane>
-                        <TabPane tabId="preview">
-                            <b>*Photo with selected blur applied will appear here*</b>
-                        </TabPane>
-                    </TabContent>
-                    {documentStateTabbuttons}
-                    <TabContent activeTab={this.state.documentState}>
-                        <TabPane tabId="write">
-                            <Form>
-                                <FormGroup>
-                                    <Label>Title</Label>
-                                    <Input type="text" id="photo_title_input" placeholder="title"
-                                        onChange={(event) => this.setState({ photoTitle: event.target.value })}></Input>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label>Content</Label>
-                                    <Input type="textarea" rows="10" id="photo_content_textarea" placeholder="content"
-                                        onChange={(event) => this.setState({ photoContent: event.target.value })}></Input>
-                                </FormGroup>
-                            </Form>
-                        </TabPane>
-                        <TabPane tabId="preview">
-                            <div className="preview">
-                            <div className="photoInfo">
-<br/>
-                            <Label>Title:</Label>
-                            <h1><div className="photoTitle">{this.state.photoTitle}</div></h1>
-                            <Label>Content:</Label>
-                            <MarkdownPreview value={this.state.photoContent} />
-                            </div>
-                            </div>
-                        </TabPane>
-                    </TabContent>
+                    <div>
+                        {documentStateTabbuttons}
+                        <TabContent activeTab={this.state.documentState}>
+                            <TabPane tabId="write">
+                                <Form>
+                                    <FormGroup>
+                                        <Label>Title</Label>
+                                        <Input type="text" id="photo_title_input" placeholder="title"
+                                            onChange={(event) => this.setState({ photoTitle: event.target.value })}></Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label>Content</Label>
+                                        <Input type="textarea" rows="10" id="photo_content_textarea" placeholder="content"
+                                            onChange={(event) => this.setState({ photoContent: event.target.value })}></Input>
+                                    </FormGroup>
+                                </Form>
+                            </TabPane>
+                            <TabPane tabId="preview">
+                                <div className="preview">
+                                    <div className="photoInfo">
+                                        <br />
+                                        <Label>Title:</Label>
+                                        <h1><div className="photoTitle">{this.state.photoTitle}</div></h1>
+                                        <Label>Content:</Label>
+                                        <MarkdownPreview value={this.state.photoContent} />
+                                    </div>
+                                </div>
+                            </TabPane>
+                        </TabContent>
+                    </div>
                     <ButtonGroup>
-                        <Button type="button" id="document_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent}
+                        <Button type="button" id="photo_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent}
                             onClick={this.onClickPhotoConfirmButton}>Confirm</Button>
-                        <Button type="button" id="document_cancel_button"
+                        <Button type="button" id="photo_cancel_button"
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>
                     </ButtonGroup>
 
-                            </div>
+                </div>
             </div>
         )
     }
 }
-
 
 export default connect(null, null)(withRouter(PhotoUpload));
