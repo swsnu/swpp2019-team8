@@ -14,5 +14,5 @@ urlpatterns = [
     path('petition/<str:petition_url>/graph/', views.draw_graph)
 ]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
+    urlpatterns += static(settings.GRAPH_URL,
                           document_root=settings.MEDIA_ROOT)

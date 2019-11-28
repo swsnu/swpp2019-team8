@@ -10,7 +10,6 @@ import * as actionCreators from '../../../../store/actions/index';
 import UpperBar from '../../UpperBar/UpperBar';
 import './PetitionDetail.css';
 
-import demoGraph from '../../../../img/demoGraph.png';
 
 class PetitionDetail extends Component {
     state = {
@@ -187,7 +186,7 @@ class PetitionDetail extends Component {
                             <img src={graphSrc + "/department.jpg"} style={{ width: 450 }} />
                             <img src={graphSrc + "/studentId.jpg"} style={{ width: 450 }} />
                             <Button type="button" id="more-statistics-button" onClick={this.onClickDrawGraphButton}>More Statistics..</Button>
-                            <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition's graphs when this petition's state becomes ongoing.</h6>
+                            <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
                             <br /><br />
                         </div>
                     </div>

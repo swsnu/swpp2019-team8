@@ -62,6 +62,8 @@ describe('<PetitionDetail />', () => {
             .mockImplementation(id => { return dispatch => { }; });
         spyLocation = jest.spyOn(window.location, 'reload')
             .mockImplementation(() => {});
+        spyGetDrawGraph = jest.spyOn(actionCreators, 'getDrawGraph')
+            .mockImplementation(id => { return dispatch => {};});
     });
 
     afterEach(() => jest.clearAllMocks())
@@ -169,6 +171,13 @@ describe('<PetitionDetail />', () => {
         await wrapper.simulate('click');
         expect(spyPostPetitionComment).toHaveBeenCalledTimes(1);
         expect(spyPutPetitionVote).toHaveBeenCalledTimes(1);
+    });
+
+    it(`should call 'onClickDrawGraphButton'`, async () => {
+        const component = await mount(petitionDetail);
+        const wrapper = component.find('#more-statistics-button').at(0);
+        await wrapper.simulate('click');
+        expect(spyGetDrawGraph).toHaveBeenCalledTimes(1);
     });
 
     it(`should call 'onClickPetitionCancelButton'`, async () => {

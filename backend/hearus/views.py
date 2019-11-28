@@ -149,9 +149,7 @@ def petition_comment(request, petition_url):
                 if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
                     os.makedirs(os.path.join('./media/graph/'+str(comment_petition.id)))
             except OSError as e:
-                if e.errno != errno.EEXIST:
-                    print("Failed to create directory!!!!!")
-                    raise
+                print("Failed to create directory!!!!!")
             plot_graph(comment_petition.id)
         student_id = request.user.studentId[0:4]
         file_location = './stat/' + str(comment_petition.id) + '.csv'
@@ -199,7 +197,7 @@ def draw_graph(request, petition_url):
         except Petition.DoesNotExist:
             return HttpResponse(status=404)
         plot_graph(petition.id)
-        return HttpResponse(status=201)
+        return HttpResponse(status=200)
     else:
         return HttpResponseNotAllowed(['GET'])
         
