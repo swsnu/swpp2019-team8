@@ -21,7 +21,11 @@ import {
     Row,
     Card,
 } from "reactstrap";
-import { MarkdownPreview } from "react-marked-markdown";
+
+import { Remarkable } from 'remarkable';
+import hljs from 'highlight.js';
+
+import 'highlight.js/styles/atom-one-dark.css';
 
 import Upperbar from "../../../UpperBar/UpperBar";
 import "./DocumentEdit.css";
@@ -94,8 +98,9 @@ class DocumentEdit extends Component {
       };
 
     render() {
-        let content = "";
+        let content = '';
         let current ="";
+        let markdownHtml = '';
         if (this.props.selectedDocument) {
             content = this.state.newDocumentContent;
             current = this.onCompareTexts(this.props.selectedDocument.content, content)
@@ -129,6 +134,16 @@ class DocumentEdit extends Component {
             </Nav>
         );
 
+        if (this.state.documentState === 'preview') {
+            var md = new Remarkable('full', {
+                html: true,
+                typographer: true,
+                highlight: function (str, lang) {
+                    return highlightCode(str, lang);
+                }
+            });
+            markdownHtml = md.render(content);
+        }
         return (
             <div>
                 <Upperbar />
@@ -216,9 +231,7 @@ class DocumentEdit extends Component {
                                     </h1>
                                     <br />
                                     <h6>Content:</h6>
-                                    <MarkdownPreview
-                                        value={this.state.newDocumentContent}
-                                    />
+                                    <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                                 </div>
                             </div>
                         </TabPane>
@@ -268,7 +281,18 @@ export const mapStateToProps = state => {
     };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withRouter(DocumentEdit));
+export function highlightCode(str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+        try {
+            return hljs.highlight(lang, str).value;
+        } catch (err) { console.log(err) }
+    }
+
+    try {
+        return hljs.highlightAuto(str).value;
+    } catch (err) { console.log(err) }
+
+    return ''; // use external default escaping
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DocumentEdit));

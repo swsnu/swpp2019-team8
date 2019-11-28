@@ -39,6 +39,7 @@ local_settings.py
 .env
 db.sqlite3
 migrations/
+media/
 
 # added by swpp2019-team8
 package-lock.json
