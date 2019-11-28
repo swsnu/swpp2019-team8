@@ -81,7 +81,8 @@ describe('<PhotoUpload />', () => {
     });
 
     it(`should set state properly on file input/ upload`, (done) => {
-        const spyPostphoto = jest.spyOn(axios, 'post')
+        let mocked = jest.fn();
+        const spyPostPhoto = jest.spyOn(axios, 'post')
             .mockImplementation((url, tm) => {
                 return new Promise((resolve, reject) => {
                     const result = {
@@ -96,16 +97,32 @@ describe('<PhotoUpload />', () => {
         let wrapper = component.find('#photo_file_file').at(0);
         wrapper.simulate('change', { target: { files: [photoFile] } });
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.onClickPhotoConfirmButton = mocked;
         expect(photoUploadInstance.state.photoFile).toEqual(null);
         expect(photoUploadInstance.state.photoUrl).toEqual(null);
-        photoUploadInstance.setState({ photoFile: photoFile, photoTitle: 'title', photoContent: 'content' });
+        photoUploadInstance.setState({
+            photoFile: photoFile,
+            photoFileName: 'name',
+            photoTitle: 'title',
+            photoContent: 'content',
+            canvasWidth: 100,
+            canvasHeight: 100
+        });
         const stubFormdata = new FormData();
-        stubFormdata.append('file', photoFile, photoFile.name);
+        stubFormdata.append('file', photoFile, 'name');
         stubFormdata.append('title', 'title');
         stubFormdata.append('content', 'content');
         wrapper = component.find('#photo_confirm_button').at(0);
         wrapper.simulate('click');
-        expect(spyPostphoto).toHaveBeenCalledTimes(1);
+        expect(mocked).toHaveBeenCalledTimes(1);
         done();
+    });
+
+    it(`should call 'onImgLoad'`, () => {
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.onImgLoad({ target: { offsetWidth: 500, offsetHeight: 500 } });
+        expect(photoUploadInstance.state.canvasWidth).toEqual(500);
+        expect(photoUploadInstance.state.canvasHeight).toEqual(500);
     });
 });
