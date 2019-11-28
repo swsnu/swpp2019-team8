@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "coveralls": "^3.0.7"
+    "coveralls": "^3.0.7",
+    "diff-match-patch": "^1.0.4",
+    "react-html-parser": "^2.0.2"
   }
 }
