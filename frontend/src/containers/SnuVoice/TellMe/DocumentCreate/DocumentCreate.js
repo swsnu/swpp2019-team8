@@ -53,7 +53,7 @@ class DocumentCreate extends Component {
 
   onChangeDocumentTitle = (event) => {
     let message = this.state.formFeedbackMessage;
-    if (/[_\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/.exec(event.target.value)) {
+    if (/[~!@#$%^&*()_+|<>?:{}.,'";\]\[/]/.exec(event.target.value)) {
       console.log("hi")
       message.title = "특수문자는 허용되지 않습니다."
     } else {
