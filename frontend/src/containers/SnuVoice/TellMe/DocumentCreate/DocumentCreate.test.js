@@ -46,8 +46,10 @@ describe('<DocumentCreate />', () => {
         const wrapper = component.find('#document_title_input').at(0);
         wrapper.simulate('change', { target: { value: documentTitle } });
         const documentCreateInstance = component.find(DocumentCreate.WrappedComponent).instance();
-        expect(documentCreateInstance.state.documentTitle).toEqual(documentTitle);
+        expect(documentCreateInstance.state.formFeedbackMessage.title).toEqual("특수문자는 허용되지 않습니다.");
         expect(documentCreateInstance.state.documentContent).toEqual('');
+        wrapper.simulate('change', { target: { value: "1" } });
+        expect(documentCreateInstance.state.documentTitle).toBe('1')
     });
 
     it(`should set state properly on content input`, () => {
