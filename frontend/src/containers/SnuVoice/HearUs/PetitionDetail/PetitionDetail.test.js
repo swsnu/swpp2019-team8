@@ -172,8 +172,7 @@ describe('<PetitionDetail />', () => {
     });
 
     it(`should call 'onClickDrawGraphButton'`, async () => {
-        
-        spyGetDrawGraph = jest.spyOn(actionCreators, 'getDrawGraph')
+        let spyGetDrawGraph = jest.spyOn(actionCreators, 'getDrawGraph')
             .mockImplementation(id => { return dispatch => { };});
         const component = await mount(petitionDetail);
         const wrapper = component.find('#more-statistics-button').at(0);
