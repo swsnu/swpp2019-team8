@@ -231,7 +231,7 @@ class PhotoUpload extends Component {
             ctx.drawImage(img, 0, 0);
 
             this_tmp.state.blurElements.forEach(function (element, index) {
-                if (element.blur == true) {
+                if (element.blur) {
                     let blurAmount = element.width / 10;
                     ctx.filter = `blur(${blurAmount}px)`;
                     ctx.drawImage(
