@@ -43,7 +43,8 @@ class PhotoUpload extends Component {
 
         this.state.blurElements.forEach(function (element, index) {
             if (element.blur === true) {
-                ctx.filter = 'blur(20px)';
+                let blurAmount = element.width / 10;
+                ctx.filter = `blur(${blurAmount}px)`;
                 ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
                 ctx.filter = 'none';
             }
@@ -90,7 +91,7 @@ class PhotoUpload extends Component {
         let file = event.target.files[0];
 
         reader.onloadend = () => {
-            this.setState({ photoFile: file, photoFileName: file.name, photoUrl: reader.result });
+            this.setState({ photoFile: file, photoFileName: file.name, photoUrl: reader.result, blurElements: [] });
             const imageData = reader.result.split(",")[1];
             const img = new Image();
             img.src = reader.result;
@@ -226,7 +227,8 @@ class PhotoUpload extends Component {
 
             this_tmp.state.blurElements.forEach(function (element, index) {
                 if (element.blur == true) {
-                    ctx.filter = 'blur(20px)';
+                    let blurAmount = element.width / 10;
+                    ctx.filter = `blur(${blurAmount}px)`;
                     ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
                     ctx.filter = 'none';
                 }
@@ -254,6 +256,9 @@ class PhotoUpload extends Component {
                 })
             });
         }
+        console.log(this.state.canvasWidth);
+        console.log(this.state.canvasHeight);
+        console.log(this.state.blurElements);
 
         // Render elements.
         this.state.blurElements.forEach(function (element) {
