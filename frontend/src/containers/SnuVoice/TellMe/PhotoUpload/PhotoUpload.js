@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import axios from 'axios';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -14,8 +15,8 @@ class PhotoUpload extends Component {
     state = {
         photoTitle: '',
         photoContent: '',
-        photoFile: '',
-        photoUrl: '',
+        photoFile: null,
+        photoUrl: null,
         photoState: 'photo',
         documentState: 'write',
         message: "Upload your Photo",
@@ -31,11 +32,27 @@ class PhotoUpload extends Component {
     }
 
     onClickPhotoConfirmButton = () => {
-        // confirm
+        const formData = new FormData();
+        formData.append('file', this.state.photoFile, this.state.photoFile.name);
+        formData.append('title', this.state.photoTitle);
+        formData.append('content', this.state.photoContent);
+        axios.post(
+            '/api/tellme/photo/',
+            formData,
+            {
+                headers: { 'content-type': 'multipart/form-data' }
+            })
+            .then(() => {
+                console.log("hurray");
+            })
+            .catch(e => {
+                console.log(e);
+            })
+        //url 전송
     }
 
     onClickPhotoCancelButton = () => {
-        this.props.history.push('/tell_me/create');
+        this.props.history.goBack();
     }
 
     onClickPhotoTabButton = (event) => {
@@ -282,7 +299,7 @@ class PhotoUpload extends Component {
                     <div>
                         <p>{this.state.message}</p>
                         <div className="FileUpload">
-                            <Input type="file" name="photo_file_file"
+                            <Input type="file" id="photo_file_file"
                                 onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" />
                         </div>
                         <br />

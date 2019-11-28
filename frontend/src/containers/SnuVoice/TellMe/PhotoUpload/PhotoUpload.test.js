@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 
 import PhotoUpload from './PhotoUpload';
 import { getMockStore } from '../../../../test-utils/mocks';
@@ -53,12 +54,12 @@ describe('<PhotoUpload />', () => {
     });
 
     it(`should call 'onClickPhotoCancelButton'`, () => {
-        const spyHistoryPush = jest.spyOn(history, 'push')
+        const spyHistoryPush = jest.spyOn(history, 'goBack')
             .mockImplementation(path => { });
         const component = mount(photoUpload);
         const wrapper = component.find('#photo_cancel_button').at(0);
         wrapper.simulate('click');
-        expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/create');
+        expect(spyHistoryPush).toHaveBeenCalledTimes(1);
     });
 
     it(`should set state properly: 'photo' -> 'preview'`, () => {
@@ -97,9 +98,32 @@ describe('<PhotoUpload />', () => {
         expect(photoUploadInstance.state.documentState).toEqual('write');
     });
 
-    it(`should upload photo`, () => {
-        // TODO
-        // 아래 참고해서 적용가능한건가..?
-        // https://github.com/testing-library/react-testing-library/issues/93
-    })
+    it(`should set state properly on file input/ upload`, (done) => {
+        const spyPostphoto = jest.spyOn(axios, 'post')
+            .mockImplementation((url, tm) => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 201,
+                        data: stubFormdata,
+                    };
+                    resolve(result);
+                });
+            });
+        const photoFile = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
+        const component = mount(photoUpload);
+        let wrapper = component.find('#photo_file_file').at(0);
+        wrapper.simulate('change', { target: { files: [photoFile] } });
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        expect(photoUploadInstance.state.photoFile).toEqual(null);
+        expect(photoUploadInstance.state.photoUrl).toEqual(null);
+        photoUploadInstance.setState({ photoFile: photoFile, photoTitle: 'title', photoContent: 'content' });
+        const stubFormdata = new FormData();
+        stubFormdata.append('file', photoFile, photoFile.name);
+        stubFormdata.append('title', 'title');
+        stubFormdata.append('content', 'content');
+        wrapper = component.find('#photo_confirm_button').at(0);
+        wrapper.simulate('click');
+        expect(spyPostphoto).toHaveBeenCalledTimes(1);
+        done();
+    });
 });
