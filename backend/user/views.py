@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, HttpResponseNotFound, JsonResponse
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 import json
 import string
@@ -206,7 +207,7 @@ def check_student_id_duplicate(request, student_id):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-
+@ensure_csrf_cookie
 def check_signin(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
