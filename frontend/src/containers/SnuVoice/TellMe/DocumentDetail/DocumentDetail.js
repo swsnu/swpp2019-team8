@@ -9,6 +9,7 @@ import * as actionCreators from '../../../../store/actions/index';
 import { Button } from 'reactstrap';
 
 import Upperbar from '../../UpperBar/UpperBar';
+import SearchBar from '../../TellMe/SearchBar/SearchBar';
 import './DocumentDetail.css';
 
 class DocumentDetail extends Component {
@@ -35,6 +36,8 @@ class DocumentDetail extends Component {
             <div>
                 <Upperbar />
                 <div className="DocumentDetail">
+                    <br />
+                    <SearchBar />
                     <br />
                     <h4 className="document">Document:</h4>
                     <div className="content">
