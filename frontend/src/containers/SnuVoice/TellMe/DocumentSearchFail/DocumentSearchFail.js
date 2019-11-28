@@ -8,10 +8,6 @@ import * as actionCreator from '../../../../store/actions/index';
 import UpperBar from '../../UpperBar/UpperBar';
 import SearchBar from '../SearchBar/SearchBar';
 
-import {
-    Button
-} from 'reactstrap';
-
 export class DocumentSearchFail extends Component {
 
     componentDidMount = async () => {
