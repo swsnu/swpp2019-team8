@@ -16,6 +16,7 @@ class PhotoUpload extends Component {
         photoTitle: '',
         photoContent: '',
         photoFile: null,
+        photoFileName: null,
         photoUrl: null,
         photoState: 'photo',
         documentState: 'write',
@@ -33,7 +34,7 @@ class PhotoUpload extends Component {
 
     onClickPhotoConfirmButton = () => {
         const formData = new FormData();
-        formData.append('file', this.state.photoFile, this.state.photoFile.name);
+        formData.append('file', this.state.photoFile, this.state.photoFileName);
         formData.append('title', this.state.photoTitle);
         formData.append('content', this.state.photoContent);
         axios.post(
@@ -70,7 +71,7 @@ class PhotoUpload extends Component {
         let file = event.target.files[0];
 
         reader.onloadend = () => {
-            this.setState({ photoFile: file, photoUrl: reader.result });
+            this.setState({ photoFile: file, photoFileName: file.name, photoUrl: reader.result });
             const imageData = reader.result.split(",")[1];
             const img = new Image();
             img.src = reader.result;
@@ -188,6 +189,8 @@ class PhotoUpload extends Component {
         let elemTop = canvas.offsetTop;
         let elements = [];
 
+        const this_tmp = this;
+
         canvas.addEventListener('click', function (event) {
             var x = event.pageX - elemLeft,
                 y = event.pageY - elemTop;
@@ -202,7 +205,6 @@ class PhotoUpload extends Component {
                         ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
                         ctx.filter = 'none';
                         ctx.beginPath();
-                        ctx.lineWidth = "6";
                         ctx.strokeStyle = element.color;
                         ctx.rect(element.left, element.top, element.width, element.height);
                         ctx.stroke();
@@ -211,12 +213,14 @@ class PhotoUpload extends Component {
                         ctx.filter = 'none';
                         ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
                         ctx.beginPath();
-                        ctx.lineWidth = "6";
                         ctx.strokeStyle = element.color;
                         ctx.rect(element.left, element.top, element.width, element.height);
                         ctx.stroke();
                     }
                 }
+            });
+            canvas.toBlob(function (blob) {
+                this_tmp.setState({ photoFile: blob });
             });
         }, false);
 
@@ -237,7 +241,6 @@ class PhotoUpload extends Component {
         elements.forEach(function (element) {
             for (let i = 0; i < n; i++) {
                 ctx.beginPath();
-                ctx.lineWidth = "6";
                 ctx.strokeStyle = element.color;
                 ctx.rect(element.left, element.top, element.width, element.height);
                 ctx.stroke();
