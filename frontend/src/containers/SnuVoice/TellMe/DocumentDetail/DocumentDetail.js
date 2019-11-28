@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { MarkdownPreview } from 'react-marked-markdown';
 
 import * as actionCreators from '../../../../store/actions/index';
 
 import { Button } from 'reactstrap';
+
+import { Remarkable } from 'remarkable';
+import hljs from 'highlight.js';
+
+import 'highlight.js/styles/atom-one-dark.css';
 
 import Upperbar from '../../UpperBar/UpperBar';
 import './DocumentDetail.css';
@@ -24,12 +28,28 @@ class DocumentDetail extends Component {
         this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/edit');
     }
 
+    onClickDocumentDebateButton = () => {
+        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/debates');
+    }
+
     render() {
         let title = '';
         let content = '';
+        let markdownHtml = '';
+
+
+
         if (this.props.selectedDocument) {
             title = this.props.selectedDocument.title;
             content = this.props.selectedDocument.content;
+            var md = new Remarkable('full', {
+                html: true,
+                typographer: true,
+                highlight: function (str, lang) {
+                    return highlightCode(str, lang);
+                }
+            });
+            markdownHtml = md.render(content);
         }
         return (
             <div>
@@ -43,7 +63,7 @@ class DocumentDetail extends Component {
                         <h1 className="title">{title}</h1>
                         {/* <h3>CONTENT</h3> */}
                         <hr />
-                        <MarkdownPreview className="content" value={content} />
+                        <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                         <hr />
                         <Button
                             type="button"
@@ -59,7 +79,10 @@ class DocumentDetail extends Component {
                         >
                             Edit
                         </Button>
-                        <Button className="debateButton">Debate</Button>
+                        <Button 
+                            className="debateButton"
+                            onClick={this.onClickDocumentDebateButton}
+                            >Debate</Button>
                     </div>
                 </div>
             </div>
@@ -78,6 +101,20 @@ export const mapDispatchToProps = dispatch => {
         onGetDocument: document_title =>
             dispatch(actionCreators.getDocument(document_title)),
     }
+}
+
+export function highlightCode(str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+        try {
+            return hljs.highlight(lang, str).value;
+        } catch (err) { console.log(err) }
+    }
+
+    try {
+        return hljs.highlightAuto(str).value;
+    } catch (err) { console.log(err) }
+
+    return ''; // use external default escaping
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DocumentDetail));

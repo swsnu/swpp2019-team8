@@ -15,7 +15,10 @@ describe('TellMe Reducer', () => {
             selectedDocument: null,
             documentDuplicate: false,
             titleDocuments: [],
-            contentDocuments: []
+            contentDocuments: [],
+            debateComments: [],
+            debates: [],
+            selectedDebate: null
         });
     });
 
@@ -32,7 +35,10 @@ describe('TellMe Reducer', () => {
             documentDuplicate: false,
             selectedDocument: null,
             titleDocuments: [],
-            contentDocuments: []
+            contentDocuments: [],
+            debateComments: [],
+            debates: [],
+            selectedDebate: null
         });
     });
 
@@ -50,7 +56,10 @@ describe('TellMe Reducer', () => {
             selectedDocument: stubSelectedDocument,
             documentDuplicate: false,
             titleDocuments: [],
-            contentDocuments: []
+            contentDocuments: [],
+            debateComments: [],
+            debates: [],
+            selectedDebate: null
         });
     });
 
@@ -68,7 +77,108 @@ describe('TellMe Reducer', () => {
             selectedDocument: null,
             documentDuplicate: false,
             titleDocuments: stubSelectedDocument,
-            contentDocuments: stubSelectedDocument
+            contentDocuments: stubSelectedDocument,
+            debateComments: [],
+            debates: [],
+            selectedDebate: null
         });
     });
+
+    it('should post debate comment works', () => {
+        const newState = reducer(undefined, {
+            type: actionTypes.POST_DEBATE
+        })
+
+        expect(newState).toEqual({
+            documents: [],
+            selectedDocument: null,
+            documentDuplicate: false,
+            debates: [],
+            selectedDebate: null,
+            debateComments: [],
+            titleDocuments: [],
+            contentDocuments: []
+
+        })
+    });
+
+    it('should get debate comments works', () => {
+        const newState = reducer(undefined, {
+            type: actionTypes.GET_DEBATE_COMMENTS,
+            commentList : [1, 2]
+        })
+
+        expect(newState).toEqual({
+            documents: [],
+            selectedDocument: null,
+            documentDuplicate: false,
+            debates: [],
+            selectedDebate: null,
+            debateComments: [1, 2],
+            titleDocuments: [],
+            contentDocuments: []
+
+        })
+    });
+
+    it('should get debate works', () => {
+        const newState = reducer(undefined, {
+            type: actionTypes.GET_DEBATE,
+            target: 1
+        })
+
+        expect(newState).toEqual({
+            documents: [],
+            selectedDocument: null,
+            documentDuplicate: false,
+            debates: [],
+            selectedDebate: 1,
+            debateComments: [],
+            titleDocuments: [],
+            contentDocuments: []
+
+        })
+    });
+
+    it('should post debate works', () => {
+        const newState = reducer(undefined, {
+            type: actionTypes.POST_DEBATE,
+            target: 1
+        })
+
+        expect(newState).toEqual({
+            documents: [],
+            selectedDocument: null,
+            documentDuplicate: false,
+            debates: [],
+            selectedDebate: null,
+            debateComments: [],
+            titleDocuments: [],
+            contentDocuments: []
+
+        })
+    })
+
+    it('should get debates works', () => {
+        const newState = reducer(undefined, {
+            type: actionTypes.GET_DEBATES,
+            debateList: 1
+        })
+
+        expect(newState).toEqual({
+            documents: [],
+            selectedDocument: null,
+            documentDuplicate: false,
+            debates: 1,
+            selectedDebate: null,
+            debateComments: [],
+            titleDocuments: [],
+            contentDocuments: []
+
+        })
+    })
+
+
+
+
 })
