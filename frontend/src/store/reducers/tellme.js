@@ -10,6 +10,8 @@ const initialState = {
     titleDocuments : [],
     contentDocuments : [],
     documentDuplicate : false,
+
+    documentConflict: false,
 };
 
 const tellme = (prevState, action) => {
@@ -35,7 +37,9 @@ const tellme = (prevState, action) => {
                     state.documents[i].content = action.content;
                 }
             }
-             return state;  
+
+            return {...state, documentConflict: action.conflict }
+
         }   
         // case actionTypes.GET_PHOTO: {
         //     return state;   // TODO
