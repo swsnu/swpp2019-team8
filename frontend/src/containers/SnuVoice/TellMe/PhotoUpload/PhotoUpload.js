@@ -45,6 +45,7 @@ class PhotoUpload extends Component {
             if (element.blur === true) {
                 ctx.filter = 'blur(20px)';
                 ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
+                ctx.filter = 'none';
             }
         });
 
@@ -217,24 +218,25 @@ class PhotoUpload extends Component {
                 if (y > element.top && y < element.top + element.height
                     && x > element.left && x < element.left + element.width) {
                     element.blur = !element.blur;
-                    if (element.blur === true) {
-                        ctx.filter = 'blur(4px)';
-                        ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
-                        ctx.filter = 'none';
-                        ctx.beginPath();
-                        ctx.strokeStyle = element.color;
-                        ctx.rect(element.left, element.top, element.width, element.height);
-                        ctx.stroke();
-                    }
-                    else if (element.blur === false) {
-                        ctx.filter = 'none';
-                        ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
-                        ctx.beginPath();
-                        ctx.strokeStyle = element.color;
-                        ctx.rect(element.left, element.top, element.width, element.height);
-                        ctx.stroke();
-                    }
                 }
+            });
+
+            ctx.clearRect(0, 0, this_tmp.state.canvasWidth, this_tmp.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
+            ctx.drawImage(img, 0, 0);
+
+            this_tmp.state.blurElements.forEach(function (element, index) {
+                if (element.blur == true) {
+                    ctx.filter = 'blur(20px)';
+                    ctx.drawImage(img, element.left, element.top, element.width, element.height, element.left, element.top, element.width, element.height);
+                    ctx.filter = 'none';
+                }
+            });
+
+            this_tmp.state.blurElements.forEach(function (element, index) {
+                ctx.beginPath();
+                ctx.strokeStyle = element.color;
+                ctx.rect(element.left, element.top, element.width, element.height);
+                ctx.stroke();
             });
         }, false);
 
