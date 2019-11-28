@@ -145,11 +145,8 @@ def petition_comment(request, petition_url):
         if(comment_petition.votes >=4 and comment_petition.status == "preliminary"):
             comment_petition.status = "ongoing"
             comment_petition.save()
-            try:
-                if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
-                    os.makedirs(os.path.join('./media/graph/'+str(comment_petition.id)))
-            except OSError as e:
-                print("Failed to create directory!!!!!")
+            if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
+                os.makedirs(os.path.join('./media/graph/'+str(comment_petition.id)))
             plot_graph(comment_petition.id)
         student_id = request.user.studentId[0:4]
         file_location = './stat/' + str(comment_petition.id) + '.csv'
