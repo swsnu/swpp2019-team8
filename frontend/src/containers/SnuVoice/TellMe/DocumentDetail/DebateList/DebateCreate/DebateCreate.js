@@ -15,8 +15,15 @@ export class DebateCreate extends Component {
         debateContent: '',
     }
 
-    componentDidMount() {
-        this.props.onGetDocument(this.props.match.params.document_title);
+    componentDidMount = async () => {
+        await this.props.onCheckSignIn();
+        if (this.props.signIn) {
+            this.props.onGetDocument(this.props.match.params.document_title);
+        } else {
+            alert("You must be logged in to create a new debate")
+            this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/debates');
+        }
+        
     }
 
     onClickDebateConfirmButton = () => {
@@ -62,6 +69,7 @@ export class DebateCreate extends Component {
 export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
+        signIn: state.usr.signIn
     }
 }
 
@@ -71,6 +79,8 @@ export const mapDispatchToProps = dispatch => {
             dispatch(actionCreators.getDocument(document_title)),
         onCreateDebate: (selectedDocument, debateTitle, debateContent) =>
             dispatch(actionCreators.postDebate(selectedDocument,{ title: debateTitle, content: debateContent})),
+        onCheckSignIn: () =>
+            dispatch(actionCreators.checkSignIn())  
     }
 }
 
