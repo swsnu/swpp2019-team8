@@ -51,6 +51,22 @@ class DocumentCreate extends Component {
     this.setState({ formFeedbackMessage: message })
   };
 
+  onChangeDocumentTitle = (event) => {
+    let message = this.state.formFeedbackMessage;
+    if (/[~!@#$%^&*()_+|<>?:{}.,'";/]/.exec(event.target.value)) {
+      console.log("hi")
+      message.title = "특수문자는 허용되지 않습니다."
+    } else {
+      message.title = "";
+    }
+    this.setState({
+      documentTitle : event.target.value,
+      formFeedbackMessage : message
+    })
+
+
+  }
+
   onClickDocumentCancelButton = () => {
     // 제안: alert("변경 사항은 저장되지 않습니다..이런거")
     this.props.history.push("/tell_me");
@@ -133,9 +149,7 @@ class DocumentCreate extends Component {
                     type="text"
                     id="document_title_input"
                     placeholder="title"
-                    onChange={event =>
-                      this.setState({ documentTitle: event.target.value })
-                    }
+                    onChange={this.onChangeDocumentTitle}
                   ></Input>
                   <FormText color="danger">
                     {this.state.formFeedbackMessage.title}
@@ -178,7 +192,7 @@ class DocumentCreate extends Component {
               type="button"
               id="document_confirm_button"
               disabled={
-                !this.state.documentTitle || !this.state.documentContent
+                !this.state.documentTitle || !this.state.documentContent || this.state.formFeedbackMessage.title === "특수문자는 허용되지 않습니다."
               }
               onClick={this.onClickDocumentConfirmButton}
             >

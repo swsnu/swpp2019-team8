@@ -74,11 +74,10 @@ describe('<SearchBar />', () => {
         createButton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/create')
         myPetitionButton.simulate('click')
-        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/my_petition/1')
+        expect(spyHistoryPush).toHaveBeenCalledTimes(2)
     })
 
     it('should search works', () => {
-        Window.prototype.setItem = jest.fn(() => { })
         const component = mount(searchBar)
         const searchBarInstance = component.find(SearchBar.WrappedComponent).instance()
         const searchInput = component.find('#search_input').at(0)

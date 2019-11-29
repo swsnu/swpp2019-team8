@@ -236,7 +236,7 @@ describe('<PetitionList />', () => {
         const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         petitionListComponent.onClickDetailButton({target : {value : '1'}})
-        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/1')
+        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/petition/1')
 
 
     })

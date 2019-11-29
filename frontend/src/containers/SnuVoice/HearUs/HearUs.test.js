@@ -112,7 +112,7 @@ describe('<HearUs/>', () => {
     it ('should onClickDetailButton works', () => {
         const component = shallow(<HearUs {...props} history={historyMock}/>)
         component.instance().onClickDetailButton({target : {value : '1'}})
-        expect(historyMock.push).toHaveBeenCalledWith('/hear_us/1')
+        expect(historyMock.push).toHaveBeenCalledWith('/hear_us/petition/1')
     })
 
     it ('should onClickCategoryButtons works', () => {

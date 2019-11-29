@@ -71,16 +71,8 @@ describe('<DocumentSearchFail/>', () => {
 
     it('should render without errors', () => {
         const component = shallow(<DocumentSearchFail {...props} history={historyMock}/>)
-        const buttons = component.find('Button')
         const fail = component.find('.DocumentSearchFail')
-        expect(buttons.length).toBe(8)
         expect(fail.length).toBe(1)
-    })
-
-    it('should onClickDetailButton works', () => {
-        const component = shallow(<DocumentSearchFail {...props} history={historyMock}/>)
-        component.instance().onClickDetailButton({ target : {value : '123'}})
-        expect(historyMock.push).toHaveBeenCalledWith('/tell_me/documents/123')
     })
 
     it('should componentDidMount works', async () => {
