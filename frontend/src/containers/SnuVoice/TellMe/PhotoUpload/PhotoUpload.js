@@ -47,7 +47,7 @@ class PhotoUpload extends Component {
     }
 
     onChangePhotoTitleInput = (event) => {
-        let formText = '';
+        let formText;
         if (/[#%?]/.exec(event.target.value)) {
             formText = "# ? % 는 허용되지 않습니다."
         } else {
