@@ -4,7 +4,20 @@ import axios from 'axios';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Button, ButtonGroup, Input, TabContent, TabPane, Nav, NavItem, NavLink, Label, Form, FormGroup } from 'reactstrap';
+import {
+    Button,
+    ButtonGroup,
+    Input,
+    TabContent,
+    TabPane,
+    Nav,
+    NavItem,
+    NavLink,
+    Label,
+    Form,
+    FormGroup,
+    FormText
+} from 'reactstrap';
 import { MarkdownPreview } from 'react-marked-markdown';
 
 import Upperbar from '../../UpperBar/UpperBar';
@@ -24,12 +37,31 @@ class PhotoUpload extends Component {
         canvasWidth: 100,
         canvasHeight: 100,
         blurElements: [],
+        titleFormText: ''
     }
 
     constructor(props) {
         super(props);
         this.refCanvas = React.createRef();
         this.refImg = React.createRef();
+    }
+
+    onChangePhotoTitleInput = (event) => {
+        let formText = '';
+        if (/[#%?]/.exec(event.target.value)) {
+            formText = "# ? % 는 허용되지 않습니다."
+        } else {
+            if (/.jpg$/.exec(event.target.value) || /.jpeg$/.exec(event.target.value) || /.bmp$/.exec(event.target.value) || /.png$/.exec(event.target.value)) {
+                formText = ''
+            } else {
+                formText = ".jpg/.jpeg/.bmp/.png로 끝나야 합니다."
+            }
+        }
+        this.setState({
+            photoTitle: event.target.value,
+            titleFormText: formText
+        })
+
     }
 
     onClickPhotoConfirmButton = () => {
@@ -338,8 +370,11 @@ class PhotoUpload extends Component {
                                     <FormGroup>
                                         <Label>Title</Label>
                                         <Input type="text" id="photo_title_input" placeholder="title"
-                                            onChange={(event) => this.setState({ photoTitle: event.target.value })}></Input>
+                                            onChange={this.onChangePhotoTitleInput}></Input>
                                     </FormGroup>
+                                    <FormText color="danger">
+                                        {this.state.titleFormText}
+                                    </FormText>
                                     <FormGroup>
                                         <Label>Content</Label>
                                         <Input type="textarea" rows="10" id="photo_content_textarea" placeholder="content"
@@ -361,7 +396,7 @@ class PhotoUpload extends Component {
                         </TabContent>
                     </div>
                     <ButtonGroup>
-                        <Button type="button" id="photo_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent}
+                        <Button type="button" id="photo_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent || this.state.titleFormText !== ""}
                             onClick={this.onClickPhotoConfirmButton}>Confirm</Button>
                         <Button type="button" id="photo_cancel_button"
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>

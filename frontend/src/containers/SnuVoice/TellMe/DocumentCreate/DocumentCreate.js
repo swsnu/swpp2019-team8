@@ -38,8 +38,14 @@ class DocumentCreate extends Component {
 
   onClickDocumentConfirmButton = async () => {
     let message = this.state.formFeedbackMessage;
+    let title = this.state.documentTitle;
+    let input = '';
+    for (var i = title.length - 1; i >= 0; i--) {
+      if (title[i] !== ' ') break;
+      else input = title.slice(0, i)
+    }
     await this.props.onStoreDocument(
-      this.state.documentTitle,
+      input,
       this.state.documentContent
     );
     if (this.props.documentDuplicate) {
@@ -53,15 +59,14 @@ class DocumentCreate extends Component {
 
   onChangeDocumentTitle = (event) => {
     let message = this.state.formFeedbackMessage;
-    if (/[~!@#$%^&*()_+|<>?:{}.,'";/]/.exec(event.target.value)) {
-      console.log("hi")
-      message.title = "특수문자는 허용되지 않습니다."
+    if (/[#%?]/.exec(event.target.value)) {
+      message.title = "# ? % 는 허용되지 않습니다."
     } else {
       message.title = "";
     }
     this.setState({
-      documentTitle : event.target.value,
-      formFeedbackMessage : message
+      documentTitle: event.target.value,
+      formFeedbackMessage: message
     })
 
 
@@ -192,7 +197,7 @@ class DocumentCreate extends Component {
               type="button"
               id="document_confirm_button"
               disabled={
-                !this.state.documentTitle || !this.state.documentContent || this.state.formFeedbackMessage.title === "특수문자는 허용되지 않습니다."
+                !this.state.documentTitle || !this.state.documentContent || this.state.formFeedbackMessage.title !== ""
               }
               onClick={this.onClickDocumentConfirmButton}
             >
