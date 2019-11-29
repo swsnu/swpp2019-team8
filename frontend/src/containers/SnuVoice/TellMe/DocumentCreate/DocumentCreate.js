@@ -61,6 +61,8 @@ class DocumentCreate extends Component {
     let message = this.state.formFeedbackMessage;
     if (/[#%?]/.exec(event.target.value)) {
       message.title = "# ? % 는 허용되지 않습니다."
+    } else if (/.jpg$/.exec(event.target.value) || /.jpeg$/.exec(event.target.value) || /.bmp$/.exec(event.target.value) || /.png$/.exec(event.target.value)) {
+      message.title = "document 제목은 .jpg/.jpeg/.png/.bmp로 끝낼 수 없습니다."
     } else {
       message.title = "";
     }
