@@ -20,7 +20,7 @@ export const postPetition = (petition) => {
     return dispatch => {
         return axios.post('/api/hearus/petition/', petition).then(res => {
             dispatch(postPetition_(res.data));
-            dispatch(push('/hear_us/' + res.data.url));
+            dispatch(push('/hear_us/petition/' + res.data.url));
         })
             .catch(res => {
                 alert('post Petition Failed.')

@@ -38,8 +38,14 @@ class DocumentCreate extends Component {
 
   onClickDocumentConfirmButton = async () => {
     let message = this.state.formFeedbackMessage;
+    let title = this.state.documentTitle;
+    let input = '';
+    for (var i = title.length - 1; i >= 0; i--) {
+      if (title[i] !== ' ') break;
+      else input = title.slice(0, i)
+    }
     await this.props.onStoreDocument(
-      this.state.documentTitle,
+      input,
       this.state.documentContent
     );
     if (this.props.documentDuplicate) {
@@ -50,6 +56,23 @@ class DocumentCreate extends Component {
 
     this.setState({ formFeedbackMessage: message })
   };
+
+  onChangeDocumentTitle = (event) => {
+    let message = this.state.formFeedbackMessage;
+    if (/[#%?]/.exec(event.target.value)) {
+      message.title = "# ? % 는 허용되지 않습니다."
+    } else if (/.jpg$/.exec(event.target.value) || /.jpeg$/.exec(event.target.value) || /.bmp$/.exec(event.target.value) || /.png$/.exec(event.target.value)) {
+      message.title = "document 제목은 .jpg/.jpeg/.png/.bmp로 끝낼 수 없습니다."
+    } else {
+      message.title = "";
+    }
+    this.setState({
+      documentTitle: event.target.value,
+      formFeedbackMessage: message
+    })
+
+
+  }
 
   onClickDocumentCancelButton = () => {
     // 제안: alert("변경 사항은 저장되지 않습니다..이런거")
@@ -133,9 +156,7 @@ class DocumentCreate extends Component {
                     type="text"
                     id="document_title_input"
                     placeholder="title"
-                    onChange={event =>
-                      this.setState({ documentTitle: event.target.value })
-                    }
+                    onChange={this.onChangeDocumentTitle}
                   ></Input>
                   <FormText color="danger">
                     {this.state.formFeedbackMessage.title}
@@ -178,7 +199,7 @@ class DocumentCreate extends Component {
               type="button"
               id="document_confirm_button"
               disabled={
-                !this.state.documentTitle || !this.state.documentContent
+                !this.state.documentTitle || !this.state.documentContent || this.state.formFeedbackMessage.title !== ""
               }
               onClick={this.onClickDocumentConfirmButton}
             >

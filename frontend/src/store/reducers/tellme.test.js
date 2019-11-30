@@ -20,6 +20,7 @@ describe('TellMe Reducer', () => {
             debates: [],
             selectedDebate: null,
             documentConflict: false,
+            selectedPhoto: null
         });
     });
 
@@ -41,6 +42,7 @@ describe('TellMe Reducer', () => {
             debates: [],
             selectedDebate: null,
             documentConflict: false,
+            selectedPhoto: null,
         });
     });
 
@@ -63,6 +65,7 @@ describe('TellMe Reducer', () => {
             debates: [],
             selectedDebate: null,
             documentConflict: false,
+            selectedPhoto: null,
         });
     });
 
@@ -82,9 +85,10 @@ describe('TellMe Reducer', () => {
             titleDocuments: stubSelectedDocument,
             contentDocuments: stubSelectedDocument,
             debateComments: [],
+            selectedPhoto: null,
             debates: [],
             selectedDebate: null,
-            documentConflict: false,
+            documentConflict: false
         });
     });
 
@@ -98,6 +102,7 @@ describe('TellMe Reducer', () => {
             selectedDocument: null,
             documentDuplicate: false,
             debates: [],
+            selectedPhoto: null,
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],
@@ -116,6 +121,7 @@ describe('TellMe Reducer', () => {
             documents: [],
             selectedDocument: null,
             documentDuplicate: false,
+            selectedPhoto: null,
             debates: [],
             selectedDebate: null,
             debateComments: [1, 2],
@@ -137,10 +143,11 @@ describe('TellMe Reducer', () => {
             documentDuplicate: false,
             debates: [],
             selectedDebate: 1,
+            selectedPhoto: null,
             debateComments: [],
             titleDocuments: [],
             contentDocuments: [],
-            documentConflict: false,
+            documentConflict: false
         })
     });
 
@@ -157,6 +164,7 @@ describe('TellMe Reducer', () => {
             debates: [],
             selectedDebate: null,
             debateComments: [],
+            selectedPhoto: null,
             titleDocuments: [],
             contentDocuments: [],
             documentConflict: false,
@@ -174,6 +182,28 @@ describe('TellMe Reducer', () => {
             selectedDocument: null,
             documentDuplicate: false,
             debates: 1,
+            selectedPhoto: null,
+            selectedDebate: null,
+            debateComments: [],
+            titleDocuments: [],
+            contentDocuments: [],
+            documentConflict: false,
+
+        })
+    })
+
+    it('should get photo works', () => {
+        const newState = reducer(undefined, {
+            type: actionTypes.GET_PHOTO,
+            photo : 1
+        })
+
+        expect(newState).toEqual({
+            documents: [],
+            selectedDocument: null,
+            documentDuplicate: false,
+            debates: [],
+            selectedPhoto: 1,
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],

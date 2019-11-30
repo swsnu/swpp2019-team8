@@ -15,12 +15,12 @@ import DocumentEdit from './containers/SnuVoice/TellMe/DocumentDetail/DocumentEd
 import DebateList from './containers/SnuVoice/TellMe/DocumentDetail/DebateList/DebateList';
 import DebateCreate from './containers/SnuVoice/TellMe/DocumentDetail/DebateList/DebateCreate/DebateCreate';
 import DebateDetail from './containers/SnuVoice/TellMe/DocumentDetail/DebateList/DebateDetail/DebateDetail';
+import PhotoDetail from './containers/SnuVoice/TellMe/PhotoDetail/PhotoDetail';
 import HearUs from './containers/SnuVoice/HearUs/HearUs';
 import MyPetition from './containers/SnuVoice/HearUs/MyPetition/MyPetition';
 import PetitionList from './containers/SnuVoice/HearUs/PetitionList/PetitionList';
 import PetitionCreate from './containers/SnuVoice/HearUs/PetitionCreate/PetitionCreate';
 import PetitionDetail from './containers/SnuVoice/HearUs/PetitionDetail/PetitionDetail';
-import PetitionStatistic from './containers/SnuVoice/HearUs/PetitionDetail/PetitionStatistic/PetitionStatistic';
 
 function App(props) {
   return (
@@ -38,12 +38,13 @@ function App(props) {
           <Route path='/tell_me/documents/:document_title/debates' exact component={DebateList} />
           <Route path='/tell_me/documents/:document_title/debates/create' exact component={DebateCreate} />
           <Route path='/tell_me/documents/:document_title/debates/:debate_id' exact component={DebateDetail} />
+          <Route path='/tell_me/photo/:photo_title' exact component={PhotoDetail} />
           <Route path='/hear_us' exact component={HearUs} />
-          <Route path='/hear_us/my_petition/:user_id' exact component={MyPetition} />
+          <Route path='/hear_us/my_petition' exact component={MyPetition} />
           <Route path='/hear_us/petitions' exact component={PetitionList} />
           <Route path='/hear_us/search/:petition_title' exact component={PetitionList} />
           <Route path='/hear_us/create' exact component={PetitionCreate} />
-          <Route path='/hear_us/:petition_url' exact component={PetitionDetail} />
+          <Route path='/hear_us/petition/:petition_url' exact component={PetitionDetail} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
       </div >

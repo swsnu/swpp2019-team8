@@ -23,7 +23,7 @@ def document(request):
                 return HttpResponseBadRequest()
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
-        #unique check
+        # unique check
         exist_document = [document for document in Document.objects.filter(
             title__istartswith=document_title, title__iendswith=document_title).values()]
         unique = False
@@ -32,14 +32,14 @@ def document(request):
                 unique = True
         if unique == True:
             response_dict = {
-                'documentDuplicate' : True
+                'documentDuplicate': True
             }
             return JsonResponse(response_dict, safe=False)
         else:
             document = Document(title=document_title, content=document_content)
             document.save()
-            response_dict = {'documentDuplicate' : False, 'id': document.id,
-                            'title': document.title, 'content': document.content}
+            response_dict = {'documentDuplicate': False, 'id': document.id,
+                             'title': document.title, 'content': document.content}
             return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
@@ -118,6 +118,22 @@ def photo(request):
         return HttpResponseNotAllowed(['POST'])
 
 
+def photo_title(request, photo_title):
+    if request.method == 'GET':
+        try:
+            photo = Photo.objects.get(title=photo_title)
+        except Photo.DoesNotExist:
+            return HttpResponse(status=404)
+        dict_to_return = {
+            'photo': str(photo.photo),
+            'title': photo.title,
+            'content': photo.content
+        }
+        return JsonResponse(dict_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+
 def debates_by_document(request, document_title):
     try:
         debate_document = Document.objects.get(title=document_title)
@@ -130,9 +146,9 @@ def debates_by_document(request, document_title):
         response = []
         for i in debate_list_by_document:
             res_dict = {
-                'id' : i.id,
-                'author' : i.author.nickname,
-                'title' : i.title
+                'id': i.id,
+                'author': i.author.nickname,
+                'title': i.title
             }
             response.append(res_dict)
         return JsonResponse(response, safe=False, status=200)

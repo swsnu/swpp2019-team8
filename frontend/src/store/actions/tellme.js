@@ -177,7 +177,25 @@ export const postDebateComment = (comment, debate_id) => {
     };
 };
 
-/*
+
+   export const getPhoto_ = (photo) => {
+    return {
+        type: actionTypes.GET_PHOTO,
+        photo : photo
+    };
+    };
+
+    export const getPhoto = (photo_title) => {
+        return dispatch => {
+            return axios.get('/api/tellme/photo/' + photo_title + '/')
+                .then(res => {
+                    dispatch(getPhoto_(res.data))
+                })
+                .catch(e => {})
+        };
+    };
+    
+  /* 
    export const postPhoto_ = (TODO) => {
        return {
            type: actionTypes.POST_PHOTO,
@@ -190,24 +208,8 @@ export const postDebateComment = (comment, debate_id) => {
            // TODO
        };
    };
-   */
 
-/*
-   export const getPhoto_ = (TODO) => {
-       return {
-           type: actionTypes.GET_PHOTO,
-           // TODO
-       };
-   };
-   
-   export const getPhoto = (TODO) => {
-       return dispatch => {
-           // TODO
-       };
-   };
-   */
 
-/*
    export const putPhoto_ = (TODO) => {
        return {
            type: actionTypes.PUT_PHOTO,
@@ -220,4 +222,5 @@ export const postDebateComment = (comment, debate_id) => {
            // TODO
        };
    };
-   */
+  */
+   

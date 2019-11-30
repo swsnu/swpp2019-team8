@@ -40,7 +40,7 @@ export class SearchBar extends Component {
     }
 
     onClickMyPetitionButton = () => {
-        this.props.history.push('/hear_us/my_petition/' + this.props.selectedUser.id)
+        this.props.history.push('/hear_us/my_petition')
     }
 
     render() {

@@ -39,9 +39,13 @@ describe('<PhotoUpload />', () => {
         const photoTitle = 'TEST_TITLE';
         const component = mount(photoUpload);
         const wrapper = component.find('#photo_title_input').at(0);
-        wrapper.simulate('change', { target: { value: photoTitle } });
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        wrapper.simulate('change', { target: { value: photoTitle } });
         expect(photoUploadInstance.state.photoTitle).toEqual(photoTitle);
+        wrapper.simulate('change', { target: { value: "###" } });
+        expect(photoUploadInstance.state.titleFormText).toEqual("# ? % 는 허용되지 않습니다.");
+        wrapper.simulate('change', { target: { value: "asd.jpg" } });
+        expect(photoUploadInstance.state.titleFormText).toEqual("");
     });
 
     it(`should set state properly on content input`, () => {
