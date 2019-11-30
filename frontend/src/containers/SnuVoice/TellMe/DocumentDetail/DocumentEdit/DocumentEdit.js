@@ -73,7 +73,7 @@ class DocumentEdit extends Component {
                 "/tell_me/documents/" + this.props.selectedDocument.title
             );
         }
-        console.log(this.props.documentConflict);
+        //console.log(this.props.documentConflict);
     };
 
     onClickDocumentCancelButton = () => {

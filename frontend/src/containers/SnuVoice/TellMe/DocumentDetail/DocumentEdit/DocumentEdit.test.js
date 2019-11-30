@@ -17,6 +17,7 @@ const stubInitialState = {
         content: 'SELECTED_DOCUMENT_TEST_CONTENT',
     },
 
+    documentConflict: true,
 };
 
 const mockStore = getMockStore(stubInitialState);
@@ -24,6 +25,8 @@ const mockStore = getMockStore(stubInitialState);
 describe('<DocumentEdit />', () => {
     let documentEdit;
     let spyOnGetDocument;
+    window.alert = jest.fn();
+
 
     beforeEach(() => {
         documentEdit = (
@@ -54,49 +57,50 @@ describe('<DocumentEdit />', () => {
         const wrapper = component.find('#document_content_textarea').at(0);
         wrapper.simulate('change', { target: { value: documentContent } });
         const documentEditInstance = component.find(DocumentEdit.WrappedComponent).instance();
-        expect(documentEditInstance.state.documentContent).toEqual(documentContent);
+        expect(documentEditInstance.state.newDocumentContent).toEqual(documentContent);
     });
 
-    it(`should call 'putDocument'`, () => {
+    it(`should call 'putDocument'`,  async () => {
         const spyPutDocument = jest.spyOn(actionCreators, 'putDocument')
             .mockImplementation(td => { return dispatch => { }; });
-        const component = mount(documentEdit);
+        const component = await mount(documentEdit);
         const documentEditInstance = component.find(DocumentEdit.WrappedComponent).instance()
         documentEditInstance.setState({
-            documentContent: 'TEST_CONTENT',
+            newDocumentContent: 'TEST_CONTENT',
         });
         const wrapper = component.find('#document_confirm_button').at(0);
-        wrapper.simulate('click');
+        await wrapper.simulate('click');
+
         expect(spyPutDocument).toHaveBeenCalledTimes(1);
     });
 
-    it(`should call 'onClickDocumentCancelButton'`, () => {
+    it(`should call 'onClickDocumentCancelButton'`, async () => {
         const spyHistoryPush = jest.spyOn(history, 'goBack')
             .mockImplementation(path => { });
-        const component = mount(documentEdit);
+        const component = await mount(documentEdit);
         const wrapper = component.find('#document_cancel_button').at(0);
-        wrapper.simulate('click');
+        await wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledTimes(1);//must to fix
     });
 
-    it(`should call 'onClickPhotoButton'`, () => {
+    it(`should call 'onClickPhotoButton'`, async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-        const component = mount(documentEdit);
+        const component = await mount(documentEdit);
         const wrapper = component.find('#photo_button').at(0);
-        wrapper.simulate('click');
+        await wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/photo');
     });
 
-    it(`should set state properly: 'write' -> 'preview'`, () => {
-        const component = mount(documentEdit);
+    it(`should set state properly: 'write' -> 'preview'`, async () => {
+        const component = await mount(documentEdit);
         const documentEditInstance = component.find(DocumentEdit.WrappedComponent).instance()
         documentEditInstance.setState({ documentState: 'write', });
         let wrapper = component.find('#preview_tab_button').at(0);
-        wrapper.simulate('click');
+        await wrapper.simulate('click');
         expect(documentEditInstance.state.documentState).toEqual('preview');
         wrapper = component.find('#write_tab_button').at(0);
-        wrapper.simulate('click');
+        await wrapper.simulate('click');
         expect(documentEditInstance.state.documentState).toEqual('write');
     });
 
