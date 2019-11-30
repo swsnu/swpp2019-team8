@@ -22,9 +22,9 @@ export class HearUs extends Component {
     this.setState({ selectedCategory: event.target.value })
   };
 
-  onClickDetailButton = event => {
+  onClickDetailButton = petition => {
     // petion detail로 redirect
-    this.props.history.push("/hear_us/petition/" + event.target.value);
+    this.props.history.push("/hear_us/petition/" + petition.url);
   };
 
   onClickListButton = () => {
@@ -69,7 +69,7 @@ export class HearUs extends Component {
                   state={petition.status}
                   title={petition.title}
                   votes={petition.votes}
-                  onClick={this.onClickDetailButton}
+                  onClick={() => this.onClickDetailButton(petition)}
                 />
               )
             } else return undefined;
@@ -91,8 +91,7 @@ export class HearUs extends Component {
                   votes={petition.votes}
                   category={petition.category}
                   dueDate={petition.end_date}
-                  onClick={this.onClickDetailButton}
-                />
+                  onClick={() => this.onClickDetailButton(petition)}                />
               )
             } else return undefined;
           })
@@ -113,8 +112,7 @@ export class HearUs extends Component {
                   category={petition.category}
                   dueDate={petition.end_date}
                   votes={petition.votes}
-                  onClick={this.onClickDetailButton}
-                />
+                  onClick={() => this.onClickDetailButton(petition)}                />
               )
             } else return undefined;
           })
@@ -134,13 +132,12 @@ export class HearUs extends Component {
                   votes={petition.votes}
                   state={petition.status}
                   title={petition.title}
-                  onClick={this.onClickDetailButton}
+                  onClick={() => this.onClickDetailButton(petition)}
                 />
               )
             } else return undefined;
           })
       );
-
     }
 
     return (
