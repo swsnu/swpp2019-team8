@@ -41,15 +41,18 @@ describe('<DocumentCreate />', () => {
     });
 
     it(`should set state properly on title input`, () => {
-        const documentTitle = 'TEST_TITLE';
+        const documentTitle = 'TEST#TITLE';
         const component = mount(documentCreate);
         const wrapper = component.find('#document_title_input').at(0);
-        wrapper.simulate('change', { target: { value: documentTitle } });
         const documentCreateInstance = component.find(DocumentCreate.WrappedComponent).instance();
-        expect(documentCreateInstance.state.formFeedbackMessage.title).toEqual("특수문자는 허용되지 않습니다.");
+        wrapper.simulate('change', { target: { value: documentTitle } });
+        expect(documentCreateInstance.state.formFeedbackMessage.title).toEqual("# ? % 는 허용되지 않습니다.");
         expect(documentCreateInstance.state.documentContent).toEqual('');
+        wrapper.simulate('change', { target: { value: "1.jpg" } });
+        expect(documentCreateInstance.state.formFeedbackMessage.title).toEqual("document 제목은 .jpg/.jpeg/.png/.bmp로 끝낼 수 없습니다.");
         wrapper.simulate('change', { target: { value: "1" } });
-        expect(documentCreateInstance.state.documentTitle).toBe('1')
+        expect(documentCreateInstance.state.documentTitle).toBe('1');
+        expect(documentCreateInstance.state.formFeedbackMessage.title).toEqual("");
     });
 
     it(`should set state properly on content input`, () => {
@@ -95,7 +98,7 @@ describe('<DocumentCreate />', () => {
         const component = mount(documentCreate);
         const documentCreateInstance = component.find(DocumentCreate.WrappedComponent).instance()
         documentCreateInstance.setState({
-            documentTitle: 'TEST_TITLE',
+            documentTitle: 'TEST_TITLE     ',
             documentContent: 'TEST_CONTENT',
         });
         const wrapper = component.find('#document_confirm_button').at(0);
