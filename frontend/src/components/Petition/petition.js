@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Table } from 'reactstrap';
+import { Table } from 'reactstrap';
 
 const Petition = (props) => {
     let dueDate = '';
