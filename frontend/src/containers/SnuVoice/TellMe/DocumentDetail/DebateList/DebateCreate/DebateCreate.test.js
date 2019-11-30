@@ -7,6 +7,7 @@ describe('<DebateCreate />', () => {
     let props;
     let mocked = jest.fn();
     let mockHistory = { push: jest.fn() };
+    window.alert = jest.fn();
 
     beforeEach(() => {
         props = {

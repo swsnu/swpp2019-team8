@@ -6,6 +6,7 @@ describe('<MyPetition />', () => {
     let props;
     let mock = jest.fn();
     let mockHistory = { push : jest.fn() };
+    window.alert = jest.fn();
 
     beforeEach(()=> {
         props = {
