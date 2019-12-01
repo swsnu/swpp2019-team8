@@ -39,8 +39,8 @@ describe('<MyPetition />', () => {
 
     it('should onClickDetailButton work', () => {
         const component = shallow(<MyPetition {...props} history={mockHistory} />);
-        component.instance().onClickDetailButton( { target : { value: "1"}} );
-        expect(mockHistory.push).toHaveBeenCalledWith('/hear_us/1');
+        component.instance().onClickDetailButton( {url : "1"} );
+        expect(mockHistory.push).toHaveBeenCalledWith('/hear_us/petition/1');
 
     })
 
