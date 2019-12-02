@@ -7,9 +7,7 @@ import { Button, Table } from 'reactstrap';
 
 import Upperbar from "../../UpperBar/UpperBar";
 import Petition from "../../../../components/Petition/petition";
-import Category from "../../../../components/Category/category";
 import * as actionCreator from "../../../../store/actions/index";
-import SearchBar from "../SearchBar/SearchBar";
 
 
 export class MyPetition extends Component {

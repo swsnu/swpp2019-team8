@@ -8,7 +8,6 @@ import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 import * as actionCreators from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
-import SearchBar from '../../HearUs/SearchBar/SearchBar';
 import './PetitionDetail.css';
 
 

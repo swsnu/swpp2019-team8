@@ -11,7 +11,7 @@ import {
     InputGroupAddon
 } from 'reactstrap';
 
-export class SearchBar extends Component {
+export class HearUsSearchBar extends Component {
     state = {
         searchInput: '',
     }
@@ -35,26 +35,7 @@ export class SearchBar extends Component {
         this.props.getPetitionByTitle(input);
     }
 
-    onClickCreateButton = () => {
-        this.props.history.push('/hear_us/create')
-    }
-
-    onClickMyPetitionButton = () => {
-        this.props.history.push('/hear_us/my_petition')
-    }
-
-    render() {
-        let buttons = '';
-        if (this.props.signIn === true) {
-            buttons = (
-                <div className="userOptions">
-                    <Button type="button" id="create_button"
-                        onClick={this.onClickCreateButton}>NEW</Button>
-                    <Button type="button" id="my_petition_button"
-                        onClick={this.onClickMyPetitionButton}>MINE</Button>
-                </div>
-            )
-        }
+    render() {    
         return (
             <div>
                 <InputGroup className="searchBar">
@@ -67,8 +48,6 @@ export class SearchBar extends Component {
                             onClick={this.onClickSearchConfirmButton}>Search</Button>
                     </InputGroupAddon>
                 </InputGroup>
-                <br />
-                {buttons}
             </div >
         )
     }
@@ -91,4 +70,4 @@ export const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withRouter(SearchBar));
+)(withRouter(HearUsSearchBar));
