@@ -28,13 +28,15 @@ def check_end(petition_id):
     if(target_petition.status == 'ongoing'):
         target_petition.status = 'end'
         target_petition.save()
-        
-@shared_task
-def plot_graph(petition_id):
-    plt_graph.apply_async([petition_id], countdown=10)
 
 @shared_task
-def plt_graph(petition_id):
+def plot_all():
+    petition_list = [petition for petition in Petition.objects.filter(status='ongoing').values()]
+    for petition in petition_list:
+        plot_graph(petition['id'])
+
+@shared_task
+def plot_graph(petition_id):
     file_location = './stat/' + str(petition_id) + '.csv'#petition_id
     stat = pd.read_csv(file_location)
     graph_loc = './media/graph/'

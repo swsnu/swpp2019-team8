@@ -57,10 +57,6 @@ class PetitionDetail extends Component {
         }
     }
 
-    onClickDrawGraphButton = () => {
-        this.props.onDrawGraph(this.props.match.params.petition_url);
-        window.location.reload(false);
-    }
 
     render() {
         let title = '';
@@ -191,7 +187,6 @@ class PetitionDetail extends Component {
                             <img src={graphSrc + "/department.jpg"} style={{ width: 450 }} />
                             <b5> studentId </b5>
                             <img src={graphSrc + "/studentId.jpg"} style={{ width: 450 }} />
-                            <Button type="button" id="more-statistics-button" onClick={this.onClickDrawGraphButton}>More Statistics..</Button>
                             <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
                             <br /><br />
                         </div>
@@ -244,9 +239,7 @@ export const mapDispatchToProps = dispatch => {
         onPetitionVote: petition_url =>
             dispatch(actionCreators.putPetitionVote(petition_url)),
         onGetCsvFile: petition_url =>
-            dispatch(actionCreators.getCsvFile(petition_url)),
-        onDrawGraph: petition_url =>
-            dispatch(actionCreators.getDrawGraph(petition_url))
+            dispatch(actionCreators.getCsvFile(petition_url))
     }
 }
 

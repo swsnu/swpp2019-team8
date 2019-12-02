@@ -187,16 +187,5 @@ def downlaod_csv(request, petition_url):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-def draw_graph(request, petition_url):
-    if request.method == 'GET':
-        try:
-            petition = Petition.objects.get(url=petition_url)
-        except Petition.DoesNotExist:
-            return HttpResponse(status=404)
-        plot_graph(petition.id)
-        return HttpResponse(status=200)
-    else:
-        return HttpResponseNotAllowed(['GET'])
-        
 
 # Create your views here.
