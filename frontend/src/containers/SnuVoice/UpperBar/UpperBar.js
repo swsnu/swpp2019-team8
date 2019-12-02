@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actionCreator from '../../../store/actions/index'
 
+
 import HearUsSearchBar from '../HearUs/HearUsSearchBar/HearUsSearchBar'
 import TellMeSearchBar from '../TellMe/TellMeSearchBar/TellMeSearchBar'
+
+
+import './UpperBar.css';
 
 import {
     Button,

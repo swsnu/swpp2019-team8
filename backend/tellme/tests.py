@@ -119,19 +119,19 @@ class DebateTestCase(TestCase):
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'title', 'content': '123'}),
+        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'title', 'content': '123', 'version': '0'}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'TI', 'content': '123'}),
+        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'TI', 'content': '123', 'version': '0'}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 404)
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123'}),
+        response = client.put('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123', 'ver': '0'}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
-        response = client.post('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123'}),
+        response = client.post('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123', 'ver':'0'}),
                                content_type='application/json')
         self.assertEqual(response.status_code, 405)
 

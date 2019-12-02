@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from .models import Petition, PetitionComment
-from .tasks import status_changer,check_fail,check_end
+from .tasks import status_changer,check_fail,check_end,plot_graph,plot_all
 from unittest.mock import patch
 from user.models import User
 from django.utils import timezone
@@ -47,6 +47,19 @@ class HearusTestCase(TestCase):
         petition = Petition.objects.get(id=2)
         self.assertEqual(petition.status, 'end')
 
+    @patch('hearus.tasks.plot_graph')
+    def test_graph(self,petition_id):
+        client = Client(enforce_csrf_checks=False)
+        response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
+                               content_type='application/json')
+        petition = Petition.objects.get(title="title")
+        response = client.get('/api/hearus/petition/' + str(petition.id) + '/download/')
+        plot_graph(petition_id=1)
+
+    @patch('hearus.tasks.plot_all')
+    def test_graph_all(self,petition_id):
+        plot_all()
+        
     def test_petition(self):
         client = Client(enforce_csrf_checks=False)
         response = client.get('/api/hearus/petition/')
