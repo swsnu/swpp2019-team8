@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('petition/', views.petition),
@@ -11,3 +13,8 @@ urlpatterns = [
     path('petition/<str:petition_url>/download/', views.downlaod_csv),
     path('petition/document_title/<str:document_title>/', views.petition_by_document_title)
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.GRAPH_URL,
+                          document_root=settings.MEDIA_ROOT)
+

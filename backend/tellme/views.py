@@ -75,17 +75,34 @@ def document_title(request, document_title):
             req_data = json.loads(request.body.decode())
             document_target = req_data['target']
             document_content = req_data['content']
+            document_version = req_data['version']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         try:
             document = Document.objects.get(title=document_target)
         except Document.DoesNotExist:
             return HttpResponse(status=404)
-        document.content = document_content
-        document.save()
-        response_dict = {'title': document.title,
-                         'content': document.content}
-        return JsonResponse(response_dict, status=201)
+        print(document.version, document_version)
+
+        if document_version == document.version:
+            document.content = document_content
+            document.version = document.version+1
+            document.save()
+            response_dict = {
+                'title': document.title,
+                'content': document.content,
+                'version': document.version,
+                'conflict': False,
+                            }
+            return JsonResponse(response_dict, status=201)
+        else:
+            response_dict = {
+                'title': document.title,
+                'content': document.content,
+                'version': document.version,
+                'conflict': True,
+                }
+            return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 
@@ -133,7 +150,6 @@ def debates_by_document(request, document_title):
                 'title': i.title
             }
             response.append(res_dict)
-
         return JsonResponse(response, safe=False, status=200)
 
     elif request.method == 'POST':

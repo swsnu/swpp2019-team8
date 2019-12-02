@@ -35,4 +35,5 @@ h2, h3, h4, h6 {
     color: black !important;
     text-align: left;
     padding-left: 5%; 
+    padding-right: 5%;
 }

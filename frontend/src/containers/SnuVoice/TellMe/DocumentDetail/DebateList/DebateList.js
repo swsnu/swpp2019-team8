@@ -19,8 +19,13 @@ export class DebateList extends Component {
         this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + "/debates/" + event.target.value);
     }
 
-    onClickNewDebateButton = () => {
-        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + "/debates/create");
+    onClickNewDebateButton = async () => {
+        await this.props.onCheckSignIn();
+        if (this.props.signIn) {
+            this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + "/debates/create");
+        } else {
+            alert("You must be logged in to create a new debate")
+        }
     }
 
 
@@ -66,7 +71,8 @@ export class DebateList extends Component {
 export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
-        debates: state.tm.debates
+        debates: state.tm.debates,
+        signIn: state.usr.signIn,
     }
 }
 
@@ -77,6 +83,9 @@ export const mapDispatchToProps = dispatch => {
    
         onGetDebates: (document_title) =>
             dispatch(actionCreators.getDebates(document_title)),
+
+        onCheckSignIn: () =>
+            dispatch(actionCreators.checkSignIn())  
     }
 }
 

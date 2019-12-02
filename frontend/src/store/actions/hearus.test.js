@@ -239,4 +239,22 @@ describe('ActionCreators', () => {
         expect(spyGet).toHaveBeenCalledTimes(7);
 
     })
+
+    it(`'getDrawGraph' should draw graph correctly`, (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: null,
+                    }
+                    resolve(result);
+                });
+            })
+        store.dispatch(actionCreators.getDrawGraph()).then(() => {
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
 });

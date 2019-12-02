@@ -35,11 +35,13 @@ describe('<DebateList /> ', () => {
 
             onGetDocument: mocked,
             onGetDebates: mocked,
+            onCheckSignIn: mocked,
             match: {
                 params: {
                     document_title: "1"
                 }
-            }
+            },
+            signIn: false,
         }
     })
 
@@ -51,9 +53,9 @@ describe('<DebateList /> ', () => {
         expect(top.length).toBe(1)
     })
 
-    it('should onClickButton funcs works', () => {
-        const component = shallow(<DebateList {...props} history={historyMock} />)
-        component.instance().onClickNewDebateButton()
+    it('should onClickButton funcs works', async () => {
+        const component = shallow(<DebateList {...props} signIn={true} history={historyMock}/>)
+        await component.instance().onClickNewDebateButton()
         expect(historyMock.push).toHaveBeenCalledWith('/tell_me/documents/1/debates/create')
         component.instance().onClickDebateTitleButton({ target: { value: "123" } })
         expect(historyMock.push).toHaveBeenCalledWith('/tell_me/documents/1/debates/123')
@@ -98,7 +100,10 @@ describe('mapStateToProps', () => {
         const initialState = {
             tm : {
                 selectedDocument : 1,
-                debates : 2
+                debates : 2,
+            },
+            usr : {
+                signIn: false,
             }
         }
         expect(mapStateToProps(initialState).selectedDocument).toBe(1)
