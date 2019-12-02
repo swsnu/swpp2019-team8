@@ -169,6 +169,7 @@ describe('<PetitionList />', () => {
     })
 
     it('should petitionOrderButtonWorks',async () => {
+        let mocked = jest.fn();
         const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         const votesButton = component.find('#top_votes_button').at(0)
@@ -177,12 +178,16 @@ describe('<PetitionList />', () => {
         latestButton.simulate('click')
         expect(petitionListComponent.state.petitionOrder).toBe('latest')
         votesButton.simulate('click')
-        petition = component.find('Petition')
+        petition = component.find('Petition').at(0)
         expect(petitionListComponent.state.petitionOrder).toBe('vote')
-        expect(petition.length).toBe(2)
+        expect(petition.length).toBe(1);
+        petitionListComponent.onClickDetailButton = mocked;
+        petition.simulate('click');
+        expect(mocked).toHaveBeenCalledTimes(1);
     })
 
     it('should petitionStateButtonWorks', async () => {
+        let mocked = jest.fn();
         const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         const ongoingButton = component.find('#ongoing_petition_button').at(0)
@@ -193,20 +198,31 @@ describe('<PetitionList />', () => {
         let petition = component.find('Petition')
         expect(petition.length).toBe(20)
         ongoingButton.simulate('click')
+        petition = component.find('Petition').at(0)
+        petitionListComponent.onClickDetailButton = mocked;
+        petition.simulate('click');
+        expect(mocked).toHaveBeenCalledTimes(1);
         expect(petitionListComponent.state.petitionState).toBe('ongoing')
-        petition = component.find('Petition')
-        expect(petition.length).toBe(2)
+        petition = component.find('Petition').at(0)
+        expect(petition.length).toBe(1);
+        petition.simulate('click');
+        expect(mocked).toHaveBeenCalledTimes(2);
     })
 
     it('should clickCategoryButton work', async () => {
+        let mocked = jest.fn();
         const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         petitionListComponent.onClickCategoryButton({ target: { value: 'welfare' } })
-        const petition = component.find('Petition')
-        expect(petition.length).toBe(2)
+        const petition = component.find('Petition').at(0)
+        expect(petition.length).toBe(1);
+        petitionListComponent.onClickDetailButton = mocked;
+        petition.simulate('click');
+        expect(mocked).toHaveBeenCalledTimes(1);
     })
 
     it('should clickListNumberButton work', async () => {
+        let mocked = jest.fn();
         const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         petitionListComponent.setState({
@@ -214,20 +230,27 @@ describe('<PetitionList />', () => {
         })
         petitionListComponent.onClickListNumberButton({ target: { value: 23 } })
         petitionListComponent.forceUpdate()
-        const petition = component.find('Petition')
+        const petition = component.find('Petition').at(0)
         expect(petitionListComponent.state.selectedNumber).toBe(23)
-        expect(petition.length).toBe(2)
+        expect(petition.length).toBe(1)
+        petitionListComponent.onClickDetailButton = mocked;
+        petition.simulate('click');
+        expect(mocked).toHaveBeenCalledTimes(1);
     })
 
     it('should sort well', async () => { // something strange
+        let mocked = jest.fn();
         const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
         petitionListComponent.onClickPetitionTabButton('end')
         petitionListComponent.forceUpdate()
         petitionListComponent.onClickPetitionOrderButton({ target: { value: '123' } })
         petitionListComponent.forceUpdate()
-        const petition = component.find('Petition')
-        expect(petition.length).toBe(2)
+        const petition = component.find('Petition').at(0)
+        expect(petition.length).toBe(1)
+        petitionListComponent.onClickDetailButton = mocked;
+        petition.simulate('click');
+        expect(mocked).toHaveBeenCalledTimes(1);
     })
 
     it('should onClickDetailButtonWorks', async () => {
@@ -235,8 +258,8 @@ describe('<PetitionList />', () => {
             .mockImplementation(path => { });
         const component = await mount(petitionList);
         const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
-        petitionListComponent.onClickDetailButton({target : {value : '1'}})
-        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/1')
+        petitionListComponent.onClickDetailButton({url : '1'})
+        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/petition/1')
 
 
     })

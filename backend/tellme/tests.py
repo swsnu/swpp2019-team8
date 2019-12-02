@@ -3,7 +3,7 @@ from django.utils import timezone
 
 import json
 
-from .models import Debate, DebateComment, Document
+from .models import Debate, DebateComment, Document, Photo
 from user.models import User
 
 
@@ -17,6 +17,44 @@ from user.models import User
 
 # Create your tests here.
 class DebateTestCase(TestCase):
+
+    def test_photo_get(self):
+        client = Client(enforce_csrf_checks=False)
+
+        new_user = {
+            'password': "iluvswpp",
+            'nickname': "user1",
+            'gender': "male",
+            'status': "student",
+            'studentId': "2018-12345",
+            'department': "engineering",
+            'major': "cses",
+            'studentStatus': "undergrad"
+        }
+
+        user1 = User.objects.create_user(
+            email='user@snu.ac.kr',
+            new_user=new_user
+        )
+        photo = Photo.objects.create(photo="1", title="!", content="2")
+
+
+        response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
+                               content_type='application/json')
+
+        expected = {
+            'photo': '1',
+            'title': '!',
+            'content': '2'
+        }
+        response = client.get('/api/tellme/photo/!/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.get('/api/tellme/photo/123/')
+        self.assertEqual(response.status_code, 404)
+
+        response = client.delete('/api/tellme/photo/!/')
+        self.assertEqual(response.status_code, 405)
 
     def test_document_post(self):
         client = Client(enforce_csrf_checks=False)
@@ -36,25 +74,25 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        
+
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
 
-        #succesfull post
-        response = client.post('/api/tellme/document/', json.dumps({"title" : "1", "content" : "1"}),
-                                content_type='application/json')
+        # succesfull post
+        response = client.post('/api/tellme/document/', json.dumps({"title": "1", "content": "1"}),
+                               content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
-        #bad request
-        response = client.post('/api/tellme/document/', json.dumps({"tile" : "1", "content" : "1"}),
-                                content_type='application/json')
+        # bad request
+        response = client.post('/api/tellme/document/', json.dumps({"tile": "1", "content": "1"}),
+                               content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
-        response = client.post('/api/tellme/document/', json.dumps({"title" : "1", "content" : "1", "!@3" : "!@"}),
-                                content_type='application/json')
+        response = client.post('/api/tellme/document/', json.dumps({"title": "1", "content": "1", "!@3": "!@"}),
+                               content_type='application/json')
         self.assertEqual(response.status_code, 400)
-                            
-        #not allowed request
+
+        # not allowed request
         response = client.get('/api/tellme/document/')
         self.assertEqual(response.status_code, 405)
 
@@ -81,22 +119,21 @@ class DebateTestCase(TestCase):
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'target' : 'title', 'content' : '123'}),
-                                content_type='application/json')
+        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'title', 'content': '123'}),
+                              content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'target' : 'TI', 'content' : '123'}),
-                                content_type='application/json')
+        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'TI', 'content': '123'}),
+                              content_type='application/json')
         self.assertEqual(response.status_code, 404)
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'tar' : 'title', 'content' : '123'}),
-                                content_type='application/json')
+        response = client.put('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123'}),
+                              content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
-        response = client.post('/api/tellme/document/title/', json.dumps({'tar' : 'title', 'content' : '123'}),
-                                content_type='application/json')
+        response = client.post('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123'}),
+                               content_type='application/json')
         self.assertEqual(response.status_code, 405)
-
 
     def test_doucment_get(self):
         client = Client(enforce_csrf_checks=False)
@@ -119,7 +156,8 @@ class DebateTestCase(TestCase):
         doc1 = Document.objects.create(title='title', content='content')
         Document.objects.create(title='Titles', content='content, title')
         Document.objects.create(title='contentUpper', content='Content, title')
-        Document.objects.create(title='Titsadaes', content='find fucking Contents!!!')
+        Document.objects.create(
+            title='Titsadaes', content='find fucking Contents!!!')
 
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
@@ -132,7 +170,6 @@ class DebateTestCase(TestCase):
 
         response = client.get('/api/tellme/document/wtf/')
         self.assertIn('false', response.content.decode())
-        
 
     def test_debates_by_document(self):
         client = Client(enforce_csrf_checks=False)
@@ -215,7 +252,8 @@ class DebateTestCase(TestCase):
         self.assertEqual(response.status_code, 404)
 
         # successful get
-        response = client.get('/api/tellme/document/title/debate/' + str(debate1.id) + '/')
+        response = client.get(
+            '/api/tellme/document/title/debate/' + str(debate1.id) + '/')
         self.assertEqual(response.status_code, 200)
 
         # wrong request
@@ -238,7 +276,7 @@ class DebateTestCase(TestCase):
 
         user1 = User.objects.create_user(
             email='user@snu.ac.kr',
-            new_user = new_user2
+            new_user=new_user2
         )
         doc1 = Document.objects.create(title='title', content='content')
         debate1 = Debate.objects.create(

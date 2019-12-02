@@ -7,6 +7,7 @@ const stubDocument = {
     id: 0,
     title: 'title 1',
     content: 'content 1',
+    documentDuplicate : false
 };
 
 describe('ActionCreators', () => {
@@ -21,6 +22,26 @@ describe('ActionCreators', () => {
                     const result = {
                         status: 200,
                         data: stubDocument,
+                    };
+                    resolve(result);
+                });
+            })
+
+        store.dispatch(actionCreators.postDocument(stubDocument)).then(() => {
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    });
+
+    it(`'postDocument' should post document correctly`, (done) => {
+        const spy = jest.spyOn(axios, 'post')
+            .mockImplementation((url, tm) => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: {
+                            documentDuplicate : true
+                        },
                     };
                     resolve(result);
                 });
@@ -195,6 +216,26 @@ describe('ActionCreators', () => {
         });
     });
 
+    it('getPhoto works', (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: 1
+                    };
+                    resolve(result);
+                })
+            })
+
+        store.dispatch(actionCreators.getPhoto(1)).then(() => {
+            const newState = store.getState();
+            expect(newState.tm.selectedPhoto).toBe(1);
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    })
+
     it('should errors work', async () => {
         const spyGet = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
@@ -237,6 +278,9 @@ describe('ActionCreators', () => {
 
         await store.dispatch(actionCreators.postDebateComment("!", "2"));
         expect(spyPost).toHaveBeenCalledTimes(3);
+
+        await store.dispatch(actionCreators.getPhoto(1));
+        expect(spyGet).toHaveBeenCalledTimes(4);
 
 
     })

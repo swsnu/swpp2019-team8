@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import * as actionCreator from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
 import SearchBar from '../SearchBar/SearchBar';
 
-import {
-    Button
-} from 'reactstrap';
-
 export class DocumentSearchFail extends Component {
-    state = {
-
-    };
-
-    onClickDetailButton = (event) => {
-        this.props.history.push('/tell_me/documents/' + event.target.value)
-    }
 
     componentDidMount = async () => {
         await this.props.getDocument(this.props.match.params.document_title)
@@ -31,13 +21,9 @@ export class DocumentSearchFail extends Component {
         let titleList = this.props.titleDocuments.map(document => {
             return (
                 <div key={document.id}>
-                    <Button
-                        key={document.id}
-                        id="title_list_button"
-                        value={document.title}
-                        onClick={this.onClickDetailButton}
-                    >{document.title}
-                    </Button>
+                    <Link
+                        exact to={'/tell_me/documents/' + document.title}
+                    >{document.title}</Link>
                     <br />
                 </div>
             )
@@ -46,13 +32,9 @@ export class DocumentSearchFail extends Component {
         let contentList = this.props.contentDocuments.map(document => {
             return (
                 <div key={document.id}>
-                    <Button
-                        key={document.id}
-                        id="content_list_button"
-                        value={document.title}
-                        onClick={this.onClickDetailButton}
-                    >{document.title}
-                    </Button>
+                    <Link
+                        exact to={'/tell_me/documents/' + document.title}
+                    > {document.title}</Link>
                     <br />
                 </div>
             )
