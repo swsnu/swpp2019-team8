@@ -102,11 +102,12 @@ class PetitionDetail extends Component {
                         <div key={com.id} className="Reply_Reply_list">
                             <div className="Reply_Reply_contents">
                                 <div className="pv3_R_contents_head">
-                                    {date + ' ' + time}
+                                    <h6>{date + ' ' + time}</h6>
                                 </div>
                                 <div className="R_R_contents_txt">
-                                    {com.comment}
+                                    <h6>{com.comment}</h6>
                                 </div>
+                                <hr/>
                             </div>
                         </div>
                     );
@@ -124,16 +125,18 @@ class PetitionDetail extends Component {
         });
 
         let listNumberButtons = (
-            <ButtonGroup>
-                <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1}
-                    onClick={this.onClickListPrevButton}>prev</Button>
-                {listNumbers}
-                <Button type="button" id="list_next_button" disabled={this.props.storedPetitionComments && this.state.listNumber[0] + 5 > this.props.storedPetitionComments.length / 10 + 1}
-                    onClick={this.onClickListNextButton}>next</Button>
-            </ButtonGroup>
+            <div className="list_numbering_button">
+                <ButtonGroup>
+                    <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1}
+                        onClick={this.onClickListPrevButton}>prev</Button>
+                    {listNumbers}
+                    <Button type="button" id="list_next_button" disabled={this.props.storedPetitionComments && this.state.listNumber[0] + 5 > this.props.storedPetitionComments.length / 10 + 1}
+                        onClick={this.onClickListNextButton}>next</Button>
+                </ButtonGroup>
+            </div>
         );
 
-        let graphSrc = "http://localhost:8000/api/tellme/media/graph/ex/";
+        let graphSrc = "http://localhost:8000/api/tellme/media/graph/ex";
         if (this.props.selectedPetition) {
             if (this.props.selectedPetition.status === 'ongoing' || this.props.selectedPetition.status === 'end')
                 graphSrc = "http://localhost:8000/api/tellme/media/graph/" + this.props.selectedPetition.id;
@@ -145,14 +148,15 @@ class PetitionDetail extends Component {
                 <div className="PetitionDetail">
                     <br /><br />
                     <SearchBar />
+                    <Button type="button" id="petition_cancel_button"
+                        onClick={this.onClickPetitionCancelButton}>BACK</Button>
                     <br /><br />
                     <div className="content">
                         <b><br />
-                            <h6>Petition</h6>
+                            <p className="petitionStatus_count">- {status} -</p>
                             <h2 className="petitionsView_title"><b>{title}</b></h2>
                             <br />
                             <p className="petitionsView_count">Votes: [ {votes} ]</p>
-                            <p className="petitionStatus_count">Status: [ {status} ]</p>
                             <div className="petitionsView_info">
                                 <Row className="petitionsView_info_list">
                                     <Col>
@@ -168,7 +172,7 @@ class PetitionDetail extends Component {
                             </div>
                         </b>
                         <br />
-
+                        <hr />
                         <div className="petitionsView_write">
                             <h6 className="petitionsView_writeHead">Petition Description:</h6>
                             <div className="View_write">{content}</div>
@@ -176,43 +180,41 @@ class PetitionDetail extends Component {
                             <h6 className="View_write_link">Attached links: </h6>
                             {links}
                         </div>
-
+                        <hr />
                         <div className="petitionsView_statistic">
+                            <h4>&#60;Graphs&#62;</h4>
                             <br /><br />
-                            <h4> trend </h4>
                             <img src={graphSrc + "/trend.jpg"} style={{ width: 450 }} />
-                            <h4> gender </h4>
                             <img src={graphSrc + "/gender.jpg"} style={{ width: 450 }} />
-                            <h4> department </h4>
                             <img src={graphSrc + "/department.jpg"} style={{ width: 450 }} />
-                            <h4> studentId </h4>
                             <img src={graphSrc + "/studentId.jpg"} style={{ width: 450 }} />
                             <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
+                            <div className="download_csv_buttn" hidden={status !== 'ongoing'}>
+                                <Button id="download_csv_button"
+                                    onClick={this.onClickDownloadCsvButton}>Download .csv file</Button>
+                            </div>
                             <br /><br />
                         </div>
                     </div>
 
-                    <h3 className="Reply_area_agree">Votes <span>{votes}</span></h3>
+                    <h3 className="Reply_area_agree"><span>{votes}</span> Current Votes</h3>
 
-                    <Button id="download_csv_button"
-                        onClick={this.onClickDownloadCsvButton}>Download</Button>
+
                     <div className="Reply_area_write">
-                        <textarea id="tw_contents" style={{ width: 700 }}
+                        <textarea id="tw_contents" placeholder="Write your comment within 50 characters."
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
                             disabled={!this.props.signIn || this.props.storedPetitionComments
-                                .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
+                            .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 
-                    <Button type="button" id="petition_cancel_button"
-                        onClick={this.onClickPetitionCancelButton}>BACK</Button>
-
-                    <br /><br />
                     <div className="petitionsReply_Reply">
                         {comments}
+                        <br />
                         {listNumberButtons}
                     </div>
+                    <br />
                 </div >
             </div >
         );
