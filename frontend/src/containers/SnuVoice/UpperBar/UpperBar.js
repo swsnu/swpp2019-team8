@@ -3,7 +3,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actionCreator from '../../../store/actions/index'
+
+
+import HearUsSearchBar from '../HearUs/HearUsSearchBar/HearUsSearchBar'
+import TellMeSearchBar from '../TellMe/TellMeSearchBar/TellMeSearchBar'
+
+
 import './UpperBar.css';
+
 import {
     Button,
     Input,
@@ -41,12 +48,12 @@ export class UpperBar extends Component {
         if (event.key === 'Enter') this.onClickSignInButton()
     }
 
-    onClickCrossOverButton = () => {
-        if (this.state.location === 'tell_me') {
-            this.props.history.push('/hear_us');
-        } else if (this.state.location === 'hear_us') {
-            this.props.history.push('/tell_me');
-        }
+    onClickTellMeButton = () => {
+        this.props.history.push('/tell_me');
+    }
+
+    onClickHearUsButton = () => {
+        this.props.history.push('/hear_us');
     }
 
     onClickSignUpButton = () => {
@@ -77,41 +84,57 @@ export class UpperBar extends Component {
         }
     }
     render() {
-        let crossover = null;
         let upperBar = null;
-
-        if (this.state.location !== '') {
-            crossover = (
-                <div className="Crossover">
-                    <Button type="button" id="crossover_button"
-                        onClick={this.onClickCrossOverButton}>Cross</Button>
+        let searchBar = '';
+        if (this.state.location === 'tell_me') {
+            searchBar =
+                <div className="sub_bar">
+                    <Button type="button" id="tell_me_button"
+                        onClick={this.onClickTellMeButton}>TELL-ME</Button>
+                    <Button type="button" id="hear_us_button"
+                        onClick={this.onClickHearUsButton}>HEAR-US</Button>
+                    <TellMeSearchBar />
                 </div>
-            );
+        } else if (this.state.location === 'hear_us') {
+            searchBar =
+                <div className="sub_bar">
+                    <Button type="button" id="tell_me_button"
+                        onClick={this.onClickTellMeButton}>TELL-ME</Button>
+                    <Button type="button" id="hear_us_button"
+                        onClick={this.onClickHearUsButton}>HEAR-US</Button>
+                    <HearUsSearchBar />
+                </div>
         }
 
         if (this.props.signIn === false) {
             upperBar = (
-                <nav className="navbar">
-                    <a className="navbar-brand" href="/">SNUVOICE</a>
-                    <form className="form-inline">
-                        {crossover}
-                        <Button type="button" id="sign_in_button"
-                            onClick={this.toggleModal}>SIGN-IN</Button>
-                        <Button type="button" id="sign_up_button"
-                            onClick={this.onClickSignUpButton}>SIGN-UP</Button>
-                    </form>
-                </nav>
-            );
+                <div className="bar">
+                    <nav className="navbar">
+                        <a className="navbar-brand" href="/">SNUVOICE</a>
+                        <form className="form-inline">
+                            <Button type="button" id="sign_in_button"
+                                onClick={this.toggleModal}>SIGN-IN</Button>
+                            <Button type="button" id="sign_up_button"
+                                onClick={this.onClickSignUpButton}>SIGN-UP</Button>
+                        </form>
+                    </nav>
+                    <br />
+                    {searchBar}
+                </div>
+            )
         } else {
             upperBar = (
-                <nav className="navbar">
-                    <a className="navbar-brand" href="/">SNUVOICE</a>
-                    <form className="form-inline">
-                        {crossover}
-                        <Button type="button" id="sign_out_button"
-                            onClick={this.onClickSignOutButton}>SIGN-OUT</Button>
-                    </form>
-                </nav>
+                <div className="bar">
+                    <nav className="navbar">
+                        <a className="navbar-brand" href="/">SNUVOICE</a>
+                        <form className="form-inline">
+                            <Button type="button" id="sign_out_button"
+                                onClick={this.onClickSignOutButton}>SIGN-OUT</Button>
+                        </form>
+                    </nav>
+                    <br />
+                    {searchBar}
+                </div >
             );
         }
         return (

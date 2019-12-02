@@ -6,7 +6,6 @@ import { withRouter } from 'react-router';
 import { Button, ButtonGroup, Table, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
 import UpperBar from '../../UpperBar/UpperBar'
-import SearchBar from '../SearchBar/SearchBar'
 import Petition from '../../../../components/Petition/petition'
 import Category from '../../../../components/Category/category'
 import * as actionCreator from '../../../../store/actions/index'
@@ -193,7 +192,6 @@ class PetitionList extends Component {
                         <h1>Hear Us</h1>
                         <h4>Petition List</h4>
                         <br />
-                        <SearchBar/>
                     </div>
                     <br />
                     {petitionStateTabButtons}

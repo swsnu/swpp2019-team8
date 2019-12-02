@@ -5,7 +5,6 @@ import { withRouter } from "react-router";
 import { Button } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
-import SearchBar from './SearchBar/SearchBar';
 
 import "./TellMe.css";
 
@@ -30,7 +29,6 @@ class TellMe extends Component {
             </h6>
           </div>
           <div className="SearchBar">
-            <SearchBar />
           </div>
           <br />
           <div />
