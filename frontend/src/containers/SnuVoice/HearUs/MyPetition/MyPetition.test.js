@@ -44,6 +44,14 @@ describe('<MyPetition />', () => {
 
     })
 
+    it('should onClickPetiton orks', () => {
+        const component = shallow(<MyPetition {...props} history={mockHistory} />);
+        const petition = component.find('Petition').at(0)
+        component.instance().onClickDetailButton = mock
+        petition.simulate('click')
+        expect(mock).toHaveBeenCalledTimes(1)
+    })
+
     it('should render without error', () => {
         const component = shallow(<MyPetition {...props}/>)
         const body = component.find('.MyPetition')
