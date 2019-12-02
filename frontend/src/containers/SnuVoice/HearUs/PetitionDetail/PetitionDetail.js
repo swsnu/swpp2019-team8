@@ -8,7 +8,6 @@ import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 import * as actionCreators from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
-import SearchBar from '../../HearUs/SearchBar/SearchBar';
 import './PetitionDetail.css';
 
 
@@ -147,7 +146,6 @@ class PetitionDetail extends Component {
                 <UpperBar />
                 <div className="PetitionDetail">
                     <br /><br />
-                    <SearchBar />
                     <Button type="button" id="petition_cancel_button"
                         onClick={this.onClickPetitionCancelButton}>BACK</Button>
                     <br /><br />
