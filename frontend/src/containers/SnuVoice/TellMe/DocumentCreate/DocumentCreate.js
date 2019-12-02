@@ -39,7 +39,7 @@ class DocumentCreate extends Component {
   onClickDocumentConfirmButton = async () => {
     let message = this.state.formFeedbackMessage;
     let title = this.state.documentTitle;
-    let input = '';
+    let input = this.state.documentTitle;
     for (var i = title.length - 1; i >= 0; i--) {
       if (title[i] !== ' ') break;
       else input = title.slice(0, i)

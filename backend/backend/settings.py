@@ -16,6 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+GRAPH_URL = '/graph/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -150,4 +151,5 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 SESSION_CACHE_ALIAS = 'default'
-
+CELERY_TIMEZONE = 'Asia/Seoul'
+CELERY_ENABLE_UTC=False

@@ -13,14 +13,7 @@ const hearus = (prevState, action) => {
     else state = prevState;
     switch (action.type) {
         case actionTypes.POST_PETITION: {
-            const newPetition = {
-                id: action.id,
-                title: action.title,
-                content: action.content,
-                link: action.link,
-                tag: action.tag,
-            };
-            return { ...state, petition_list: state.petition_list.concat(newPetition) };
+            return state;
         }
         case actionTypes.GET_ALL_PETITIONS:
             return { ...state, petition_list: action.petitionList };   // TODO

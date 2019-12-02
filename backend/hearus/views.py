@@ -5,7 +5,7 @@ from json import JSONDecodeError
 
 from .models import Petition, PetitionComment
 from user.models import User
-from .tasks import status_changer
+from .tasks import status_changer, plot_graph
 from secrets import token_urlsafe
 
 
@@ -142,9 +142,12 @@ def petition_comment(request, petition_url):
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
-        if(comment_petition.votes >=5 and comment_petition.status == "preliminary"):
+        if(comment_petition.votes >=4 and comment_petition.status == "preliminary"):
             comment_petition.status = "ongoing"
             comment_petition.save()
+            if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
+                os.makedirs(os.path.join('./media/graph/'+str(comment_petition.id)))
+            plot_graph(comment_petition.id)
         student_id = request.user.studentId[0:4]
         file_location = './stat/' + str(comment_petition.id) + '.csv'
         stat = pd.read_csv(file_location)

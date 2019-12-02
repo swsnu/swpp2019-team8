@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actionCreator from '../../../store/actions/index'
-
+import './UpperBar.css';
 import {
     Button,
     Input,
