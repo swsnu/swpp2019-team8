@@ -179,13 +179,13 @@ class PetitionDetail extends Component {
 
                         <div className="petitionsView_statistic">
                             <br /><br />
-                            <b5> trend </b5>
+                            <h4> trend </h4>
                             <img src={graphSrc + "/trend.jpg"} style={{ width: 450 }} />
-                            <b5> gender </b5>
+                            <h4> gender </h4>
                             <img src={graphSrc + "/gender.jpg"} style={{ width: 450 }} />
-                            <b5> department </b5>
+                            <h4> department </h4>
                             <img src={graphSrc + "/department.jpg"} style={{ width: 450 }} />
-                            <b5> studentId </b5>
+                            <h4> studentId </h4>
                             <img src={graphSrc + "/studentId.jpg"} style={{ width: 450 }} />
                             <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
                             <br /><br />

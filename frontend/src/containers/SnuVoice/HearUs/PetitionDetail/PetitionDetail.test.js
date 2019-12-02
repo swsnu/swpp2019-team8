@@ -171,14 +171,6 @@ describe('<PetitionDetail />', () => {
         expect(spyPutPetitionVote).toHaveBeenCalledTimes(1);
     });
 
-    it(`should call 'onClickDrawGraphButton'`, async () => {
-        let spyGetDrawGraph = jest.spyOn(actionCreators, 'getDrawGraph')
-            .mockImplementation(id => { return dispatch => { };});
-        const component = await mount(petitionDetail);
-        const wrapper = component.find('#more-statistics-button').at(0);
-        await wrapper.simulate('click');
-        expect(spyGetDrawGraph).toHaveBeenCalledTimes(1);
-    });
 
     it(`should call 'onClickPetitionCancelButton'`, async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
