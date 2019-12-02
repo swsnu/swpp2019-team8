@@ -6,7 +6,6 @@ import { withRouter } from 'react-router';
 import * as actionCreator from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
-import SearchBar from '../SearchBar/SearchBar';
 
 export class DocumentSearchFail extends Component {
 
@@ -43,7 +42,6 @@ export class DocumentSearchFail extends Component {
         return (
             <div className="DocumentSearchFail">
                 <UpperBar />
-                <SearchBar />
                 <h2>{this.props.match.params.document_title}가 포함된 document 제목</h2>
                 {titleList}
                 <br />
