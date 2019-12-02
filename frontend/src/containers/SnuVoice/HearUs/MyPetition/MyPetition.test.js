@@ -39,9 +39,17 @@ describe('<MyPetition />', () => {
 
     it('should onClickDetailButton work', () => {
         const component = shallow(<MyPetition {...props} history={mockHistory} />);
-        component.instance().onClickDetailButton( { target : { value: "1"}} );
-        expect(mockHistory.push).toHaveBeenCalledWith('/hear_us/1');
+        component.instance().onClickDetailButton( {url : "1"} );
+        expect(mockHistory.push).toHaveBeenCalledWith('/hear_us/petition/1');
 
+    })
+
+    it('should onClickPetiton orks', () => {
+        const component = shallow(<MyPetition {...props} history={mockHistory} />);
+        const petition = component.find('Petition').at(0)
+        component.instance().onClickDetailButton = mock
+        petition.simulate('click')
+        expect(mock).toHaveBeenCalledTimes(1)
     })
 
     it('should render without error', () => {
