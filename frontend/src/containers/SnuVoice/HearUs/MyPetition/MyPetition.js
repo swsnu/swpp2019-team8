@@ -18,8 +18,13 @@ export class MyPetition extends Component {
   }
 
   componentDidMount = async () => {
-    await this.props.getCurrentUser(this.props.selectedUser.id);
-    await this.props.getPetitionByUser(this.props.selectedUser.id);
+    await this.props.getCurrentUser();
+    if (this.props.signIn) {
+      this.props.getPetitionByUser(this.props.selectedUser.id);
+    } else {
+      alert("You must be logged in to see your petitions")
+      this.props.history.push('/hear_us');
+    }
   }
 
   onClickDetailButton = (petition) => {
@@ -30,7 +35,16 @@ export class MyPetition extends Component {
   //   this.setState({ selectedCategory: event.target.value })
   // }
 
+  ngOnInit = async () => {
+    await this.props.getCurrentUser();
+    if(!this.props.signIn) {
+      this.props.history.push("/hear_us");
+    }
+  }
+
   render() {
+    this.ngOnInit();
+
     let myPetitionList = this.props.petitionList.map(petition => {
       return (
         <Petition
@@ -45,6 +59,7 @@ export class MyPetition extends Component {
         />
       );
     });
+
 
     return (
       <div className="TopOfPage">
@@ -76,6 +91,7 @@ export const mapStateToProps = state => {
   return {
     selectedUser: state.usr.selectedUser,
     petitionList: state.hu.petition_list,
+    signIn: state.usr.signIn
   };
 };
 
@@ -84,8 +100,8 @@ export const mapDispatchToProps = dispatch => {
     getPetitionByUser: user_id =>
       dispatch(actionCreator.getMyPetitions(user_id)),
 
-    getCurrentUser: user_id =>
-      dispatch(actionCreator.getUserByUserId(user_id))
+    getCurrentUser:  ()=>
+      dispatch(actionCreator.checkSignIn())
   };
 };
 
