@@ -27,8 +27,8 @@ export class MyPetition extends Component {
     }
   }
 
-  onClickDetailButton = (event) => {
-    this.props.history.push('/hear_us/' + event.target.value)
+  onClickDetailButton = (petition) => {
+    this.props.history.push('/hear_us/petition/' + petition.url)
   }
 
   // onClickCategoryButton = (event) => {
@@ -48,23 +48,23 @@ export class MyPetition extends Component {
     let myPetitionList = this.props.petitionList.map(petition => {
       return (
         <Petition
-        url={petition.url}
-        key={petition.id}
+          key={petition.id}
+          url={petition.url}
           title={petition.title}
           state={petition.status}
           category={petition.category}
           dueDate={petition.end_date}
           votes={petition.votes}
-          onClick={this.onClickDetailButton}
+          onClick={() => this.onClickDetailButton(petition)}
         />
       );
     });
 
 
     return (
-        <div className="TopOfPage">
+      <div className="TopOfPage">
         <Upperbar />
-      <div className="MyPetition">
+        <div className="MyPetition">
           <br />
           {/* <SearchBar/> */}
           <h1>{this.props.selectedUser.nickname}`s Petitions</h1>

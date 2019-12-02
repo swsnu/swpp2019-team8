@@ -34,8 +34,8 @@ class PetitionList extends Component {
         this.setState({ petitionOrder: event.target.value })
     }
 
-    onClickDetailButton = (event) => {
-        this.props.history.push('/hear_us/petition/' + event.target.value)
+    onClickDetailButton = (petition) => {
+        this.props.history.push('/hear_us/petition/' + petition.url)
     }
 
     onClickListPrevButton = () => {
@@ -146,7 +146,7 @@ class PetitionList extends Component {
                                 category={petition.category}
                                 dueDate={petition.end_date}
                                 votes={petition.votes}
-                                onClick={this.onClickDetailButton}
+                                onClick={() => this.onClickDetailButton(petition)}
                             />
                         )
                     } else return undefined;
@@ -165,7 +165,7 @@ class PetitionList extends Component {
                                 state={petition.status}
                                 title={petition.title}
                                 votes={petition.votes}
-                                onClick={this.onClickDetailButton}
+                                onClick={() => this.onClickDetailButton(petition)}
                             />
                         )
                     } else return undefined;
