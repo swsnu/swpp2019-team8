@@ -96,7 +96,6 @@ def document_title(request, document_title):
                             }
             return JsonResponse(response_dict, status=201)
         else:
-            #document.version = document.version+1
             response_dict = {
                 'title': document.title,
                 'content': document.content,
