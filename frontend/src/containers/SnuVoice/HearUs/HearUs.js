@@ -5,7 +5,6 @@ import { withRouter } from "react-router";
 import { Button, Table } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
-import SearchBar from './SearchBar/SearchBar';
 import Category from "../../../components/Category/category";
 import Petition from "../../../components/Petition/petition";
 import * as actionCreator from '../../../store/actions/index'
@@ -35,9 +34,29 @@ export class HearUs extends Component {
     this.props.getAllPetitions();
   }
 
+  onClickCreateButton = () => {
+    this.props.history.push('/hear_us/create')
+  }
+
+  onClickMyPetitionButton = () => {
+    this.props.history.push('/hear_us/my_petition')
+  }
+
   render() {
     let category = <Category onClick={this.onClickCategoryButton} />;
     let voteList, deadlineList;
+    let buttons = '';
+
+    if (this.props.signIn) {
+      buttons = (
+        <div className="userOptions">
+          <Button type="button" id="create_button"
+            onClick={this.onClickCreateButton}>NEW</Button>
+          <Button type="button" id="my_petition_button"
+            onClick={this.onClickMyPetitionButton}>MINE</Button>
+        </div>
+      )
+    }
 
     let tableHead = (
       <Table hover>
@@ -91,7 +110,7 @@ export class HearUs extends Component {
                   votes={petition.votes}
                   category={petition.category}
                   dueDate={petition.end_date}
-                  onClick={() => this.onClickDetailButton(petition)}                />
+                  onClick={() => this.onClickDetailButton(petition)} />
               )
             } else return undefined;
           })
@@ -112,7 +131,7 @@ export class HearUs extends Component {
                   category={petition.category}
                   dueDate={petition.end_date}
                   votes={petition.votes}
-                  onClick={() => this.onClickDetailButton(petition)}                />
+                  onClick={() => this.onClickDetailButton(petition)} />
               )
             } else return undefined;
           })
@@ -144,12 +163,11 @@ export class HearUs extends Component {
       <div>
         <UpperBar />
         <div className="TopOfPage">
-          <br />
           <div className="HearUs">
             <h1>Hear Us</h1>
             <br />
+            {buttons}
           </div>
-          <SearchBar />
           <br></br><br />
           <div className="Category">{category}</div>
           <br /><br /><br />
@@ -189,7 +207,8 @@ export const mapDispatchToProps = dispatch => {
 export const mapStateToProps = state => {
   return {
     petitionList: state.hu.petition_list,
-    selectedUser: state.usr.selectedUser
+    selectedUser: state.usr.selectedUser,
+    signIn: state.usr.signIn
   }
 }
 

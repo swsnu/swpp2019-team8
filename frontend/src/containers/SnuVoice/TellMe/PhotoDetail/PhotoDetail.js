@@ -5,7 +5,6 @@ import { withRouter } from 'react-router';
 import * as actionCreator from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
-import SearchBar from '../SearchBar/SearchBar';
 
 import { Button } from 'reactstrap';
 
@@ -51,7 +50,6 @@ export class PhotoDetail extends Component {
             <div>
                 <UpperBar />
                 <div className='TopOfPage'>
-                    <SearchBar />
                     <div className="photoDetail">
                         <br />
                         <h4 className="document">Document:</h4>

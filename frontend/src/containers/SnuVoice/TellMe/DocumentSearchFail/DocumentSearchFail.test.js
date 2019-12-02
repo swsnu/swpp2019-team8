@@ -1,18 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import { DocumentSearchFail, mapDispatchToProps, mapStateToProps } from './DocumentSearchFail';
 
-jest.mock('../../UpperBar/UpperBar', () => {
-    return jest.fn(props => {
-        return <div/>
-    })
-})
-jest.mock('../SearchBar/SearchBar', () => {
-    return jest.fn(props => {
-        return <div/>
-    })
-})
 describe('<DocumentSearchFail/>', () => {
     let props;
     let mocked = jest.fn();

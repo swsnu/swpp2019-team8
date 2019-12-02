@@ -13,7 +13,6 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 
 import Upperbar from '../../UpperBar/UpperBar';
-import SearchBar from '../../TellMe/SearchBar/SearchBar';
 import './DocumentDetail.css';
 
 class DocumentDetail extends Component {
@@ -57,7 +56,6 @@ class DocumentDetail extends Component {
                 <Upperbar />
                 <div className="DocumentDetail">
                     <br />
-                    <SearchBar />
                     <br />
                     <h4 className="document">Document:</h4>
                     <div className="content">
