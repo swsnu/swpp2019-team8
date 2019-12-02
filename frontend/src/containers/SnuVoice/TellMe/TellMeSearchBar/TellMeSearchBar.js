@@ -11,7 +11,7 @@ import {
     InputGroupAddon
 } from 'reactstrap';
 
-export class SearchBar extends Component {
+export class TellMeSearchBar extends Component {
     state = {
         searchInput: ''
     }
@@ -100,5 +100,5 @@ export const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withRouter(SearchBar));
+)(withRouter(TellMeSearchBar));
 
