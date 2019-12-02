@@ -5,6 +5,7 @@ from user.models import User
 class Document(models.Model):
     title = models.CharField(max_length=64, unique=True, db_index=True)
     content = models.TextField()
+    version = models.IntegerField(default=0)
 
 class Photo(models.Model):
     photo = models.ImageField(upload_to="media/%Y/%m/%d")
