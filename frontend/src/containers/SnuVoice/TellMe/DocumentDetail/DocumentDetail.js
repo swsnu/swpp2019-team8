@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 import * as actionCreators from '../../../../store/actions/index';
@@ -16,8 +17,9 @@ import Upperbar from '../../UpperBar/UpperBar';
 import './DocumentDetail.css';
 
 class DocumentDetail extends Component {
-    componentDidMount() {
-        this.props.onGetDocument(this.props.match.params.document_title);
+    componentDidMount = async () => {
+        await this.props.onGetDocument(this.props.match.params.document_title);
+        await this.props.onGetPetitionList(this.props.match.params.document_title);
     }
 
     onClickDocumentCancelButton = () => {
@@ -36,6 +38,19 @@ class DocumentDetail extends Component {
         let title = '';
         let content = '';
         let markdownHtml = '';
+        let petitonList = this.props.petitionList.map(petition => {
+            return (
+                <div key={petition.id}>
+                    <li key={petition.id}>
+                        <a href={'localhost:3000/hear_us/petition/'+ petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
+                    </li>
+                    <br />
+                </div>
+
+            )
+
+        });
+
 
 
 
@@ -66,6 +81,7 @@ class DocumentDetail extends Component {
                         <hr />
                         <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                         <hr />
+                        {petitonList}
                         <Button
                             type="button"
                             id="document_cancel_button"
@@ -80,10 +96,10 @@ class DocumentDetail extends Component {
                         >
                             Edit
                         </Button>
-                        <Button 
+                        <Button
                             className="debateButton"
                             onClick={this.onClickDocumentDebateButton}
-                            >Debate</Button>
+                        >Debate</Button>
                     </div>
                 </div>
             </div>
@@ -94,6 +110,7 @@ class DocumentDetail extends Component {
 export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
+        petitionList: state.hu.petition_list_by_document
     }
 }
 
@@ -101,6 +118,8 @@ export const mapDispatchToProps = dispatch => {
     return {
         onGetDocument: document_title =>
             dispatch(actionCreators.getDocument(document_title)),
+        onGetPetitionList: document_title =>
+            dispatch(actionCreators.getPetitionByDocument(document_title))
     }
 }
 

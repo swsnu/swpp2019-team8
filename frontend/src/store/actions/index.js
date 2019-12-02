@@ -32,6 +32,7 @@ export {
     getAllPetitions,
     getPetition,
     getPetitionByTitle,
+    getPetitionByDocument,
     getMyPetitions,
     getPetitionComments,
     postPetitionComment,
