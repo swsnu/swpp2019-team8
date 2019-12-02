@@ -53,7 +53,7 @@ class HearusTestCase(TestCase):
         self.assertEqual(response.status_code, 401)
         response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
                                content_type='application/json')
-        response = client.post('/api/hearus/petition/', json.dumps({'title': "testtitle", "content": "testcontent", "category": "testcategory", "link": "testlink",
+        response = client.post('/api/hearus/petition/', json.dumps({'title': "testtitle", "content": "testcontent", "category": "testcategory", "link": "tellme/documents/testlink",
                                                                     "tag": "tag"}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = client.post('/api/hearus/petition/', json.dumps({'titl': "testtitle", "content": "testcontent", "category": "testcategory", "link": "testlink",
@@ -61,6 +61,13 @@ class HearusTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
         response = client.put('/api/hearus/petition/')
         self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/hearus/petition/document_title/testlink/')
+        self.assertEqual(response.status_code, 200)
+        
+        response = client.delete('/api/hearus/petition/document_title/testlink/')
+        self.assertEqual(response.status_code, 405)
+
 
     def test_petition_list(self):
         client = Client(enforce_csrf_checks=False)

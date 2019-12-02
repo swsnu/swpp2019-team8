@@ -8,5 +8,6 @@ urlpatterns = [
     path('petition/<str:petition_url>/', views.petition_petitionurl),
     path('petition/user/<int:user_id>/', views.petition_userid),
     path('petition/<str:petition_url>/comment/', views.petition_comment),
-    path('petition/<str:petition_url>/download/', views.downlaod_csv)
+    path('petition/<str:petition_url>/download/', views.downlaod_csv),
+    path('petition/document_title/<str:document_title>/', views.petition_by_document_title)
 ]
