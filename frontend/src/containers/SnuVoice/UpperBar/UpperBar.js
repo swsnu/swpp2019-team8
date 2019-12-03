@@ -14,6 +14,8 @@ import {
     FormText
 } from 'reactstrap';
 
+import './UpperBar.css';
+
 export class UpperBar extends Component {
     state = {
         email: '',

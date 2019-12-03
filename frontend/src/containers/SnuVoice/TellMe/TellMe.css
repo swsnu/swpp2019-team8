@@ -23,6 +23,8 @@
     min-height: 370px;
     padding-left: 5%;
     padding-right: 5%;
+    border-style: solid;
+    border-color: black;
 }
 
 .TellMeText {
