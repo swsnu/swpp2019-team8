@@ -79,9 +79,6 @@ class DocumentCreate extends Component {
     this.props.history.push("/tell_me");
   };
 
-  onClickPhotoButton = () => {
-    this.props.history.push("/tell_me/photo");
-  };
 
   onClickTabButton = event => {
     this.setState({ documentState: event });
@@ -136,14 +133,6 @@ class DocumentCreate extends Component {
 
           <h1 className="document_create_title">Create New Document</h1>
 
-          <Button
-            type="button"
-            id="photo_button"
-            className="photoButton"
-            onClick={this.onClickPhotoButton}
-          >
-            Upload Photo
-          </Button>
           <br />
           {createStateTabbuttons}
           <br />
