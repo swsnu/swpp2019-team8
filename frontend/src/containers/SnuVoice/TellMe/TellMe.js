@@ -18,7 +18,7 @@ class TellMe extends Component {
 
   render() {
     return (
-      <div>
+      <div className="TellMe">
         <UpperBar />
         <div className="TopOfPage">
           <br />
@@ -33,7 +33,7 @@ class TellMe extends Component {
           <br />
           <div />
           <br />
-          <div className="TellMe">
+          <div className="TellMeContent">
             <br />
             <div className="TellMeText">
               <h5><b>Tell Me 설명글:</b></h5>

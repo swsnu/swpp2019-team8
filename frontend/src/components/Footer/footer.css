@@ -1,6 +1,9 @@
 .footer {
-    border-style: solid;
-    border-color: black;
+    border-top: 2px solid #e5e5e5;
     background-color: white;
     text-align: center;
+}
+
+.footer_content {
+    color: gray;
 }

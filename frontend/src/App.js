@@ -49,8 +49,9 @@ function App(props) {
           <Route path='/hear_us/petition/:petition_url' exact component={PetitionDetail} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
-      </div >
+      <br/><br/>
       <Footer />
+      </div >
     </ConnectedRouter>
   );
 }

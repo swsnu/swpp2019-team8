@@ -1,5 +1,5 @@
 .TopOfPage {
-    background-color: #3779c4;
+    background-color: #f2f4f7;
     padding-left: 8%;
     padding-right: 8%;
 }
@@ -9,7 +9,9 @@
     padding-right: 15%;
 }
 
-
+.TellMe {
+    background-color: #f2f4f7;
+}
 
 .Title {
     color: white;
@@ -18,7 +20,7 @@
     /* text-align: left; */
 }
 
-.TellMe {
+.TellMeContent {
     background-color: white;
     min-height: 370px;
     padding-left: 5%;
