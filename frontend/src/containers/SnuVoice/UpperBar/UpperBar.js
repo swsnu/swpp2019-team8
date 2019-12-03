@@ -97,20 +97,24 @@ export class UpperBar extends Component {
             searchBar = (
                 <Row className="sub_bar">
                     <Col className="navbuttons">
-                        <Button
-                            type="button"
+                        <a
+                            className="navbar-brand"
+                            // type="button"
                             id="tell_me_button"
-                            onClick={this.onClickTellMeButton}
+                            // onClick={this.onClickTellMeButton}
+                            href="/tell_me"
                         >
                             TELL-ME
-                        </Button>
-                        <Button
-                            type="button"
+                        </a>
+                        <a
+                            className="navbar-brand"
+                            // type="button"
                             id="hear_us_button"
-                            onClick={this.onClickHearUsButton}
+                            // onClick={this.onClickHearUsButton}
+                            href="/hear_us"
                         >
                             HEAR-US
-                        </Button>
+                        </a>
                     </Col>
                     <Col className="searchbar">
                         <TellMeSearchBar />
@@ -121,20 +125,24 @@ export class UpperBar extends Component {
             searchBar = (
                 <Row className="sub_bar">
                     <Col className="navbuttons">
-                        <Button
-                            type="button"
+                    <a
+                            className="navbar-brand"
+                            // type="button"
                             id="tell_me_button"
-                            onClick={this.onClickTellMeButton}
+                            // onClick={this.onClickTellMeButton}
+                            href="/tell_me"
                         >
                             TELL-ME
-                        </Button>
-                        <Button
-                            type="button"
+                        </a>
+                        <a
+                            className="navbar-brand"
+                            // type="button"
                             id="hear_us_button"
-                            onClick={this.onClickHearUsButton}
+                            // onClick={this.onClickHearUsButton}
+                            href="/hear_us"
                         >
                             HEAR-US
-                        </Button>
+                        </a>
                     </Col>
                     <Col className="searchbar">
                         <HearUsSearchBar />

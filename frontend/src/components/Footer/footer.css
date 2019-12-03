@@ -2,9 +2,11 @@
     border-top: 2px groove;
     background-color: white;
     text-align: center;
-    font-size: small;
+    align-content: center;
 }
 
-.footer_content {
+.footer_text {
     color: gray;
+    font-size: small;
+
 }

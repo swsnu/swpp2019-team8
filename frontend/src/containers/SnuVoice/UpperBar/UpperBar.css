@@ -4,6 +4,7 @@
 
 .navbar-brand {
     color: white;
+    font: bold !important;
 }
 
 .upperbar_top {
@@ -28,6 +29,7 @@
 .navbuttons {
     display: flex;
     align-content: left;
+    left: 5%;
 }
 
 .sub_bar {
@@ -39,4 +41,3 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
