@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseForbidden, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth import authenticate
 from django.forms.models import model_to_dict
+from django.utils import timezone
+
 
 import json
 import datetime
@@ -19,6 +21,7 @@ def document(request):
             req_data = json.loads(request.body.decode())
             document_title = req_data['title']
             document_content = req_data['content']
+            document_date = timezone.now()
             if len(req_data) != 2:
                 return HttpResponseBadRequest()
         except (KeyError, JSONDecodeError) as e:
@@ -36,7 +39,7 @@ def document(request):
             }
             return JsonResponse(response_dict, safe=False)
         else:
-            document = Document(title=document_title, content=document_content)
+            document = Document(title=document_title, content=document_content, edit_date = document_date)
             document.save()
             response_dict = {'documentDuplicate': False, 'id': document.id,
                              'title': document.title, 'content': document.content}
@@ -76,17 +79,18 @@ def document_title(request, document_title):
             document_target = req_data['target']
             document_content = req_data['content']
             document_version = req_data['version']
+            document_date = timezone.now()
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         try:
             document = Document.objects.get(title=document_target)
         except Document.DoesNotExist:
             return HttpResponse(status=404)
-        print(document.version, document_version)
 
         if document_version == document.version:
             document.content = document_content
             document.version = document.version+1
+            document.edit_date = document_date
             document.save()
             response_dict = {
                 'title': document.title,
@@ -106,6 +110,14 @@ def document_title(request, document_title):
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 
+def document_recent(request):
+    if request.method == 'GET':
+        document_list = [ document for document in
+                            Document.objects.all().values('title', 'edit_date').order_by('-edit_date')]
+        list_to_return = document_list[:10]
+        return JsonResponse(list_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
 
 def photo(request):
     if request.method == 'POST':
