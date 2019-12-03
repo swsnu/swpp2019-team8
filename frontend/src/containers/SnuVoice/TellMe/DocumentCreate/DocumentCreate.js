@@ -134,7 +134,7 @@ class DocumentCreate extends Component {
         <div className="DocumentCreate">
           <br />
 
-          <h1 className="pageTitle">Create New Document</h1>
+          <h1 className="document_create_title">Create New Document</h1>
 
           <Button
             type="button"
@@ -147,7 +147,7 @@ class DocumentCreate extends Component {
           <br />
           {createStateTabbuttons}
           <br />
-          <TabContent activeTab={this.state.documentState}>
+          <TabContent className="document_create_tab" activeTab={this.state.documentState}>
             <TabPane tabId="write" className="inputTab">
               <Form>
                 <FormGroup>
@@ -181,13 +181,11 @@ class DocumentCreate extends Component {
               <div className="preview">
                 <div className="document">
                   <br />
-                  <h6>Title:</h6>
-
                   <h1>
-                    <div className="title">{this.state.documentTitle}</div>
+                    <div >{this.state.documentTitle}</div>
                   </h1>
+                  <hr />
                   <br />
-                  <h6>Content:</h6>
                   <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                 </div>
               </div>

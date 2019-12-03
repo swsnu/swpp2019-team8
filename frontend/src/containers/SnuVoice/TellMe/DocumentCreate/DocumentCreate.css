@@ -1,11 +1,13 @@
 .DocumentCreate {
-    background-color: #3779c4;
+    background-color: #f2f4f7;
     padding-left: 8%;
     padding-right: 8%;
+    font-family: "Malgun Gothic", sans-serif;
 }
 
-.pageTitle {
-    color: white !important;
+.document_create_title {
+    color: black !important;
+    font-family: Georgia, sans-serif;
 }
 
 .photoButton {
@@ -29,6 +31,10 @@ h2, h3, h4, h6 {
 .inputTab {
     padding-left: 4%;
     padding-right: 4%;
+}
+
+.preview {
+    border:groove;
 }
 
 .document {

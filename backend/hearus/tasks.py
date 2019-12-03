@@ -51,9 +51,8 @@ def plot_graph(petition_id):
     period = (time2-time1).days
     if period is 0 :
         plt.figure()
-        trend = trend.cumsum()
         trend.plot()
-        plt.axis('off')
+        plt.title("Increasing trend")
         plt.savefig(graph_loc + str(petition_id) + '/trend.jpg')
     else: 
         trend_series = pd.Series(index=(pd.date_range(trend.index[0],periods = period)))
@@ -65,34 +64,39 @@ def plot_graph(petition_id):
             else:
                 trend_series[comparestr] = trend[comparestr]
         trend_series = trend_series.cumsum()
+        plt.figure()
         trend_series.plot()
-        plt.savefig(graph_loc + str(petition_id) + '/trend.jpg')#petition_id
+        plt.title("Increasing trend")
+        plt.savefig(graph_loc + str(petition_id) + '/trend.jpg')
     #draw gender graph
-    gender = stat['gender'].value_counts()
+    gender = stat['gender'].value_counts().sort_index()
     df_gender = pd.DataFrame()
     for i in range(len(gender)):
         df_gender[gender.index[i]] = [gender.values[i]]
     plt.figure()
     df_gender.plot.barh(stacked=True)
     plt.axis('off')
+    plt.title("Gender")
     plt.savefig(graph_loc + str(petition_id) + '/gender.jpg')
     #draw department graph
-    department = stat['department'].value_counts()
+    department = stat['department'].value_counts().sort_index()
     df_department = pd.DataFrame()
     for i in range(len(department)):
         df_department[department.index[i]] = [department.values[i]]
     plt.figure()
     df_department.plot.barh(stacked=True)
     plt.axis('off')
+    plt.title("Department")
     plt.savefig(graph_loc + str(petition_id) + '/department.jpg')
     #draw studentid graph
-    studentid = stat['studentId'].value_counts()
+    studentid = stat['studentId'].value_counts().sort_index()
     df_studentid = pd.DataFrame()
     for i in range(len(studentid)):
         df_studentid[studentid.index[i]] = [studentid.values[i]]
     plt.figure()
     df_studentid.plot.barh(stacked=True)
     plt.axis('off')
+    plt.title("Student ID")
     plt.savefig(graph_loc + str(petition_id) +'/studentId.jpg')
     plt.close('all')
 

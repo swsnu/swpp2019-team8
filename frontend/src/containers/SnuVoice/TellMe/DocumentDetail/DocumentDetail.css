@@ -1,5 +1,5 @@
 .DocumentDetail {
-    background-color: #3779c4;
+    background-color: #f2f4f7;
     padding-left: 8%;
     padding-right: 8%;
     text-align: left;
@@ -11,9 +11,14 @@
     background-color: white;
 }
 
+.document_detail_title {
+    text-align:center;
+    position: relative;
+}
+
 .document {
     text-align: left;
-    color: white !important;
+    color: black !important;
 }
 
 .debateButton {
