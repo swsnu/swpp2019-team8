@@ -247,17 +247,35 @@ class PhotoUpload extends Component {
         const this_tmp = this;
 
         canvas.addEventListener('click', function (event) {
-            var x = event.pageX - elemLeft,
-                y = event.pageY - elemTop;
+            let x = event.pageX - elemLeft;
+            let y = event.pageY - elemTop;
+
+            let isBoxClicked = false;
 
             // Collision detection between clicked offset and element.
             this_tmp.state.blurElements.forEach(function (element, index) {
-                if (y > element.top && y < element.top + element.height
-                    && x > element.left && x < element.left + element.width) {
+                if (y > element.top && y < element.top + element.height &&
+                    x > element.left && x < element.left + element.width &&
+                    element.color === 'red') {
                     element.blur = !element.blur;
+                    isBoxClicked = true;
                     console.log(index + 'clicked!');
                 }
             });
+
+            if (!isBoxClicked) {
+                const blurSize = Math.min(this_tmp.state.canvasWidth, this_tmp.state.canvasHeight) / 20;
+                this_tmp.setState({
+                    blurElements: this_tmp.state.blurElements.concat({
+                        color: '',
+                        width: blurSize * 2,
+                        height: blurSize * 2,
+                        left: x - blurSize,
+                        top: y - blurSize,
+                        blur: true,
+                    })
+                });
+            }
 
             ctx.clearRect(0, 0, this_tmp.state.canvasWidth, this_tmp.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
             ctx.drawImage(img, 0, 0);
@@ -281,10 +299,12 @@ class PhotoUpload extends Component {
             });
 
             this_tmp.state.blurElements.forEach(function (element, index) {
-                ctx.beginPath();
-                ctx.strokeStyle = element.color;
-                ctx.rect(element.left, element.top, element.width, element.height);
-                ctx.stroke();
+                if (element.color === 'red') {
+                    ctx.beginPath();
+                    ctx.strokeStyle = element.color;
+                    ctx.rect(element.left, element.top, element.width, element.height);
+                    ctx.stroke();
+                }
             });
         }, false);
 
