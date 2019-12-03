@@ -50,7 +50,7 @@ describe('<TellMe/>', () => {
     it(`should call 'onClickPhotoButton'`, () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-        const component = mount(documentCreate);
+        const component = mount(tellMe);
         const wrapper = component.find('#photo_button').at(0);
         wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/photo');
