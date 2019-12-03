@@ -29,6 +29,8 @@ import io
 import pandas as pd
 import numpy as np
 
+#urlparsing
+import urllib.parse
 
 def petition(request):
     if not request.user.is_authenticated:
@@ -175,10 +177,11 @@ def petition_comment(request, petition_url):
 
 def petition_by_document_title(request, document_title):
     if request.method == 'GET':
+        encoded_title = urllib.parse.quote(document_title)
         petition_to_exclude = ['preliminary', 'fail']
         petition_list = [petition for petition in
                          Petition.objects.exclude(status__in=petition_to_exclude).filter(
-                             link__icontains='/tell_me/documents/' + document_title)
+                             link__icontains='/tell_me/documents/' + encoded_title)
                          .values('id', 'url', 'title')
                          ]
         return JsonResponse(petition_list, safe=False)
