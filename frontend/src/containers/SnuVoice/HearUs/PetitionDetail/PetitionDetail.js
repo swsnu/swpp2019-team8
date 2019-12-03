@@ -182,10 +182,14 @@ class PetitionDetail extends Component {
                         <div className="petitionsView_statistic">
                             <h4>&#60;Graphs&#62;</h4>
                             <br /><br />
-                            <img src={graphSrc + "/trend.jpg"} style={{ width: 450 }} />
-                            <img src={graphSrc + "/gender.jpg"} style={{ width: 450 }} />
-                            <img src={graphSrc + "/department.jpg"} style={{ width: 450 }} />
-                            <img src={graphSrc + "/studentId.jpg"} style={{ width: 450 }} />
+                            <Row>
+                            <img className="imgs" src={graphSrc + "/trend.jpg"} />
+                            <img className="imgs" src={graphSrc + "/gender.jpg"} />
+                            </Row>
+                            <Row>
+                            <img className="imgs" src={graphSrc + "/department.jpg"} />
+                            <img className="imgs" src={graphSrc + "/studentId.jpg"} />
+                            </Row>
                             <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
                             <div className="download_csv_buttn" hidden={status !== 'ongoing'}>
                                 <Button id="download_csv_button"
@@ -202,8 +206,7 @@ class PetitionDetail extends Component {
                         <textarea id="tw_contents" placeholder="Write your comment within 50 characters."
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
-                            disabled={!this.props.signIn || this.props.storedPetitionComments
-                            .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
+                            
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 

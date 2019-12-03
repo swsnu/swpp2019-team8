@@ -38,9 +38,15 @@ h4 {
     color: black;
 }
 
-img {
-    width:80px;
+.imgs {
+    width:450px;
     height:auto;
+    display:block;
+    margin:0 auto;
+}
+
+.petitionsView_statistic {
+    width:100%;
 }
 
 .download_csv_buttn {
