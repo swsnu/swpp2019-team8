@@ -16,6 +16,7 @@ export {
 export {
     postDocument,
     getDocument,
+    getLatestDocuments,
     putDocument,
     getPhoto,
     // postPhoto,
