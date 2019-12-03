@@ -14,10 +14,11 @@ export const footer = () => {
             <br/>
             <div className="footer_content">
             SWPP Team 8 Project: SNU Wiki, Petition site<br/>
-            Share the Voice<br/>
+            Kiwan Kim . Dongseok Heo . Donghyun Lee . Jeongrok Seo<br/>
+            Share the Voice
             </div>
             <br/>
-            <img src={Logo} style = {{height:40}}/>
+            <img src={Logo} style = {{height:30}}/>
             <br/><br/>
         </div>
     )

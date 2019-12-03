@@ -1,7 +1,8 @@
 .footer {
-    border-top: 2px solid #e5e5e5;
+    border-top: 2px groove;
     background-color: white;
     text-align: center;
+    font-size: small;
 }
 
 .footer_content {
