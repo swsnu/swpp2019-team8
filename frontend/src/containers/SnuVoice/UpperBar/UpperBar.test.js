@@ -6,7 +6,7 @@ import { sign } from 'crypto';
 describe('<UpperBar/>', () => {
     let props;
     let mocked = jest.fn();
-
+    let historyMock;
     beforeEach(() => {
         props = {
             selectedUser: '',
@@ -15,7 +15,8 @@ describe('<UpperBar/>', () => {
             postSignIn: mocked,
             getSignOut: mocked,
             getUserByUserId: mocked
-        }
+        },
+        historyMock = { push : jest.fn() }
     })
 
     afterEach(() => jest.clearAllMocks())
@@ -34,13 +35,6 @@ describe('<UpperBar/>', () => {
         const upperbar = component.find('.UpperBar')
         expect(signOut.length).toBe(1);
         expect(upperbar.length).toBe(1);
-    })
-
-    it('should crossoverButton exists, not in Main', () => {
-        const component = shallow(<UpperBar {...props} />)
-        component.instance().setState({ location: "!234" })
-        const crossover = component.find('#crossover_button')
-        expect(crossover.length).toBe(1);
     })
 
     it('should email, password input changes', () => {
@@ -79,32 +73,6 @@ describe('<UpperBar/>', () => {
         expect(mocked).toHaveBeenCalledTimes(1);
     })
 
-    it('click crossover Button in tell_me', () => {
-        let historyMock = { push: jest.fn() };
-        const component = shallow(<UpperBar history={historyMock} {...props} />)
-        component.instance().setState({ location: 'tell_me' })
-        const crossover = component.find('#crossover_button')
-        crossover.simulate('click')
-        expect(historyMock.push).toHaveBeenCalledWith('/hear_us');
-    })
-
-    it('click crossover Button in hear_us', () => {
-        let historyMock = { push: jest.fn() };
-        const component = shallow(<UpperBar history={historyMock} {...props} />)
-        component.instance().setState({ location: 'hear_us' })
-        const crossover = component.find('#crossover_button')
-        crossover.simulate('click')
-        expect(historyMock.push).toHaveBeenCalledWith('/tell_me');
-    })
-
-    it('click crossover Button location is main', () => {
-        let historyMock = { push: jest.fn() };
-        const component = shallow(<UpperBar history={historyMock} {...props} />)
-        component.instance().setState({ location: '' })
-        component.instance().onClickCrossOverButton()
-        expect(historyMock.push).toHaveBeenCalledTimes(0);
-    })
-
     it('onClickSignInButton works', async () => {
         const component = shallow(<UpperBar {...props} />)
         component.instance().toggleModal = mocked;
@@ -130,7 +98,8 @@ describe('<UpperBar/>', () => {
             }
         });
         let component;
-        component = await mount(<UpperBar {...props} />)
+        component = shallow(<UpperBar {...props} />)
+        await component.instance().componentDidMount()
         //expect(component.instance().state.location).toBe('tell_me')
         expect(mocked).toHaveBeenCalledTimes(1)
     })
@@ -144,7 +113,8 @@ describe('<UpperBar/>', () => {
             }
         });
         let component;
-        component = await mount(<UpperBar {...props} />)
+        component = shallow(<UpperBar {...props} />)
+        await component.instance().componentDidMount()
         //expect(component.instance().state.location).toBe('hear_us')
         expect(mocked).toHaveBeenCalledTimes(1)
     })
@@ -158,7 +128,8 @@ describe('<UpperBar/>', () => {
             }
         });
         let component;
-        component = await mount(<UpperBar {...props} />)
+        component = shallow(<UpperBar {...props} />)
+        await component.instance().componentDidMount()
         expect(component.instance().state.location).toBe('')
         expect(mocked).toHaveBeenCalledTimes(1)
     })
@@ -170,6 +141,23 @@ describe('<UpperBar/>', () => {
         expect(mocked).toHaveBeenCalledTimes(1)
         component.instance().onKeyPress({ key: 'Entr' })
         expect(mocked).toHaveBeenCalledTimes(1)
+    })
+
+    it('should buttons work', () => {
+        const component = shallow(<UpperBar {...props} history={historyMock} />);
+        component.instance().setState({
+            location : 'tell_me'
+        });
+        const tellme = component.find('#tell_me_button');
+        tellme.simulate('click');
+        expect(historyMock.push).toHaveBeenCalledTimes(1);
+        component.instance().setState({
+            location : 'hear_us'
+        });
+        const hearus = component.find('#hear_us_button');
+        hearus.simulate('click');
+        expect(historyMock.push).toHaveBeenCalledTimes(2);
+
     })
 
 

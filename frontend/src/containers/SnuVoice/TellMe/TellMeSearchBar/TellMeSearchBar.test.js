@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
-import SearchBar from './SearchBar';
+import TellMeSearchBar from './TellMeSearchBar';
 import { history } from '../../../../store/store';
 import { getMockStore } from '../../../../test-utils/mocks';
 import * as actionCreator from '../../../../store/actions/tellme';
@@ -30,7 +30,7 @@ describe('<SearchBar/>', () => {
             <Provider store={mockStore}>
                 <ConnectedRouter history={history}>
                     <Switch>
-                        <Route path='/' exact component={SearchBar} />
+                        <Route path='/' exact component={TellMeSearchBar} />
                     </Switch>
                 </ConnectedRouter>
             </Provider>
@@ -53,14 +53,14 @@ describe('<SearchBar/>', () => {
 
     it('should onClickCreateBButton work', () => {
         const component = mount(searchBar)
-        const searchBarComponent = component.find(SearchBar.WrappedComponent).instance()
+        const searchBarComponent = component.find(TellMeSearchBar.WrappedComponent).instance()
         searchBarComponent.onClickCreateButton()
         expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/create')
     })
 
     it('should onClickConfirmButton work', async () => {
         const component = mount(searchBar)
-        const searchBarComponent = component.find(SearchBar.WrappedComponent).instance()
+        const searchBarComponent = component.find(TellMeSearchBar.WrappedComponent).instance()
         searchBarComponent.setState({
             searchInput: 'hi   '
         })
@@ -84,13 +84,13 @@ describe('<SearchBar/>', () => {
             <Provider store={remockStore}>
                 <ConnectedRouter history={history}>
                     <Switch>
-                        <Route path='/' exact component={SearchBar} />
+                        <Route path='/' exact component={TellMeSearchBar} />
                     </Switch>
                 </ConnectedRouter>
             </Provider>
         )
         const component = mount(searchBar)
-        const searchBarComponent = component.find(SearchBar.WrappedComponent).instance()
+        const searchBarComponent = component.find(TellMeSearchBar.WrappedComponent).instance()
         searchBarComponent.setState({
             searchInput : "hi.jpg"
         })
@@ -111,7 +111,7 @@ describe('<SearchBar/>', () => {
     it('should onClickConfirmButton work', async () => {
         let mocked = jest.fn();
         const component = mount(searchBar)
-        const searchBarComponent = component.find(SearchBar.WrappedComponent).instance()
+        const searchBarComponent = component.find(TellMeSearchBar.WrappedComponent).instance()
         searchBarComponent.onClickSearchConfirmButton = mocked
         searchBarComponent.onKeyPress({ key: 'Entr' })
         expect(mocked).toHaveBeenCalledTimes(0)
@@ -125,7 +125,7 @@ describe('<SearchBar/>', () => {
 
     it('should onClickConfirmButton work', async () => {
         const component = mount(searchBar)
-        const searchBarComponent = component.find(SearchBar.WrappedComponent).instance()
+        const searchBarComponent = component.find(TellMeSearchBar.WrappedComponent).instance()
         searchBarComponent.onChangeSearchInput({ target: { value: 1 } })
         expect(searchBarComponent.state.searchInput).toBe(1)
 

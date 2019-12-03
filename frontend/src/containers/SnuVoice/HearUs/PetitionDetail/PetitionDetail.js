@@ -8,10 +8,8 @@ import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 import * as actionCreators from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
-import SearchBar from '../../HearUs/SearchBar/SearchBar';
 import './PetitionDetail.css';
 
-import demoGraph from '../../../../img/demoGraph.png';
 
 class PetitionDetail extends Component {
     state = {
@@ -39,7 +37,7 @@ class PetitionDetail extends Component {
     onClickDownloadCsvButton = () => {
         this.props.onGetCsvFile(this.props.match.params.petition_url);
     }
-      
+
     onClickListPrevButton = () => {
         const numbers = this.state.listNumber.map(listNumber => listNumber - 5);
         if (numbers[0] > 0) {
@@ -58,10 +56,12 @@ class PetitionDetail extends Component {
         }
     }
 
+
     render() {
         let title = '';
         let content = '';
         let votes = '';
+        let status = '';
         let category = '';
         let start_date = '';
         let end_date = '';
@@ -72,6 +72,7 @@ class PetitionDetail extends Component {
             content = this.props.selectedPetition.content;
             votes = this.props.selectedPetition.votes;
             category = this.props.selectedPetition.category;
+            status = this.props.selectedPetition.status;
             start_date = this.props.selectedPetition.start_date.substring(0, 10);
             end_date = this.props.selectedPetition.end_date.substring(0, 10);
             link = this.props.selectedPetition.link.split(' ');
@@ -131,12 +132,17 @@ class PetitionDetail extends Component {
             </ButtonGroup>
         );
 
+        let graphSrc = "http://localhost:8000/api/tellme/media/graph/ex/";
+        if (this.props.selectedPetition) {
+            if (this.props.selectedPetition.status === 'ongoing' || this.props.selectedPetition.status === 'end')
+                graphSrc = "http://localhost:8000/api/tellme/media/graph/" + this.props.selectedPetition.id;
+        }
+
         return (
             <div>
                 <UpperBar />
                 <div className="PetitionDetail">
                     <br /><br />
-                    <SearchBar />
                     <br /><br />
                     <div className="content">
                         <b><br />
@@ -144,6 +150,7 @@ class PetitionDetail extends Component {
                             <h2 className="petitionsView_title"><b>{title}</b></h2>
                             <br />
                             <p className="petitionsView_count">Votes: [ {votes} ]</p>
+                            <p className="petitionStatus_count">Status: [ {status} ]</p>
                             <div className="petitionsView_info">
                                 <Row className="petitionsView_info_list">
                                     <Col>
@@ -170,8 +177,15 @@ class PetitionDetail extends Component {
 
                         <div className="petitionsView_statistic">
                             <br /><br />
-                            <img src={demoGraph} style={{ width: 450 }} />
-                            <Button type="button" id="more-statistics-button">More Statistics..</Button>
+                            <h4> trend </h4>
+                            <img src={graphSrc + "/trend.jpg"} style={{ width: 450 }} />
+                            <h4> gender </h4>
+                            <img src={graphSrc + "/gender.jpg"} style={{ width: 450 }} />
+                            <h4> department </h4>
+                            <img src={graphSrc + "/department.jpg"} style={{ width: 450 }} />
+                            <h4> studentId </h4>
+                            <img src={graphSrc + "/studentId.jpg"} style={{ width: 450 }} />
+                            <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
                             <br /><br />
                         </div>
                     </div>

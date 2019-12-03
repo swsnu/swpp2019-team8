@@ -32,9 +32,11 @@ export {
     getAllPetitions,
     getPetition,
     getPetitionByTitle,
+    getPetitionByDocument,
     getMyPetitions,
     getPetitionComments,
     postPetitionComment,
     putPetitionVote,      // Wiki에 추가 필요
-    getCsvFile  // Statistic에 해당하는 것은 아직 안 만듦
+    getCsvFile,  // Statistic에 해당하는 것은 아직 안 만듦
+    getDrawGraph
 } from './hearus';

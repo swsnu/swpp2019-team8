@@ -4,6 +4,8 @@ const initialState = {
     petition_list: [],
     selectedPetition: null,
     comment_list: [],
+    petition_list_by_document: [],
+    
 };
 
 
@@ -13,14 +15,7 @@ const hearus = (prevState, action) => {
     else state = prevState;
     switch (action.type) {
         case actionTypes.POST_PETITION: {
-            const newPetition = {
-                id: action.id,
-                title: action.title,
-                content: action.content,
-                link: action.link,
-                tag: action.tag,
-            };
-            return { ...state, petition_list: state.petition_list.concat(newPetition) };
+            return state;
         }
         case actionTypes.GET_ALL_PETITIONS:
             return { ...state, petition_list: action.petitionList };   // TODO
@@ -28,16 +23,14 @@ const hearus = (prevState, action) => {
             return { ...state, petition_list: action.petitionList }
         case actionTypes.GET_PETITION:
             return { ...state, selectedPetition: action.target };   // TODO
+        case actionTypes.GET_PETITION_BY_DOCUMENT:
+            return {...state, petition_list_by_document: action.petitionList}
         case actionTypes.GET_MY_PETITIONS:
             return { ...state, petition_list: action.myPetitionList };   // TODO
         case actionTypes.GET_PETITION_COMMENTS:
             return { ...state, comment_list: action.comment_list };
         case actionTypes.POST_PETITION_COMMENT: {
-            const newPetitionComment = {
-                id: action.id,
-                comment: action.comment,
-            };
-            return { ...state, comment_list: state.comment_list.concat(newPetitionComment) };
+            return { ...state };
         }
         case actionTypes.PUT_PETITION_VOTE: {
             return { ...state, selectedPetition: action.target };
