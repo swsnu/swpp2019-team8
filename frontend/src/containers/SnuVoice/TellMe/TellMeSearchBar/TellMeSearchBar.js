@@ -45,6 +45,7 @@ export class TellMeSearchBar extends Component {
                 return;
             }
         }
+        await this.props.getDocumentByTitle(input)
         this.props.history.push('/tell_me/search_fail/' + input)
     };
 
