@@ -32,7 +32,7 @@ class PhotoUpload extends Component {
         photoFileName: null,
         photoUrl: null,
         documentState: 'write',
-        message: "Upload your Photo",
+        message: "Upload your photo (max size: 500,000B)",
         googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
         canvasWidth: 100,
         canvasHeight: 100,
