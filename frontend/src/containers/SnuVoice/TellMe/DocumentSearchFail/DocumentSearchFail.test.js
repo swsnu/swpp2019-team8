@@ -47,7 +47,18 @@ describe('<DocumentSearchFail/>', () => {
                     title : '123'
                 },
             ],
+            titlePhotoList : [
+                {
+                    title:"1"
+                }
+            ],
+            contentPhotoList : [
+                {
+                    title:"1"
+                }
+            ],
             getDocument : mocked,
+            getPhotos: mocked,
             match : {
                 params : {
                     document_title : '1'
@@ -70,6 +81,7 @@ describe('<DocumentSearchFail/>', () => {
         await component.instance().componentDidMount();
         expect(mocked).toHaveBeenCalledWith('1')
         expect(historyMock.push).toHaveBeenCalledTimes(0)
+        expect(mocked).toHaveBeenCalledTimes(2)
     })
 
     it('should componentDidMount works at selectedDocument is null', async () => {
@@ -78,8 +90,11 @@ describe('<DocumentSearchFail/>', () => {
                 title : '123'
             },
             getDocument : mocked,
+            getPhotos: mocked,
             titleDocuments : [],
             contentDocuments : [],
+            titlePhotoList: [],
+            contentPhotoList: [],
             match : {
                 params :{
                     document_title : '123'
@@ -106,6 +121,8 @@ describe('mapDispathToProps', () => {
     it ('test getDocument', () => {
         mapDispatchToProps(dispatch).getDocument();
         expect(dispatch).toHaveBeenCalledTimes(1);
+        mapDispatchToProps(dispatch).getPhotos();
+        expect(dispatch).toHaveBeenCalledTimes(2);
     })
 
 })
@@ -127,11 +144,15 @@ describe('mapStateToProps', () => {
                     {
                         id: 3
                     }
-                ]
+                ],
+                titlePhotoList : 1,
+                contentPhotoList : 2,
             }
         }
         expect(mapStateToProps(initialState).titleDocuments.length).toBe(2)
         expect(mapStateToProps(initialState).contentDocuments.length).toBe(1)
         expect(mapStateToProps(initialState).selectedDocument).toBe(initialState.tm.selectedDocument)
+        expect(mapStateToProps(initialState).titlePhotoList).toBe(1)
+        expect(mapStateToProps(initialState).contentPhotoList).toBe(2)
     })
 })

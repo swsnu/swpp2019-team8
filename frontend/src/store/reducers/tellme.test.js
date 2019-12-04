@@ -20,7 +20,9 @@ describe('TellMe Reducer', () => {
             debates: [],
             selectedDebate: null,
             documentConflict: false,
-            selectedPhoto: null
+            selectedPhoto: null,
+            titlePhotoList: [],
+            contentPhotoList: []
         });
     });
 
@@ -30,7 +32,7 @@ describe('TellMe Reducer', () => {
             id: stubDocument.id,
             title: stubDocument.title,
             content: stubDocument.content,
-            documentDuplicate: false, 
+            documentDuplicate: false,
         });
         expect(newState).toEqual({
             documents: [],
@@ -43,6 +45,8 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             documentConflict: false,
             selectedPhoto: null,
+            titlePhotoList: [],
+            contentPhotoList: []
         });
     });
 
@@ -66,6 +70,8 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             documentConflict: false,
             selectedPhoto: null,
+            titlePhotoList: [],
+            contentPhotoList: []
         });
     });
 
@@ -88,7 +94,9 @@ describe('TellMe Reducer', () => {
             selectedPhoto: null,
             debates: [],
             selectedDebate: null,
-            documentConflict: false
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         });
     });
 
@@ -108,13 +116,15 @@ describe('TellMe Reducer', () => {
             titleDocuments: [],
             contentDocuments: [],
             documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     });
 
     it('should get debate comments works', () => {
         const newState = reducer(undefined, {
             type: actionTypes.GET_DEBATE_COMMENTS,
-            commentList : [1, 2]
+            commentList: [1, 2]
         })
 
         expect(newState).toEqual({
@@ -128,6 +138,8 @@ describe('TellMe Reducer', () => {
             titleDocuments: [],
             contentDocuments: [],
             documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     });
 
@@ -147,7 +159,9 @@ describe('TellMe Reducer', () => {
             debateComments: [],
             titleDocuments: [],
             contentDocuments: [],
-            documentConflict: false
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     });
 
@@ -168,6 +182,8 @@ describe('TellMe Reducer', () => {
             titleDocuments: [],
             contentDocuments: [],
             documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     })
 
@@ -188,14 +204,15 @@ describe('TellMe Reducer', () => {
             titleDocuments: [],
             contentDocuments: [],
             documentConflict: false,
-
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     })
 
     it('should get photo works', () => {
         const newState = reducer(undefined, {
             type: actionTypes.GET_PHOTO,
-            photo : 1
+            photo: 1
         })
 
         expect(newState).toEqual({
@@ -209,6 +226,8 @@ describe('TellMe Reducer', () => {
             titleDocuments: [],
             contentDocuments: [],
             documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     })
 

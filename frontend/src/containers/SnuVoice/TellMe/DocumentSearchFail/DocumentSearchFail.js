@@ -17,6 +17,7 @@ export class DocumentSearchFail extends Component {
             this.props.history.push(
                 "/tell_me/documents/" + this.props.selectedDocument.title
             );
+        await this.props.getPhotos(this.props.match.params.document_title);
     };
 
     onClickCreateButton = () => {
@@ -51,6 +52,28 @@ export class DocumentSearchFail extends Component {
             );
         });
 
+        let titlePhotoList = this.props.titlePhotoList.map((photo, i) => {
+            return (
+                <div key={i}>
+                    <Link exact to={"/tell_me/photo/" + photo.title}>
+                        {" "}
+                        {photo.title}
+                    </Link>
+                </div>
+            );
+        }) 
+
+        let contentPhotoList = this.props.contentPhotoList.map((photo, i) => {
+            return (
+                <div key={i}>
+                    <Link exact to ={"/tell_me/photo/" + photo.title}>
+                        {" "}
+                        {photo.title}
+                    </Link>
+                </div>
+            );
+        })
+
         return (
             <div className="DocumentSearchFail">
                 <UpperBar />
@@ -67,6 +90,18 @@ export class DocumentSearchFail extends Component {
                             포함된 document 내용:
                         </h3>
                         {contentList}
+                        <br />
+                        <h3>
+                        &quot;{this.props.match.params.document_title}&quot;가(이)
+                            포함된 photo 제목:
+                        </h3>
+                        {titlePhotoList}
+                        <br />
+                        <h3>
+                        &quot;{this.props.match.params.document_title}&quot;가(이)
+                            포함된 photo 내용:
+                        </h3>
+                        {contentPhotoList}
                         <br />
                         Can&apos;t find the document you&apos;re looking for? Create a new
                         document here!
@@ -102,7 +137,9 @@ export class DocumentSearchFail extends Component {
 export const mapDispatchToProps = dispatch => {
     return {
         getDocument: document_title =>
-            dispatch(actionCreator.getDocument(document_title))
+            dispatch(actionCreator.getDocument(document_title)),
+        getPhotos: photo_title =>
+            dispatch(actionCreator.getRelatedPhoto(photo_title))
     };
 };
 
@@ -110,7 +147,9 @@ export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
         titleDocuments: state.tm.titleDocuments,
-        contentDocuments: state.tm.contentDocuments
+        contentDocuments: state.tm.contentDocuments,
+        titlePhotoList: state.tm.titlePhotoList,
+        contentPhotoList: state.tm.contentPhotoList
     };
 };
 
