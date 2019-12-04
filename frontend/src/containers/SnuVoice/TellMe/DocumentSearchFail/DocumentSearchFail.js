@@ -67,8 +67,7 @@ export class DocumentSearchFail extends Component {
             return (
                 <div key={i}>
                     <Link exact to ={"/tell_me/photo/" + photo.title}>
-                        {" "}
-                        {photo.title}
+                        {" " + photo.title}
                     </Link>
                 </div>
             );
