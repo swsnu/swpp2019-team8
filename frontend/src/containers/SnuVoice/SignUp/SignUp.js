@@ -21,6 +21,7 @@ import {
 } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
+import './SignUp.css';
 
 class SignUp extends Component {
   state = {
