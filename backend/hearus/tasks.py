@@ -46,15 +46,17 @@ def plot_graph(petition_id):
     year = int(start_date[0])
     month = int(start_date[1])
     date = int(start_date[2])
-    time1 = datetime(year, month, date, 0, 0, 0)
+    time1 = datetime(year, month, date)
     time2 = datetime.now()
     period = (time2-time1).days
     if period is 0 :
         plt.figure()
+        trend = trend.cumsum()
         trend.plot()
         plt.title("Increasing trend")
         plt.savefig(graph_loc + str(petition_id) + '/trend.jpg')
     else: 
+        period = period + 1
         trend_series = pd.Series(index=(pd.date_range(trend.index[0],periods = period)))
         for i in range(period):
             tmptime = time1 + timedelta(days=1*i)
