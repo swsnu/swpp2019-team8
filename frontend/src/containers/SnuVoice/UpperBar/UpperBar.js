@@ -104,7 +104,7 @@ export class UpperBar extends Component {
                             // onClick={this.onClickTellMeButton}
                             href="/tell_me"
                         >
-                            TELL-ME
+                            <b>TELL-ME</b>
                         </a>
                         <a
                             className="navbar-brand"
@@ -141,7 +141,7 @@ export class UpperBar extends Component {
                             // onClick={this.onClickHearUsButton}
                             href="/hear_us"
                         >
-                            HEAR-US
+                            <b>HEAR-US</b>
                         </a>
                     </Col>
                     <Col className="searchbar">
