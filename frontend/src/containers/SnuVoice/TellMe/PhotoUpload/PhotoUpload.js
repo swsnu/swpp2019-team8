@@ -128,6 +128,11 @@ class PhotoUpload extends Component {
         const reader = new FileReader();
         let file = event.target.files[0];
 
+        if (file && file.size > 307200) {
+            alert("File is too big! (max: 307,200B)");
+            return;
+        };
+
         reader.onloadend = () => {
             this.setState({ uploadEnd: false, blurElements: [], photoFile: file, photoFileName: file.name, photoUrl: reader.result });
             const imageData = reader.result.split(",")[1];
@@ -153,7 +158,7 @@ class PhotoUpload extends Component {
             };
         }
 
-        if (file && file.type.match('image.*')) {
+        if (file) {
             reader.readAsDataURL(file);
         }
     }
