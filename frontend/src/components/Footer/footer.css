@@ -1,0 +1,12 @@
+.footer {
+    border-top: 2px groove;
+    background-color: white;
+    text-align: center;
+    align-content: center;
+}
+
+.footer_text {
+    color: gray;
+    font-size: small;
+
+}

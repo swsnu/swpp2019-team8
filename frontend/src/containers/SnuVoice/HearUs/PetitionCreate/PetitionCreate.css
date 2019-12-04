@@ -1,9 +1,13 @@
 .PetitionCreate {
-    background-color: #3779c4;
+    background-color: #f2f4f7;
     padding-left: 8%;
     padding-right: 8%;
     text-align: left;
-    color: white;
+    font-family: "Malgun Gothic", sans-serif;
+}
+
+.petition_create_title {
+    color: black;
 }
 
 .inputTop {
@@ -16,6 +20,17 @@
 
 .buttons {
     float: right;
+    left:255px;
+}
+
+#petition_content_textarea {
+    resize:none;
+    width: 500;
+    height:200;
+}
+
+.LinkList {
+    font-weight:500;
 }
 
 .agree {

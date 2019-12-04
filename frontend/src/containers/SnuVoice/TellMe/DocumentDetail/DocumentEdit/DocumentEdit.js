@@ -150,7 +150,7 @@ class DocumentEdit extends Component {
                 <Upperbar />
                 <div className="DocumentEdit">
                     <br />
-                    <h1 className="pageTitle">Document Edit</h1>
+                    <h1 className="pageTitle">Edit document</h1>
                     <Button
                         type="button"
                         id="photo_button"
@@ -165,12 +165,12 @@ class DocumentEdit extends Component {
                     <TabContent activeTab={this.state.documentState}>
                         <TabPane tabId="write" className="inputTab">
                             <br />
-                            <h6>Title:</h6>
                             <h1>
                                 <div className="title">
                                     {this.props.match.params.document_title}
                                 </div>
                             </h1>
+                            <hr />
                             <br />
                             <Form>
                                 <Row>
@@ -221,7 +221,6 @@ class DocumentEdit extends Component {
                             <div className="preview">
                                 <div className="document">
                                     <br />
-                                    <h6>Title:</h6>
                                     <h1>
                                         <div className="title">
                                             {
@@ -231,7 +230,7 @@ class DocumentEdit extends Component {
                                         </div>
                                     </h1>
                                     <br />
-                                    <h6>Content:</h6>
+                                    <hr />
                                     <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                                 </div>
                             </div>

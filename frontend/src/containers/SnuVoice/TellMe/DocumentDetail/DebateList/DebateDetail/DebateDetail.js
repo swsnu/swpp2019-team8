@@ -30,6 +30,10 @@ export class DebateDetail extends Component {
         await this.props.onGetDebateComments(this.props.match.params.debate_id);
     }
 
+    onClickDebateCancelButton = () => {
+        this.props.history.goBack();
+    }
+
     render() {
         let documentTitle = '';
         let debateTitle = '';
@@ -93,6 +97,13 @@ export class DebateDetail extends Component {
                         <Button
                             id="debate_comment_confirm_button" disabled={this.state.comment === ''}
                             onClick={this.onClickCommentConfirmButton}>CONFIRM</Button>
+                        <Button
+                        type="button"
+                        id="debate_cancel_button"
+                        onClick={this.onClickDebateCancelButton}
+                    >
+                        Back
+                        </Button>
                     </div>
                 </div>
             </div>

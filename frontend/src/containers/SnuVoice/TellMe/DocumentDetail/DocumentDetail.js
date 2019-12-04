@@ -41,7 +41,7 @@ class DocumentDetail extends Component {
             return (
                 <div key={petition.id}>
                     <li key={petition.id}>
-                        <a href={'localhost:3000/hear_us/petition/'+ petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
+                        <a href={'localhost:3000/hear_us/petition/' + petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
                     </li>
                     <br />
                 </div>
@@ -69,36 +69,34 @@ class DocumentDetail extends Component {
             <div>
                 <Upperbar />
                 <div className="DocumentDetail">
+                <br /><br />
+                <div className="Document_detail_upperbar">
+                    <Button
+                        type="button"
+                        id="document_cancel_button"
+                        onClick={this.onClickDocumentCancelButton}
+                    >
+                        Back
+                        </Button>
+                    <Button
+                        type="button"
+                        id="document_edit_button"
+                        onClick={this.onClickDocumentEditButton}
+                    >
+                        Edit
+                        </Button>
+                    <Button
+                        className="debateButton"
+                        onClick={this.onClickDocumentDebateButton}
+                    >Debate</Button>
+                    <h1 className="document_detail_title">{title}</h1>  
+                    </div>         
                     <br />
-                    <br />
-                    <h4 className="document">Document:</h4>
                     <div className="content">
                         <br />
-                        {/* <h3>TITLE</h3> */}
-                        <h1 className="title">{title}</h1>
-                        {/* <h3>CONTENT</h3> */}
-                        <hr />
                         <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                         <hr />
                         {petitonList}
-                        <Button
-                            type="button"
-                            id="document_cancel_button"
-                            onClick={this.onClickDocumentCancelButton}
-                        >
-                            Back
-                        </Button>
-                        <Button
-                            type="button"
-                            id="document_edit_button"
-                            onClick={this.onClickDocumentEditButton}
-                        >
-                            Edit
-                        </Button>
-                        <Button
-                            className="debateButton"
-                            onClick={this.onClickDocumentDebateButton}
-                        >Debate</Button>
                     </div>
                 </div>
             </div>

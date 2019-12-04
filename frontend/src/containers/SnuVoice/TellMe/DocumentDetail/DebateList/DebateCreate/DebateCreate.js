@@ -32,6 +32,10 @@ export class DebateCreate extends Component {
             this.state.debateContent,
         );
     }
+    
+    onClickDebateCancelButton = () => {
+        this.props.history.goBack();
+    }
 
     render() {
         return (
@@ -54,11 +58,12 @@ export class DebateCreate extends Component {
                         />
                 <br />
                 <Button 
-                    id="debate_confirm_button"
+                    id="debate_confirm_button" disabled={this.state.debateContent === '' || this.state.debateTitle === ''}
                     onClick={this.onClickDebateConfirmButton}>CONFIRM</Button>
                 
                 <Button
-                    id="onClickDebateCancelButton">Cancel</Button>
+                    id="debate_cancel_button"
+                    onClick={this.onClickDebateCancelButton}>Cancel</Button>
                     </div>
             </div>
         )

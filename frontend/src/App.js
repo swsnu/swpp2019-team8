@@ -22,6 +22,8 @@ import PetitionList from './containers/SnuVoice/HearUs/PetitionList/PetitionList
 import PetitionCreate from './containers/SnuVoice/HearUs/PetitionCreate/PetitionCreate';
 import PetitionDetail from './containers/SnuVoice/HearUs/PetitionDetail/PetitionDetail';
 
+import Footer from './components/Footer/footer';
+
 function App(props) {
   return (
     <ConnectedRouter history={props.history}>
@@ -47,6 +49,8 @@ function App(props) {
           <Route path='/hear_us/petition/:petition_url' exact component={PetitionDetail} />
           <Route render={() => <h1>Not Found</h1>} />
         </Switch>
+      <br/><br/>
+      <Footer />
       </div >
     </ConnectedRouter>
   );

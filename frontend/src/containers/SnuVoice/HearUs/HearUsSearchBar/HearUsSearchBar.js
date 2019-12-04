@@ -46,7 +46,8 @@ export class HearUsSearchBar extends Component {
                 <InputGroup className="searchBar">
                     <Input type="text" id="search_input" autoFocus
                         onKeyPress={this.onKeyPress}
-                        onChange={this.onChangeSearchInput}></Input>
+                        onChange={this.onChangeSearchInput}
+                        ></Input>
                     <InputGroupAddon addonType="append">
                         <Button type="button" id="search_confirm_button"
                             disabled={this.state.searchInput === '' || this.state.searchInput === undefined}

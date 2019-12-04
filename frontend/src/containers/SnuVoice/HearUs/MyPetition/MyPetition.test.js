@@ -114,6 +114,16 @@ describe('<MyPetition />', () => {
         expect(component.instance().state.selectedTab).toBe('1');
     })
 
+
+    it('should onClickPetiton works', () => {
+        const component = shallow(<MyPetition {...props} history={mockHistory} />);
+        const petition = component.find('Petition').at(0)
+        component.instance().onClickDetailButton = mock
+        petition.simulate('click')
+        expect(mock).toHaveBeenCalledTimes(2)
+    })
+    
+
     it('should render without error when signIn is false', () => {
         const component = shallow(<MyPetition {...props} signIn={false} history={mockHistory}/>)
         const body = component.find('.MyPetition')

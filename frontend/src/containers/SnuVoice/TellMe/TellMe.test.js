@@ -56,4 +56,13 @@ describe('<TellMe/>', () => {
         expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/create')
     })
 
+    it(`should call 'onClickPhotoButton'`, () => {
+        const spyHistoryPush = jest.spyOn(history, 'push')
+            .mockImplementation(path => { });
+        const component = mount(tellMe);
+        const wrapper = component.find('#photo_button').at(0);
+        wrapper.simulate('click');
+        expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/photo');
+    });
+
 })

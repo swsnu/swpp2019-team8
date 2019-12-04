@@ -1,7 +1,8 @@
 .TopOfPage {
-    background-color: #3779c4;
+    background-color: #f2f4f7;
     padding-left: 8%;
     padding-right: 8%;
+    font-family: "Malgun Gothic", sans-serif;
 }
 
 .SearchBar {
@@ -9,20 +10,24 @@
     padding-right: 15%;
 }
 
-
+.TellMe {
+    background-color: #f2f4f7;
+}
 
 .Title {
-    color: white;
+    color: black;
     /* float: left; */
     padding-bottom: 30px;
     /* text-align: left; */
 }
 
-.TellMe {
+.TellMeContent {
     background-color: white;
     min-height: 370px;
     padding-left: 5%;
     padding-right: 5%;
+    border-style: groove;
+    /* border-color: #d0d2d5; */
 }
 
 .TellMeText {
