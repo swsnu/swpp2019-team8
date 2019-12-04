@@ -79,10 +79,10 @@ class SignUp extends Component {
       engineering: [{ value: '-' }, { value: "engineering" }],
       fineArts: [{ value: 'fineArts' }],
       humanities: [{ value: 'humanities' }],
-      humanEcology: [{ value : 'humanEcology'}],
+      humanEcology: [{ value: 'humanEcology' }],
       liberalStudies: [{ value: 'liberalStudies' }],
       medicine: [{ value: 'medicine' }],
-      music: [{ value : 'music'}],
+      music: [{ value: 'music' }],
       naturalSciences: [{ value: 'naturalSciences' }],
       nursing: [{ value: 'nursing' }],
       socialSciences: [{ value: 'socialSciences' }],
@@ -134,7 +134,7 @@ class SignUp extends Component {
     if (this.state.confirmModal === true && this.state.confirmModalMessage === '회원 가입이 완료되었습니다.') {
       this.props.history.push('/')
     }
-      this.setState({ confirmModal: !this.state.confirmModal })
+    this.setState({ confirmModal: !this.state.confirmModal })
   }
 
   onChangeEmailInput = async (event) => {
@@ -338,10 +338,10 @@ class SignUp extends Component {
       statusRadio: selectedStatus,
       selectedStatus: event.target.value,
       checkInputResult: inputResult,
-      studentId : '',
-      selectedDepartment : 'all',
-      selectedMajor : '-',
-      selectedStudentStatus : ''
+      studentId: '',
+      selectedDepartment: 'all',
+      selectedMajor: '-',
+      selectedStudentStatus: ''
     })
   };
 
