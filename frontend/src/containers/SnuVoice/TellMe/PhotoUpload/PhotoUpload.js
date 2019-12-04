@@ -122,14 +122,13 @@ class PhotoUpload extends Component {
     }
 
     handlePhoto = (event) => {
-        this.setState({ uploadEnd: false });
         event.preventDefault();
 
         const reader = new FileReader();
         let file = event.target.files[0];
 
         reader.onloadend = () => {
-            this.setState({ photoFile: file, photoFileName: file.name, photoUrl: reader.result, blurElements: [] });
+            this.setState({ uploadEnd: false, blurElements: [], photoFile: file, photoFileName: file.name, photoUrl: reader.result });
             const imageData = reader.result.split(",")[1];
             const img = new Image();
             img.src = reader.result;
@@ -239,7 +238,7 @@ class PhotoUpload extends Component {
         };
     };
 
-    drawInCanvas = (photoInfo, n, copiedImg) => {
+    drawInCanvas = async(photoInfo, n, copiedImg) => {
         const canvas = this.refCanvas.current;
         const ctx = canvas.getContext("2d");
         const img = copiedImg;
@@ -252,7 +251,7 @@ class PhotoUpload extends Component {
 
         const this_tmp = this;
 
-        canvas.addEventListener('click', function (event) {
+        await canvas.addEventListener('click', function (event) {
             let x = event.pageX - elemLeft;
             let y = event.pageY - elemTop;
 
@@ -268,6 +267,8 @@ class PhotoUpload extends Component {
                     console.log(index + 'clicked!');
                 }
             });
+
+            console.log(isBoxClicked);
 
             if (!isBoxClicked) {
                 const blurSize = Math.min(this_tmp.state.canvasWidth, this_tmp.state.canvasHeight) / 20;
