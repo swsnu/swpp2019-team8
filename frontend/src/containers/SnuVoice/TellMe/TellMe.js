@@ -51,9 +51,9 @@ class TellMe extends Component {
                 <i>Ask Anything, Answer Everything</i>
               </h6>
               <br />
-              <a href="/tell_me/document/TELL-ME:기본방침">TELL-ME:기본방침</a>
+              <a href="/tell_me/documents/TELL-ME:기본방침">TELL-ME:기본방침</a>
               <br />
-              <a href="/tell_me/document/TELL-ME:문법%20도움말">TELL-ME:문법 도움말</a>
+              <a href="/tell_me/documents/TELL-ME:문법%20도움말">TELL-ME:문법 도움말</a>
             </div>
 
             <Button
