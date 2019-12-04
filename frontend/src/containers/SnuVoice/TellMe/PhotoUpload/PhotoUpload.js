@@ -33,7 +33,7 @@ class PhotoUpload extends Component {
         photoFileName: null,
         photoUrl: null,
         documentState: 'write',
-        message: "Upload your photo (max size: 500,000B)",
+        message: "Upload your photo (max size: 5MB)",
         googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
         canvasWidth: 0,
         canvasHeight: 0,
@@ -134,8 +134,8 @@ class PhotoUpload extends Component {
         let file = event.target.files[0];
         console.log(file);
 
-        if (file && file.size > 500000) {
-            alert("File is too big! (max: 500,000B)");
+        if (file && file.size > 5242880) {
+            alert("File is too big! (max: 5MB)");
             return;
         }
 
