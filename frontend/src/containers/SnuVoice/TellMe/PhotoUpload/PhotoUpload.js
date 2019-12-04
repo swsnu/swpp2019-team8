@@ -39,6 +39,7 @@ class PhotoUpload extends Component {
         blurElements: [],
         titleFormText: '',
         uploadEnd: false,
+        _img: null,
     }
 
     constructor(props) {
@@ -68,7 +69,7 @@ class PhotoUpload extends Component {
     onClickPhotoConfirmButton = () => {
         const canvas = this.refCanvas.current;
         const ctx = canvas.getContext("2d");
-        const img = this.refImg.current;
+        const img = this.state._img;
 
         ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
         ctx.drawImage(img, 0, 0);
@@ -137,6 +138,7 @@ class PhotoUpload extends Component {
                 this.setState({
                     uploadEnd: true,
                     message: "File uploading...",
+                    _img: copiedImg,
                 });
                 this.fileUpload(imageData)
                     .then((result) => {
@@ -238,7 +240,7 @@ class PhotoUpload extends Component {
         };
     };
 
-    drawInCanvas = async(photoInfo, n, copiedImg) => {
+    drawInCanvas = async (photoInfo, n, copiedImg) => {
         const canvas = this.refCanvas.current;
         const ctx = canvas.getContext("2d");
         const img = copiedImg;
