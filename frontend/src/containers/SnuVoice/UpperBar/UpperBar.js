@@ -51,13 +51,13 @@ export class UpperBar extends Component {
         if (event.key === "Enter") this.onClickSignInButton();
     };
 
-    onClickTellMeButton = () => {
-        this.props.history.push("/tell_me");
-    };
+    // onClickTellMeButton = () => {
+    //     this.props.history.push("/tell_me");
+    // };
 
-    onClickHearUsButton = () => {
-        this.props.history.push("/hear_us");
-    };
+    // onClickHearUsButton = () => {
+    //     this.props.history.push("/hear_us");
+    // };
 
     onClickSignUpButton = () => {
         this.props.history.push("/sign_up");
@@ -155,7 +155,6 @@ export class UpperBar extends Component {
             upperBar = (
                 <div>
                 <div className="upperbar_top">
-                    <div className="navbar">
                         <a className="logo" href="/">
                         <img src={Logo} style={{ height: 60 }} />
                         </a>
@@ -175,7 +174,6 @@ export class UpperBar extends Component {
                                 SIGN-UP
                             </Button>
                         </div>
-                    </div>
                 </div>
                     <div className="upperbar_bottom">{searchBar}</div>
                     </div>
