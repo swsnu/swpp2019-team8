@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import * as actionCreator from '../../../store/actions/index';
 
+import terms from './term';
+
 import {
   Button,
   Form,
@@ -539,7 +541,6 @@ class SignUp extends Component {
         </div>
       );
     }
-    let terms = '약관 적어넣기 약관 적어넣기'
 
     return (
       <div className="SignUp">
@@ -563,8 +564,7 @@ class SignUp extends Component {
         </Modal>
         <Container>
           <Form>
-            <textarea rows="5" cols="80" defaultValue={terms}>
-            </textarea>
+            {terms}
             <FormGroup>
               <Input
                 type="checkbox"
