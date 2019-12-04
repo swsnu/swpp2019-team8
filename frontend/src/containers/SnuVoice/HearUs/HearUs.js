@@ -152,8 +152,8 @@ export class HearUs extends Component {
         <div className="TopOfPage">
           <br />
           <div className="HearUs">
-            <h1>Hear Us</h1>
-            <br />
+            {/* <h1>Hear Us</h1>
+            <br /> */}
             {buttons}
           </div>
           <br></br><br />

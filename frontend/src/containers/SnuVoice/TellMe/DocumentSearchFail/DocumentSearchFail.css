@@ -1,4 +1,16 @@
 .DocumentSearchFail {
     min-height: 500px;
+    align-content: center !important;
+    justify-content: center;
 }
 
+.DocumentSearchFail_content {
+    text-align: left;
+    padding: 3%;
+    background-color: white;
+    border-style: groove;
+}
+
+.DocumentSearchFail_content_border {
+    padding: 1%;
+}

@@ -25,21 +25,16 @@ class TellMe extends Component {
       <div className="TellMe">
         <UpperBar />
         <div className="TopOfPage">
-          <br />
-          <div className="Title">
-            <h1>Tell Me</h1>
-            <h6>
-              <i>Ask Anything, Answer Everything</i>
-            </h6>
-          </div>
-          <div className="SearchBar">
-          </div>
-          <br />
           <div />
           <br />
           <div className="TellMeContent">
             <br />
             <div className="TellMeText">
+            <h1>Tell Me</h1>
+            <h6>
+              <i>Ask Anything, Answer Everything</i>
+            </h6>
+            <br/>
               <h5><b>Tell Me 설명글:</b></h5>
               <br />
               예: Tell Me는 무엇인가<br />
