@@ -8,12 +8,14 @@ import {
     Button,
     Input,
     InputGroup,
-    InputGroupAddon
+    InputGroupAddon,
+    FormText
 } from 'reactstrap';
 
 export class TellMeSearchBar extends Component {
     state = {
-        searchInput: ''
+        searchInput: '',
+        formText: '',
     }
 
     onKeyPress = event => {
@@ -27,6 +29,10 @@ export class TellMeSearchBar extends Component {
     onClickSearchConfirmButton = async () => {
         let toSearch = this.state.searchInput
         let input = toSearch;
+        if (/[/\\]/.exec(toSearch)) {
+            alert("\\ and / is not allowed while seraching");
+            return;
+        }
         for (var i = toSearch.length - 1; i >= 0; i--) {
             if (toSearch[i] !== ' ') break;
             else input = toSearch.slice(0, i)
@@ -47,7 +53,7 @@ export class TellMeSearchBar extends Component {
         }
         await this.props.getDocumentByTitle(input)
         this.props.history.push('/tell_me/search_fail/' + input)
-    };
+    }; 
 
     onClickCreateButton = () => {
         this.props.history.push("/tell_me/create");
@@ -64,6 +70,9 @@ export class TellMeSearchBar extends Component {
                         onKeyPress={this.onKeyPress}
                         onChange={this.onChangeSearchInput}
                     ></Input>
+                    <FormText >
+                        {this.state.formText}
+                    </FormText>
                     <InputGroupAddon addonType="append">
                         <Button
                             type="button"

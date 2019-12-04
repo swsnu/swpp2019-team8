@@ -46,7 +46,7 @@ describe('<DocumentCreate />', () => {
         const wrapper = component.find('#document_title_input').at(0);
         const documentCreateInstance = component.find(DocumentCreate.WrappedComponent).instance();
         wrapper.simulate('change', { target: { value: documentTitle } });
-        expect(documentCreateInstance.state.formFeedbackMessage.title).toEqual("# ? % 는 허용되지 않습니다.");
+        expect(documentCreateInstance.state.formFeedbackMessage.title).toEqual("# ? %  / \\ 는 허용되지 않습니다.");
         expect(documentCreateInstance.state.documentContent).toEqual('');
         wrapper.simulate('change', { target: { value: "1.jpg" } });
         expect(documentCreateInstance.state.formFeedbackMessage.title).toEqual("document 제목은 .jpg/.jpeg/.png/.bmp로 끝낼 수 없습니다.");
