@@ -24,3 +24,12 @@
 .debateButton {
     float: right;
 }
+
+blockquote {
+    border: 1px solid #27a9e3;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-left: 10px solid #27a9e3;
+  }
