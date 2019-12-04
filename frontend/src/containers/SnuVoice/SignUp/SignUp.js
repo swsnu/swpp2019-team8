@@ -2,9 +2,9 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import * as actionCreator from '../../../store/actions/index';
+import * as actionCreator from "../../../store/actions/index";
 
-import { terms } from './terms';
+import terms from "./term";
 
 import {
   Button,
@@ -23,7 +23,7 @@ import {
 } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
-import './SignUp.css';
+import "./SignUp.css";
 
 class SignUp extends Component {
   state = {
@@ -54,7 +54,7 @@ class SignUp extends Component {
       doctor: false
     },
     departmentList: [
-      { value: "all", label: '-' },
+      { value: "all", label: "-" },
       { value: "agricultureAndLifeSciences", label: "Agriculture and Life Sciences" },
       { value: "businessAdministration", label: "Business Administration" },
       { value: "education", label: "Education" },
@@ -67,29 +67,118 @@ class SignUp extends Component {
       { value: "music", label: "Music" },
       { value: "naturalSciences", label: "Natural Sciences" },
       { value: "nursing", label: "Nursing" },
-      { value: "socialSciences", label: "Social Sciences" },
       { value: "pharmacy", label: "Pharmacy" },
+      { value: "socialSciences", label: "Social Sciences" },
       { value: "veterinaryMedicine", label: "Veterinary Medicine" }
     ], // ex() 공대, 농생대
     majorList: {
       all: [{ value: "-" }],
-      agricultureAndLifeSciences: [{ value: 'agricultureAndLifeSciences' }],
-      businessAdministration: [{ value: 'businessAdministration' }],
-      education: [{ value: 'education' }],
-      engineering: [{ value: '-' }, { value: "engineering" }],
-      fineArts: [{ value: 'fineArts' }],
-      humanities: [{ value: 'humanities' }],
-      humanEcology: [{ value: 'humanEcology' }],
-      liberalStudies: [{ value: 'liberalStudies' }],
-      medicine: [{ value: 'medicine' }],
-      music: [{ value: 'music' }],
-      naturalSciences: [{ value: 'naturalSciences' }],
-      nursing: [{ value: 'nursing' }],
-      socialSciences: [{ value: 'socialSciences' }],
-      pharmacy: [{ value: 'pharmacy' }],
-      veterinaryMedicine: [{ value: 'veterinaryMedicine' }]
+      agricultureAndLifeSciences: [
+        { value: "agricultureAndLifeSciences" }
+      ],
+      businessAdministration: [{ value: "businessAdministration" }],
+      education: [
+        { value: "education", label: "Education" },
+        {
+          value: "koreanLanguageEducation",
+          label: "Korean Language Education"
+        },
+        { value: "englishEducation", label: "English Education" },
+        {
+          value: "germanLanguageEducation",
+          label: "German Language Education"
+        },
+        {
+          value: "frenchLanguageEducation",
+          label: "French Language Education"
+        },
+        {
+          value: "socialStudiesEducation",
+          label: "Social Studies Education"
+        },
+        { value: "historyEducation", label: "History Education" },
+        { value: "geographyEducation", label: "Geography Education" },
+        { value: "ethicsEducation", label: "Ethics Education" },
+        { value: "mathematicsEducation", label: "Mathematics Education" },
+        { value: "physicsEducation", label: "Physics Education" },
+        { value: "chemistryEducation", label: "Chemistry Education" },
+        { value: "biologyEducation", label: "Biology Education" },
+        {
+          value: "earthScienceEducation",
+          label: "Earth Science Education"
+        },
+        { value: "physicalEducation", label: "Physical Education" }
+      ],
+      engineering: [{ value: "-" }, { value: "engineering" }],
+      fineArts: [
+        { value: "orientalPainting", label: "Oriental Painting" },
+        { value: "painting", label: "Painting" },
+        { value: "sculpture", label: "Sculpture" },
+        { value: "craftsAndDesign", label: "Crafts and Design" },
+      ],
+      humanities: [
+        { value: "koreanLanguageAndLiterature", label: "Korean Language and Literature" },
+        { value: "chineseLanguageAndLiterature", label: "Chinese Language and Literature" },
+        { value: "englishLanguageAndLiterature", label: "English Language and Literature" },
+        { value: "frenchLanguageAndLiterature", label: "French Language and Literature" },
+        { value: "germanLanguageAndLiterature", label: "German Language and Literature" },
+        { value: "russianLanguageAndLiterature", label: "Russian Language and Literature" },
+        { value: "hispanicLanguageAndLiterature", label: "Hispanic Language and Literature" },
+        { value: "linguistics", label: "Linguistics" },
+        { value: "asianLanguagesAndCivilizations", label: "Asian Languages and Civilizations" },
+        { value: "koreanHistory", label: "Korean History" },
+        { value: "asianHistory", label: "Asian History" },
+        { value: "westernHistory", label: "Western History" },
+        { value: "archaeologyAndArtHistory", label: "Archaeology and Art History" },
+        { value: "philosophy", label: "Philosophy" },
+        { value: "religiousStudies", label: "Religious Studies" },
+        { value: "aesthetics", label: "Aesthetics" },
+      ],
+      humanEcology: [
+        { value: "consumerAndChildStudies", label: "Consumer and Child Studies" },
+        { value: "foodAndNutrition", label: "Food and Nutrition" },
+        { value: "textilesMerchandisingAndFashionDesign", label: "Textiles, Merchandising and Fashion Design" },
+      ],
+      liberalStudies: [{ value: "liberalStudies" }],
+      medicine: [
+        { value: "preliminaryMedicine", label: "Preliminary Medicine" },
+        { value: "medicine", label: "Medicine" }
+      ],
+      music: [
+        { value: "vocalMusic", label: "Vocal Music" },
+        { value: "composition", label: "Composition" },
+        { value: "instrumentalMusic", label: "Instrumental Music" },
+        { value: "koreanMusic", label: "Korean Music" }
+      ],
+      naturalSciences: [
+        { value: "mathematicalSciences", label: "Mathematical Sciences" },
+        { value: "statistics", label: "Statistics" },
+        { value: "physicsAndAstronomy", label: "Physics and Astronomy" },
+        { value: "chemistry", label: "Chemistry" },
+        { value: "biologicalSciences", label: "Biological Sciences" },
+        { value: "earthAndEnvironmentalSciences", label: "Earth and Environmental Sciences" },
+      ],
+      nursing: [
+        { value: "nursing", label: "Nursing" },
+      ],
+      socialSciences: [
+        { value: "politicalScienceAndInternationalRelations", label: "Political Science and International Relations" },
+        { value: "economics", label: "Economics" },
+        { value: "sociology", label: "Sociology" },
+        { value: "anthropology", label: "Anthropology" },
+        { value: "psychology", label: "Psychology" },
+        { value: "geography", label: "Geography" },
+        { value: "socialWelfare", label: "Social Welfare" },
+        { value: "communication", label: "Communication" },
+      ],
+      pharmacy: [{ value: "pharmacy" }],
+      veterinaryMedicine: [
+        { value: "preliminaryVeterinaryMedicine", label: "Preliminary Veterinary Medicine" },
+        { value: "veterinaryMedicine", label: "Veterinary Medicine" },
+      ],
     },
-    checkInputResult: { // 회원가입을 위한 정보들이 알맞게 들어왔는지 확인
+    checkInputResult: {
+      // 회원가입을 위한 정보들이 알맞게 들어왔는지 확인
       agreeToTerms: false,
       email: false,
       verifyCode: false,
@@ -103,7 +192,8 @@ class SignUp extends Component {
       status: false,
       studentStatus: false
     },
-    checkInputInvalid: { // input이 invalid한 상태이어야 하는지 확인
+    checkInputInvalid: {
+      // input이 invalid한 상태이어야 하는지 확인
       email: false,
       verifyCode: false,
       password: false,
@@ -112,91 +202,99 @@ class SignUp extends Component {
       studentId: false
     },
     formFeedbackMessage: {
-      email: '',
-      verifyCode: '',
-      password: '',
-      passwordConfirm: '',
-      nickname: '',
-      studentId: ''
+      email: "",
+      verifyCode: "",
+      password: "",
+      passwordConfirm: "",
+      nickname: "",
+      studentId: ""
     },
     verifyModal: false,
-    verifyModalMessage: '',
+    verifyModalMessage: "",
     confirmModal: false,
-    confirmModalMessage: '',
-
+    confirmModalMessage: ""
   };
 
   toggleVerifyModal = () => {
-    this.setState({ verifyModal: !this.state.verifyModal })
-  }
+    this.setState({ verifyModal: !this.state.verifyModal });
+  };
 
   toggleConfirmModal = () => {
-    if (this.state.confirmModal === true && this.state.confirmModalMessage === '회원 가입이 완료되었습니다.') {
-      this.props.history.push('/')
+    if (
+      this.state.confirmModal === true &&
+      this.state.confirmModalMessage === "회원 가입이 완료되었습니다."
+    ) {
+      this.props.history.push("/");
     }
-    this.setState({ confirmModal: !this.state.confirmModal })
-  }
+    this.setState({ confirmModal: !this.state.confirmModal });
+  };
 
-  onChangeEmailInput = async (event) => {
+  onChangeEmailInput = async event => {
     let email = event.target.value;
     let formFeedbackMessage = this.state.formFeedbackMessage;
     let inputResult = this.state.checkInputResult;
     let inputInvalid = this.state.checkInputInvalid;
-    if (/^[a-zA-Z0-9]+@snu\.ac\.kr$/.exec(email)) { // 성공
-      //중복체크? 
-      await this.props.checkEmailDuplicate(email)
+    if (/^[a-zA-Z0-9]+@snu\.ac\.kr$/.exec(email)) {
+      // 성공
+      //중복체크?
+      await this.props.checkEmailDuplicate(email);
       if (this.props.emailDuplicate === true) {
         inputResult.email = false;
         inputInvalid.email = true;
-        formFeedbackMessage.email = '이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.';
+        formFeedbackMessage.email =
+          "이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.";
       } else {
         inputResult.email = true;
         inputInvalid.email = false;
-        formFeedbackMessage.email = ''
-
+        formFeedbackMessage.email = "";
       }
-    } else if (email === '') {
+    } else if (email === "") {
       inputResult.email = false;
       inputInvalid.email = false;
-      formFeedbackMessage.email = ''
-    } else {                                                  // 실패
+      formFeedbackMessage.email = "";
+    } else {
+      // 실패
       inputResult.email = false;
       inputInvalid.email = true;
-      formFeedbackMessage.email = '스누메일 형식으로 입력해주세요.'
+      formFeedbackMessage.email = "스누메일 형식으로 입력해주세요.";
     }
 
     this.setState({
       email: email,
       checkInputInvalid: inputInvalid,
       checkInputResult: inputResult,
-      formFeedbackMessage: formFeedbackMessage,
-    })
-
+      formFeedbackMessage: formFeedbackMessage
+    });
   };
 
   onChangeVerifyCodeInput = event => {
     let inputResult = this.state.checkInputResult;
     let formFeedbackMessage = this.state.formFeedbackMessage;
     let inputInvalid = this.state.checkInputInvalid;
-    if (event.target.value === this.props.verifyCode && this.props.verifyCode !== '') { //성공
+    if (
+      event.target.value === this.props.verifyCode &&
+      this.props.verifyCode !== ""
+    ) {
+      //성공
       inputResult.verifyCode = true;
       inputInvalid.verifyCode = false;
-      formFeedbackMessage.verifyCode = '';
-    } else if (event.target.value === '') {
+      formFeedbackMessage.verifyCode = "";
+    } else if (event.target.value === "") {
       inputResult.verifyCode = false;
       inputInvalid.verifyCode = false;
-      formFeedbackMessage.verifyCode = '';
-    } else {                                                                          //실패
+      formFeedbackMessage.verifyCode = "";
+    } else {
+      //실패
       inputResult.verifyCode = false;
       inputInvalid.verifyCode = true;
-      formFeedbackMessage.verifyCode = '인증번호가 일치하지 않습니다.';
+      formFeedbackMessage.verifyCode = "인증번호가 일치하지 않습니다.";
     }
     this.setState({
       verifyCode: event.target.value,
       checkInputInvalid: inputInvalid,
       checkInputResult: inputResult,
-      formFeedbackMessage: formFeedbackMessage,
-    })
+      formFeedbackMessage: formFeedbackMessage
+    });
   };
 
   onChangePasswordInput = event => {
@@ -205,106 +303,117 @@ class SignUp extends Component {
     let formFeedbackMessage = this.state.formFeedbackMessage;
     let inputInvalid = this.state.checkInputInvalid;
     if (event.target.value.length < 8) {
-      if (event.target.value === '') {
+      if (event.target.value === "") {
         inputResult.password = false;
         inputInvalid.password = false;
-        formFeedbackMessage.password = ''
+        formFeedbackMessage.password = "";
       } else {
         inputResult.password = false;
         inputInvalid.password = true;
-        formFeedbackMessage.password = '비밀번호가 너무 짧습니다. 8자 이상으로 설정해주십시오'
+        formFeedbackMessage.password =
+          "비밀번호가 너무 짧습니다. 8자 이상으로 설정해주십시오";
       }
     } else {
-      if (/[a-zA-Z]+/.exec(event.target.value) && /[0-9]+/.exec(event.target.value) && /[^\w\s]+/.exec(event.target.value)) {
+      if (
+        /[a-zA-Z]+/.exec(event.target.value) &&
+        /[0-9]+/.exec(event.target.value) &&
+        /[^\w\s]+/.exec(event.target.value)
+      ) {
         inputResult.password = true;
         inputInvalid.password = false;
-        formFeedbackMessage.password = ''
+        formFeedbackMessage.password = "";
       } else {
         inputResult.password = false;
         inputInvalid.password = true;
-        formFeedbackMessage.password = '영문자, 특수기호, 숫자를 포함한 8자 이상으로 설정해주십시오.'
+        formFeedbackMessage.password =
+          "영문자, 특수기호, 숫자를 포함한 8자 이상으로 설정해주십시오.";
       }
     }
-    if (event.target.value !== this.state.passwordConfirm && this.state.passwordConfirm !== '') {
+    if (
+      event.target.value !== this.state.passwordConfirm &&
+      this.state.passwordConfirm !== ""
+    ) {
       inputResult.passwordConfirm = false;
       inputInvalid.passwordConfirm = true;
-      formFeedbackMessage.passwordConfirm = '비밀번호와 일치하지 않습니다.'
-    } else if (this.state.passwordConfirm !== '') {
+      formFeedbackMessage.passwordConfirm =
+        "비밀번호와 일치하지 않습니다.";
+    } else if (this.state.passwordConfirm !== "") {
       inputResult.passwordConfirm = true;
       inputInvalid.passwordConfirm = false;
-      formFeedbackMessage.passwordConfirm = ''
+      formFeedbackMessage.passwordConfirm = "";
     }
     this.setState({
       password: event.target.value,
       checkInputInvalid: inputInvalid,
       checkInputResult: inputResult,
-      formFeedbackMessage: formFeedbackMessage,
-    })
+      formFeedbackMessage: formFeedbackMessage
+    });
   };
 
   onChangePasswordConfirmInput = event => {
     let inputResult = this.state.checkInputResult;
     let formFeedbackMessage = this.state.formFeedbackMessage;
     let inputInvalid = this.state.checkInputInvalid;
-    if (this.state.password === event.target.value) { //성공
+    if (this.state.password === event.target.value) {
+      //성공
       inputResult.passwordConfirm = true;
       inputInvalid.passwordConfirm = false;
-      formFeedbackMessage.passwordConfirm = '';
-    } else if (event.target.value === '') {                                          //실패
+      formFeedbackMessage.passwordConfirm = "";
+    } else if (event.target.value === "") {
+      //실패
       inputResult.passwordConfirm = false;
       inputInvalid.passwordConfirm = false;
-      formFeedbackMessage.passwordConfirm = '';
+      formFeedbackMessage.passwordConfirm = "";
     } else {
       inputResult.passwordConfirm = false;
       inputInvalid.passwordConfirm = true;
-      formFeedbackMessage.passwordConfirm = '비밀번호와 일치하지 않습니다.'
+      formFeedbackMessage.passwordConfirm =
+        "비밀번호와 일치하지 않습니다.";
     }
     this.setState({
       passwordConfirm: event.target.value,
       checkInputInvalid: inputInvalid,
       checkInputResult: inputResult,
-      formFeedbackMessage: formFeedbackMessage,
-    })
+      formFeedbackMessage: formFeedbackMessage
+    });
   };
 
-  onChangeNicknameInput = async (event) => {
-    let nickname = event.target.value
+  onChangeNicknameInput = async event => {
+    let nickname = event.target.value;
     let inputResult = this.state.checkInputResult;
     let formFeedbackMessage = this.state.formFeedbackMessage;
     let inputInvalid = this.state.checkInputInvalid;
-    if (nickname !== '') await this.props.checkNicknameDuplicate(nickname)
-    if (nickname === '') {
+    if (nickname !== "") await this.props.checkNicknameDuplicate(nickname);
+    if (nickname === "") {
       inputResult.nickname = false;
       inputInvalid.nickname = false;
-      formFeedbackMessage.nickname = ''
+      formFeedbackMessage.nickname = "";
     } else if (this.props.nicknameDuplicate === true) {
       inputResult.nickname = false;
       inputInvalid.nickname = true;
-      formFeedbackMessage.nickname = '이미 존재하는 닉네임입니다.'
+      formFeedbackMessage.nickname = "이미 존재하는 닉네임입니다.";
     } else {
       inputResult.nickname = true;
       inputInvalid.nickname = false;
-      formFeedbackMessage.nickname = ''
-
+      formFeedbackMessage.nickname = "";
     }
     //중복체크만 확인
     this.setState({
       nickname: nickname,
       checkInputInvalid: inputInvalid,
       checkInputResult: inputResult,
-      formFeedbackMessage: formFeedbackMessage,
+      formFeedbackMessage: formFeedbackMessage
     });
   };
 
-  onChangeGenderRadioButton = (event) => {
+  onChangeGenderRadioButton = event => {
     let inputResult = this.state.checkInputResult;
     let selectedGender = this.state.genderRadio;
     for (let i in selectedGender) {
       if (i === event.target.value) {
         inputResult.gender = true;
         selectedGender[i] = event.target.checked;
-      }
-      else selectedGender[i] = false;
+      } else selectedGender[i] = false;
     }
     this.setState({
       genderRadio: selectedGender,
@@ -332,51 +441,51 @@ class SignUp extends Component {
       inputResult.department = false;
       inputResult.major = false;
       inputResult.studentStatus = false;
-
     }
     this.setState({
       statusRadio: selectedStatus,
       selectedStatus: event.target.value,
       checkInputResult: inputResult,
-      studentId: '',
-      selectedDepartment: 'all',
-      selectedMajor: '-',
-      selectedStudentStatus: ''
-    })
+      studentId: "",
+      selectedDepartment: "all",
+      selectedMajor: "-",
+      selectedStudentStatus: ""
+    });
   };
 
-  onChangeStudentIdInput = async (event) => {
-    let studentId = event.target.value
+  onChangeStudentIdInput = async event => {
+    let studentId = event.target.value;
     let inputResult = this.state.checkInputResult;
     let inputInvalid = this.state.checkInputInvalid;
     let formFeedbackMessage = this.state.formFeedbackMessage;
     if (/^[1-2]([0-9]){3}-([0-9]){5}$/.exec(studentId)) {
-      await this.props.checkStudentIdDuplicate(studentId)
+      await this.props.checkStudentIdDuplicate(studentId);
       if (this.props.studentIdDuplicate === true) {
         inputResult.studentId = false;
         inputInvalid.studentId = true;
-        formFeedbackMessage.studentId = '이미 가입한 학번입니다.'
+        formFeedbackMessage.studentId = "이미 가입한 학번입니다.";
       } else {
         inputResult.studentId = true;
         inputInvalid.studentId = false;
-        formFeedbackMessage.studentId = ''
+        formFeedbackMessage.studentId = "";
       }
     } else {
-      if (studentId === '') {
+      if (studentId === "") {
         inputResult.studentId = false;
         inputInvalid.studentId = false;
-        formFeedbackMessage.studentId = ''
+        formFeedbackMessage.studentId = "";
       } else {
         inputResult.studentId = false;
         inputInvalid.studentId = true;
-        formFeedbackMessage.studentId = '학번의 형식이 올바르지 않습니다.\n20XX-XXXXX 형식으로 입력하여 주십시오'
+        formFeedbackMessage.studentId =
+          "학번의 형식이 올바르지 않습니다.\n20XX-XXXXX 형식으로 입력하여 주십시오";
       }
     }
     this.setState({
       studentId: studentId,
       checkInputResult: inputResult,
       checkInputInvalid: inputInvalid,
-      formFeedbackMessage: formFeedbackMessage,
+      formFeedbackMessage: formFeedbackMessage
     });
   };
 
@@ -398,7 +507,7 @@ class SignUp extends Component {
 
   onChangeDepartmentSelect = event => {
     let inputResult = this.state.checkInputResult;
-    if (event.target.value !== 'all') {
+    if (event.target.value !== "all") {
       inputResult.department = true;
     } else {
       inputResult.department = false;
@@ -412,7 +521,7 @@ class SignUp extends Component {
 
   onChangeMajorSelect = event => {
     let inputResult = this.state.checkInputResult;
-    if (event.target.value !== '-') {
+    if (event.target.value !== "-") {
       inputResult.major = true;
     } else inputResult.major = false;
     this.setState({
@@ -429,16 +538,22 @@ class SignUp extends Component {
 
   onClickVerifyButton = async () => {
     await this.props.getVerifyCode(this.state.email);
-    if (this.props.verifyCode === '') {
-      this.setState({ verifyModalMessage: '메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.' })
-    }
-    else {
-      this.setState({ verifyModalMessage: '메일로 인증번호를 발송하였습니다.\n메일을 확인해 주시기 바랍니다.' })
+    if (this.props.verifyCode === "") {
+      this.setState({
+        verifyModalMessage:
+          "메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다."
+      });
+    } else {
+      this.setState({
+        verifyModalMessage:
+          "메일로 인증번호를 발송하였습니다.\n메일을 확인해 주시기 바랍니다."
+      });
     }
     this.toggleVerifyModal();
   };
 
-  onClickSignUpConfirmButton = async () => { // 회원가입 확인 + 추가 구현 예정
+  onClickSignUpConfirmButton = async () => {
+    // 회원가입 확인 + 추가 구현 예정
     let inputResult = this.state.checkInputResult;
     let signUp = true;
     for (let i in inputResult) {
@@ -455,11 +570,15 @@ class SignUp extends Component {
         department: this.state.selectedDepartment,
         major: this.state.selectedMajor,
         student_status: this.state.selectedStudentStatus
-      }
+      };
       await this.props.postSignUp(user);
-      this.setState({ confirmModalMessage: '회원 가입이 완료되었습니다.' })
+      this.setState({
+        confirmModalMessage: "회원 가입이 완료되었습니다."
+      });
     } else {
-      this.setState({ confirmModalMessage: '다시 한 번 확인해주시기 바랍니다.' })
+      this.setState({
+        confirmModalMessage: "다시 한 번 확인해주시기 바랍니다."
+      });
     }
     this.toggleConfirmModal();
   };
@@ -472,13 +591,17 @@ class SignUp extends Component {
     let status_detail = null;
     if (this.state.statusRadio["student"]) {
       const departmentList = this.state.departmentList.map((v, i) => {
-        return <option key={i} value={v.value} label={v.label}></option>;
+        return (
+          <option key={i} value={v.value} label={v.label}></option>
+        );
       });
-      const majorList = this.state.majorList[this.state.selectedDepartment].map(
-        (v, i) => {
-          return <option key={i} value={v.value} label={v.value}></option>;
-        }
-      );
+      const majorList = this.state.majorList[
+        this.state.selectedDepartment
+      ].map((v, i) => {
+        return (
+          <option key={i} value={v.value} label={v.value}></option>
+        );
+      });
 
       status_detail = (
         <div className="StatusDetail">
@@ -491,7 +614,7 @@ class SignUp extends Component {
               valid={this.state.checkInputResult.studentId}
               invalid={this.state.checkInputInvalid.studentId}
             ></Input>
-            <FormFeedback >
+            <FormFeedback>
               {this.state.formFeedbackMessage.studentId}
             </FormFeedback>
             <br />
@@ -506,7 +629,7 @@ class SignUp extends Component {
                   onChange={this.onChangeStudentRadioButton}
                 ></Input>
                 UNDERGRAD
-              </Col>
+                            </Col>
               <Col>
                 <Input
                   type="radio"
@@ -516,7 +639,7 @@ class SignUp extends Component {
                   onChange={this.onChangeStudentRadioButton}
                 ></Input>
                 GRADUATE
-              </Col>
+                            </Col>
               <Col>
                 <Input
                   type="radio"
@@ -526,14 +649,20 @@ class SignUp extends Component {
                   onChange={this.onChangeStudentRadioButton}
                 ></Input>
                 DOCTOR
-              </Col>
+                            </Col>
               <br />
               College of...
-              <Input type="select" onChange={this.onChangeDepartmentSelect}>
+                            <Input
+                type="select"
+                onChange={this.onChangeDepartmentSelect}
+              >
                 {departmentList}
               </Input>
               Major
-              <Input type="select" onChange={this.onChangeMajorSelect}>
+                            <Input
+                type="select"
+                onChange={this.onChangeMajorSelect}
+              >
                 {majorList}
               </Input>
             </Row>
@@ -546,18 +675,22 @@ class SignUp extends Component {
       <div className="SignUp">
         <UpperBar />
         <h1>Sign Up</h1>
-        <Modal isOpen={this.state.verifyModal} toggle={this.toggleVerifyModal} className="VerifyModal">
-          <ModalBody>
-            {this.state.verifyModalMessage}
-          </ModalBody>
+        <Modal
+          isOpen={this.state.verifyModal}
+          toggle={this.toggleVerifyModal}
+          className="VerifyModal"
+        >
+          <ModalBody>{this.state.verifyModalMessage}</ModalBody>
           <ModalFooter>
             <Button onClick={this.toggleVerifyModal}>확인</Button>
           </ModalFooter>
         </Modal>
-        <Modal isOpen={this.state.confirmModal} toggle={this.toggleConfirmModal} className="ConfirmModal">
-          <ModalBody>
-            {this.state.confirmModalMessage}
-          </ModalBody>
+        <Modal
+          isOpen={this.state.confirmModal}
+          toggle={this.toggleConfirmModal}
+          className="ConfirmModal"
+        >
+          <ModalBody>{this.state.confirmModalMessage}</ModalBody>
           <ModalFooter>
             <Button onClick={this.toggleConfirmModal}>확인</Button>
           </ModalFooter>
@@ -570,10 +703,12 @@ class SignUp extends Component {
                 type="checkbox"
                 id="agree_to_terms_checkbox"
                 checked={this.state.agreeToTerms}
-                onChange={() => this.onClickAgreeToTermsCheckBox()}
+                onChange={() =>
+                  this.onClickAgreeToTermsCheckBox()
+                }
               />
               Agree
-            </FormGroup>
+                        </FormGroup>
             <Col md={{ size: 4, offset: 4 }}>
               <FormGroup row>
                 <Label>SNU MAIL</Label>
@@ -583,23 +718,28 @@ class SignUp extends Component {
                     id="email_input"
                     placeholder="SNU MAIL"
                     onChange={this.onChangeEmailInput}
-                    valid={this.state.checkInputResult.email}
-                    invalid={this.state.checkInputInvalid.email}
+                    valid={
+                      this.state.checkInputResult.email
+                    }
+                    invalid={
+                      this.state.checkInputInvalid.email
+                    }
                   ></Input>
                   <Button
                     type="button"
                     id="verify_button"
                     className="float-right"
-                    disabled={!this.state.checkInputResult.email}
+                    disabled={
+                      !this.state.checkInputResult.email
+                    }
                     onClick={this.onClickVerifyButton}
                   >
                     Verify
-                </Button>
-                  <FormFeedback >
+                                    </Button>
+                  <FormFeedback>
                     {this.state.formFeedbackMessage.email}
                   </FormFeedback>
                 </InputGroup>
-
               </FormGroup>
               <FormGroup row>
                 <Label>VERIFY CODE</Label>
@@ -608,10 +748,14 @@ class SignUp extends Component {
                   id="verify_code_input"
                   placeholder="VERIFY CODE"
                   onChange={this.onChangeVerifyCodeInput}
-                  valid={this.state.checkInputResult.verifyCode}
-                  invalid={this.state.checkInputInvalid.verifyCode}
+                  valid={
+                    this.state.checkInputResult.verifyCode
+                  }
+                  invalid={
+                    this.state.checkInputInvalid.verifyCode
+                  }
                 ></Input>
-                <FormFeedback >
+                <FormFeedback>
                   {this.state.formFeedbackMessage.verifyCode}
                 </FormFeedback>
               </FormGroup>
@@ -623,9 +767,11 @@ class SignUp extends Component {
                   placeholder="PASSWORD"
                   onChange={this.onChangePasswordInput}
                   valid={this.state.checkInputResult.password}
-                  invalid={this.state.checkInputInvalid.password}
+                  invalid={
+                    this.state.checkInputInvalid.password
+                  }
                 ></Input>
-                <FormFeedback >
+                <FormFeedback>
                   {this.state.formFeedbackMessage.password}
                 </FormFeedback>
               </FormGroup>
@@ -636,11 +782,20 @@ class SignUp extends Component {
                   id="password_confirm_input"
                   placeholder="PASSWORD CONFIRMATION"
                   onChange={this.onChangePasswordConfirmInput}
-                  valid={this.state.checkInputResult.passwordConfirm}
-                  invalid={this.state.checkInputInvalid.passwordConfirm}
+                  valid={
+                    this.state.checkInputResult
+                      .passwordConfirm
+                  }
+                  invalid={
+                    this.state.checkInputInvalid
+                      .passwordConfirm
+                  }
                 ></Input>
-                <FormFeedback >
-                  {this.state.formFeedbackMessage.passwordConfirm}
+                <FormFeedback>
+                  {
+                    this.state.formFeedbackMessage
+                      .passwordConfirm
+                  }
                 </FormFeedback>
               </FormGroup>
               <FormGroup row>
@@ -651,9 +806,11 @@ class SignUp extends Component {
                   placeholder="NICKNAME"
                   onChange={this.onChangeNicknameInput}
                   valid={this.state.checkInputResult.nickname}
-                  invalid={this.state.checkInputInvalid.nickname}
+                  invalid={
+                    this.state.checkInputInvalid.nickname
+                  }
                 ></Input>
-                <FormFeedback >
+                <FormFeedback>
                   {this.state.formFeedbackMessage.nickname}
                 </FormFeedback>
               </FormGroup>
@@ -667,30 +824,36 @@ class SignUp extends Component {
                       name="gender_radio"
                       id="gender_male_radio"
                       value="male"
-                      onChange={this.onChangeGenderRadioButton}
+                      onChange={
+                        this.onChangeGenderRadioButton
+                      }
                     ></Input>
                     MALE&emsp;
-                  </Col>
+                                    </Col>
                   <Col>
                     <Input
                       type="radio"
                       name="gender_radio"
                       id="gender_female_radio"
                       value="female"
-                      onChange={this.onChangeGenderRadioButton}
+                      onChange={
+                        this.onChangeGenderRadioButton
+                      }
                     ></Input>
                     FEMALE
-                  </Col>
+                                    </Col>
                   <Col>
                     <Input
                       type="radio"
                       name="gender_radio"
                       id="gender_etc_radio"
                       value="etc"
-                      onChange={this.onChangeGenderRadioButton}
+                      onChange={
+                        this.onChangeGenderRadioButton
+                      }
                     ></Input>
                     ETC
-                  </Col>
+                                    </Col>
                 </Row>
               </FormGroup>
               <br />
@@ -703,30 +866,36 @@ class SignUp extends Component {
                       name="status_radio"
                       id="status_student_radio"
                       value="student"
-                      onChange={this.onChangeStatusRadioButton}
+                      onChange={
+                        this.onChangeStatusRadioButton
+                      }
                     ></Input>
                     STUDENT
-                  </Col>
+                                    </Col>
                   <Col>
                     <Input
                       type="radio"
                       name="status_radio"
                       id="status_alumnus_radio"
                       value="alumnus"
-                      onChange={this.onChangeStatusRadioButton}
+                      onChange={
+                        this.onChangeStatusRadioButton
+                      }
                     ></Input>
                     ALUMNUS
-                  </Col>
+                                    </Col>
                   <Col>
                     <Input
                       type="radio"
                       name="status_radio"
                       id="status_faculty_radio"
                       value="faculty"
-                      onChange={this.onChangeStatusRadioButton}
+                      onChange={
+                        this.onChangeStatusRadioButton
+                      }
                     ></Input>
                     FACULTY
-                  </Col>
+                                    </Col>
                 </Row>
               </FormGroup>
               {status_detail}
@@ -737,7 +906,7 @@ class SignUp extends Component {
                 className="float-right"
               >
                 BACK
-              </Button>
+                            </Button>
               <Button
                 type="button"
                 id="confirm_button"
@@ -745,7 +914,7 @@ class SignUp extends Component {
                 className="float-right"
               >
                 CONFIRM
-              </Button>
+                            </Button>
             </Col>
           </Form>
         </Container>
@@ -756,20 +925,18 @@ class SignUp extends Component {
 
 export const mapDispatchToProps = dispatch => {
   return {
-    postSignUp: (user) =>
-      dispatch(actionCreator.postSignUp(user)),
-    getVerifyCode: (email) =>
-      dispatch(actionCreator.getVerifyCode(email)),
-    checkEmailDuplicate: (email) =>
+    postSignUp: user => dispatch(actionCreator.postSignUp(user)),
+    getVerifyCode: email => dispatch(actionCreator.getVerifyCode(email)),
+    checkEmailDuplicate: email =>
       dispatch(actionCreator.checkEmailDuplicate(email)),
-    checkNicknameDuplicate: (nickname) =>
+    checkNicknameDuplicate: nickname =>
       dispatch(actionCreator.checkNicknameDuplicate(nickname)),
-    checkStudentIdDuplicate: (studentId) =>
+    checkStudentIdDuplicate: studentId =>
       dispatch(actionCreator.checkStudentIdDuplicate(studentId))
 
     //중복 체크를 위한 것들 추가
-  }
-}
+  };
+};
 
 export const mapStateToProps = state => {
   return {
@@ -778,11 +945,7 @@ export const mapStateToProps = state => {
     nicknameDuplicate: state.usr.nicknameDuplicate,
     studentIdDuplicate: state.usr.studentIdDuplicate
     //중복 체크를 위한 것들 추가
+  };
+};
 
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(SignUp));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignUp));
