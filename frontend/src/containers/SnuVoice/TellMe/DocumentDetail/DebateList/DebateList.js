@@ -27,6 +27,10 @@ export class DebateList extends Component {
             alert("You must be logged in to create a new debate")
         }
     }
+    
+    onClickDebateCancelButton = () => {
+        this.props.history.goBack();
+    }
 
 
     render() {
@@ -40,29 +44,29 @@ export class DebateList extends Component {
         debateList = (
             this.props.debates.map(debate => {
                 return <Debate
-                key = {debate.id}
-                id = {debate.id}
-                author = {debate.author}
-                title = {debate.title}
-                onClick = {this.onClickDebateTitleButton}
+                    key={debate.id}
+                    id={debate.id}
+                    author={debate.author}
+                    title={debate.title}
+                    onClick={this.onClickDebateTitleButton}
                 />
             })
         );
 
         return (
             <div>
-            <Upperbar />
-            <div className="TopOfPage">
-
-                <div className="DebateList">
-                    <h1>Debate List</h1>
-                    <h3 id="document_title_text">{documentTitle}</h3>
-                    {debateList}
+                <Upperbar />
+                <div className="TopOfPage">
+                        <h1 id="document_title_text">title: {documentTitle}</h1>
+                        <h4 >Debate List</h4>
+                        {debateList}
+                    <Button
+                        onClick={this.onClickNewDebateButton}
+                        id="new_debate_button">NEW</Button>
+                    <Button
+                        id="debate_cancel_button"
+                        onClick={this.onClickDebateCancelButton}>Back</Button>
                 </div>
-                <Button 
-                    onClick={this.onClickNewDebateButton}
-                    id="new_debate_button">NEW</Button>
-            </div>
             </div>
         )
     }
@@ -80,12 +84,12 @@ export const mapDispatchToProps = dispatch => {
     return {
         onGetDocument: (document_title) =>
             dispatch(actionCreators.getDocument(document_title)),
-   
+
         onGetDebates: (document_title) =>
             dispatch(actionCreators.getDebates(document_title)),
 
         onCheckSignIn: () =>
-            dispatch(actionCreators.checkSignIn())  
+            dispatch(actionCreators.checkSignIn())
     }
 }
 

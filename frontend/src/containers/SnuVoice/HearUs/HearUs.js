@@ -163,6 +163,7 @@ export class HearUs extends Component {
       <div>
         <UpperBar />
         <div className="TopOfPage">
+          <br />
           <div className="HearUs">
             <h1>Hear Us</h1>
             <br />

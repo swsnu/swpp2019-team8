@@ -16,6 +16,10 @@ class TellMe extends Component {
     this.props.history.push("/tell_me/create");
   };
 
+  onClickPhotoButton = () => {
+    this.props.history.push("/tell_me/photo");
+  };
+
   render() {
     return (
       <div>
@@ -57,6 +61,14 @@ class TellMe extends Component {
             >
               Create
             </Button>
+            <Button
+            type="button"
+            id="photo_button"
+            className="photoButton"
+            onClick={this.onClickPhotoButton}
+          >
+            Upload Photo
+          </Button>
           </div>
         </div>
       </div>

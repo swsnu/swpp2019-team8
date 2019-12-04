@@ -1,12 +1,19 @@
 .PetitionDetail {
-    background-color: white;
+    background-color:#f2f4f7;
     padding-left: 8%;
     padding-right: 8%;
+    font-family: "Malgun Gothic", sans-serif;
 }
 
 .petitionsView_info {
     padding-left: 8%;
     padding-right: 8%;
+}
+
+.petitionsView_title {
+    font-weight: bold;
+    font-family: Georgia, sans-serif;
+    font-size: xx-large;
 }
 
 .petitionsView_write {
@@ -20,8 +27,56 @@
     background-color: white;
     color: black;
     white-space: pre-line;
+    border:groove;
+}
+
+.petitionsView_writeHead {
+    font-weight:bold;
 }
 
 h4 {
     color: black;
+}
+
+.imgs {
+    width:450px;
+    height:auto;
+    display:block;
+    margin:0 auto;
+}
+
+.petitionsView_statistic {
+    width:100%;
+}
+
+.download_csv_buttn {
+    align-self: center;
+}
+
+span {
+    font-style: oblique;
+    font-size: xx-large;
+}
+
+
+#tw_contents {
+    resize:none;
+    width: 700px;
+}
+
+#comment_confirm_button {
+    position: relative;
+        bottom: 20px;
+        left:10px;
+}
+
+#petition_cancel_button {
+    float:left;
+}
+
+
+.list_numbering_button {
+    padding-left: 15%;
+    padding-right: 15%;
+    text-align: center;
 }
