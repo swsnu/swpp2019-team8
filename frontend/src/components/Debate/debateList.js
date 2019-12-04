@@ -1,15 +1,15 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
 function debateList(props) {
     return (
         <div>
             <p>
-                <Button 
-                    onClick={props.onClick}
+                <Link 
+                    exact to ={'/tell_me/documents/' + props.document + '/debates/' + props.id}
                     value={props.id}
-                    id="debate_title_button">{props.title}</Button> | {props.author}
+                    id="debate_title_button">{props.title}</Link>
             </p>
         </div>
     )

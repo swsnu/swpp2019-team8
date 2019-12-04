@@ -9,6 +9,8 @@ import { Button } from 'reactstrap';
 import Debate from '../../../../../components/Debate/debateList';
 import Upperbar from '../../../UpperBar/UpperBar';
 
+import './DebateList.css';
+
 export class DebateList extends Component {
     componentDidMount() {
         this.props.onGetDocument(this.props.match.params.document_title);
@@ -43,23 +45,27 @@ export class DebateList extends Component {
 
         debateList = (
             this.props.debates.map(debate => {
-                return <Debate
+                return <li>
+                    <Debate
                     key={debate.id}
                     id={debate.id}
                     author={debate.author}
                     title={debate.title}
-                    onClick={this.onClickDebateTitleButton}
-                />
+                    document={this.props.selectedDocument.title}
+                    />
+                    </li>
             })
         );
 
         return (
             <div>
                 <Upperbar />
-                <div className="TopOfPage">
-                        <h1 id="document_title_text">title: {documentTitle}</h1>
-                        <h4 >Debate List</h4>
-                        {debateList}
+                <div className="debate_list_page">
+                        <h1 id="document_title_text">{documentTitle}</h1>
+                        <h4 >Debate</h4>
+                        <ol>
+                            {debateList}
+                        </ol>
                     <Button
                         onClick={this.onClickNewDebateButton}
                         id="new_debate_button">NEW</Button>
