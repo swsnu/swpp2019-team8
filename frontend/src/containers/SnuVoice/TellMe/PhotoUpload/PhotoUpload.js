@@ -37,7 +37,8 @@ class PhotoUpload extends Component {
         canvasWidth: 100,
         canvasHeight: 100,
         blurElements: [],
-        titleFormText: ''
+        titleFormText: '',
+        uploadEnd: false,
     }
 
     constructor(props) {
@@ -121,6 +122,7 @@ class PhotoUpload extends Component {
     }
 
     handlePhoto = (event) => {
+        this.setState({ uploadEnd: false });
         event.preventDefault();
 
         const reader = new FileReader();
@@ -132,7 +134,9 @@ class PhotoUpload extends Component {
             const img = new Image();
             img.src = reader.result;
             img.onload = () => {
+                const copiedImg = img;
                 this.setState({
+                    uploadEnd: true,
                     message: "File uploading...",
                 });
                 this.fileUpload(imageData)
@@ -143,7 +147,7 @@ class PhotoUpload extends Component {
                             });
                         }
                         console.log('num_faces: ' + result.num_faces);
-                        this.drawInCanvas(result.info, result.num_faces);
+                        this.drawInCanvas(result.info, result.num_faces, copiedImg);
                     });
             };
         }
@@ -235,10 +239,10 @@ class PhotoUpload extends Component {
         };
     };
 
-    drawInCanvas = (photoInfo, n) => {
+    drawInCanvas = (photoInfo, n, copiedImg) => {
         const canvas = this.refCanvas.current;
         const ctx = canvas.getContext("2d");
-        const img = this.refImg.current;
+        const img = copiedImg;
 
         ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
         ctx.drawImage(img, 0, 0);
@@ -308,6 +312,8 @@ class PhotoUpload extends Component {
                     ctx.stroke();
                 }
             });
+
+            console.log(this_tmp.state.blurElements);
         }, false);
 
         // Add element.
@@ -364,8 +370,9 @@ class PhotoUpload extends Component {
             </Nav>
         );
 
-        let $imagePreview = (this.state.photoUrl) ? (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />) :
-            (<div className="noPhoto">There is no image to preview</div>);
+        let $imagePreview = (!this.state.photoUrl) ? (<div className="noPhoto">There is no image to preview</div>) :
+            (this.state.uploadEnd) ? (<div></div>) :
+                (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />);
 
         return (
             <div>
