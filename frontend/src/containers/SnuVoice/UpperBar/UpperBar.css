@@ -46,3 +46,19 @@
     font-weight: 900;
     color: white;
 }
+
+.sign_out_button {
+    border-radius: 20px !important;
+}
+
+.sign_in_button {
+    border-radius: 20px !important;
+}
+
+.sign_up_button {
+    border-radius: 20px !important;
+}
+
+.cancel_button {
+    border-radius: 20px !important;
+}
