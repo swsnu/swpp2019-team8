@@ -69,7 +69,7 @@ describe('<MyPetition />', () => {
         const petition = component.find('Petition').at(0)
         component.instance().onClickDetailButton = mock
         petition.simulate('click')
-        expect(mock).toHaveBeenCalledTimes(1)
+        expect(mock).toHaveBeenCalledTimes(2)
     })
     
     it('should render without error when signIn is false', () => {
