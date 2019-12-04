@@ -106,7 +106,7 @@ class PetitionList extends Component {
         )
 
         let listNumbers = this.state.listNumber.map((number, i) => {
-            if (this.props.petitionList.length / 10 + 1 >= number) {
+            if (this.props.petitionList.length / 10 + 1 > number) {
                 return (
                     <Button type="button" id="list_number_buttons" key={i} value={number}
                         onClick={this.onClickListNumberButton}>{number}</Button>

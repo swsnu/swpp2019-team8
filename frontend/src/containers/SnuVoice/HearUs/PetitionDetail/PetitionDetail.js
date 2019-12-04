@@ -206,7 +206,8 @@ class PetitionDetail extends Component {
                         <textarea id="tw_contents" placeholder="Write your comment within 50 characters."
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
-                            
+                            disabled={!this.props.signIn || this.props.storedPetitionComments
+                                .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 
