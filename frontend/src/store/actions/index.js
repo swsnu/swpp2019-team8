@@ -35,6 +35,7 @@ export {
     getPetitionByTitle,
     getPetitionByDocument,
     getMyPetitions,
+    getMyPetitionsByComment,
     getPetitionComments,
     postPetitionComment,
     putPetitionVote,      // Wiki에 추가 필요
