@@ -55,14 +55,8 @@ class SignUp extends Component {
     },
     departmentList: [
       { value: "all", label: "-" },
-      {
-        value: "agricultureAndLifeSciences",
-        label: "Agriculture and Life Sciences"
-      },
-      {
-        value: "businessAdministration",
-        label: "Business Administration"
-      },
+      { value: "agricultureAndLifeSciences", label: "Agriculture and Life Sciences" },
+      { value: "businessAdministration", label: "Business Administration" },
       { value: "education", label: "Education" },
       { value: "engineering", label: "Engineering" },
       { value: "fineArts", label: "Fine Arts" },
