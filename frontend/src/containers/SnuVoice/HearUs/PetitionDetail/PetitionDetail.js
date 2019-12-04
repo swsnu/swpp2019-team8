@@ -199,14 +199,15 @@ class PetitionDetail extends Component {
                         </div>
                     </div>
 
-                    <h3 className="Reply_area_agree"><span>{votes}</span> Current Votes</h3>
+                    <h3 className="Reply_area_agree"><span className="pet_det_votes">{votes}</span> Current Votes</h3>
 
 
                     <div className="Reply_area_write">
                         <textarea id="tw_contents" placeholder="Write your comment within 50 characters."
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
-                            
+                            disabled={!this.props.signIn || this.props.storedPetitionComments
+                                .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 

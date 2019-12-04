@@ -30,6 +30,11 @@
     border:groove;
 }
 
+.pet_det_votes {
+    font-style: oblique;
+    font-size: xx-large;
+}
+
 .petitionsView_writeHead {
     font-weight:bold;
 }
@@ -51,11 +56,6 @@ h4 {
 
 .download_csv_buttn {
     align-self: center;
-}
-
-span {
-    font-style: oblique;
-    font-size: xx-large;
 }
 
 
