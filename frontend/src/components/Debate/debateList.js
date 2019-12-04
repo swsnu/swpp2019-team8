@@ -9,7 +9,7 @@ function debateList(props) {
                 <Button 
                     onClick={props.onClick}
                     value={props.id}
-                    id="debate_title_button">{props.title}</Button> | {props.author} | hi
+                    id="debate_title_button">{props.title}</Button> | {props.author}
             </p>
         </div>
     )

@@ -7,6 +7,7 @@ import { Button, Table } from 'reactstrap';
 
 import Upperbar from "../../UpperBar/UpperBar";
 import Petition from "../../../../components/Petition/petition";
+import PetitionTableHeader from "../../../../components/Petition/petitionTableHeader";
 import * as actionCreator from "../../../../store/actions/index";
 
 
@@ -67,17 +68,7 @@ export class MyPetition extends Component {
           {/* <SearchBar/> */}
           <h1>{this.props.selectedUser.nickname}`s Petitions</h1>
           <br />
-          <Table hover>
-            <thead>
-              <tr>
-                <th>State</th>
-                <th>Category</th>
-                <th>Title</th>
-                <th>due</th>
-                <th>votes</th>
-              </tr>
-            </thead>
-          </Table>
+          <PetitionTableHeader/>
           {myPetitionList}
         </div>
       </div>
