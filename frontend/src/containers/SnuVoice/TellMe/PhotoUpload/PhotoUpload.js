@@ -393,7 +393,7 @@ class PhotoUpload extends Component {
                         <p>{this.state.message}</p>
                         <div className="FileUpload">
                             <Input type="file" id="photo_file_file"
-                                onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" width="300" />
+                                onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" />
                         </div>
                         <br />
                         <canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />
