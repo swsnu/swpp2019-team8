@@ -59,7 +59,7 @@ describe('<DocumentDetail />', () => {
 
     it(`should render SELECTED_DOCUMENT`, async () => {
         const component = await mount(documentDetail);
-        const wrapperTitle = component.find('.title');
+        const wrapperTitle = component.find('.document_detail_title');
         const wrapperContent = component.find('.content');
         expect(wrapperTitle.at(0).text()).toBe('SELECTED_DOCUMENT_TEST_TITLE');
         // expect(wrapperContent.at(0).props().value).toBe('SELECTED_DOCUMENT_TEST_CONTENT');
@@ -79,7 +79,7 @@ describe('<DocumentDetail />', () => {
                 </ConnectedRouter>
             </Provider>
         );
-        const wrapperTitle = component.find('.title');
+        const wrapperTitle = component.find('.document_detail_title');
         const wrapperContent = component.find('.content');
         expect(wrapperTitle.at(0).text()).toBe('');
         // expect(wrapperContent.at(0).props().value).toBe('');
