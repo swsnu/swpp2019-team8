@@ -127,6 +127,7 @@ class PhotoUpload extends Component {
 
         const reader = new FileReader();
         let file = event.target.files[0];
+        console.log(file);
 
         if (file && file.size > 500000) {
             alert("File is too big! (max: 500,000B)");
@@ -382,6 +383,9 @@ class PhotoUpload extends Component {
             (this.state.uploadEnd) ? (<div></div>) :
                 (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />);
 
+        let $canvas = (this.state.photoUrl && this.state.uploadEnd) ?
+            (<canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />) : (<div></div>);
+
         return (
             <div>
                 <Upperbar />
@@ -396,8 +400,8 @@ class PhotoUpload extends Component {
                                 onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" />
                         </div>
                         <br />
-                        <canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />
                         {$imagePreview}
+                        {$canvas}
                     </div>
                     <div>
                         {documentStateTabbuttons}
