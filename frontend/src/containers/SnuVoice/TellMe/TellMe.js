@@ -11,34 +11,34 @@ import UpperBar from "../UpperBar/UpperBar";
 import "./TellMe.css";
 
 class TellMe extends Component {
-	state = {
-	};
+  state = {
+  };
 
-	onClickCreateButton = () => {
-		this.props.history.push("/tell_me/create");
-	};
+  onClickCreateButton = () => {
+    this.props.history.push("/tell_me/create");
+  };
 
   onClickPhotoButton = () => {
     this.props.history.push("/tell_me/photo");
   };
 
-	componentDidMount = async () => {
-		await this.props.onGetDocumentList();
-	}
+  componentDidMount = async () => {
+    await this.props.onGetDocumentList();
+  }
 
-	render() {
-		let documetList = this.props.documentList.map((document, i) => {
-			return (
-				<div className="document" key={i}>
-					<li key={i}>
-						<a href={'document/' + document.title} target="_blank" rel="noopener noreferrer">{document.title}</a>
-					</li>
-					<br />
-				</div>
+  render() {
+    let documetList = this.props.documentList.map((document, i) => {
+      return (
+        <div className="document" key={i}>
+          <li key={i}>
+            <a href={'document/' + document.title} target="_blank" rel="noopener noreferrer">{document.title}</a>
+          </li>
+          <br />
+        </div>
 
-			)
-		})
-		return (
+      )
+    })
+    return (
       <div className="TellMe">
         <UpperBar />
         <div className="TopOfPage">
@@ -46,19 +46,15 @@ class TellMe extends Component {
           <div className="TellMeContent">
             <br />
             <div className="TellMeText">
-            <h1>Tell Me</h1>
-            <h6>
-              <i>Ask Anything, Answer Everything</i>
-            </h6>
-            <br/>
-              <h5><b>Tell Me 설명글:</b></h5>
+              <h1>Tell Me</h1>
+              <h6>
+                <i>Ask Anything, Answer Everything</i>
+              </h6>
               <br />
-              예: Tell Me는 무엇인가<br />
-              Tell Me의 목적?<br />
-              Tell Me의 규정?<br />
-              Tell Me의 사용법?<br />
-              Tell Me는 마크다운 기반?
-           </div>
+              <a href="/tell_me/documents/TELL-ME:기본방침">TELL-ME:기본방침</a>
+              <br />
+              <a href="/tell_me/documents/TELL-ME:문법%20도움말">TELL-ME:문법 도움말</a>
+            </div>
 
             <Button
               className="CreateButton"
@@ -69,34 +65,34 @@ class TellMe extends Component {
               Create
             </Button>
             <Button
-            type="button"
-            id="photo_button"
-            className="photoButton"
-            onClick={this.onClickPhotoButton}
-          >
-            Upload Photo
+              type="button"
+              id="photo_button"
+              className="photoButton"
+              onClick={this.onClickPhotoButton}
+            >
+              Upload Photo
           </Button>
           </div>
         </div>
       </div>
     );
-	}
+  }
 }
 
 export const mapStateToProps = state => {
-	return {
-		documentList: state.tm.documents
-	}
+  return {
+    documentList: state.tm.documents
+  }
 }
 
 export const mapDispatchToProps = dispatch => {
-	return {
-		onGetDocumentList: () =>
-			dispatch(actionCreator.getLatestDocuments())
+  return {
+    onGetDocumentList: () =>
+      dispatch(actionCreator.getLatestDocuments())
   }
 }
 
 export default connect(
-	mapStateToProps,
-	mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(withRouter(TellMe));
