@@ -16,6 +16,7 @@ export {
 export {
     postDocument,
     getDocument,
+    getLatestDocuments,
     putDocument,
     getPhoto,
     // postPhoto,
@@ -34,6 +35,7 @@ export {
     getPetitionByTitle,
     getPetitionByDocument,
     getMyPetitions,
+    getMyPetitionsByComment,
     getPetitionComments,
     postPetitionComment,
     putPetitionVote,      // Wiki에 추가 필요

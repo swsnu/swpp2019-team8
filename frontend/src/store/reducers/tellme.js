@@ -9,9 +9,9 @@ const initialState = {
     selectedDebate: null,
     debateComments: [],
 
-    titleDocuments : [],
-    contentDocuments : [],
-    documentDuplicate : false,
+    titleDocuments: [],
+    contentDocuments: [],
+    documentDuplicate: false,
 
     documentConflict: false
 };
@@ -31,11 +31,14 @@ const tellme = (prevState, action) => {
                 return { ...state, selectedDocument: null, titleDocuments: action.titleDocuments, contentDocuments: action.contentDocuments }
             }
         }
+        case actionTypes.GET_LATEST_DOCUMENTS: {
+            return { ...state, documents: action.documents }
+        }
         case actionTypes.PUT_DOCUMENT: {
 
-            return {...state, documentConflict: action.conflict }
+            return { ...state, documentConflict: action.conflict }
 
-        }   
+        }
         case actionTypes.GET_PHOTO: {
 
             return { ...state, selectedPhoto: action.photo };   // TODO

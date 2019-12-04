@@ -62,8 +62,13 @@ class HearusTestCase(TestCase):
         
     def test_petition(self):
         client = Client(enforce_csrf_checks=False)
+
         response = client.get('/api/hearus/petition/')
         self.assertEqual(response.status_code, 401)
+
+        response = client.get('/api/hearus/petition/comment/related/')
+        self.assertEqual(response.status_code, 401)
+
         response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
                                content_type='application/json')
         response = client.post('/api/hearus/petition/', json.dumps({'title': "testtitle", "content": "testcontent", "category": "testcategory", "link": "tellme/documents/testlink",
@@ -80,6 +85,8 @@ class HearusTestCase(TestCase):
         
         response = client.delete('/api/hearus/petition/document_title/testlink/')
         self.assertEqual(response.status_code, 405)
+
+
 
 
     def test_petition_list(self):
@@ -129,7 +136,14 @@ class HearusTestCase(TestCase):
         response = client.post('/api/hearus/petition/1/comment/', json.dumps({"commnt": "testcomment"}),
                                content_type='application/json')
         self.assertEqual(response.status_code, 400)
+
         response = client.put('/api/hearus/petition/1/comment/')
+        self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/hearus/petition/comment/related/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/hearus/petition/comment/related/')
         self.assertEqual(response.status_code, 405)
 
     def test_download_csv(self):
