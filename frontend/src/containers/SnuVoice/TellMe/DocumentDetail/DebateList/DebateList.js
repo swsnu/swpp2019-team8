@@ -45,9 +45,8 @@ export class DebateList extends Component {
 
         debateList = (
             this.props.debates.map(debate => {
-                return <li>
+                return <li key={debate.id}>
                     <Debate
-                    key={debate.id}
                     id={debate.id}
                     author={debate.author}
                     title={debate.title}
