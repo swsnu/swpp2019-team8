@@ -19,6 +19,7 @@ import {
     FormText
 } from 'reactstrap';
 import { MarkdownPreview } from 'react-marked-markdown';
+import Resizer from 'react-image-file-resizer';
 
 import Upperbar from '../../UpperBar/UpperBar';
 
@@ -34,12 +35,16 @@ class PhotoUpload extends Component {
         documentState: 'write',
         message: "Upload your photo (max size: 500,000B)",
         googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
-        canvasWidth: 100,
-        canvasHeight: 100,
+        canvasWidth: 0,
+        canvasHeight: 0,
+        imgWidth: 0,
+        imgHeigth: 0,
         blurElements: [],
         titleFormText: '',
         uploadEnd: false,
         _img: null,
+        maxWidth: 700,
+        maxHeight: 10000,
     }
 
     constructor(props) {
@@ -140,7 +145,19 @@ class PhotoUpload extends Component {
             const img = new Image();
             img.src = reader.result;
             img.onload = () => {
-                const copiedImg = img;
+                let copiedImg = new Image();
+                Resizer.imageFileResizer(
+                    file,
+                    this.state.maxWidth,
+                    this.state.maxHeight,
+                    file.type,
+                    100,
+                    0,
+                    uri => {
+                        copiedImg.src = uri;
+                    },
+                    'base64'
+                );
                 this.setState({
                     uploadEnd: true,
                     message: "File uploading...",
@@ -272,11 +289,9 @@ class PhotoUpload extends Component {
                     element.color === 'red') {
                     element.blur = !element.blur;
                     isBoxClicked = true;
-                    console.log(index + 'clicked!');
+                    console.log(index + ' clicked!');
                 }
             });
-
-            console.log(isBoxClicked);
 
             if (!isBoxClicked) {
                 const blurSize = Math.min(this_tmp.state.canvasWidth, this_tmp.state.canvasHeight) / 20;
@@ -326,21 +341,22 @@ class PhotoUpload extends Component {
         }, false);
 
         // Add element.
+        const ratio = this.state.canvasWidth / this.state.imgWidth;
         for (let i = 0; i < n; i++) {
             const { x, y, width, height } = photoInfo[i];
             this.setState({
                 blurElements: this.state.blurElements.concat({
                     color: 'red',
-                    width: width,
-                    height: height,
-                    left: x,
-                    top: y,
+                    width: width * ratio,
+                    height: height * ratio,
+                    left: x * ratio,
+                    top: y * ratio,
                     blur: false,
                 })
             });
         }
-        console.log(this.state.canvasWidth);
-        console.log(this.state.canvasHeight);
+        console.log("canvasWidth: " + this.state.canvasWidth);
+        console.log("canvasHeight: " + this.state.canvasHeight);
         console.log(this.state.blurElements);
 
         // Render elements.
@@ -356,8 +372,10 @@ class PhotoUpload extends Component {
 
     onImgLoad = ({ target: img }) => {
         this.setState({
-            canvasWidth: img.offsetWidth,
-            canvasHeight: img.offsetHeight,
+            canvasWidth: Math.min(this.state.maxWidth, img.offsetWidth),
+            canvasHeight: img.offsetHeight * (Math.min(this.state.maxWidth, img.offsetWidth) / img.offsetWidth),
+            imgWidth: img.offsetWidth,
+            imgHeight: img.offsetHeight,
         });
     }
 
