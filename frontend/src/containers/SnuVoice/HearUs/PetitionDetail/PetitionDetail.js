@@ -199,7 +199,7 @@ class PetitionDetail extends Component {
                         </div>
                     </div>
 
-                    <h3 className="Reply_area_agree"><span>{votes}</span> Current Votes</h3>
+                    <h3 className="Reply_area_agree"><span className="pet_det_votes">{votes}</span> Current Votes</h3>
 
 
                     <div className="Reply_area_write">
