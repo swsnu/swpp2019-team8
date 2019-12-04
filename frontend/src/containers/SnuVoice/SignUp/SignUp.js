@@ -65,9 +65,9 @@ class SignUp extends Component {
       { value: "music", label: "Music" },
       { value: "naturalSciences", label: "Natural Sciences" },
       { value: "nursing", label: "Nursing" },
-      { value: "socialSciences", label: "Social Sciences" },
       { value: "pharmacy", label: "Pharmacy" },
-      { value: "veterinaryMedicine", label: "Veterinary Medicine" }
+      { value: "socialSciences", label: "Social Sciences" },
+      { value: "veterinaryMedicine", label: "Veterinary Medicine" },
     ], // ex() 공대, 농생대
     majorList: {
       all: [{ value: "-" }],

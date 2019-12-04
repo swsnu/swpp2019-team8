@@ -26,7 +26,6 @@ class TellMe extends Component {
         <UpperBar />
         <div className="TopOfPage">
           <div />
-          <br />
           <div className="TellMeContent">
             <br />
             <div className="TellMeText">
@@ -43,11 +42,7 @@ class TellMe extends Component {
               Tell Me의 사용법?<br />
               Tell Me는 마크다운 기반?
            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+
             <Button
               className="CreateButton"
               type="button"
