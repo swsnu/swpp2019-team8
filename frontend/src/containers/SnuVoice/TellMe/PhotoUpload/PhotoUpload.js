@@ -148,7 +148,9 @@ class PhotoUpload extends Component {
             };
         }
 
-        reader.readAsDataURL(file);
+        if (file && file.type.match('image.*')) {
+            reader.readAsDataURL(file);
+        }
     }
 
     fileUpload = (content) => {
