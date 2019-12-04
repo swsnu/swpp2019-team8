@@ -84,36 +84,36 @@ class SignUp extends Component {
             ],
             businessAdministration: [{ value: "businessAdministration" }],
             education: [
-                { value: education, label: "Education" },
+                { value: "education", label: "Education" },
                 {
-                    value: koreanLanguageEducation,
+                    value: "koreanLanguageEducation",
                     label: "Korean Language Education"
                 },
-                { value: englishEducation, label: "English Education" },
+                { value: "englishEducation", label: "English Education" },
                 {
-                    value: germanLanguageEducation,
+                    value: "germanLanguageEducation",
                     label: "German Language Education"
                 },
                 {
-                    value: frenchLanguageEducation,
+                    value: "frenchLanguageEducation",
                     label: "French Language Education"
                 },
                 {
-                    value: socialStudiesEducation,
+                    value: "socialStudiesEducation",
                     label: "Social Studies Education"
                 },
-                { value: historyEducation, label: "History Education" },
-                { value: geographyEducation, label: "Geography Education" },
-                { value: ethicsEducation, label: "Ethics Education" },
-                { value: mathematicsEducation, label: "Mathematics Education" },
-                { value: physicsEducation, label: "Physics Education" },
-                { value: chemistryEducation, label: "Chemistry Education" },
-                { value: biologyEducation, label: "Biology Education" },
+                { value: "historyEducation", label: "History Education" },
+                { value: "geographyEducation", label: "Geography Education" },
+                { value: "ethicsEducation", label: "Ethics Education" },
+                { value: "mathematicsEducation", label: "Mathematics Education" },
+                { value: "physicsEducation", label: "Physics Education" },
+                { value: "chemistryEducation", label: "Chemistry Education" },
+                { value: "biologyEducation", label: "Biology Education" },
                 {
-                    value: earthScienceEducation,
+                    value: "earthScienceEducation",
                     label: "Earth Science Education"
                 },
-                { value: physicalEducation, label: "Physical Education" }
+                { value: "physicalEducation", label: "Physical Education" }
             ],
             engineering: [{ value: "-" }, { value: "engineering" }],
             fineArts: [{ value: "fineArts" }],
@@ -121,14 +121,14 @@ class SignUp extends Component {
             humanEcology: [{ value: "humanEcology" }],
             liberalStudies: [{ value: "liberalStudies" }],
             medicine: [
-                { value: preliminaryMedicine, label: "Preliminary Medicine" },
-                { value: medicine, label: "Medicine" }
+                { value: "preliminaryMedicine", label: "Preliminary Medicine" },
+                { value: "medicine", label: "Medicine" }
             ],
             music: [
-                { value: vocalMusic, label: "Vocal Music" },
-                { value: composition, label: "Composition" },
-                { value: instrumentalMusic, label: "Instrumental Music" },
-                { value: koreanMusic, label: "Korean Music" }
+                { value: "vocalMusic", label: "Vocal Music" },
+                { value: "composition", label: "Composition" },
+                { value: "instrumentalMusic", label: "Instrumental Music" },
+                { value: "koreanMusic", label: "Korean Music" }
             ],
             naturalSciences: [{ value: "naturalSciences" }],
             nursing: [{ value: "nursing" }],
