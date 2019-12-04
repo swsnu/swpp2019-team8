@@ -103,12 +103,10 @@ export const mapDispatchToProps = dispatch => {
 	return {
 		onGetDocumentList: () =>
 			dispatch(actionCreator.getLatestDocuments())
-	}
-
-
+  }
+}
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(withRouter(TellMe));
-
