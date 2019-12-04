@@ -95,6 +95,20 @@ export const getMyPetitions = (user_id) => {
     };
 };
 
+export const getMyPetitionsByComment_ = (petition) => {
+    return {
+        type: actionTypes.GET_MY_PETITIONS_BY_COMMENT,
+        petitionList: petition
+    }
+}
+export const getMyPetitionsByComment = () => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/comment/related/')
+            .then(res => dispatch(getMyPetitionsByComment_(res.data)))
+            .catch((e) => { })
+    }
+}
+
 export const getPetitionComments_ = (comment_list) => {
     return {
         type: actionTypes.GET_PETITION_COMMENTS,

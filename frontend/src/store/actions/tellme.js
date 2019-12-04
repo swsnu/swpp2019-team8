@@ -90,6 +90,23 @@ export const getDebates = document_title => {
     };
 };
 
+export const getLatestDocuments_ = documents => {
+    return {
+        type: actionTypes.GET_LATEST_DOCUMENTS,
+        documents : documents
+    }
+}
+
+export const getLatestDocuments = () => {
+    return dispatch => {
+        return axios.get('/api/tellme/document/list/latest/')
+            .then(res => {
+                dispatch(getLatestDocuments_(res.data));
+            })
+            .catch((e) => { })
+    }
+}
+
 export const postDebate_ = debate => {
     return {
         type: actionTypes.POST_DEBATE

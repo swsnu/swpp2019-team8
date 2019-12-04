@@ -27,10 +27,15 @@ export class HearUsSearchBar extends Component {
     onClickSearchConfirmButton = () => {
         let toSearch = this.state.searchInput
         let input = toSearch;
+        if (/[/\\]/.exec(toSearch)) {
+            alert("\\ and / is not allowed while seraching");
+            return;
+        }
         for (var i = toSearch.length - 1; i >= 0; i--) {
             if (toSearch[i] !== ' ') break;
             else input = toSearch.slice(0, i)
         }
+        if(input === '') return;
         this.props.history.push('/hear_us/search/' + input);
         this.props.getPetitionByTitle(input);
     }
@@ -41,7 +46,8 @@ export class HearUsSearchBar extends Component {
                 <InputGroup className="searchBar">
                     <Input type="text" id="search_input" autoFocus
                         onKeyPress={this.onKeyPress}
-                        onChange={this.onChangeSearchInput}></Input>
+                        onChange={this.onChangeSearchInput}
+                        ></Input>
                     <InputGroupAddon addonType="append">
                         <Button type="button" id="search_confirm_button"
                             disabled={this.state.searchInput === '' || this.state.searchInput === undefined}

@@ -1,7 +1,9 @@
 .TopOfPage {
     background-color: #f2f4f7;
-    padding-left: 8%;
-    padding-right: 8%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
     font-family: "Malgun Gothic", sans-serif;
 }
 
@@ -10,7 +12,9 @@
     padding-right: 15%;
 }
 
-
+.TellMe {
+    background-color: #f2f4f7;
+}
 
 .Title {
     color: black;
@@ -19,11 +23,13 @@
     /* text-align: left; */
 }
 
-.TellMe {
+.TellMeContent {
     background-color: white;
     min-height: 370px;
     padding-left: 5%;
     padding-right: 5%;
+    border-style: groove;
+    /* border-color: #d0d2d5; */
 }
 
 .TellMeText {
@@ -32,5 +38,8 @@
 
 .CreateButton {
     float: right;
-    bottom: 10px;
+}
+
+.photoButton {
+    float: right;
 }

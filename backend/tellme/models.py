@@ -5,6 +5,7 @@ from user.models import User
 class Document(models.Model):
     title = models.CharField(max_length=64, unique=True, db_index=True)
     content = models.TextField()
+    edit_date = models.DateTimeField()
     version = models.IntegerField(default=0)
 
 class Photo(models.Model):

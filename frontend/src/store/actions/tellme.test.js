@@ -98,6 +98,27 @@ describe('ActionCreators', () => {
         });
     });
 
+    it(`should 'getLatestDocuments'should work well`, (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data : [1, 2, 3]
+                    }
+                    resolve(result);
+                });
+            })
+
+        store.dispatch(actionCreators.getLatestDocuments())
+            .then(() => {
+                const newState = store.getState();
+                expect(newState.tm.documents).toStrictEqual([1, 2, 3])
+                expect(spy).toHaveBeenCalledTimes(1);
+                done();
+            })
+    });
+
     it(`'getDocument' should work well`, async (done) => {
         const spy = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
@@ -281,6 +302,9 @@ describe('ActionCreators', () => {
 
         await store.dispatch(actionCreators.getPhoto(1));
         expect(spyGet).toHaveBeenCalledTimes(4);
+
+        await store.dispatch(actionCreators.getLatestDocuments());
+        expect(spyGet).toHaveBeenCalledTimes(5);
 
 
     })

@@ -3,6 +3,7 @@ from django.utils import timezone
 
 import json
 
+
 from .models import Debate, DebateComment, Document, Photo
 from user.models import User
 
@@ -114,7 +115,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        doc1 = Document.objects.create(title='title', content='content')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
 
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
@@ -153,11 +154,11 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        doc1 = Document.objects.create(title='title', content='content')
-        Document.objects.create(title='Titles', content='content, title')
-        Document.objects.create(title='contentUpper', content='Content, title')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
+        Document.objects.create(title='Titles', content='content, title', edit_date = timezone.now())
+        Document.objects.create(title='contentUpper', content='Content, title', edit_date = timezone.now())
         Document.objects.create(
-            title='Titsadaes', content='find fucking Contents!!!')
+            title='Titsadaes', content='find fucking Contents!!!', edit_date = timezone.now())
 
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
@@ -170,6 +171,13 @@ class DebateTestCase(TestCase):
 
         response = client.get('/api/tellme/document/wtf/')
         self.assertIn('false', response.content.decode())
+
+        response = client.get('/api/tellme/document/list/latest/')
+        self.assertEqual(200, response.status_code)
+
+        response = client.delete('/api/tellme/document/list/latest/')
+        self.assertEqual(405, response.status_code)
+
 
     def test_debates_by_document(self):
         client = Client(enforce_csrf_checks=False)
@@ -190,7 +198,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        doc1 = Document.objects.create(title='title', content='content')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
         debate1 = Debate.objects.create(
             document=doc1, author=user1, title='title', content='content')
 
@@ -243,7 +251,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        doc1 = Document.objects.create(title='title', content='content')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
         debate1 = Debate.objects.create(
             document=doc1, author=user1, title='title', content='content')
 
@@ -278,7 +286,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user2
         )
-        doc1 = Document.objects.create(title='title', content='content')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
         debate1 = Debate.objects.create(
             document=doc1, author=user1, title='title', content='content')
         comment1 = DebateComment.objects.create(
