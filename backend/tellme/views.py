@@ -144,6 +144,23 @@ def photo_title(request, photo_title):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+def photo_related_title(request, photo_title):
+    if request.method == 'GET':
+        title_photo_list = [
+            photo for photo in
+                Photo.objects.filter(title__icontains=photo_title).values('title')
+        ]
+        content_photo_list = [
+            photo for photo in
+                Photo.objects.filter(content__icontains=photo_title).values('title')
+        ]
+        dict_to_return = {
+            'titlePhotoList' : title_photo_list,
+            'contentPhotoList' : content_photo_list
+        }
+        return JsonResponse(dict_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
 
 def debates_by_document(request, document_title):
     try:

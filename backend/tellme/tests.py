@@ -37,7 +37,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        photo = Photo.objects.create(photo="1", title="!", content="2")
+        photo = Photo.objects.create(photo="1", title="!", content="2!!!!")
 
 
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
@@ -56,6 +56,14 @@ class DebateTestCase(TestCase):
 
         response = client.delete('/api/tellme/photo/!/')
         self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/tellme/photo/!/related/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/tellme/photo/!/related/')
+        self.assertEqual(response.status_code, 405)
+
+
 
     def test_document_post(self):
         client = Client(enforce_csrf_checks=False)
