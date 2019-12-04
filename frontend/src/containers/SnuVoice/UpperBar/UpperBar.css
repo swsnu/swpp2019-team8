@@ -41,3 +41,8 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+.navbar-brand:hover {
+    font-weight: 900;
+    color: white;
+}

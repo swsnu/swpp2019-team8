@@ -42,21 +42,15 @@ class TellMe extends Component {
       <div className="TellMe">
         <UpperBar />
         <div className="TopOfPage">
-          <br />
-          <div className="Title">
+          <div />
+          <div className="TellMeContent">
+            <br />
+            <div className="TellMeText">
             <h1>Tell Me</h1>
             <h6>
               <i>Ask Anything, Answer Everything</i>
             </h6>
-          </div>
-          <div className="SearchBar">
-          </div>
-          <br />
-          <div />
-          <br />
-          <div className="TellMeContent">
-            <br />
-            <div className="TellMeText">
+            <br/>
               <h5><b>Tell Me 설명글:</b></h5>
               <br />
               예: Tell Me는 무엇인가<br />
@@ -65,11 +59,7 @@ class TellMe extends Component {
               Tell Me의 사용법?<br />
               Tell Me는 마크다운 기반?
            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+
             <Button
               className="CreateButton"
               type="button"

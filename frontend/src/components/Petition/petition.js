@@ -9,11 +9,11 @@ const Petition = (props) => {
         <Table hover onClick={props.onClick}>
             <tbody>
                 <tr>
-                    <th scope="row">{props.state}</th>
-                    <td>{props.category}</td>
-                    <td>{props.title}</td>
-                    <td>{dueDate}</td>
-                    <td>{props.votes}</td>
+                    <td width="15%">{props.state}</td>
+                    <td width="15%">{props.category}</td>
+                    <th width="40%">{props.title}</th>
+                    <td width="20%">{dueDate}</td>
+                    <th width="10%">{props.votes}</th>
                 </tr>
             </tbody>
         </Table>

@@ -16,6 +16,7 @@ import {
 
 import Upperbar from "../../UpperBar/UpperBar";
 import Petition from "../../../../components/Petition/petition";
+import PetitionTableHeader from "../../../../components/Petition/petitionTableHeader";
 import * as actionCreator from "../../../../store/actions/index";
 
 
@@ -138,17 +139,7 @@ export class MyPetition extends Component {
 					<TabContent activeTab={this.state.selectedTab}>
 						<TabPane tabId='Author'>
 							<br />
-							<Table hover>
-								<thead>
-									<tr>
-										<th>State</th>
-										<th>Category</th>
-										<th>Title</th>
-										<th>due</th>
-										<th>votes</th>
-									</tr>
-								</thead>
-							</Table>
+							<PetitionTableHeader/>
 							{myPetitionList}
 							<Button type="button" id="more_author_button"
 								onClick={this.onClickMoreButton}
@@ -157,17 +148,7 @@ export class MyPetition extends Component {
 						</TabPane>
 						<TabPane tabId='Voter'>
 							<br />
-							<Table hover>
-								<thead>
-									<tr>
-										<th>State</th>
-										<th>Category</th>
-										<th>Title</th>
-										<th>due</th>
-										<th>votes</th>
-									</tr>
-								</thead>
-							</Table>
+							<PetitionTableHeader/>
 							{myCommentPetitionList}
 							<Button type="button" id="more_voter_button"
 								onClick={this.onClickMoreButton}

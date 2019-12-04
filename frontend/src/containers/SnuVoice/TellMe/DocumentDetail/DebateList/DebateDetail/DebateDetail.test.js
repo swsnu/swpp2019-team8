@@ -60,7 +60,7 @@ describe('<DebateDetail/>', () => {
     it('render documentTitle as empty if selectedDocument does not exist', () => {
         const component = shallow(<DebateDetail selectedDocument={false} debateComments={[]}/>);
         let wrapper = component.find(".documentTitle");
-        expect(wrapper.text()).toEqual("");
+        expect(wrapper.text()).toEqual(" (Debate)");
     })
 
     it('render debate title and content as empty if selectedDebate does not exist', () => {

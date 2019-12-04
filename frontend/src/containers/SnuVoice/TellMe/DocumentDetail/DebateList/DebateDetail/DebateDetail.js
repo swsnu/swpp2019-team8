@@ -31,7 +31,7 @@ export class DebateDetail extends Component {
     }
 
     onClickDebateCancelButton = () => {
-        this.props.history.goBack();
+        this.props.history.push('/tell_me/documents/' + this.props.selectedDocument.title + '/debates');
     }
 
     render() {
@@ -63,15 +63,12 @@ export class DebateDetail extends Component {
 
         return (
             <div>
-                <Upperbar />
+                <Upperbar /><br/>
                 <div className="TopOfPage">
 
                     <div className="DebateDetail">
-                        <div>
-                            <h1>DebateDetail</h1>
-                        </div>
                         <h3 className="documentTitle">
-                            {documentTitle}
+                            {documentTitle} (Debate)
                         </h3>
                         <br />
                         <h4 id="debate_title_text">
