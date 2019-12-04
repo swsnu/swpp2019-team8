@@ -132,7 +132,7 @@ class PhotoUpload extends Component {
         if (file && file.size > 500000) {
             alert("File is too big! (max: 500,000B)");
             return;
-        };
+        }
 
         reader.onloadend = () => {
             this.setState({ uploadEnd: false, blurElements: [], photoFile: file, photoFileName: file.name, photoUrl: reader.result });
