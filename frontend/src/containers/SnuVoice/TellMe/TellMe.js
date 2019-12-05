@@ -11,12 +11,12 @@ import UpperBar from "../UpperBar/UpperBar";
 import "./TellMe.css";
 
 class TellMe extends Component {
-  state = {
-  };
+	state = {
+	};
 
-  onClickCreateButton = () => {
-    this.props.history.push("/tell_me/create");
-  };
+	onClickCreateButton = () => {
+		this.props.history.push("/tell_me/create");
+	};
 
   onClickPhotoButton = () => {
     this.props.history.push("/tell_me/photo");
@@ -76,13 +76,13 @@ class TellMe extends Component {
         </div>
       </div>
     );
-  }
+	}
 }
 
 export const mapStateToProps = state => {
-  return {
-    documentList: state.tm.documents
-  }
+	return {
+		documentList: state.tm.documents
+	}
 }
 
 export const mapDispatchToProps = dispatch => {

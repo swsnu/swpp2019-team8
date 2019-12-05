@@ -110,8 +110,9 @@ class PhotoUpload extends Component {
                 {
                     headers: { 'content-type': 'multipart/form-data' }
                 })
-                .then(() => {
+                .then((res) => {
                     console.log("hurray");
+                    this_tmp.props.history.push('/tell_me/photo/' + this_tmp.state.photoTitle)
                 })
                 .catch(e => {
                     console.log(e);
