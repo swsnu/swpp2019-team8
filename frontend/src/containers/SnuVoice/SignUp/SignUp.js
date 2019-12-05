@@ -109,7 +109,21 @@ class SignUp extends Component {
         },
         { value: "physicalEducation", label: "Physical Education" }
       ],
-      engineering: [{ value: "-" }, { value: "engineering" }],
+      engineering : [
+       { value: 'civilAndEnvironmentalEngineering', label: 'Civil and Environmetnal Engineering'},
+       { value: 'mechanicalEngineerinig', label: 'Mechanical Engineering'},
+       { value: 'aerospaceEngineering', label: 'Aerospace Engineering'},
+       { value: 'materialsScienceAndEngineering', label: ' Materials Science and Engineering' },
+       { value: 'electricalAndComputerEngineering', label :'Electrical and Computer Engineering'},
+       { value: 'computerScienceAndEngineering', label : 'Computer Science and Engineering'},
+       { value: 'Chemical and Biological Engineering', label: 'Chemical and Biological Engineering'},
+       { value: 'architecture', label: 'Architecture' },
+       { value: 'architectureEngineering', label: 'Architecture Engineering' },
+       { value: 'industrialEngineering', label: 'Industrial Engineering' },
+       { value: 'energyResourcesEngineering', label: 'Energy Resources Engineering'},
+       { value: 'nuclearEngineering', label: 'Nuclear Engineering'},
+       { value: 'navalArchitectureAndOceanEngineering', label: 'Naval Architecture and Ocean Engineering'},
+      ],
       fineArts: [
         { value: "orientalPainting", label: "Oriental Painting" },
         { value: "painting", label: "Painting" },
@@ -599,7 +613,7 @@ class SignUp extends Component {
         this.state.selectedDepartment
       ].map((v, i) => {
         return (
-          <option key={i} value={v.value} label={v.value}></option>
+          <option key={i} value={v.value} label={v.label}></option>
         );
       });
 
