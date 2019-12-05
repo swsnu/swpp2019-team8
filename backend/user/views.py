@@ -88,7 +88,6 @@ def get_verify_code(request, email):
                 "snuvoice.master@gmail.com",
                 [email],
                 fail_silently=False)
-        email.send
         verify_code_to_return = {
             'verifyCode': verify_code
         }
