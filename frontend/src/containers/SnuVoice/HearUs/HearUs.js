@@ -7,6 +7,7 @@ import { Button, Table } from "reactstrap";
 import UpperBar from "../UpperBar/UpperBar";
 import Category from "../../../components/Category/category";
 import Petition from "../../../components/Petition/petition";
+import PetitionTableHeader from "../../../components/Petition/petitionTableHeader";
 import * as actionCreator from '../../../store/actions/index'
 
 import "./HearUs.css";
@@ -57,20 +58,6 @@ export class HearUs extends Component {
         </div>
       )
     }
-
-    let tableHead = (
-      <Table hover>
-        <thead>
-          <tr>
-            <th>State</th>
-            <th>Category</th>
-            <th>Title</th>
-            <th>due</th>
-            <th>votes</th>
-          </tr>
-        </thead>
-      </Table>
-    );
 
     if (this.state.selectedCategory === 'All') {
       voteList = (
@@ -165,8 +152,8 @@ export class HearUs extends Component {
         <div className="TopOfPage">
           <br />
           <div className="HearUs">
-            <h1>Hear Us</h1>
-            <br />
+            {/* <h1>Hear Us</h1>
+            <br /> */}
             {buttons}
           </div>
           <br></br><br />
@@ -174,12 +161,12 @@ export class HearUs extends Component {
           <br /><br /><br />
           <div className="Tables">
             <br />
-            <h5><b>Top 5 Votes</b></h5>
-            {tableHead}
+            <h5 className="headers"><b>Top 5 Votes</b></h5>
+            <PetitionTableHeader/>
             {voteList}
             <br />
-            <h5><b>Latest 5</b></h5>
-            {tableHead}
+            <h5 className="headers"><b>Latest 5</b></h5>
+            <PetitionTableHeader/>
             {deadlineList}
             <br />
           </div>

@@ -1,7 +1,9 @@
 .TopOfPage {
     background-color: #f2f4f7;
-    padding-left: 8%;
-    padding-right: 8%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
     font-family: "Malgun Gothic", sans-serif;
 }
 
@@ -36,5 +38,13 @@
 
 .CreateButton {
     float: right;
-    bottom: 10px;
+    background-color: #003686 !important;
+    border-color: #003686 !important;
+
+}
+
+.photoButton {
+    float: right;
+    background-color: #003686 !important;
+    border-color: #003686 !important;
 }

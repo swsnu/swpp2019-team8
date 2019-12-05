@@ -189,6 +189,28 @@ describe('ActionCreators', () => {
             });
     })
 
+    it('getPetitionsByComment works well', (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status:200,
+                        data : 1
+                    }
+                    resolve(result);
+                })
+            })
+
+        store.dispatch(actionCreators.getMyPetitionsByComment())
+            .then(() => {
+                const newState = store.getState();
+                expect(newState.hu.petition_list_by_comment).toBe(1);
+                expect(spy).toHaveBeenCalledTimes(1);
+                done()
+            })
+
+    })
+
     it(' works well when error occurs', async () => {
         const spyGet = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
@@ -237,6 +259,9 @@ describe('ActionCreators', () => {
 
         await store.dispatch(actionCreators.getCsvFile('1'));
         expect(spyGet).toHaveBeenCalledTimes(7);
+
+        await store.dispatch(actionCreators.getMyPetitionsByComment());
+        expect(spyGet).toHaveBeenCalledTimes(8);
 
     })
 

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import * as actionCreator from '../../../store/actions/index';
+
 import { Button } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
@@ -9,50 +11,51 @@ import UpperBar from "../UpperBar/UpperBar";
 import "./TellMe.css";
 
 class TellMe extends Component {
-  state = {
-  };
+	state = {
+	};
 
-  onClickCreateButton = () => {
-    this.props.history.push("/tell_me/create");
-  };
+	onClickCreateButton = () => {
+		this.props.history.push("/tell_me/create");
+	};
 
   onClickPhotoButton = () => {
     this.props.history.push("/tell_me/photo");
   };
 
+  componentDidMount = async () => {
+    await this.props.onGetDocumentList();
+  }
+
   render() {
+    let documetList = this.props.documentList.map((document, i) => {
+      return (
+        <div className="document" key={i}>
+          <li key={i}>
+            <a href={'document/' + document.title} target="_blank" rel="noopener noreferrer">{document.title}</a>
+          </li>
+          <br />
+        </div>
+
+      )
+    })
     return (
       <div className="TellMe">
         <UpperBar />
         <div className="TopOfPage">
-          <br />
-          <div className="Title">
-            <h1>Tell Me</h1>
-            <h6>
-              <i>Ask Anything, Answer Everything</i>
-            </h6>
-          </div>
-          <div className="SearchBar">
-          </div>
-          <br />
           <div />
-          <br />
           <div className="TellMeContent">
             <br />
             <div className="TellMeText">
-              <h5><b>Tell Me 설명글:</b></h5>
+              <h1>Tell Me</h1>
+              <h6>
+                <i>Ask Anything, Answer Everything</i>
+              </h6>
               <br />
-              예: Tell Me는 무엇인가<br />
-              Tell Me의 목적?<br />
-              Tell Me의 규정?<br />
-              Tell Me의 사용법?<br />
-              Tell Me는 마크다운 기반?
-           </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+              <a href="/tell_me/documents/TELL-ME:기본방침">TELL-ME:기본방침</a>
+              <br />
+              <a href="/tell_me/documents/TELL-ME:문법%20도움말">TELL-ME:문법 도움말</a>
+            </div>
+
             <Button
               className="CreateButton"
               type="button"
@@ -62,23 +65,34 @@ class TellMe extends Component {
               Create
             </Button>
             <Button
-            type="button"
-            id="photo_button"
-            className="photoButton"
-            onClick={this.onClickPhotoButton}
-          >
-            Upload Photo
+              type="button"
+              id="photo_button"
+              className="photoButton"
+              onClick={this.onClickPhotoButton}
+            >
+              Upload Photo
           </Button>
           </div>
         </div>
       </div>
     );
+	}
+}
+
+export const mapStateToProps = state => {
+	return {
+		documentList: state.tm.documents
+	}
+}
+
+export const mapDispatchToProps = dispatch => {
+  return {
+    onGetDocumentList: () =>
+      dispatch(actionCreator.getLatestDocuments())
   }
 }
 
-
 export default connect(
-  null,
-  null
+  mapStateToProps,
+  mapDispatchToProps
 )(withRouter(TellMe));
-

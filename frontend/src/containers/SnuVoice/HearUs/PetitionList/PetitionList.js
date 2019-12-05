@@ -8,6 +8,7 @@ import { Button, ButtonGroup, Table, TabContent, TabPane, Nav, NavItem, NavLink 
 import UpperBar from '../../UpperBar/UpperBar'
 import Petition from '../../../../components/Petition/petition'
 import Category from '../../../../components/Category/category'
+import PetitionTableHeader from '../../../../components/Petition/petitionTableHeader';
 import * as actionCreator from '../../../../store/actions/index'
 
 import './PetitionList.css';
@@ -66,19 +67,7 @@ class PetitionList extends Component {
 
     render() {
         let petitionList, sortedPetitionList;
-        let tableHead = (
-            <Table hover>
-                <thead>
-                    <tr>
-                        <th>State</th>
-                        <th>Category</th>
-                        <th>Title</th>
-                        <th>due</th>
-                        <th>votes</th>
-                    </tr>
-                </thead>
-            </Table>
-        )
+
         let petitionStateTabButtons = (
             <Nav tabs>
                 <NavItem>
@@ -106,7 +95,7 @@ class PetitionList extends Component {
         )
 
         let listNumbers = this.state.listNumber.map((number, i) => {
-            if (this.props.petitionList.length / 10 + 1 >= number) {
+            if (this.props.petitionList.length / 10 + 1 > number) {
                 return (
                     <Button type="button" id="list_number_buttons" key={i} value={number}
                         onClick={this.onClickListNumberButton}>{number}</Button>
@@ -209,7 +198,7 @@ class PetitionList extends Component {
                             <br /><br /><br />
                             <div className="Tables">
 
-                                {tableHead}
+                                <PetitionTableHeader/>
                                 {sortedPetitionList}
                             </div>
                             {listNumberButtons}
@@ -228,7 +217,7 @@ class PetitionList extends Component {
                             <br /><br /><br />
                             <div className="Tables">
 
-                                {tableHead}
+                                <PetitionTableHeader/>
                                 {sortedPetitionList}
                             </div>
                             {listNumberButtons}

@@ -44,6 +44,8 @@ describe('<SearchBar />', () => {
     })
 
     it('should search works', () => {
+        let mocked = jest.fn();
+        window.alert = mocked;
         const component = mount(searchBar)
         const searchBarInstance = component.find(HearUsSearchBar.WrappedComponent).instance()
         const searchInput = component.find('#search_input').at(0)
@@ -52,6 +54,16 @@ describe('<SearchBar />', () => {
         expect(searchBarInstance.state.searchInput).toBe('12   ')
         searchButton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us/search/12')
+        searchBarInstance.setState({
+            searchInput : '///'
+        });
+        searchButton.simulate('click');
+        expect(mocked).toHaveBeenCalledTimes(1);
+        searchBarInstance.setState({
+            searchInput : '    '
+        });
+        expect(spyHistoryPush).toHaveBeenCalledTimes(1);
+
     })
 
     it('should onKeyPress works', () => {

@@ -5,6 +5,7 @@ const initialState = {
     selectedPetition: null,
     comment_list: [],
     petition_list_by_document: [],
+    petition_list_by_comment: [],
     
 };
 
@@ -27,6 +28,8 @@ const hearus = (prevState, action) => {
             return {...state, petition_list_by_document: action.petitionList}
         case actionTypes.GET_MY_PETITIONS:
             return { ...state, petition_list: action.myPetitionList };   // TODO
+        case actionTypes.GET_MY_PETITIONS_BY_COMMENT:
+            return { ...state, petition_list_by_comment:action.petitionList}
         case actionTypes.GET_PETITION_COMMENTS:
             return { ...state, comment_list: action.comment_list };
         case actionTypes.POST_PETITION_COMMENT: {
