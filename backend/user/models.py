@@ -47,7 +47,7 @@ class User(AbstractBaseUser):
     nickname = models.CharField(max_length=32, unique=True, db_index=True)
     gender = models.CharField(max_length=16)
     status = models.CharField(max_length=16)
-    studentId = models.CharField(max_length=16, unique=True, db_index=True)
+    studentId = models.CharField(max_length=16, db_index=True)
     department = models.CharField(max_length=64)
     major = models.CharField(max_length=64)
     studentStatus = models.CharField(max_length=16)
@@ -57,8 +57,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nickname', 'gender', 'status', 'studentId',
-                       'department', 'major', 'studentStatus']
+    REQUIRED_FIELDS = []
 
     def has_perm(self, perm, obj=None):
         return True
