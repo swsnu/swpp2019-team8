@@ -128,14 +128,14 @@ USE_L10N = True
 
 USE_TZ = False
 
+SENDGRID_API_KEY = os.getenv('rldhks0203!')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = 'dkwanm00@gmail.com'
-EMAIL_HOST_PASSWORD = 'rldhks0203!'
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD ='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'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
