@@ -19,6 +19,7 @@ export {
     getLatestDocuments,
     putDocument,
     getPhoto,
+    getRelatedPhoto,
     // postPhoto,
     // putPhoto,
     getDebates,

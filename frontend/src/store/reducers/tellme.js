@@ -13,7 +13,10 @@ const initialState = {
     contentDocuments: [],
     documentDuplicate: false,
 
-    documentConflict: false
+    documentConflict: false,
+
+    titlePhotoList: [],
+    contentPhotoList: []
 };
 
 const tellme = (prevState, action) => {
@@ -35,13 +38,13 @@ const tellme = (prevState, action) => {
             return { ...state, documents: action.documents }
         }
         case actionTypes.PUT_DOCUMENT: {
-
             return { ...state, documentConflict: action.conflict }
-
         }
         case actionTypes.GET_PHOTO: {
-
             return { ...state, selectedPhoto: action.photo };   // TODO
+        }
+        case actionTypes.GET_RELATED_PHOTO: {
+            return { ...state, titlePhotoList: action.titlePhotoList, contentPhotoList: action.contentPhotoList}
         }
         // case actionTypes.PUT_PHOTO: {
         //     return state;   // TODO
