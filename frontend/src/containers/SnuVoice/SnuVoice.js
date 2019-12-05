@@ -29,8 +29,12 @@ class SnuVoice extends Component {
             <div>
                 <UpperBar />
             <div className="SnuVoice">
-                                <Row>
+                
+                <br/>
+                <Row>
                     <Col>
+                        <br/>
+                        <h1><b>SNU VOICE</b></h1>
                         <h4>
                             <i><b>COLLECTING THE STUDENTS&apos; VOICE</b></i>
                         </h4>
