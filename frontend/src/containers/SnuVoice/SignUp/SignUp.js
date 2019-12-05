@@ -74,10 +74,12 @@ class SignUp extends Component {
     majorList: {
       all: [{ value: "-" }],
       agricultureAndLifeSciences: [
+        { value: "all", label: "-" },
         { value: "agricultureAndLifeSciences" }
       ],
-      businessAdministration: [{ value: "businessAdministration" }],
+      businessAdministration: [{ value: "all", label: "-" }, { value: "businessAdministration" }],
       education: [
+        { value: "all", label: "-" },
         { value: "education", label: "Education" },
         {
           value: "koreanLanguageEducation",
@@ -109,14 +111,31 @@ class SignUp extends Component {
         },
         { value: "physicalEducation", label: "Physical Education" }
       ],
-      engineering: [{ value: "-" }, { value: "engineering" }],
+      engineering : [
+        { value: "all", label: "-" },
+        { value: 'civilAndEnvironmentalEngineering', label: 'Civil and Environmetnal Engineering'},
+        { value: 'mechanicalEngineerinig', label: 'Mechanical Engineering'},
+        { value: 'aerospaceEngineering', label: 'Aerospace Engineering'},
+        { value: 'materialsScienceAndEngineering', label: ' Materials Science and Engineering' },
+        { value: 'electricalAndComputerEngineering', label :'Electrical and Computer Engineering'},
+        { value: 'computerScienceAndEngineering', label : 'Computer Science and Engineering'},
+        { value: 'Chemical and Biological Engineering', label: 'Chemical and Biological Engineering'},
+        { value: 'architecture', label: 'Architecture' },
+        { value: 'architectureEngineering', label: 'Architecture Engineering' },
+        { value: 'industrialEngineering', label: 'Industrial Engineering' },
+        { value: 'energyResourcesEngineering', label: 'Energy Resources Engineering'},
+        { value: 'nuclearEngineering', label: 'Nuclear Engineering'},
+        { value: 'navalArchitectureAndOceanEngineering', label: 'Naval Architecture and Ocean Engineering'},
+      ],
       fineArts: [
+        { value: "all", label: "-" },
         { value: "orientalPainting", label: "Oriental Painting" },
         { value: "painting", label: "Painting" },
         { value: "sculpture", label: "Sculpture" },
         { value: "craftsAndDesign", label: "Crafts and Design" },
       ],
       humanities: [
+        { value: "all", label: "-" },
         { value: "koreanLanguageAndLiterature", label: "Korean Language and Literature" },
         { value: "chineseLanguageAndLiterature", label: "Chinese Language and Literature" },
         { value: "englishLanguageAndLiterature", label: "English Language and Literature" },
@@ -135,22 +154,26 @@ class SignUp extends Component {
         { value: "aesthetics", label: "Aesthetics" },
       ],
       humanEcology: [
+        { value: "all", label: "-" },
         { value: "consumerAndChildStudies", label: "Consumer and Child Studies" },
         { value: "foodAndNutrition", label: "Food and Nutrition" },
         { value: "textilesMerchandisingAndFashionDesign", label: "Textiles, Merchandising and Fashion Design" },
       ],
-      liberalStudies: [{ value: "liberalStudies" }],
+      liberalStudies: [{ value: "all", label: "-" }, { value: "liberalStudies" }],
       medicine: [
+        { value: "all", label: "-" },
         { value: "preliminaryMedicine", label: "Preliminary Medicine" },
         { value: "medicine", label: "Medicine" }
       ],
       music: [
+        { value: "all", label: "-" },
         { value: "vocalMusic", label: "Vocal Music" },
         { value: "composition", label: "Composition" },
         { value: "instrumentalMusic", label: "Instrumental Music" },
         { value: "koreanMusic", label: "Korean Music" }
       ],
       naturalSciences: [
+        { value: "all", label: "-" },
         { value: "mathematicalSciences", label: "Mathematical Sciences" },
         { value: "statistics", label: "Statistics" },
         { value: "physicsAndAstronomy", label: "Physics and Astronomy" },
@@ -159,9 +182,11 @@ class SignUp extends Component {
         { value: "earthAndEnvironmentalSciences", label: "Earth and Environmental Sciences" },
       ],
       nursing: [
+        { value: "all", label: "-" },
         { value: "nursing", label: "Nursing" },
       ],
       socialSciences: [
+        { value: "all", label: "-" },
         { value: "politicalScienceAndInternationalRelations", label: "Political Science and International Relations" },
         { value: "economics", label: "Economics" },
         { value: "sociology", label: "Sociology" },
@@ -171,8 +196,9 @@ class SignUp extends Component {
         { value: "socialWelfare", label: "Social Welfare" },
         { value: "communication", label: "Communication" },
       ],
-      pharmacy: [{ value: "pharmacy" }],
+      pharmacy: [{ value: "all", label: "-" }, { value: "pharmacy" }],
       veterinaryMedicine: [
+        { value: "all", label: "-" },
         { value: "preliminaryVeterinaryMedicine", label: "Preliminary Veterinary Medicine" },
         { value: "veterinaryMedicine", label: "Veterinary Medicine" },
       ],
@@ -599,7 +625,7 @@ class SignUp extends Component {
         this.state.selectedDepartment
       ].map((v, i) => {
         return (
-          <option key={i} value={v.value} label={v.value}></option>
+          <option key={i} value={v.value} label={v.label}></option>
         );
       });
 
