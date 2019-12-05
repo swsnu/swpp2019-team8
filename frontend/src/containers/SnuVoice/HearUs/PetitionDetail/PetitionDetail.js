@@ -135,10 +135,10 @@ class PetitionDetail extends Component {
             </div>
         );
 
-        let graphSrc = "http://localhost:8000/api/tellme/media/graph/ex";
+        let graphSrc = "https://www.snuvoice.site/tellme/media/graph/ex";//local : http://localhost:8000/api/tellme ...
         if (this.props.selectedPetition) {
             if (this.props.selectedPetition.status === 'ongoing' || this.props.selectedPetition.status === 'end')
-                graphSrc = "http://localhost:8000/api/tellme/media/graph/" + this.props.selectedPetition.id;
+                graphSrc = "https://www.snuvoice.site/tellme/media/graph/" + this.props.selectedPetition.id;
         }
 
         return (

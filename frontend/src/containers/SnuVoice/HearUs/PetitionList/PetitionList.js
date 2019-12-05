@@ -178,7 +178,6 @@ class PetitionList extends Component {
                 <div className="TopOfPage">
                     <br />
                     <div className="PetitionList">
-                        <h1>Hear Us</h1>
                         <h4>Petition List</h4>
                         <br />
                     </div>

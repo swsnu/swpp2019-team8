@@ -82,10 +82,10 @@ export class UpperBar extends Component {
 
     componentDidMount = () => {
         this.props.checkSignIn();
-        if (/^http:\/\/localhost:3000\/tell_me/.exec(window.location.href)) {
+        if (/^https:\/\/www.snuvoice.site\/tell_me/.exec(window.location.href)) {
             this.setState({ location: "tell_me" });
         } else if (
-            /^http:\/\/localhost:3000\/hear_us/.exec(window.location.href)
+            /^https:\/\/www.snuvoice.site\/hear_us/.exec(window.location.href)
         ) {
             this.setState({ location: "hear_us" });
         }
@@ -163,12 +163,14 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_in_button"
                                 onClick={this.toggleModal}
+                                className="sign_in_button"
                             >
                                 SIGN-IN
                             </Button>
                             <Button
                                 type="button"
                                 id="sign_up_button"
+                                className="sign_up_button"
                                 onClick={this.onClickSignUpButton}
                             >
                                 SIGN-UP
@@ -190,6 +192,7 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_out_button"
                                 onClick={this.onClickSignOutButton}
+                                className="sign_out_button"
                                 >
                                 SIGN-OUT
                             </Button>
@@ -234,10 +237,10 @@ export class UpperBar extends Component {
                         ></Input>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={this.onClickSignInButton}>
+                        <Button className="sign_in_button" onClick={this.onClickSignInButton}>
                             Sign In
                         </Button>
-                        <Button onClick={this.toggleModal}>Cancel</Button>
+                        <Button className="cancel_button" onClick={this.toggleModal}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>
