@@ -83,17 +83,12 @@ def get_verify_code(request, email):
             verify_code += str(random.randint(0, 9))
             i = i + 1
         send_mail(
-                "hi",
-                verify_code,
-                "dkwanm1@snu.ac.kr",
+                "Welcome to SNU VOICE!!!",
+                "Thanks for signing up for snuvoice\n Enter this code in sign up page\n This is your code : " + verify_code,
+                "snuvoice.master@gmail.com",
                 [email],
                 fail_silently=False)
-        email = EmailMessage(
-            '인증 메일입니다.',
-            '인증 번호는 ' + verify_code + ' 입니다.',
-             to=[email]
-        )
-        email.send()
+        email.send
         verify_code_to_return = {
             'verifyCode': verify_code
         }
