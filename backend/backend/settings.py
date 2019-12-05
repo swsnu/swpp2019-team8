@@ -16,6 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+GRAPH_URL = '/graph/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -127,14 +128,14 @@ USE_L10N = True
 
 USE_TZ = False
 
+SENDGRID_API_KEY = os.getenv('rldhks0203!')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = 'dkwanm00@gmail.com'
-EMAIL_HOST_PASSWORD = 'rldhks0203!'
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD ='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'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -150,4 +151,5 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 SESSION_CACHE_ALIAS = 'default'
-
+CELERY_TIMEZONE = 'Asia/Seoul'
+CELERY_ENABLE_UTC=False

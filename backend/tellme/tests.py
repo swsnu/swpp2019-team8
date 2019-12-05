@@ -3,6 +3,7 @@ from django.utils import timezone
 
 import json
 
+
 from .models import Debate, DebateComment, Document, Photo
 from user.models import User
 
@@ -36,7 +37,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        photo = Photo.objects.create(photo="1", title="!", content="2")
+        photo = Photo.objects.create(photo="1", title="!", content="2!!!!")
 
 
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
@@ -55,6 +56,14 @@ class DebateTestCase(TestCase):
 
         response = client.delete('/api/tellme/photo/!/')
         self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/tellme/photo/!/related/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/tellme/photo/!/related/')
+        self.assertEqual(response.status_code, 405)
+
+
 
     def test_document_post(self):
         client = Client(enforce_csrf_checks=False)
@@ -114,24 +123,24 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        doc1 = Document.objects.create(title='title', content='content')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
 
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'title', 'content': '123'}),
+        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'title', 'content': '123', 'version': '0'}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'TI', 'content': '123'}),
+        response = client.put('/api/tellme/document/title/', json.dumps({'target': 'TI', 'content': '123', 'version': '0'}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 404)
 
-        response = client.put('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123'}),
+        response = client.put('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123', 'ver': '0'}),
                               content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
-        response = client.post('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123'}),
+        response = client.post('/api/tellme/document/title/', json.dumps({'tar': 'title', 'content': '123', 'ver':'0'}),
                                content_type='application/json')
         self.assertEqual(response.status_code, 405)
 
@@ -153,11 +162,11 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        doc1 = Document.objects.create(title='title', content='content')
-        Document.objects.create(title='Titles', content='content, title')
-        Document.objects.create(title='contentUpper', content='Content, title')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
+        Document.objects.create(title='Titles', content='content, title', edit_date = timezone.now())
+        Document.objects.create(title='contentUpper', content='Content, title', edit_date = timezone.now())
         Document.objects.create(
-            title='Titsadaes', content='find fucking Contents!!!')
+            title='Titsadaes', content='find fucking Contents!!!', edit_date = timezone.now())
 
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
@@ -170,6 +179,13 @@ class DebateTestCase(TestCase):
 
         response = client.get('/api/tellme/document/wtf/')
         self.assertIn('false', response.content.decode())
+
+        response = client.get('/api/tellme/document/list/latest/')
+        self.assertEqual(200, response.status_code)
+
+        response = client.delete('/api/tellme/document/list/latest/')
+        self.assertEqual(405, response.status_code)
+
 
     def test_debates_by_document(self):
         client = Client(enforce_csrf_checks=False)
@@ -190,7 +206,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        doc1 = Document.objects.create(title='title', content='content')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
         debate1 = Debate.objects.create(
             document=doc1, author=user1, title='title', content='content')
 
@@ -243,7 +259,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user
         )
-        doc1 = Document.objects.create(title='title', content='content')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
         debate1 = Debate.objects.create(
             document=doc1, author=user1, title='title', content='content')
 
@@ -278,7 +294,7 @@ class DebateTestCase(TestCase):
             email='user@snu.ac.kr',
             new_user=new_user2
         )
-        doc1 = Document.objects.create(title='title', content='content')
+        doc1 = Document.objects.create(title='title', content='content', edit_date = timezone.now())
         debate1 = Debate.objects.create(
             document=doc1, author=user1, title='title', content='content')
         comment1 = DebateComment.objects.create(

@@ -15,7 +15,7 @@ class Petition(models.Model):
     title = models.CharField(max_length=128, db_index=True)
     content = models.TextField()
     category = models.TextField()
-    link = models.TextField()
+    link = models.TextField(db_index=True)
     tag = models.TextField()
     start_date = models.DateTimeField(db_index=True)
     end_date = models.DateTimeField(db_index=True)

@@ -76,6 +76,7 @@ const stubInitialState = {
         }
     ],
     selectedUser: { id: 1 },
+    signIn : true
 }
 
 const mockStore = getMockStore(stubInitialState);
@@ -99,7 +100,6 @@ describe('<HearUs/>', () => {
             .mockImplementation(() => { return dispatch => { }; })
         spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-
 
     })
 
@@ -148,6 +148,15 @@ describe('<HearUs/>', () => {
         expect(hearUsComponent.state.selectedCategory).toBe('1')
     })
 
+    it('should onClickButtons works', async () => {
+        const component = await mount(hearus)
+        const hearUsComponent = component.find(HearUs.WrappedComponent).instance();
+        hearUsComponent.onClickCreateButton();
+        expect(spyHistoryPush).toHaveBeenCalledTimes(1);
+        hearUsComponent.onClickMyPetitionButton();
+        expect(spyHistoryPush).toHaveBeenCalledTimes(2);
+    })
+
     it('should componentDidMount Works', async () => {
         const component = await mount(hearus)
         expect(spyGetPetitions).toHaveBeenCalledTimes(1)
@@ -172,7 +181,27 @@ describe('<HearUs/>', () => {
         petition = component.find('Petition').at(0);
         petition.simulate('click')
         expect(mocked).toHaveBeenCalledTimes(4);
+    })
 
+    it('should signIn false render well', async () => {
+        let mockstate = {
+            petition_list: [],
+            selectedUser: { id: 1 },
+            signIn : false
+        }
+        let reMockStore = getMockStore(mockstate);
+        hearus = (
+            <Provider store={reMockStore}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={HearUs} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        );
+        const component = await mount(hearus)
+        const options = component.find('.userOptions')
+        expect(options.length).toBe(0);
 
     })
 })

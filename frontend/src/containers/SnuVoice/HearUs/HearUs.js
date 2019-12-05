@@ -5,9 +5,9 @@ import { withRouter } from "react-router";
 import { Button, Table } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
-import SearchBar from './SearchBar/SearchBar';
 import Category from "../../../components/Category/category";
 import Petition from "../../../components/Petition/petition";
+import PetitionTableHeader from "../../../components/Petition/petitionTableHeader";
 import * as actionCreator from '../../../store/actions/index'
 
 import "./HearUs.css";
@@ -35,23 +35,29 @@ export class HearUs extends Component {
     this.props.getAllPetitions();
   }
 
+  onClickCreateButton = () => {
+    this.props.history.push('/hear_us/create')
+  }
+
+  onClickMyPetitionButton = () => {
+    this.props.history.push('/hear_us/my_petition')
+  }
+
   render() {
     let category = <Category onClick={this.onClickCategoryButton} />;
     let voteList, deadlineList;
+    let buttons = '';
 
-    let tableHead = (
-      <Table hover>
-        <thead>
-          <tr>
-            <th>State</th>
-            <th>Category</th>
-            <th>Title</th>
-            <th>due</th>
-            <th>votes</th>
-          </tr>
-        </thead>
-      </Table>
-    );
+    if (this.props.signIn) {
+      buttons = (
+        <div className="userOptions">
+          <Button type="button" id="create_button"
+            onClick={this.onClickCreateButton}>NEW</Button>
+          <Button type="button" id="my_petition_button"
+            onClick={this.onClickMyPetitionButton}>MINE</Button>
+        </div>
+      )
+    }
 
     if (this.state.selectedCategory === 'All') {
       voteList = (
@@ -91,7 +97,7 @@ export class HearUs extends Component {
                   votes={petition.votes}
                   category={petition.category}
                   dueDate={petition.end_date}
-                  onClick={() => this.onClickDetailButton(petition)}                />
+                  onClick={() => this.onClickDetailButton(petition)} />
               )
             } else return undefined;
           })
@@ -112,7 +118,7 @@ export class HearUs extends Component {
                   category={petition.category}
                   dueDate={petition.end_date}
                   votes={petition.votes}
-                  onClick={() => this.onClickDetailButton(petition)}                />
+                  onClick={() => this.onClickDetailButton(petition)} />
               )
             } else return undefined;
           })
@@ -146,21 +152,21 @@ export class HearUs extends Component {
         <div className="TopOfPage">
           <br />
           <div className="HearUs">
-            <h1>Hear Us</h1>
-            <br />
+            {/* <h1>Hear Us</h1>
+            <br /> */}
+            {buttons}
           </div>
-          <SearchBar />
           <br></br><br />
           <div className="Category">{category}</div>
           <br /><br /><br />
           <div className="Tables">
             <br />
             <h5><b>Top 5 Votes</b></h5>
-            {tableHead}
+            <PetitionTableHeader/>
             {voteList}
             <br />
             <h5><b>Latest 5</b></h5>
-            {tableHead}
+            <PetitionTableHeader/>
             {deadlineList}
             <br />
           </div>
@@ -189,7 +195,8 @@ export const mapDispatchToProps = dispatch => {
 export const mapStateToProps = state => {
   return {
     petitionList: state.hu.petition_list,
-    selectedUser: state.usr.selectedUser
+    selectedUser: state.usr.selectedUser,
+    signIn: state.usr.signIn
   }
 }
 

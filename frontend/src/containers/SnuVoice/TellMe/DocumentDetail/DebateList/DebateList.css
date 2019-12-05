@@ -1,5 +1,6 @@
-.TopOfPage {
-    background-color: #3779c4;
+.debate_list_page {
+    background-color: #f2f4f7;
+    min-height: 400px;
     padding-left: 8%;
     padding-right: 8%;
 }

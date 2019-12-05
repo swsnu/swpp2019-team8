@@ -13,12 +13,12 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 
 import Upperbar from '../../UpperBar/UpperBar';
-import SearchBar from '../../TellMe/SearchBar/SearchBar';
 import './DocumentDetail.css';
 
 class DocumentDetail extends Component {
-    componentDidMount() {
-        this.props.onGetDocument(this.props.match.params.document_title);
+    componentDidMount = async () => {
+        await this.props.onGetDocument(this.props.match.params.document_title);
+        await this.props.onGetPetitionList(this.props.match.params.document_title);
     }
 
     onClickDocumentCancelButton = () => {
@@ -37,6 +37,19 @@ class DocumentDetail extends Component {
         let title = '';
         let content = '';
         let markdownHtml = '';
+        let petitonList = this.props.petitionList.map(petition => {
+            return (
+                <div key={petition.id}>
+                    <li key={petition.id}>
+                        <a href={'www.snuvoice.site/hear_us/petition/' + petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
+                    </li>
+                    <br />
+                </div>
+
+            )
+
+        });
+
 
 
 
@@ -56,36 +69,34 @@ class DocumentDetail extends Component {
             <div>
                 <Upperbar />
                 <div className="DocumentDetail">
+                <br /><br />
+                <div className="Document_detail_upperbar">
+                    <Button
+                        type="button"
+                        id="document_cancel_button"
+                        onClick={this.onClickDocumentCancelButton}
+                    >
+                        Back
+                        </Button>
+                    <Button
+                        type="button"
+                        id="document_edit_button"
+                        onClick={this.onClickDocumentEditButton}
+                    >
+                        Edit
+                        </Button>
+                    <Button
+                        className="debateButton"
+                        onClick={this.onClickDocumentDebateButton}
+                    >Debate</Button>
+                    <h1 className="document_detail_title">{title}</h1>  
+                    </div>         
                     <br />
-                    <SearchBar />
-                    <br />
-                    <h4 className="document">Document:</h4>
                     <div className="content">
                         <br />
-                        {/* <h3>TITLE</h3> */}
-                        <h1 className="title">{title}</h1>
-                        {/* <h3>CONTENT</h3> */}
-                        <hr />
                         <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                         <hr />
-                        <Button
-                            type="button"
-                            id="document_cancel_button"
-                            onClick={this.onClickDocumentCancelButton}
-                        >
-                            Back
-                        </Button>
-                        <Button
-                            type="button"
-                            id="document_edit_button"
-                            onClick={this.onClickDocumentEditButton}
-                        >
-                            Edit
-                        </Button>
-                        <Button 
-                            className="debateButton"
-                            onClick={this.onClickDocumentDebateButton}
-                            >Debate</Button>
+                        {petitonList}
                     </div>
                 </div>
             </div>
@@ -96,6 +107,7 @@ class DocumentDetail extends Component {
 export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
+        petitionList: state.hu.petition_list_by_document
     }
 }
 
@@ -103,6 +115,8 @@ export const mapDispatchToProps = dispatch => {
     return {
         onGetDocument: document_title =>
             dispatch(actionCreators.getDocument(document_title)),
+        onGetPetitionList: document_title =>
+            dispatch(actionCreators.getPetitionByDocument(document_title))
     }
 }
 

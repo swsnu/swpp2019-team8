@@ -19,7 +19,10 @@ describe('TellMe Reducer', () => {
             debateComments: [],
             debates: [],
             selectedDebate: null,
-            selectedPhoto: null
+            documentConflict: false,
+            selectedPhoto: null,
+            titlePhotoList: [],
+            contentPhotoList: []
         });
     });
 
@@ -29,7 +32,7 @@ describe('TellMe Reducer', () => {
             id: stubDocument.id,
             title: stubDocument.title,
             content: stubDocument.content,
-            documentDuplicate: false, 
+            documentDuplicate: false,
         });
         expect(newState).toEqual({
             documents: [],
@@ -40,7 +43,10 @@ describe('TellMe Reducer', () => {
             debateComments: [],
             debates: [],
             selectedDebate: null,
+            documentConflict: false,
             selectedPhoto: null,
+            titlePhotoList: [],
+            contentPhotoList: []
         });
     });
 
@@ -62,7 +68,10 @@ describe('TellMe Reducer', () => {
             debateComments: [],
             debates: [],
             selectedDebate: null,
+            documentConflict: false,
             selectedPhoto: null,
+            titlePhotoList: [],
+            contentPhotoList: []
         });
     });
 
@@ -84,7 +93,10 @@ describe('TellMe Reducer', () => {
             debateComments: [],
             selectedPhoto: null,
             debates: [],
-            selectedDebate: null
+            selectedDebate: null,
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         });
     });
 
@@ -102,15 +114,17 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     });
 
     it('should get debate comments works', () => {
         const newState = reducer(undefined, {
             type: actionTypes.GET_DEBATE_COMMENTS,
-            commentList : [1, 2]
+            commentList: [1, 2]
         })
 
         expect(newState).toEqual({
@@ -122,8 +136,10 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             debateComments: [1, 2],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     });
 
@@ -142,8 +158,10 @@ describe('TellMe Reducer', () => {
             selectedPhoto: null,
             debateComments: [],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     });
 
@@ -162,8 +180,10 @@ describe('TellMe Reducer', () => {
             debateComments: [],
             selectedPhoto: null,
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     })
 
@@ -182,15 +202,17 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     })
 
     it('should get photo works', () => {
         const newState = reducer(undefined, {
             type: actionTypes.GET_PHOTO,
-            photo : 1
+            photo: 1
         })
 
         expect(newState).toEqual({
@@ -202,8 +224,10 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],
-            contentDocuments: []
-
+            contentDocuments: [],
+            documentConflict: false,
+            titlePhotoList: [],
+            contentPhotoList: []
         })
     })
 

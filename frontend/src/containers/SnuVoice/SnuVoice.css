@@ -1,11 +1,11 @@
 html, .SnuVoice {
     min-height: 100%;
-    background-color: #3779c4;
+    background-color: white;
     overflow-x: hidden;
 }
 
 h1, h4 {
-    color: white;
+    color: black;
 }
 
 .btn-primary {

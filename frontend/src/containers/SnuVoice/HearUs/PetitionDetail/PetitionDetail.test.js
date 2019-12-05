@@ -171,6 +171,7 @@ describe('<PetitionDetail />', () => {
         expect(spyPutPetitionVote).toHaveBeenCalledTimes(1);
     });
 
+
     it(`should call 'onClickPetitionCancelButton'`, async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });

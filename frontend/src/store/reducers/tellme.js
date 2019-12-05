@@ -8,9 +8,15 @@ const initialState = {
     debates: [],
     selectedDebate: null,
     debateComments: [],
+
     titleDocuments: [],
     contentDocuments: [],
     documentDuplicate: false,
+
+    documentConflict: false,
+
+    titlePhotoList: [],
+    contentPhotoList: []
 };
 
 const tellme = (prevState, action) => {
@@ -28,17 +34,21 @@ const tellme = (prevState, action) => {
                 return { ...state, selectedDocument: null, titleDocuments: action.titleDocuments, contentDocuments: action.contentDocuments }
             }
         }
+        case actionTypes.GET_LATEST_DOCUMENTS: {
+            return { ...state, documents: action.documents }
+        }
         case actionTypes.PUT_DOCUMENT: {
-            return { ...state };
+            return { ...state, documentConflict: action.conflict }
         }
         case actionTypes.GET_PHOTO: {
-
             return { ...state, selectedPhoto: action.photo };   // TODO
+        }
+        case actionTypes.GET_RELATED_PHOTO: {
+            return { ...state, titlePhotoList: action.titlePhotoList, contentPhotoList: action.contentPhotoList}
         }
         // case actionTypes.PUT_PHOTO: {
         //     return state;   // TODO
         // }
-
         case actionTypes.GET_DEBATES: {
             return { ...state, debates: action.debateList };   // TODO
         }

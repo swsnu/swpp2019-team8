@@ -98,6 +98,27 @@ describe('ActionCreators', () => {
         });
     });
 
+    it(`should 'getLatestDocuments'should work well`, (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data : [1, 2, 3]
+                    }
+                    resolve(result);
+                });
+            })
+
+        store.dispatch(actionCreators.getLatestDocuments())
+            .then(() => {
+                const newState = store.getState();
+                expect(newState.tm.documents).toStrictEqual([1, 2, 3])
+                expect(spy).toHaveBeenCalledTimes(1);
+                done();
+            })
+    });
+
     it(`'getDocument' should work well`, async (done) => {
         const spy = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
@@ -236,6 +257,30 @@ describe('ActionCreators', () => {
         });
     })
 
+    it('getRelatedPhoto works', (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation(url => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status: 200,
+                        data: {
+                            titlePhotoList : 1,
+                            contentPhotoList: 2
+                        }
+                    };
+                    resolve(result);
+                })
+            })
+
+        store.dispatch(actionCreators.getRelatedPhoto("!")).then(() => {
+            const newState = store.getState();
+            expect(newState.tm.titlePhotoList).toBe(1);
+            expect(newState.tm.contentPhotoList).toBe(2);
+            expect(spy).toHaveBeenCalledTimes(1);
+            done();
+        });
+    })
+
     it('should errors work', async () => {
         const spyGet = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
@@ -281,6 +326,12 @@ describe('ActionCreators', () => {
 
         await store.dispatch(actionCreators.getPhoto(1));
         expect(spyGet).toHaveBeenCalledTimes(4);
+
+        await store.dispatch(actionCreators.getLatestDocuments());
+        expect(spyGet).toHaveBeenCalledTimes(5);
+
+        await store.dispatch(actionCreators.getRelatedPhoto());
+        expect(spyGet).toHaveBeenCalledTimes(6);
 
 
     })

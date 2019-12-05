@@ -14,12 +14,12 @@ class PetitionCreate extends Component {
         petitionTitle: '',
         categoryList: [
             { value: '-', label: '- Select Category -' },
-            { value: 'human rights', label : 'Human Rights' },
-            { value: 'welfare', label : 'Welfare' },
-            { value: 'traffic', label : 'Traffic' },
-            { value: 'education', label : 'Education' },
-            { value: 'administration', label : 'Administration' },
-            { value: 'facility', label : 'Facility' },
+            { value: 'human rights', label: 'Human Rights' },
+            { value: 'welfare', label: 'Welfare' },
+            { value: 'traffic', label: 'Traffic' },
+            { value: 'education', label: 'Education' },
+            { value: 'administration', label: 'Administration' },
+            { value: 'facility', label: 'Facility' },
         ],
         selectedCategory: '-',
         petitionContent: '',
@@ -53,33 +53,15 @@ class PetitionCreate extends Component {
         this.state.petitionLinkList.splice(event.target.value, 1);
         this.forceUpdate();
     }
-/*
-    onClickTagAddButton = () => {
-        this.state.petitionTagList.push(this.state.petitionTag);
-        this.setState({ petitionTag: '' });
-        this.forceUpdate();
-    }
-
-    onClickTagDeleteButton = (event) => {
-        this.state.petitionTagList.splice(event.target.value, 1);
-        this.forceUpdate();
-    }
-*/
     onClickPetitionConfirmButton = () => {
-        //Tag 주석처리
         let retLink = '';
-        //let retTag = '';
         for (var i in this.state.petitionLinkList) {
             retLink += this.state.petitionLinkList[i] + ' ';
         }
-        /*for (var j in this.state.petitionTag) {
-            retTag += this.state.petitionTagList[j] + ' ';
-        }*/
         this.props.onStorePetition(this.state.petitionTitle, this.state.petitionContent, this.state.selectedCategory, /*retTag ,*/ retLink);
     }
 
     onClickPetitionCancelButton = () => {
-        //제안: alert("변경 사항은 저장되지 않습니다..이런거")
         this.props.history.push('/hear_us');
     }
 
@@ -87,21 +69,12 @@ class PetitionCreate extends Component {
         const link_list = this.state.petitionLinkList.map((link, i) => {
             return (
                 <div className="LinkList" key={i}>
-                    {link}
+                    <a href={link} target="_sub">{link}</a>
                     <Button type="button" value={i} id="petition_link_delete_button"
                         onClick={this.onClickLinkDeleteButton}>Delete Link</Button>
                 </div>
             );
         });
-        /*const tag_list = this.state.petitionTagList.map((tag, i) => {
-            return (
-                <div className="TagList" key={i}>
-                    {tag}
-                    <Button type="button" value={i} id="petition_tag_delete_button"
-                        onClick={this.onClickTagDeleteButton}>Delete Tag</Button>
-                </div>
-            );
-        });*/
         const category_list = this.state.categoryList.map((v, i) => {
             return (
                 <option key={i} value={v.value} label={v.label}></option>
@@ -113,11 +86,11 @@ class PetitionCreate extends Component {
                 <div className="PetitionCreate">
                     <Form>
                         <b><br />
-                            <h1>Create New Petition</h1>
+                            <h1 className="petition_create_title">Create New Petition</h1>
                             <br />
                             <div className="inputTop">
                                 <Input type="textarea" id="petition_terms_textarea" placeholder="content" readOnly
-                                    defaultValue="Cautions when you create new petition"></Input>
+                                    defaultValue="Cautions when you create new petition:"></Input>
                                 <div className="agree">
 
                                     <FormGroup>
@@ -155,26 +128,15 @@ class PetitionCreate extends Component {
                                     </InputGroup>
                                     {link_list}
                                 </FormGroup>
-                                {/*<FormGroup >
-                                    <Label>Tag</Label>
-                                    <InputGroup>
-                                        <Input type="text" id="petition_tag_input" placeholder="new tag" value={this.state.petitionTag}
-                                            onChange={(event) => this.setState({ petitionTag: event.target.value })}></Input>
-                                        <InputGroupAddon addonType="prepend">
-                                            <Button type="button" id="petition_tag_add_button"
-                                                onClick={this.onClickTagAddButton} disabled={!this.state.petitionTag}>Add Tag</Button>
-                                        </InputGroupAddon>
-                                    </InputGroup>
-                                    {tag_list}
-                                </FormGroup> */}
+                                <ButtonGroup className="buttons">
+                                    <Button type="button" id="petition_confirm_button"
+                                        onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent || this.state.selectedCategory == '-'}>CONFIRM</Button>
+                                    <Button type="button" id="petition_cancel_button"
+                                        onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
+                                </ButtonGroup>
                             </div>
                             <br /><br /><br />
-                            <ButtonGroup className="buttons">
-                                <Button type="button" id="petition_confirm_button"
-                                    onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent || this.state.selectedCategory == '-'}>CONFIRM</Button>
-                                <Button type="button" id="petition_cancel_button"
-                                    onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
-                            </ButtonGroup>
+
                         </b>
                     </Form>
                 </div >

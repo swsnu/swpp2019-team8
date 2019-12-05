@@ -7,7 +7,9 @@ describe('HearUs Reducer', () => {
         expect(newState).toEqual({
             comment_list: [],
             petition_list: [],
+            petition_list_by_document:[],
             selectedPetition: null,
+            petition_list_by_comment:[]
         });
     });
 
@@ -20,11 +22,13 @@ describe('HearUs Reducer', () => {
         expect(newState).toEqual({
             comment_list: [],
             petition_list: [],
+            petition_list_by_document:[],
             selectedPetition: {
                 content: "content",
                 id: 1,
                 title: "title",
             },
+            petition_list_by_comment:[]
         });
     });
 });

@@ -15,8 +15,14 @@ export class DebateCreate extends Component {
         debateContent: '',
     }
 
-    componentDidMount() {
-        this.props.onGetDocument(this.props.match.params.document_title);
+    componentDidMount = async () => {
+        await this.props.onCheckSignIn();
+        if (this.props.signIn) {
+            this.props.onGetDocument(this.props.match.params.document_title);
+        } else {
+            alert("You must be logged in to create a new debate")
+            this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/debates');
+        }
     }
 
     onClickDebateConfirmButton = () => {
@@ -25,6 +31,10 @@ export class DebateCreate extends Component {
             this.state.debateTitle,
             this.state.debateContent,
         );
+    }
+    
+    onClickDebateCancelButton = () => {
+        this.props.history.goBack();
     }
 
     render() {
@@ -48,11 +58,12 @@ export class DebateCreate extends Component {
                         />
                 <br />
                 <Button 
-                    id="debate_confirm_button"
+                    id="debate_confirm_button" disabled={this.state.debateContent === '' || this.state.debateTitle === ''}
                     onClick={this.onClickDebateConfirmButton}>CONFIRM</Button>
                 
                 <Button
-                    id="onClickDebateCancelButton">Cancel</Button>
+                    id="debate_cancel_button"
+                    onClick={this.onClickDebateCancelButton}>Cancel</Button>
                     </div>
             </div>
         )
@@ -62,6 +73,7 @@ export class DebateCreate extends Component {
 export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
+        signIn: state.usr.signIn
     }
 }
 
@@ -71,6 +83,8 @@ export const mapDispatchToProps = dispatch => {
             dispatch(actionCreators.getDocument(document_title)),
         onCreateDebate: (selectedDocument, debateTitle, debateContent) =>
             dispatch(actionCreators.postDebate(selectedDocument,{ title: debateTitle, content: debateContent})),
+        onCheckSignIn: () =>
+            dispatch(actionCreators.checkSignIn())  
     }
 }
 

@@ -30,6 +30,10 @@ export class DebateDetail extends Component {
         await this.props.onGetDebateComments(this.props.match.params.debate_id);
     }
 
+    onClickDebateCancelButton = () => {
+        this.props.history.push('/tell_me/documents/' + this.props.selectedDocument.title + '/debates');
+    }
+
     render() {
         let documentTitle = '';
         let debateTitle = '';
@@ -59,15 +63,12 @@ export class DebateDetail extends Component {
 
         return (
             <div>
-                <Upperbar />
+                <Upperbar /><br/>
                 <div className="TopOfPage">
 
                     <div className="DebateDetail">
-                        <div>
-                            <h1>DebateDetail</h1>
-                        </div>
                         <h3 className="documentTitle">
-                            {documentTitle}
+                            {documentTitle} (Debate)
                         </h3>
                         <br />
                         <h4 id="debate_title_text">
@@ -93,6 +94,13 @@ export class DebateDetail extends Component {
                         <Button
                             id="debate_comment_confirm_button" disabled={this.state.comment === ''}
                             onClick={this.onClickCommentConfirmButton}>CONFIRM</Button>
+                        <Button
+                        type="button"
+                        id="debate_cancel_button"
+                        onClick={this.onClickDebateCancelButton}
+                    >
+                        Back
+                        </Button>
                     </div>
                 </div>
             </div>

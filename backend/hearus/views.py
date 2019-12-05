@@ -5,7 +5,7 @@ from json import JSONDecodeError
 
 from .models import Petition, PetitionComment
 from user.models import User
-from .tasks import status_changer
+from .tasks import status_changer, plot_graph
 from secrets import token_urlsafe
 
 
@@ -28,6 +28,9 @@ import io
 # handling csv file
 import pandas as pd
 import numpy as np
+
+# urlparsing
+import urllib.parse
 
 
 def petition(request):
@@ -76,8 +79,9 @@ def petition(request):
 
 def petition_list(request):
     if request.method == 'GET':
+        petition_to_exclude = ['preliminary', 'fail']
         petition_list = [
-            petition for petition in Petition.objects.exclude(status="preliminary").values().order_by('-start_date')]
+            petition for petition in Petition.objects.exclude(status__in=petition_to_exclude).values().order_by('-start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
@@ -85,7 +89,8 @@ def petition_list(request):
 
 def petition_serach_by_title(request, petition_title):
     if request.method == 'GET':
-        petition_list = [petition for petition in Petition.objects.exclude(status="preliminary").filter(
+        petition_to_exclude = ['preliminary', 'fail']
+        petition_list = [petition for petition in Petition.objects.exclude(status__in=petition_to_exclude).filter(
             title__icontains=petition_title).values().order_by('start_date')]
         return JsonResponse(petition_list, safe=False)
     else:
@@ -123,6 +128,29 @@ def petition_userid(request, user_id):
         return HttpResponseNotAllowed(['GET'])
 
 
+def petition_comment_user(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    if request.method == 'GET':
+        petitions = [
+            comment for comment in PetitionComment.objects.select_related('petition').filter(author_id=request.user.id)
+        ]
+        ret_petition = reversed(petitions)
+        dict_to_return = []
+        for comment in ret_petition:
+            temp = {
+                'status' : comment.petition.status,
+                'title' : comment.petition.title,
+                'category' : comment.petition.category,
+                'end_date': comment.petition.end_date,
+                'votes' : comment.petition.votes,
+                'url' : comment.petition.url
+            }
+            dict_to_return.append(temp)
+        return JsonResponse(dict_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
 def petition_comment(request, petition_url):
     if request.method == 'GET':
         comment_petition = Petition.objects.get(url=petition_url)
@@ -142,9 +170,13 @@ def petition_comment(request, petition_url):
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
-        if(comment_petition.votes >=5 and comment_petition.status == "preliminary"):
+        if(comment_petition.votes >= 4 and comment_petition.status == "preliminary"):
             comment_petition.status = "ongoing"
             comment_petition.save()
+            if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
+                os.makedirs(os.path.join(
+                    './media/graph/'+str(comment_petition.id)))
+            plot_graph(comment_petition.id)
         student_id = request.user.studentId[0:4]
         file_location = './stat/' + str(comment_petition.id) + '.csv'
         stat = pd.read_csv(file_location)
@@ -157,14 +189,30 @@ def petition_comment(request, petition_url):
             'department': [request.user.department],
             'major': [request.user.major]
         })
-        index = ['voteDate', 'status', 'degree', 'studentId', 'gender', 'department', 'major']
+        index = ['voteDate', 'status', 'degree',
+                 'studentId', 'gender', 'department', 'major']
         df = stat.append(df, sort=False, ignore_index=True)
-        df.to_csv(file_location, encoding="utf-8", 
-                    columns=index)
+        df.to_csv(file_location, encoding="utf-8",
+                  columns=index)
         response_dict = model_to_dict(comment)
         return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
+
+
+def petition_by_document_title(request, document_title):
+    if request.method == 'GET':
+        encoded_title = urllib.parse.quote(document_title)
+        petition_to_exclude = ['preliminary', 'fail']
+        petition_list = [petition for petition in
+                         Petition.objects.exclude(status__in=petition_to_exclude).filter(
+                             link__icontains='/tell_me/documents/' + encoded_title)
+                         .values('id', 'url', 'title')
+                         ]
+        return JsonResponse(petition_list, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
 
 def downlaod_csv(request, petition_url):
     if request.method == 'GET':

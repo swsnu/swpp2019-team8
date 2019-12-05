@@ -43,9 +43,7 @@ export const getAllPetitions = (/* TODO */) => {
             .then(res => {
                 dispatch(getAllPetitions_(res.data))
             })
-            .catch(e => {
-                console.log(e)
-            })
+            .catch(e => {})
         // TODO
     };
 };
@@ -59,8 +57,9 @@ export const getPetition_ = (petition) => {
 
 export const getPetition = (petition_url) => {
     return dispatch => {
-        return axios.get('/api/hearus/petition/' + petition_url)
-            .then(res => dispatch(getPetition_(res.data)));
+        return axios.get('/api/hearus/petition/' + petition_url + '/')
+            .then(res => dispatch(getPetition_(res.data)))
+            .catch((e) => {});
     }
 }
 
@@ -76,9 +75,7 @@ export const getPetitionByTitle = (title) => {
     return dispatch => {
         return axios.get('/api/hearus/petition/petition_title/' + title + '/')
             .then(res => dispatch(getPetitionByTitle_(res.data)))
-            .catch(
-
-            );
+            .catch((e) => {});
     }
 }
 
@@ -93,9 +90,24 @@ export const getMyPetitions_ = (myPetitions) => {
 export const getMyPetitions = (user_id) => {
     return dispatch => {
         return axios.get('/api/hearus/petition/user/' + user_id + '/')
-            .then(res => dispatch(getMyPetitions_(res.data)));
+            .then(res => dispatch(getMyPetitions_(res.data)))
+            .catch((e) => {});
     };
 };
+
+export const getMyPetitionsByComment_ = (petition) => {
+    return {
+        type: actionTypes.GET_MY_PETITIONS_BY_COMMENT,
+        petitionList: petition
+    }
+}
+export const getMyPetitionsByComment = () => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/comment/related/')
+            .then(res => dispatch(getMyPetitionsByComment_(res.data)))
+            .catch((e) => { })
+    }
+}
 
 export const getPetitionComments_ = (comment_list) => {
     return {
@@ -107,7 +119,8 @@ export const getPetitionComments_ = (comment_list) => {
 export const getPetitionComments = (petition_url) => {
     return dispatch => {
         return axios.get('/api/hearus/petition/' + petition_url + '/comment/')
-            .then(res => dispatch(getPetitionComments_(res.data)));
+            .then(res => dispatch(getPetitionComments_(res.data)))
+            .catch((e) => {});
     };
 };
 
@@ -122,7 +135,8 @@ export const postPetitionComment_ = (comment) => {
 export const postPetitionComment = (comment) => {
     return dispatch => {
         return axios.post('/api/hearus/petition/' + comment.petition_url + '/comment/', comment)
-            .then(res => dispatch(postPetitionComment_(res.data)));
+            .then(res => dispatch(postPetitionComment_(res.data)))
+            .catch((e) => {});
     };
 };
 
@@ -136,7 +150,25 @@ export const putPetitionVote_ = (petition) => {
 export const putPetitionVote = (petition_url) => {
     return dispatch => {
         return axios.put('/api/hearus/petition/' + petition_url + '/')
-            .then(res => dispatch(putPetitionVote_(res.data)));
+            .then(res => dispatch(putPetitionVote_(res.data)))
+            .catch((e) => {});
+    }
+}
+
+export const getPetitionByDocument_ = (petitionList) => {
+    return  {
+        type: actionTypes.GET_PETITION_BY_DOCUMENT,
+        petitionList: petitionList
+    }
+}
+
+export const getPetitionByDocument = (document_title) => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/document_title/' + document_title + '/')
+            .then(res => {
+                dispatch(getPetitionByDocument_(res.data))
+            })
+            .catch((e) => {})
     }
 }
 
@@ -155,4 +187,10 @@ export const getCsvFile = (petition_url) => {
     }
 }
 
+export const getDrawGraph = (petition_url) => {
+    return dispatch => {
+        return axios.get('/api/hearus/petition/' + petition_url + '/graph/')
+            .catch((e) => {})
+    }
+}
 // Statistic에 해당하는 것은 아직 안 만듦

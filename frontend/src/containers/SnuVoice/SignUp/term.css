@@ -1,0 +1,7 @@
+.terms {
+    height: 200px;
+    overflow: scroll;
+    text-align: left;
+    color: #6f6f6f;
+    font-size: small;
+}

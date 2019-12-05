@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from .models import Petition, PetitionComment
-from .tasks import status_changer,check_fail,check_end
+from .tasks import status_changer,check_fail,check_end,plot_graph,plot_all
 from unittest.mock import patch
 from user.models import User
 from django.utils import timezone
@@ -47,13 +47,31 @@ class HearusTestCase(TestCase):
         petition = Petition.objects.get(id=2)
         self.assertEqual(petition.status, 'end')
 
-    def test_petition(self):
+    @patch('hearus.tasks.plot_graph')
+    def test_graph(self,petition_id):
         client = Client(enforce_csrf_checks=False)
-        response = client.get('/api/hearus/petition/')
-        self.assertEqual(response.status_code, 401)
         response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
                                content_type='application/json')
-        response = client.post('/api/hearus/petition/', json.dumps({'title': "testtitle", "content": "testcontent", "category": "testcategory", "link": "testlink",
+        petition = Petition.objects.get(title="title")
+        response = client.get('/api/hearus/petition/' + str(petition.id) + '/download/')
+        plot_graph(petition_id=1)
+
+    @patch('hearus.tasks.plot_all')
+    def test_graph_all(self,petition_id):
+        plot_all()
+        
+    def test_petition(self):
+        client = Client(enforce_csrf_checks=False)
+
+        response = client.get('/api/hearus/petition/')
+        self.assertEqual(response.status_code, 401)
+
+        response = client.get('/api/hearus/petition/comment/related/')
+        self.assertEqual(response.status_code, 401)
+
+        response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
+                               content_type='application/json')
+        response = client.post('/api/hearus/petition/', json.dumps({'title': "testtitle", "content": "testcontent", "category": "testcategory", "link": "tellme/documents/testlink",
                                                                     "tag": "tag"}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         response = client.post('/api/hearus/petition/', json.dumps({'titl': "testtitle", "content": "testcontent", "category": "testcategory", "link": "testlink",
@@ -61,6 +79,15 @@ class HearusTestCase(TestCase):
         self.assertEqual(response.status_code, 400)
         response = client.put('/api/hearus/petition/')
         self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/hearus/petition/document_title/testlink/')
+        self.assertEqual(response.status_code, 200)
+        
+        response = client.delete('/api/hearus/petition/document_title/testlink/')
+        self.assertEqual(response.status_code, 405)
+
+
+
 
     def test_petition_list(self):
         client = Client(enforce_csrf_checks=False)
@@ -109,7 +136,14 @@ class HearusTestCase(TestCase):
         response = client.post('/api/hearus/petition/1/comment/', json.dumps({"commnt": "testcomment"}),
                                content_type='application/json')
         self.assertEqual(response.status_code, 400)
+
         response = client.put('/api/hearus/petition/1/comment/')
+        self.assertEqual(response.status_code, 405)
+
+        response = client.get('/api/hearus/petition/comment/related/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/hearus/petition/comment/related/')
         self.assertEqual(response.status_code, 405)
 
     def test_download_csv(self):
