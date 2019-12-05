@@ -85,12 +85,6 @@ export const mapStateToProps = state => {
 	}
 }
 
-export const mapStateToProps = state => {
-  return {
-    documentList: state.tm.documents
-  }
-}
-
 export const mapDispatchToProps = dispatch => {
   return {
     onGetDocumentList: () =>
