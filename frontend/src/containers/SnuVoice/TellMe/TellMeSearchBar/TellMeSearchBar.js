@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actionCreator from '../../../../store/actions/index'
 
+import SearchButton from '../../../../img/search_button.png';
+
 import {
     Button,
     Input,
@@ -59,6 +61,7 @@ export class TellMeSearchBar extends Component {
                     <Input
                         type="text"
                         id="search_input"
+                        className="search_input"
                         autoFocus
                         onKeyPress={this.onKeyPress}
                         onChange={this.onChangeSearchInput}
@@ -68,9 +71,10 @@ export class TellMeSearchBar extends Component {
                             type="button"
                             id="search_confirm_button"
                             onClick={this.onClickSearchConfirmButton}
+                            className="search_button"
                             disabled={this.state.searchInput === '' || this.state.searchInput === undefined}
                         >
-                            Search
+                            <img src={SearchButton} style={{height: 20}}></img>
               </Button>
                     </InputGroupAddon>
                 </InputGroup>
