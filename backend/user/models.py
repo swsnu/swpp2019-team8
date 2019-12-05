@@ -24,17 +24,20 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, new_user=None):
+    def create_superuser(self, email, password):
+        temp = {
+            'password': password,
+            'nickname': '',
+            'gender': '',
+            'status': '',
+            'studentId': '',
+            'department': '',
+            'major': '',
+            'studentStatus': ''
+        }
         user = self.create_user(
             email,
-            password=new_user['password'],
-            nickname=new_user['nickname'],
-            gender=new_user['gender'],
-            status=new_user['status'],
-            studentId=new_user['studentId'],
-            department=new_user['department'],
-            major=new_user['major'],
-            studentStatus=new_user['studentStatus']
+            temp
         )
 
         user.is_admin = True
@@ -57,7 +60,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['password']
 
     def has_perm(self, perm, obj=None):
         return True
