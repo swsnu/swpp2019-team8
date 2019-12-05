@@ -82,10 +82,10 @@ export class UpperBar extends Component {
 
     componentDidMount = () => {
         this.props.checkSignIn();
-        if (/^http:\/\/localhost:3000\/tell_me/.exec(window.location.href)) {
+        if (/^https:\/\/www.snuvoice.site\/tell_me/.exec(window.location.href)) {
             this.setState({ location: "tell_me" });
         } else if (
-            /^http:\/\/localhost:3000\/hear_us/.exec(window.location.href)
+            /^https:\/\/www.snuvoice.site\/hear_us/.exec(window.location.href)
         ) {
             this.setState({ location: "hear_us" });
         }
