@@ -46,3 +46,40 @@
     font-weight: 900;
     color: white;
 }
+
+.sign_out_button {
+    border-radius: 20px !important;
+}
+
+.sign_in_button {
+    border-radius: 20px !important;
+}
+
+.sign_up_button {
+    border-radius: 20px !important;
+}
+
+.cancel_button {
+    border-radius: 20px !important;
+}
+
+.search_input {
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+    width: 100px !important;
+}
+
+.search_button {
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+    background-color: white !important;
+    border-color: #cdd3da !important;
+    border-left-color: white !important;
+    color: black !important;
+    padding-top:1% !important;
+    padding-left: 18% !important;
+}
+
+.search_button.diabled{
+    background-color: white !important;
+}

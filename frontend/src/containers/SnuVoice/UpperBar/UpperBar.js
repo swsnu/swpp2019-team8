@@ -163,12 +163,14 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_in_button"
                                 onClick={this.toggleModal}
+                                className="sign_in_button"
                             >
                                 SIGN-IN
                             </Button>
                             <Button
                                 type="button"
                                 id="sign_up_button"
+                                className="sign_up_button"
                                 onClick={this.onClickSignUpButton}
                             >
                                 SIGN-UP
@@ -190,6 +192,7 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_out_button"
                                 onClick={this.onClickSignOutButton}
+                                className="sign_out_button"
                                 >
                                 SIGN-OUT
                             </Button>
@@ -234,10 +237,10 @@ export class UpperBar extends Component {
                         ></Input>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={this.onClickSignInButton}>
+                        <Button className="sign_in_button" onClick={this.onClickSignInButton}>
                             Sign In
                         </Button>
-                        <Button onClick={this.toggleModal}>Cancel</Button>
+                        <Button className="cancel_button" onClick={this.toggleModal}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
             </div>
