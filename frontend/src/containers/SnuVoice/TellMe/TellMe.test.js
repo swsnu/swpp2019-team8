@@ -10,12 +10,19 @@ import { getMockStore } from '../../../test-utils/mocks'
 import * as actionCreator from '../../../store/actions/tellme'
 
 describe('<TellMe/>', () => {
-    const stubInitialState = {};
+    const stubInitialState = {
+        documents : [
+            {
+                title: "1",
+                edit_date: "!235124"
+            }
+        ]
+    };
     const mockStore = getMockStore(stubInitialState);
 
     let tellMe;
     let spyHistoryPush;
-    let spyGetDocumentByTitle;
+    let spyGetDocuments;
 
     beforeEach(() => {
         tellMe = (
@@ -27,22 +34,24 @@ describe('<TellMe/>', () => {
                 </ConnectedRouter>
             </Provider>
         )
+        spyGetDocuments = jest.spyOn(actionCreator, 'getLatestDocuments')
+            .mockImplementation(() => { return dispatch => { }; })
         spyHistoryPush = jest.spyOn(history, 'push')
-            .mockImplementation(() => { })
+            .mockImplementation(() => { });
     })
 
     afterEach(() => { jest.clearAllMocks() })
 
-    it('should render without errors', () => {
-        const component = mount(tellMe)
+    it('should render without errors', async () => {
+        const component = await mount(tellMe)
         const top = component.find('.TopOfPage').at(0)
         expect(top.length).toBe(1)
+        expect(spyGetDocuments).toHaveBeenCalledTimes(1)
     })
 
-    it('should buttons works', () => {
-        const component = mount(tellMe)
+    it('should buttons works', async () => {
+        const component = await mount(tellMe)
         const createButton = component.find('#create_button').at(0)
-        const searchButton = component.find('#search_confirm_button').at(0)
         createButton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/create')
     })

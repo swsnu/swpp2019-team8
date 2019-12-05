@@ -19,6 +19,7 @@ import {
     FormText
 } from 'reactstrap';
 import { MarkdownPreview } from 'react-marked-markdown';
+import Resizer from 'react-image-file-resizer';
 
 import Upperbar from '../../UpperBar/UpperBar';
 
@@ -32,12 +33,18 @@ class PhotoUpload extends Component {
         photoFileName: null,
         photoUrl: null,
         documentState: 'write',
-        message: "Upload your Photo",
+        message: "Upload your photo (max size: 5MB)",
         googleKey: "AIzaSyCf7H4P1K0Q_y-Eu9kZP9ECo0DsS1PmeMQ",
-        canvasWidth: 100,
-        canvasHeight: 100,
+        canvasWidth: 0,
+        canvasHeight: 0,
+        imgWidth: 0,
+        imgHeigth: 0,
         blurElements: [],
-        titleFormText: ''
+        titleFormText: '',
+        uploadEnd: false,
+        _img: null,
+        maxWidth: 700,
+        maxHeight: 10000,
     }
 
     constructor(props) {
@@ -48,8 +55,8 @@ class PhotoUpload extends Component {
 
     onChangePhotoTitleInput = (event) => {
         let formText;
-        if (/[#%?]/.exec(event.target.value)) {
-            formText = "# ? % 는 허용되지 않습니다."
+        if (/[#%?/\\]/.exec(event.target.value)) {
+            formText = "# ? % / \\ 는 허용되지 않습니다."
         } else {
             if (/.jpg$/.exec(event.target.value) || /.jpeg$/.exec(event.target.value) || /.bmp$/.exec(event.target.value) || /.png$/.exec(event.target.value)) {
                 formText = ''
@@ -67,7 +74,7 @@ class PhotoUpload extends Component {
     onClickPhotoConfirmButton = () => {
         const canvas = this.refCanvas.current;
         const ctx = canvas.getContext("2d");
-        const img = this.refImg.current;
+        const img = this.state._img;
 
         ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
         ctx.drawImage(img, 0, 0);
@@ -125,15 +132,36 @@ class PhotoUpload extends Component {
 
         const reader = new FileReader();
         let file = event.target.files[0];
+        console.log(file);
+
+        if (file && file.size > 5242880) {
+            alert("File is too big! (max: 5MB)");
+            return;
+        }
 
         reader.onloadend = () => {
-            this.setState({ photoFile: file, photoFileName: file.name, photoUrl: reader.result, blurElements: [] });
+            this.setState({ uploadEnd: false, blurElements: [], photoFile: file, photoFileName: file.name, photoUrl: reader.result });
             const imageData = reader.result.split(",")[1];
             const img = new Image();
             img.src = reader.result;
             img.onload = () => {
+                let copiedImg = new Image();
+                Resizer.imageFileResizer(
+                    file,
+                    this.state.maxWidth,
+                    this.state.maxHeight,
+                    file.type,
+                    100,
+                    0,
+                    uri => {
+                        copiedImg.src = uri;
+                    },
+                    'base64'
+                );
                 this.setState({
+                    uploadEnd: true,
                     message: "File uploading...",
+                    _img: copiedImg,
                 });
                 this.fileUpload(imageData)
                     .then((result) => {
@@ -143,12 +171,14 @@ class PhotoUpload extends Component {
                             });
                         }
                         console.log('num_faces: ' + result.num_faces);
-                        this.drawInCanvas(result.info, result.num_faces);
+                        this.drawInCanvas(result.info, result.num_faces, copiedImg);
                     });
             };
         }
 
-        reader.readAsDataURL(file);
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     }
 
     fileUpload = (content) => {
@@ -233,10 +263,10 @@ class PhotoUpload extends Component {
         };
     };
 
-    drawInCanvas = (photoInfo, n) => {
+    drawInCanvas = async (photoInfo, n, copiedImg) => {
         const canvas = this.refCanvas.current;
         const ctx = canvas.getContext("2d");
-        const img = this.refImg.current;
+        const img = copiedImg;
 
         ctx.clearRect(0, 0, this.state.canvasWidth, this.state.canvasHeight); // 시작에 앞서 canvas에 렌더링 된 데이터를 삭제합니다.
         ctx.drawImage(img, 0, 0);
@@ -246,7 +276,7 @@ class PhotoUpload extends Component {
 
         const this_tmp = this;
 
-        canvas.addEventListener('click', function (event) {
+        await canvas.addEventListener('click', function (event) {
             let x = event.pageX - elemLeft;
             let y = event.pageY - elemTop;
 
@@ -259,7 +289,7 @@ class PhotoUpload extends Component {
                     element.color === 'red') {
                     element.blur = !element.blur;
                     isBoxClicked = true;
-                    console.log(index + 'clicked!');
+                    console.log(index + ' clicked!');
                 }
             });
 
@@ -306,24 +336,27 @@ class PhotoUpload extends Component {
                     ctx.stroke();
                 }
             });
+
+            console.log(this_tmp.state.blurElements);
         }, false);
 
         // Add element.
+        const ratio = this.state.canvasWidth / this.state.imgWidth;
         for (let i = 0; i < n; i++) {
             const { x, y, width, height } = photoInfo[i];
             this.setState({
                 blurElements: this.state.blurElements.concat({
                     color: 'red',
-                    width: width,
-                    height: height,
-                    left: x,
-                    top: y,
+                    width: width * ratio,
+                    height: height * ratio,
+                    left: x * ratio,
+                    top: y * ratio,
                     blur: false,
                 })
             });
         }
-        console.log(this.state.canvasWidth);
-        console.log(this.state.canvasHeight);
+        console.log("canvasWidth: " + this.state.canvasWidth);
+        console.log("canvasHeight: " + this.state.canvasHeight);
         console.log(this.state.blurElements);
 
         // Render elements.
@@ -339,8 +372,10 @@ class PhotoUpload extends Component {
 
     onImgLoad = ({ target: img }) => {
         this.setState({
-            canvasWidth: img.offsetWidth,
-            canvasHeight: img.offsetHeight,
+            canvasWidth: Math.min(this.state.maxWidth, img.offsetWidth),
+            canvasHeight: img.offsetHeight * (Math.min(this.state.maxWidth, img.offsetWidth) / img.offsetWidth),
+            imgWidth: img.offsetWidth,
+            imgHeight: img.offsetHeight,
         });
     }
 
@@ -362,8 +397,12 @@ class PhotoUpload extends Component {
             </Nav>
         );
 
-        let $imagePreview = (this.state.photoUrl) ? (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />) :
-            (<div className="noPhoto">There is no image to preview</div>);
+        let $imagePreview = (!this.state.photoUrl) ? (<div className="noPhoto">There is no image to preview</div>) :
+            (this.state.uploadEnd) ? (<div></div>) :
+                (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />);
+
+        let $canvas = (this.state.photoUrl && this.state.uploadEnd) ?
+            (<canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />) : (<div></div>);
 
         return (
             <div>
@@ -379,8 +418,8 @@ class PhotoUpload extends Component {
                                 onChange={(event) => this.handlePhoto(event)} accept=".jpg,.png,.bmp,.jpeg" />
                         </div>
                         <br />
-                        <canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />
                         {$imagePreview}
+                        {$canvas}
                     </div>
                     <div>
                         {documentStateTabbuttons}

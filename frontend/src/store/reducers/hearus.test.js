@@ -9,6 +9,7 @@ describe('HearUs Reducer', () => {
             petition_list: [],
             petition_list_by_document:[],
             selectedPetition: null,
+            petition_list_by_comment:[]
         });
     });
 
@@ -27,6 +28,7 @@ describe('HearUs Reducer', () => {
                 id: 1,
                 title: "title",
             },
+            petition_list_by_comment:[]
         });
     });
 });
