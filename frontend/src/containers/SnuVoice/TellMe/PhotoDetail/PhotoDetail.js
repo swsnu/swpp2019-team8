@@ -62,10 +62,10 @@ export class PhotoDetail extends Component {
                         <br />
                         <h1 className="title">{title}</h1>
                         <hr />
-                        <img src={"http://localhost:8000/api/tellme/media/" + photo} />
+                        <img src={"https://www.snuvoice.site/tellme/media/" + photo} />
                         <br /><br />
                         <div className="url_copy_button">
-                            <input type="text" id="ShareUrl" value = {"http://localhost:8000/api/tellme/media/" + photo}/>
+                            <input type="text" id="ShareUrl" value = {"https://www.snuvoice.site/tellme/media/" + photo}/>
                             &nbsp;
                             <Button onClick={this.onClickCopyURL}>URL 복사</Button>
                         </div>
