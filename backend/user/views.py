@@ -93,7 +93,6 @@ def get_verify_code(request, email):
             '인증 번호는 ' + verify_code + ' 입니다.',
              to=[email]
         )
-        email.send()
         verify_code_to_return = {
             'verifyCode': verify_code
         }
