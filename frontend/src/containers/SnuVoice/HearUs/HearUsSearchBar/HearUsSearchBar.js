@@ -29,6 +29,7 @@ export class HearUsSearchBar extends Component {
             if (toSearch[i] !== " ") break;
             else input = toSearch.slice(0, i);
         }
+        if(input === '') return;
         this.props.history.push("/hear_us/search/" + input);
         this.props.getPetitionByTitle(input);
     };
