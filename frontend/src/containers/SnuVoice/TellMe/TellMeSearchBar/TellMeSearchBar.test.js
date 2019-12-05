@@ -59,6 +59,8 @@ describe('<SearchBar/>', () => {
     })
 
     it('should onClickConfirmButton work', async () => {
+        let mocked = jest.fn();
+        window.alert = mocked;
         const component = mount(searchBar)
         const searchBarComponent = component.find(TellMeSearchBar.WrappedComponent).instance()
         searchBarComponent.setState({
@@ -72,6 +74,11 @@ describe('<SearchBar/>', () => {
         })
         await searchBarComponent.onClickSearchConfirmButton()
         expect(spyHistoryPush).toHaveBeenCalledTimes(2)
+        searchBarComponent.setState({
+            searchInput: '////////'
+        })
+        await searchBarComponent.onClickSearchConfirmButton()
+        expect(mocked).toHaveBeenCalledTimes(1)
     })
 
     it('should onClickConfirmButton work', async () => {

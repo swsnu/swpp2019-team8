@@ -29,6 +29,9 @@ import io
 import pandas as pd
 import numpy as np
 
+# urlparsing
+import urllib.parse
+
 
 def petition(request):
     if not request.user.is_authenticated:
@@ -125,6 +128,29 @@ def petition_userid(request, user_id):
         return HttpResponseNotAllowed(['GET'])
 
 
+def petition_comment_user(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    if request.method == 'GET':
+        petitions = [
+            comment for comment in PetitionComment.objects.select_related('petition').filter(author_id=request.user.id)
+        ]
+        ret_petition = reversed(petitions)
+        dict_to_return = []
+        for comment in ret_petition:
+            temp = {
+                'status' : comment.petition.status,
+                'title' : comment.petition.title,
+                'category' : comment.petition.category,
+                'end_date': comment.petition.end_date,
+                'votes' : comment.petition.votes,
+                'url' : comment.petition.url
+            }
+            dict_to_return.append(temp)
+        return JsonResponse(dict_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
 def petition_comment(request, petition_url):
     if request.method == 'GET':
         comment_petition = Petition.objects.get(url=petition_url)
@@ -144,11 +170,12 @@ def petition_comment(request, petition_url):
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()
-        if(comment_petition.votes >=4 and comment_petition.status == "preliminary"):
+        if(comment_petition.votes >= 4 and comment_petition.status == "preliminary"):
             comment_petition.status = "ongoing"
             comment_petition.save()
             if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
-                os.makedirs(os.path.join('./media/graph/'+str(comment_petition.id)))
+                os.makedirs(os.path.join(
+                    './media/graph/'+str(comment_petition.id)))
             plot_graph(comment_petition.id)
         student_id = request.user.studentId[0:4]
         file_location = './stat/' + str(comment_petition.id) + '.csv'
@@ -175,10 +202,11 @@ def petition_comment(request, petition_url):
 
 def petition_by_document_title(request, document_title):
     if request.method == 'GET':
+        encoded_title = urllib.parse.quote(document_title)
         petition_to_exclude = ['preliminary', 'fail']
         petition_list = [petition for petition in
                          Petition.objects.exclude(status__in=petition_to_exclude).filter(
-                             link__icontains='/tell_me/documents/' + document_title)
+                             link__icontains='/tell_me/documents/' + encoded_title)
                          .values('id', 'url', 'title')
                          ]
         return JsonResponse(petition_list, safe=False)

@@ -90,6 +90,23 @@ export const getDebates = document_title => {
     };
 };
 
+export const getLatestDocuments_ = documents => {
+    return {
+        type: actionTypes.GET_LATEST_DOCUMENTS,
+        documents : documents
+    }
+}
+
+export const getLatestDocuments = () => {
+    return dispatch => {
+        return axios.get('/api/tellme/document/list/latest/')
+            .then(res => {
+                dispatch(getLatestDocuments_(res.data));
+            })
+            .catch((e) => { })
+    }
+}
+
 export const postDebate_ = debate => {
     return {
         type: actionTypes.POST_DEBATE
@@ -178,14 +195,14 @@ export const postDebateComment = (comment, debate_id) => {
 };
 
 
-   export const getPhoto_ = (photo) => {
+export const getPhoto_ = (photo) => {
     return {
         type: actionTypes.GET_PHOTO,
         photo : photo
     };
-    };
+};
 
-    export const getPhoto = (photo_title) => {
+export const getPhoto = (photo_title) => {
         return dispatch => {
             return axios.get('/api/tellme/photo/' + photo_title + '/')
                 .then(res => {
@@ -195,6 +212,23 @@ export const postDebateComment = (comment, debate_id) => {
         };
     };
     
+export const getRelatedPhoto_ = (list) => {
+        return {
+            type: actionTypes.GET_RELATED_PHOTO,
+            titlePhotoList: list.titlePhotoList,
+            contentPhotoList : list.contentPhotoList
+        }
+    }
+
+export const getRelatedPhoto = (photo_title) => {
+        return dispatch => {
+            return axios.get('/api/tellme/photo/' + photo_title + '/related/')
+                .then(res => {
+                    dispatch(getRelatedPhoto_(res.data));
+                })
+                .catch(e => { });
+        }
+    }
   /* 
    export const postPhoto_ = (TODO) => {
        return {

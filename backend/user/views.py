@@ -10,7 +10,7 @@ import random
 from .models import User
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import model_to_dict
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 # Create your views here.
 
 def sign_up(request):
@@ -82,10 +82,16 @@ def get_verify_code(request, email):
         for i in range(1, 6):
             verify_code += str(random.randint(0, 9))
             i = i + 1
+        send_mail(
+                "hi",
+                verify_code,
+                "dkwanm1@snu.ac.kr",
+                [email],
+                fail_silently=False)
         email = EmailMessage(
             '인증 메일입니다.',
             '인증 번호는 ' + verify_code + ' 입니다.',
-            to=[email]
+             to=[email]
         )
         email.send()
         verify_code_to_return = {

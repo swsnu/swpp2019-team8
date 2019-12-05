@@ -25,11 +25,17 @@ export class HearUsSearchBar extends Component {
     onClickSearchConfirmButton = () => {
         let toSearch = this.state.searchInput;
         let input = toSearch;
+        if (/[/\\]/.exec(toSearch)) {
+            alert("\\ and / is not allowed while seraching");
+            return;
+        }
         for (var i = toSearch.length - 1; i >= 0; i--) {
             if (toSearch[i] !== " ") break;
             else input = toSearch.slice(0, i);
         }
-        this.props.history.push("/hear_us/search/" + input);
+
+        if(input === '') return;
+        this.props.history.push('/hear_us/search/' + input);
         this.props.getPetitionByTitle(input);
     };
 
