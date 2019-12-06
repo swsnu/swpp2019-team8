@@ -63,7 +63,7 @@ describe('<SignUp/>', () => {
     it('should render without erros',async () => {
         const component =await mount(signUp);
         const wrapper = component.find('.SignUp').at(0)
-        expect(spyCheckSignIn).toHaveBeenCalledTimes(1);
+        expect(spyCheckSignIn).toHaveBeenCalledTimes(2);
         expect(wrapper.length).toBe(1)
     })
 
