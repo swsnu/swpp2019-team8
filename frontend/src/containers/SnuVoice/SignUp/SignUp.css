@@ -1,3 +1,18 @@
 .SignUp {
     background-color: #f2f4f7;
 }
+
+.signup_content {
+    padding-bottom: 5%;
+    padding-top: 1%;
+}
+
+.signup_back_button {
+    float: right;
+    border-radius: 20px !important;
+}
+
+.signup_confirm_button {
+    float: right;
+    border-radius: 20px !important;
+}

@@ -800,12 +800,11 @@ class SignUp extends Component {
         return (
             <div className="SignUp">
                 <UpperBar />
-                <h1>Sign Up</h1>
                 <Modal
                     isOpen={this.state.verifyModal}
                     toggle={this.toggleVerifyModal}
                     className="VerifyModal"
-                >
+                    >
                     <ModalBody>{this.state.verifyModalMessage}</ModalBody>
                     <ModalFooter>
                         <Button onClick={this.toggleVerifyModal}>확인</Button>
@@ -815,16 +814,17 @@ class SignUp extends Component {
                     isOpen={this.state.confirmModal}
                     toggle={this.toggleConfirmModal}
                     className="ConfirmModal"
-                >
+                    >
                     <ModalBody>{this.state.confirmModalMessage}</ModalBody>
                     <ModalFooter>
                         <Button onClick={this.toggleConfirmModal}>확인</Button>
                     </ModalFooter>
                 </Modal>
-                <Container>
+                <Container className="signup_content">
+                    <h1>Sign Up</h1><br/>
                     <Form>
                         {terms}
-                        <FormGroup>
+                        <FormGroup className="agree_terms_checkbox">
                             <Input
                                 type="checkbox"
                                 id="agree_to_terms_checkbox"
@@ -1025,11 +1025,12 @@ class SignUp extends Component {
                                 </Row>
                             </FormGroup>
                             {status_detail}
+                            <br/>
                             <Button
                                 type="button"
                                 id="back_button"
                                 onClick={this.onClickBackButton}
-                                className="float-right"
+                                className="signup_back_button"
                             >
                                 BACK
                             </Button>
@@ -1037,7 +1038,7 @@ class SignUp extends Component {
                                 type="button"
                                 id="confirm_button"
                                 onClick={this.onClickSignUpConfirmButton}
-                                className="float-right"
+                                className="signup_confirm_button"
                             >
                                 CONFIRM
                             </Button>
