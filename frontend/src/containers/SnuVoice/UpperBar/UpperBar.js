@@ -89,6 +89,14 @@ export class UpperBar extends Component {
         ) {
             this.setState({ location: "hear_us" });
         }
+
+        // if (/\/localhost:3000\/tell_me/.exec(window.location.href)) {
+        //     this.setState({ location: "tell_me" });
+        // } else if (
+        //     /\/localhost:3000\/hear_us/.exec(window.location.href)
+        // ) {
+        //     this.setState({ location: "hear_us" });
+        // }
     };
     render() {
         let upperBar = null;
