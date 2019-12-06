@@ -234,7 +234,7 @@ class SignUp extends Component {
     let formFeedbackMessage = this.state.formFeedbackMessage;
     let inputResult = this.state.checkInputResult;
     let inputInvalid = this.state.checkInputInvalid;
-    if (/^[a-zA-Z0-9]+@snu\.ac\.kr$/.exec(email)) {
+    if (/@snu\.ac\.kr$/.exec(email)) {
       // 성공
       //중복체크?
       await this.props.checkEmailDuplicate(email);
