@@ -82,21 +82,21 @@ export class UpperBar extends Component {
 
     componentDidMount = () => {
         this.props.checkSignIn();
-        if (/^https:\/\/www.snuvoice.site\/tell_me/.exec(window.location.href)) {
-            this.setState({ location: "tell_me" });
-        } else if (
-            /^https:\/\/www.snuvoice.site\/hear_us/.exec(window.location.href)
-        ) {
-            this.setState({ location: "hear_us" });
-        }
-
-        // if (/\/localhost:3000\/tell_me/.exec(window.location.href)) {
+        // if (/^https:\/\/www.snuvoice.site\/tell_me/.exec(window.location.href)) {
         //     this.setState({ location: "tell_me" });
         // } else if (
-        //     /\/localhost:3000\/hear_us/.exec(window.location.href)
+        //     /^https:\/\/www.snuvoice.site\/hear_us/.exec(window.location.href)
         // ) {
         //     this.setState({ location: "hear_us" });
         // }
+
+        if (/\/localhost:3000\/tell_me/.exec(window.location.href)) {
+            this.setState({ location: "tell_me" });
+        } else if (
+            /\/localhost:3000\/hear_us/.exec(window.location.href)
+        ) {
+            this.setState({ location: "hear_us" });
+        }
     };
     render() {
         let upperBar = null;
@@ -171,6 +171,7 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_in_button"
                                 onClick={this.toggleModal}
+                                className="sign_in_button"
                             >
                                 SIGN-IN
                             </Button>
@@ -178,6 +179,7 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_up_button"
                                 onClick={this.onClickSignUpButton}
+                                className="sign_up_button"
                             >
                                 SIGN-UP
                             </Button>

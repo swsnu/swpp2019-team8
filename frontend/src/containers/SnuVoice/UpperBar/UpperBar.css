@@ -29,7 +29,7 @@
 .navbuttons {
     display: flex;
     align-content: left;
-    left: 5%;
+    left: 7%;
 }
 
 .sub_bar {
@@ -45,4 +45,28 @@
 .navbar-brand:hover {
     font-weight: 900;
     color: white;
+}
+
+.searchBar {
+    width: 500px !important;
+    float: right;
+}
+
+.sign_in_button {
+    border-radius: 20px !important;
+}
+
+.sign_up_button {
+    border-radius: 20px !important;
+}
+
+.search_confirm_button {
+    border-bottom-right-radius: 20px !important;
+    padding-top: 1% !important;
+    padding-left: 1% !important;
+    padding-right: 1% !important;
+    height: 38px !important;
+    background-color: white !important;
+    border-color: #cdd3da !important;
+    border-left-color: white !important;
 }
