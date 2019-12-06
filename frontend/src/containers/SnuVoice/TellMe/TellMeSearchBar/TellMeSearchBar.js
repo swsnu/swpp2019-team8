@@ -71,6 +71,7 @@ export class TellMeSearchBar extends Component {
                         autoFocus
                         onKeyPress={this.onKeyPress}
                         onChange={this.onChangeSearchInput}
+                        className="search_input"
                     ></Input>
                     {/* <FormText >
                         {this.state.formText}

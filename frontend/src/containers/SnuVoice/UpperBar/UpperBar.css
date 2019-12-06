@@ -48,7 +48,7 @@
 }
 
 .searchBar {
-    width: 500px !important;
+    width: 450px !important;
     float: right;
 }
 
@@ -69,4 +69,8 @@
     background-color: white !important;
     border-color: #cdd3da !important;
     border-left-color: white !important;
+}
+
+.search_input {
+    border-top-left-radius: 20px !important;
 }
