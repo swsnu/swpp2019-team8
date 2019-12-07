@@ -5,7 +5,7 @@ import { Card } from 'reactstrap';
 import './term.css';
 
 export const terms = (
-    <Card scroll className="terms">
+    <Card scroll="true" className="terms">
 <b>제1장 총칙</b> <br/>
 제1조(목적)<br/>
 본 약관은 SNUVOICE가 제공하는 관련 제반 서비스의 이용과 관련하여 회원과 SNUVOICE 사이의 권리·의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 한다. <br/>

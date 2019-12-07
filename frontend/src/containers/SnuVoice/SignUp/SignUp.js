@@ -181,7 +181,7 @@ class SignUp extends Component {
 			// 회원가입을 위한 정보들이 알맞게 들어왔는지 확인
 			agreeToTerms: false,
 			email: false,
-			verifyCode: false,
+			verifyCode: true,
 			password: false,
 			passwordConfirm: false,
 			nickname: false,
@@ -425,6 +425,10 @@ class SignUp extends Component {
 	onChangeStatusRadioButton = event => {
 		let inputResult = this.state.checkInputResult;
 		let selectedStatus = this.state.statusRadio;
+		let studentId = '';
+		let selectedDepartment = 'all';
+		let selectedMajor = '-';
+		let selectedStudentStatus = '';
 		for (let i in selectedStatus) {
 			if (i === event.target.value) {
 				inputResult.status = true;
@@ -432,6 +436,17 @@ class SignUp extends Component {
 			} else selectedStatus[i] = false;
 		}
 		if (selectedStatus.student === false) {
+			if (selectedStatus.alumnus === true) {
+				studentId = '-';
+				selectedDepartment = 'alumnus';
+				selectedMajor = 'alumnus'
+				selectedStudentStatus = 'alumnus';
+			} else {
+				studentId = '-';
+				selectedDepartment = 'faculty';
+				selectedMajor = 'faculty'
+				selectedStudentStatus = 'faculty';
+			}
 			inputResult.studentId = true;
 			inputResult.department = true;
 			inputResult.major = true;
@@ -446,10 +461,10 @@ class SignUp extends Component {
 			statusRadio: selectedStatus,
 			selectedStatus: event.target.value,
 			checkInputResult: inputResult,
-			studentId: "",
-			selectedDepartment: "all",
-			selectedMajor: "-",
-			selectedStudentStatus: ""
+			studentId: studentId,
+			selectedDepartment: selectedDepartment,
+			selectedMajor: selectedMajor,
+			selectedStudentStatus: selectedStudentStatus
 		});
 	};
 

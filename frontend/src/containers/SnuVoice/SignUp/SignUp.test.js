@@ -79,8 +79,10 @@ describe('<SignUp/>', () => {
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.onChangeStatusRadioButton({ target: { value: 'student', checked: true } })
         expect(signUpComponent.state.statusRadio.student).toBe(true);
-        signUpComponent.onChangeStatusRadioButton({ target: { value: 'studen', checked: true } })
-        expect(signUpComponent.state.statusRadio.student).toBe(false);
+        signUpComponent.onChangeStatusRadioButton({ target: { value: 'alumnus', checked: true } })
+        expect(signUpComponent.state.selectedDepartment).toBe('alumnus');
+        signUpComponent.onChangeStatusRadioButton({ target: { value: 'faculty', checked: true } })
+        expect(signUpComponent.state.selectedMajor).toBe('faculty');
         signUpComponent.onChangeStudentRadioButton({ target: { value: 'doctor', checked: true } })
         expect(signUpComponent.state.studentRadio.doctor).toBe(true);
         signUpComponent.onChangeGenderRadioButton({ target: { value: 'male', checked: true } })
