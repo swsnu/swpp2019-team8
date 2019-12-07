@@ -151,12 +151,13 @@ export class HearUs extends Component {
         <UpperBar />
         <div className="TopOfPage">
           <br />
+          <h1 className="title">Hear Us</h1>
           <div className="HearUs">
             {/* <h1>Hear Us</h1>
             <br /> */}
             {buttons}
           </div>
-          <br></br><br />
+          <br />
           <div className="Category">{category}</div>
           <br /><br /><br />
           <div className="Tables">
