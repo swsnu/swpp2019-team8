@@ -16,6 +16,9 @@ import Upperbar from '../../UpperBar/UpperBar';
 import './DocumentDetail.css';
 
 class DocumentDetail extends Component {
+    state = {
+        selectedNumber: 1
+    }
     componentDidMount = async () => {
         await this.props.onGetDocument(this.props.match.params.document_title);
         await this.props.onGetPetitionList(this.props.match.params.document_title);
@@ -37,21 +40,43 @@ class DocumentDetail extends Component {
         let title = '';
         let content = '';
         let markdownHtml = '';
-        let petitonList = this.props.petitionList.map(petition => {
-            return (
-                <div key={petition.id}>
-                    <li key={petition.id}>
-                        <a href={'www.snuvoice.site/hear_us/petition/' + petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
-                    </li>
-                    <br />
-                </div>
-
-            )
-
+        let prev = '<';
+        let next = '>';
+        let petitonList = this.props.petitionList.map((petition, i) => {
+            if (i < this.state.selectedNumber*10 && i >= (this.state.selectedNumber-1)*10) {
+                return (
+                    <div key={petition.id}>
+                        <li key={petition.id}>
+                            <a href={'www.snuvoice.site/hear_us/petition/' + petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
+                        </li>
+                        <br />
+                    </div>
+                )
+            } else return undefined;
         });
 
-
-
+        let buttons = (
+            <div className="petition_buttons">
+                <Button
+                    type="button"
+                    id="prev_button"
+                    disabled={this.state.selectedNumber === 1}
+                    onClick={() => {
+                        this.setState({
+                            selectedNumber: this.state.selectedNumber - 1
+                        })
+                    }}>{prev}</Button>
+                <Button
+                    type="button"
+                    id="next_button"
+                    disabled={this.state.selectedNumber * 10 >= this.props.petitionList.length}
+                    onClick={() => {
+                        this.setState({
+                            selectedNumber: this.state.selectedNumber + 1
+                        })
+                    }}>{next}</Button>
+            </div>
+        )
 
         if (this.props.selectedDocument) {
             title = this.props.selectedDocument.title;
@@ -69,34 +94,38 @@ class DocumentDetail extends Component {
             <div>
                 <Upperbar />
                 <div className="DocumentDetail">
-                <br /><br />
-                <div className="Document_detail_upperbar">
-                    <Button
-                        type="button"
-                        id="document_cancel_button"
-                        onClick={this.onClickDocumentCancelButton}
-                    >
-                        Back
+                    <br /><br />
+                    <div className="Document_detail_upperbar">
+                        <Button
+                            type="button"
+                            id="document_cancel_button"
+                            onClick={this.onClickDocumentCancelButton}
+                        >
+                            Back
                         </Button>
-                    <Button
-                        type="button"
-                        id="document_edit_button"
-                        onClick={this.onClickDocumentEditButton}
-                    >
-                        Edit
+                        <Button
+                            type="button"
+                            id="document_edit_button"
+                            onClick={this.onClickDocumentEditButton}
+                        >
+                            Edit
                         </Button>
-                    <Button
-                        className="debateButton"
-                        onClick={this.onClickDocumentDebateButton}
-                    >Debate</Button>
-                    <h1 className="document_detail_title">{title}</h1>  
-                    </div>         
+                        <Button
+                            className="debateButton"
+                            onClick={this.onClickDocumentDebateButton}
+                        >Debate</Button>
+                        <h1 className="document_detail_title">{title}</h1>
+                    </div>
                     <br />
                     <div className="content">
                         <br />
                         <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                         <hr />
-                        {petitonList}
+                        <div className="related_petition">
+                            {petitonList}
+                            <br/>
+                            {buttons}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,12 +153,12 @@ export function highlightCode(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
         try {
             return hljs.highlight(lang, str).value;
-        } catch (err) { console.log(err) }
+        } catch (err) { console.log("Err") }
     }
 
     try {
         return hljs.highlightAuto(str).value;
-    } catch (err) { console.log(err) }
+    } catch (err) { console.log("Err") }
 
     return ''; // use external default escaping
 }
