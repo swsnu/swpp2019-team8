@@ -27,6 +27,7 @@ import "./SignUp.css";
 
 class SignUp extends Component {
 	state = {
+		signIn : '',
 		email: "",
 		verifyCode: "",
 		password: "",
@@ -601,10 +602,20 @@ class SignUp extends Component {
 	onClickBackButton = () => {
 		this.props.history.push("/");
 	};
-
-	componentDidMount = async () => {
-		await this.props.checkSignIn();
-		if (this.props.signIn) {
+	
+	ngOnInIt = async () => {
+		if (this.state.signIn === '') {
+			await this.props.checkSignIn();
+			if (this.props.signIn) {
+				alert("You must logged out to sign up");
+				this.props.history.push("/");
+			} else {
+				this.setState({
+					signIn: true
+				})
+			}
+		} else if (this.props.signIn) {
+			alert("You must logged out to sign up");
 			this.props.history.push('/')
 		}
 
@@ -612,6 +623,8 @@ class SignUp extends Component {
 
 
 	render() {
+		this.ngOnInIt();
+
 		let status_detail = null;
 		if (this.state.statusRadio["student"]) {
 			const departmentList = this.state.departmentList.map((v, i) => {

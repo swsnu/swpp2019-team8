@@ -28,6 +28,7 @@ describe('<SignUp/>', () => {
     let spyStudentId;
     let spyHistoryPush;
     let spyCheckSignIn;
+    window.alert = jest.fn();
 
     beforeEach(() => {
         signUp = (
@@ -204,7 +205,7 @@ describe('<SignUp/>', () => {
         expect(signUpComponent.state.formFeedbackMessage.studentId).toBe('이미 가입한 학번입니다.')
         expect(signUpComponent.state.formFeedbackMessage.email).toBe('이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.')
         expect(signUpComponent.state.formFeedbackMessage.nickname).toBe('이미 존재하는 닉네임입니다.')
-        expect(spyHistoryPush).toHaveBeenCalledTimes(1);
+        expect(spyHistoryPush).toHaveBeenCalledTimes(4);
 
     })
 
@@ -236,9 +237,12 @@ describe('<SignUp/>', () => {
             verifyCode: '',
             emailDuplicate: true,
             nicknameDuplicate: true,
-            studentIdDuplicate: true
+            studentIdDuplicate: true,
+            signIn :true
         }
         let remockStore = getMockStore(mockingState)
+        let mocked = jest.fn();
+        window.alert = mocked;
         let mockSignUp = (
             <Provider store={remockStore}>
                 <ConnectedRouter history={history}>
@@ -252,7 +256,12 @@ describe('<SignUp/>', () => {
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickVerifyButton()
         expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
-        expect(signUpComponent.state.verifyModalMessage).toBe('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.')
+        expect(signUpComponent.state.verifyModalMessage).toBe('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.');
+        signUpComponent.setState({
+            signIn : true
+        })
+        expect(mocked).toHaveBeenCalledTimes(4);
+        expect(spyHistoryPush).toHaveBeenCalledTimes(4);
 
     })
 
