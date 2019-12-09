@@ -47,7 +47,7 @@ class DocumentDetail extends Component {
                 return (
                     <div key={petition.id}>
                         <li key={petition.id}>
-                            <a href={'www.snuvoice.site/hear_us/petition/' + petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
+                            <a href={'/hear_us/petition/' + petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
                         </li>
                         <br />
                     </div>
