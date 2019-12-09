@@ -129,6 +129,16 @@ describe('<MyPetition />', () => {
         const body = component.find('.MyPetition')
         expect(body.length).toBe(1)
     })
+
+    it('should ngOnInIt works when signedIn', () => {
+        const component = shallow(<MyPetition {...props} signIn={false} history={mockHistory}/>)
+        component.instance().setState({
+            signIn : true
+        })
+        component.instance().ngOnInit();
+        expect(mockHistory.push).toHaveBeenCalledWith('/hear_us')
+
+    })
 })
 
 describe('mapDispatchToProps', () => {

@@ -33,9 +33,6 @@ export class MyPetition extends Component {
 		if (this.props.signIn) {
 			await this.props.getPetitionByUser(this.props.selectedUser.id);
 			await this.props.getPetitionByComment();
-		} else {
-			alert("You must be logged in to see your petitions")
-			this.props.history.push('/hear_us');
 		}
 	}
 
@@ -59,20 +56,24 @@ export class MyPetition extends Component {
 	// }
 
 	ngOnInit = async () => {
-		await this.props.getCurrentUser();
-		if (!this.props.signIn) {
-			this.props.history.push("/hear_us");
-		} else {
-			this.setState({
-				signIn: true
-			})
+		if (this.state.signIn === '') {
+			await this.props.getCurrentUser();
+			if (!this.props.signIn) {
+				alert("You must be logged in to see your petitions");
+				this.props.history.push("/hear_us");
+			} else {
+				this.setState({
+					signIn: true
+				})
+			}
+		} else if (!this.props.signIn) {
+			alert("You must be logged in to see your petitions");
+			this.props.history.push('/hear_us')
 		}
 	}
 
 	render() {
-		if (this.state.signIn === '') {
-			this.ngOnInit();
-		}
+		this.ngOnInit();
 
 		let tabButtons = (
 			<Nav tabs>
@@ -139,7 +140,7 @@ export class MyPetition extends Component {
 					<TabContent activeTab={this.state.selectedTab}>
 						<TabPane tabId='Author'>
 							<br />
-							<PetitionTableHeader/>
+							<PetitionTableHeader />
 							{myPetitionList}
 							<Button type="button" id="more_author_button"
 								onClick={this.onClickMoreButton}
@@ -148,7 +149,7 @@ export class MyPetition extends Component {
 						</TabPane>
 						<TabPane tabId='Voter'>
 							<br />
-							<PetitionTableHeader/>
+							<PetitionTableHeader />
 							{myCommentPetitionList}
 							<Button type="button" id="more_voter_button"
 								onClick={this.onClickMoreButton}
