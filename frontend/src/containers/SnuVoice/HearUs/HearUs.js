@@ -162,11 +162,11 @@ export class HearUs extends Component {
           <br /><br /><br />
           <div className="Tables">
             <br />
-            <h5><b>Top 5 Votes</b></h5>
+            <h5 className="table_name"><b>Top 5 Votes</b></h5>
             <PetitionTableHeader/>
             {voteList}
             <br />
-            <h5><b>Latest 5</b></h5>
+            <h5 className="table_name"><b>Latest 5</b></h5>
             <PetitionTableHeader/>
             {deadlineList}
             <br />

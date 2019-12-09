@@ -14,12 +14,16 @@
 }
 
 .Tables {
-    background-color: white;
+    background-color: #f2f4f7;
     /* text-align: left; */
 }
 
 h5 {
     text-align: left;
+}
+
+.table_name {
+    padding-left: 5%;
 }
 
 .title {
