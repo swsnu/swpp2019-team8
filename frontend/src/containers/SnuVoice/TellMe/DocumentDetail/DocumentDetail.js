@@ -94,7 +94,7 @@ class DocumentDetail extends Component {
                     <br />
                     <div className="content">
                         <br />
-                        <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
+                        <div dangerouslySetInnerHTML={{ __html: markdownHtml }} className="document_content"/>
                         <hr />
                         {petitonList}
                     </div>

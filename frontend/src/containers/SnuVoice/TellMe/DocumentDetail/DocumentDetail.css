@@ -14,6 +14,7 @@
 .document_detail_title {
     text-align:center;
     position: relative;
+    word-wrap: break-word;
 }
 
 .document {
@@ -33,3 +34,7 @@ blockquote {
     padding-right: 20px;
     border-left: 10px solid #27a9e3;
   }
+
+.document_content {
+    word-wrap: break-word;
+}

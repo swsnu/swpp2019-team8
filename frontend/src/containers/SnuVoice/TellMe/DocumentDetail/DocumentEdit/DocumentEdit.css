@@ -20,6 +20,7 @@
 .title {
     color: black;
     text-align: left;
+    word-wrap: break-word;
 }
 
 h2, h3, h4, h6 {
@@ -27,8 +28,8 @@ h2, h3, h4, h6 {
 }
 
 .inputTab {
-    padding-left: 4%;
-    padding-right: 4%;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 .document {
@@ -36,4 +37,17 @@ h2, h3, h4, h6 {
     text-align: left;
     padding-left: 5%; 
     padding-right: 5%;
+}
+
+.current_content {
+    word-wrap: break-word;
+    text-align: left;
+    padding:2%;
+    height: 700px;
+    overflow-y: scroll;
+}
+
+.edit_content {
+    word-wrap: break-word;
+    min-height: 700px;
 }
