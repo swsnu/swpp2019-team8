@@ -29,9 +29,25 @@ class PetitionCreate extends Component {
         petitionTag: '',
         petitionTagList: [
         ],
+        signIn: ''
     }
 
-    ngOnInit = () => {
+    ngOnInit = async () => {
+        if (this.state.signIn === '') {
+            await this.props.onCheckSignIn();
+            if (!this.props.signIn) {
+                alert("You must logged in to Create Petition");
+                this.props.history.push('/hear_us')
+            } else {
+                this.setState({
+                    signIn: this.props.signIn
+                })
+            }
+        } else if (!this.props.signIn) {
+            alert("You must logged in to Create Petition");
+            this.props.history.push('/hear_us')
+
+        }
         //check authentication
     }
 
@@ -66,6 +82,7 @@ class PetitionCreate extends Component {
     }
 
     render() {
+        this.ngOnInit();
         const link_list = this.state.petitionLinkList.map((link, i) => {
             return (
                 <div className="LinkList" key={i}>
@@ -149,7 +166,18 @@ export const mapDispatchToProps = dispatch => {
     return {
         onStorePetition: (title, content, category, /*tag,*/ link) =>
             dispatch(actionCreators.postPetition({ title: title, content: content, category: category, /*tag: tag,*/ link: link })),
+        onCheckSignIn: () =>
+            dispatch(actionCreators.checkSignIn())
     }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(PetitionCreate));
+export const mapStateToProps = state => {
+    return {
+        signIn: state.usr.signIn
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(PetitionCreate));
