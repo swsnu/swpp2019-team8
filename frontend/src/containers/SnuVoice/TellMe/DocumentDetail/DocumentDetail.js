@@ -43,7 +43,7 @@ class DocumentDetail extends Component {
         let prev = '<';
         let next = '>';
         let petitonList = this.props.petitionList.map((petition, i) => {
-            if (i < this.state.selectedNumber*10 && i >= (this.state.selectedNumber-1)*10) {
+            if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
                 return (
                     <div key={petition.id}>
                         <li key={petition.id}>
@@ -90,6 +90,41 @@ class DocumentDetail extends Component {
             });
             markdownHtml = md.render(content);
         }
+
+        let editButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            null :
+            (
+                <Button
+                    type="button"
+                    id="document_edit_button"
+                    onClick={this.onClickDocumentEditButton}>
+                    Edit
+                </Button>
+            );
+
+        let debateButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            null :
+            (
+                <Button
+                    className="debateButton"
+                    onClick={this.onClickDocumentDebateButton}>
+                    Debate
+                </Button>
+            );
+
+        let relatedPetition = this.props.match.params.document_title === "TELL-ME:기본방침" ||
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            null :
+            (
+                <div className="related_petition">
+                    {petitonList}
+                    <br />
+                    {buttons}
+                </div>
+            );
+
         return (
             <div>
                 <Upperbar />
@@ -103,17 +138,8 @@ class DocumentDetail extends Component {
                         >
                             Back
                         </Button>
-                        <Button
-                            type="button"
-                            id="document_edit_button"
-                            onClick={this.onClickDocumentEditButton}
-                        >
-                            Edit
-                        </Button>
-                        <Button
-                            className="debateButton"
-                            onClick={this.onClickDocumentDebateButton}
-                        >Debate</Button>
+                        {editButton}
+                        {debateButton}
                         <h1 className="document_detail_title">{title}</h1>
                     </div>
                     <br />
@@ -121,11 +147,7 @@ class DocumentDetail extends Component {
                         <br />
                         <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                         <hr />
-                        <div className="related_petition">
-                            {petitonList}
-                            <br/>
-                            {buttons}
-                        </div>
+                        {relatedPetition}
                     </div>
                 </div>
             </div>
