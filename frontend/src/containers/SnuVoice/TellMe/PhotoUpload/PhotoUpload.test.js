@@ -161,4 +161,61 @@ describe('<PhotoUpload />', () => {
         expect(photoUploadInstance.state.canvasWidth).toEqual(500);
         expect(photoUploadInstance.state.canvasHeight).toEqual(500);
     });
+
+    it(`should call 'reader.onloadend'`, () => {
+        let mocked = jest.fn()
+        let blob = new Blob([""], { type: 'image/png' });
+        blob["lastModifiedDate"] = "";
+        blob["name"] = "TEST_FILE_NAME";
+        const mockReader = {
+            onloadend: mocked,
+            readyState: 2,
+            readAsDataURL: mocked,
+            result: "TEST_RESULT,TEST_RESULT"
+        }
+        mockReader.readAsDataURL = jest.fn(() => {
+            return mockReader.onloadend()
+        });
+        window.FileReader = jest.fn(() => {
+            return mockReader
+        });
+        const photoFile = blob;
+        const component = mount(photoUpload);
+        let wrapper = component.find('#photo_file_file').at(0);
+        wrapper.simulate('change', { target: { files: [photoFile] } });
+    });
+
+    it(`file size is bigger than 5MB`, () => {
+        function range(count) {
+            let output = "";
+            for (let i = 0; i < count; i++) {
+                output += "a";
+            }
+            return output;
+        }
+
+        let mocked = jest.fn()
+        let blob = new Blob([range(6000000)], { type: 'image/png' });
+        blob["lastModifiedDate"] = "";
+        blob["name"] = "TEST_FILE_NAME";
+        const mockReader = {
+            onloadend: mocked,
+            readyState: 2,
+            readAsDataURL: mocked,
+            result: "TEST_RESULT,TEST_RESULT"
+        }
+        mockReader.readAsDataURL = jest.fn(() => {
+            return mockReader.onloadend()
+        });
+        window.FileReader = jest.fn(() => {
+            return mockReader
+        });
+        const photoFile = blob;
+        const component = mount(photoUpload);
+        let wrapper = component.find('#photo_file_file').at(0);
+        wrapper.simulate('change', { target: { files: [photoFile] } });
+    });
+
+    it(`should call 'reader.onloadend'`, () => {
+    });
 });
