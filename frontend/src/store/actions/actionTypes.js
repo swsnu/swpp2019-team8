@@ -13,6 +13,7 @@ export const GET_LATEST_DOCUMENTS = 'GET_LATEST_DOCUMENTS';
 export const PUT_DOCUMENT = 'PUT_DOCUMENT';
 export const POST_PHOTO = 'POST_PHOTO';
 export const GET_PHOTO = 'GET_PHOTO';
+export const CHECK_PHOTO = 'CHECK_PHOTO';
 export const GET_RELATED_PHOTO = 'GET_RELATED_PHOTO';
 export const PUT_PHOTO = 'PUT_PHOTO';
 export const GET_DEBATES = 'GET_DEBATES';

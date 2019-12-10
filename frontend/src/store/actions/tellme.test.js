@@ -281,6 +281,29 @@ describe('ActionCreators', () => {
         });
     })
 
+    it('should chekcPhoto works', (done) => {
+        const spy = jest.spyOn(axios, 'get')
+            .mockImplementation((url) => {
+                return new Promise((resolve, reject) => {
+                    const result = {
+                        status : 200,
+                        data: {
+                            photoDuplicated : 1
+                        }
+                    };
+                    resolve(result)
+                })
+            })
+        
+        store.dispatch(actionCreators.checkPhotoDuplicate("!"))
+            .then(() => {
+                const newState = store.getState();
+                expect(newState.tm.photoDuplicate).toBe(1);
+                expect(spy).toHaveBeenCalledTimes(1);
+                done();
+            })
+    })
+
     it('should errors work', async () => {
         const spyGet = jest.spyOn(axios, 'get')
             .mockImplementation(url => {
@@ -332,6 +355,9 @@ describe('ActionCreators', () => {
 
         await store.dispatch(actionCreators.getRelatedPhoto());
         expect(spyGet).toHaveBeenCalledTimes(6);
+
+        await store.dispatch(actionCreators.checkPhotoDuplicate("1"));
+        expect(spyGet).toHaveBeenCalledTimes(7);
 
 
     })

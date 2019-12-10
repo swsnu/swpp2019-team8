@@ -213,7 +213,7 @@ export const getPhoto = (photo_title) => {
     };
     
 export const getRelatedPhoto_ = (list) => {
-        return {
+    return {
             type: actionTypes.GET_RELATED_PHOTO,
             titlePhotoList: list.titlePhotoList,
             contentPhotoList : list.contentPhotoList
@@ -221,7 +221,7 @@ export const getRelatedPhoto_ = (list) => {
     }
 
 export const getRelatedPhoto = (photo_title) => {
-        return dispatch => {
+    return dispatch => {
             return axios.get('/api/tellme/photo/' + photo_title + '/related/')
                 .then(res => {
                     dispatch(getRelatedPhoto_(res.data));
@@ -229,6 +229,23 @@ export const getRelatedPhoto = (photo_title) => {
                 .catch(e => { });
         }
     }
+
+export const checkPhotoDuplicate_ = (response) => {
+    return {
+        type: actionTypes.CHECK_PHOTO,
+        photoDuplicate : response.photoDuplicated
+    }
+}
+
+export const checkPhotoDuplicate = (title) => {
+    return dispatch => {
+        return axios.get('/api/tellme/check/' + title + '/')
+            .then(res => {
+                dispatch(checkPhotoDuplicate_(res.data))
+            })
+            .catch(e => {});
+    }
+}
   /* 
    export const postPhoto_ = (TODO) => {
        return {
