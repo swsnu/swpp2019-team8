@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 
-import DiffMatchPatch, { Diff } from "diff-match-patch";
+import DiffMatchPatch from "diff-match-patch";
 // import ReactHtmlParser from 'react-html-parser';
 
 import { connect } from "react-redux";
@@ -43,17 +43,17 @@ class DocumentEdit extends Component {
     componentDidMount = async () => {
         await this.props.onGetDocument(this.props.match.params.document_title);
         // if(this.props.documentConflict) {
-          this.setState({
-              newDocumentContent: this.props.selectedDocument.content,
-              prevDocumentContent: this.props.selectedDocument.content,
-          });
-      //     });
-      //   } else {
-      //   this.setState({
-      //       newDocumentContent: this.props.selectedDocument.content,
-      //       prevDocumentContent: this.props.selectedDocument.content
-      //   });
-      // }
+        this.setState({
+            newDocumentContent: this.props.selectedDocument.content,
+            prevDocumentContent: this.props.selectedDocument.content,
+        });
+        //     });
+        //   } else {
+        //   this.setState({
+        //       newDocumentContent: this.props.selectedDocument.content,
+        //       prevDocumentContent: this.props.selectedDocument.content
+        //   });
+        // }
     };
 
     onClickDocumentConfirmButton = async () => {
@@ -95,10 +95,10 @@ class DocumentEdit extends Component {
         dmp.diff_cleanupSemantic(diff);
         var ds = dmp.diff_prettyHtml(diff);
         return ds;
-      };
+    };
 
     render() {
-        let current ="";
+        let current = "";
         let content = '';
         let markdownHtml = '';
         if (this.props.selectedDocument) {
@@ -145,7 +145,7 @@ class DocumentEdit extends Component {
             markdownHtml = md.render(content);
         }
 
-  return (
+        return (
             <div>
                 <Upperbar />
                 <div className="DocumentEdit">
@@ -175,7 +175,7 @@ class DocumentEdit extends Component {
                             <Form>
                                 <Row>
                                     <Col>
-                                            <h4>Current</h4>
+                                        <h4>Current</h4>
                                         <Card>
                                             <div
                                                 dangerouslySetInnerHTML={{
