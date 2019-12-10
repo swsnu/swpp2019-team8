@@ -217,7 +217,7 @@ class PetitionDetail extends Component {
                             </a>
                             <ShareLink link={window.location.href}>
                                 {link => (
-                                    <a href={link} target='_blank'>
+                                    <a href={link} target='_blank' rel="noopener noreferrer">
                                         <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" />
                                     </a>
                                 )}
