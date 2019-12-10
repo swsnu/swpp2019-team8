@@ -133,7 +133,6 @@ def photo(request):
 
 def check_photo_duplicate(request, photo_title):
     if request.method == 'GET':
-        photo_title = photo_title
         selected_photo = [photo for photo in Photo.objects.filter(
             title__istartswith=photo_title, title__iendswith=photo_title).values('title')]
         unique = True
