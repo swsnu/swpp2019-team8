@@ -39,7 +39,8 @@ def document(request):
             }
             return JsonResponse(response_dict, safe=False)
         else:
-            document = Document(title=document_title, content=document_content, edit_date = document_date)
+            document = Document(
+                title=document_title, content=document_content, edit_date=document_date)
             document.save()
             response_dict = {'documentDuplicate': False, 'id': document.id,
                              'title': document.title, 'content': document.content}
@@ -110,14 +111,16 @@ def document_title(request, document_title):
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 
+
 def document_recent(request):
     if request.method == 'GET':
-        document_list = [ document for document in
+        document_list = [document for document in
                             Document.objects.all().values('title', 'edit_date').order_by('-edit_date')]
         list_to_return = document_list[:10]
         return JsonResponse(list_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
+
 
 def photo(request):
     if request.method == 'POST':
@@ -126,8 +129,29 @@ def photo(request):
         photo.save()
         return HttpResponse(status=201)
     else:
-        return HttpResponseNotAllowed(['POST'])
+        return HttpResponseNotAllowed(['POST', 'GET'])
 
+def check_photo_duplicate(request, photo_title):
+    if request.method == 'GET':
+        photo_title = photo_title
+        selected_photo = [photo for photo in Photo.objects.filter(
+            title__istartswith=photo_title, title__iendswith=photo_title).values('title')]
+        unique = True
+        for i in selected_photo:
+            if photo_title == i['title']:
+                unique = False
+        if unique:
+            json_to_return = {
+                'photoDuplicated': False
+            }
+            return JsonResponse(json_to_return, safe=False)
+        else:
+            json_to_return = {
+                'photoDuplicated': True
+            }
+            return JsonResponse(json_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
 
 def photo_title(request, photo_title):
     if request.method == 'GET':
