@@ -216,8 +216,8 @@ class PetitionDetail extends Component {
                                 <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" />
                             </a>
                             <ShareLink link={window.location.href}>
-                                {link => (
-                                    <a href={link} target='_blank' rel="noopener noreferrer">
+                                {_link => (
+                                    <a href={_link} target='_blank' rel="noopener noreferrer">
                                         <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" />
                                     </a>
                                 )}
