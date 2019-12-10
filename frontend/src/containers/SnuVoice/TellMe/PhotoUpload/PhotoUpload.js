@@ -144,7 +144,6 @@ class PhotoUpload extends Component {
             this.setState({ uploadEnd: false, blurElements: [], photoFile: file, photoFileName: file.name, photoUrl: reader.result });
             const imageData = reader.result.split(",")[1];
             const img = new Image();
-            img.src = reader.result;
             img.onload = () => {
                 let copiedImg = new Image();
                 Resizer.imageFileResizer(
@@ -174,7 +173,8 @@ class PhotoUpload extends Component {
                         console.log('num_faces: ' + result.num_faces);
                         this.drawInCanvas(result.info, result.num_faces, copiedImg);
                     });
-            };
+            }
+            img.src = reader.result;
         }
 
         if (file) {
