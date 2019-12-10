@@ -130,7 +130,7 @@ describe('<PhotoUpload />', () => {
         expect(photoUploadInstance.state.canvasHeight).toEqual(500);
     });
 
-    it(`mock reader & file`, () => {
+    it(`should call 'reader.onloadend'`, () => {
         let mocked = jest.fn()
         let blob = new Blob([""], { type: 'image/png' });
         blob["lastModifiedDate"] = "";
@@ -182,5 +182,8 @@ describe('<PhotoUpload />', () => {
         const component = mount(photoUpload);
         let wrapper = component.find('#photo_file_file').at(0);
         wrapper.simulate('change', { target: { files: [photoFile] } });
+    });
+
+    it(`should call 'reader.onloadend'`, () => {
     });
 });
