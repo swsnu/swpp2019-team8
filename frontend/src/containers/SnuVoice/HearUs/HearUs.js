@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { Button, Table } from "reactstrap";
+import { Button } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
 import Category from "../../../components/Category/category";
@@ -162,11 +162,11 @@ export class HearUs extends Component {
           <div className="Tables">
             <br />
             <h5><b>Top 5 Votes</b></h5>
-            <PetitionTableHeader/>
+            <PetitionTableHeader />
             {voteList}
             <br />
             <h5><b>Latest 5</b></h5>
-            <PetitionTableHeader/>
+            <PetitionTableHeader />
             {deadlineList}
             <br />
           </div>
