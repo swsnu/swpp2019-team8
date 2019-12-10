@@ -144,6 +144,7 @@ class PetitionDetail extends Component {
                         </div>
                     );
                 }
+                return [];
             });
         }
 
@@ -154,6 +155,7 @@ class PetitionDetail extends Component {
                         onClick={this.onClickListNumberButton}>{number}</Button>
                 );
             }
+            return null;
         });
 
         let listNumberButtons = (
@@ -212,13 +214,13 @@ class PetitionDetail extends Component {
                             {links}
                             <input type="text" id="ShareUrl" value={window.location.href} />
                             <Button onClick={this.onClickCopyURL}>URL 복사</Button>
-                            <a id="kakao-link-btn">
-                                <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" />
-                            </a>
+                            <div id="kakao-link-btn">
+                                <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" alt="Share on Kakao Talk" />
+                            </div>
                             <ShareLink link={window.location.href}>
                                 {_link => (
                                     <a href={_link} target='_blank' rel="noopener noreferrer">
-                                        <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" />
+                                        <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" alt="Share on Facebook" />
                                     </a>
                                 )}
                             </ShareLink>
@@ -228,12 +230,12 @@ class PetitionDetail extends Component {
                             <h4>&#60;Graphs&#62;</h4>
                             <br /><br />
                             <Row>
-                                <img className="imgs" src={graphSrc + "/trend.jpg"} />
-                                <img className="imgs" src={graphSrc + "/gender.jpg"} />
+                                <img className="imgs" src={graphSrc + "/trend.jpg"} alt="Graph: Trend" />
+                                <img className="imgs" src={graphSrc + "/gender.jpg"} alt="Graph: Gender" />
                             </Row>
                             <Row>
-                                <img className="imgs" src={graphSrc + "/department.jpg"} />
-                                <img className="imgs" src={graphSrc + "/studentId.jpg"} />
+                                <img className="imgs" src={graphSrc + "/department.jpg"} alt="Graph: Department" />
+                                <img className="imgs" src={graphSrc + "/studentId.jpg"} alt="Graph: Student ID" />
                             </Row>
                             <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
                             <div className="download_csv_buttn" hidden={status !== 'ongoing'}>
