@@ -43,7 +43,7 @@ describe('<PhotoUpload />', () => {
         wrapper.simulate('change', { target: { value: photoTitle } });
         expect(photoUploadInstance.state.photoTitle).toEqual(photoTitle);
         wrapper.simulate('change', { target: { value: "###" } });
-        expect(photoUploadInstance.state.titleFormText).toEqual( "# ? % / \\ 는 허용되지 않습니다.");
+        expect(photoUploadInstance.state.titleFormText).toEqual("# ? % / \\ 는 허용되지 않습니다.");
         wrapper.simulate('change', { target: { value: "asd.jpg" } });
         expect(photoUploadInstance.state.titleFormText).toEqual("");
     });
@@ -128,5 +128,28 @@ describe('<PhotoUpload />', () => {
         photoUploadInstance.onImgLoad({ target: { offsetWidth: 500, offsetHeight: 500 } });
         expect(photoUploadInstance.state.canvasWidth).toEqual(500);
         expect(photoUploadInstance.state.canvasHeight).toEqual(500);
+    });
+
+    it(`mock reader & file`, () => {
+        let mocked = jest.fn()
+        let blob = new Blob([""], { type: 'image/png' });
+        blob["lastModifiedDate"] = "";
+        blob["name"] = "TEST_FILE_NAME";
+        const mockReader = {
+            onloadend: mocked,
+            readyState: 2,
+            readAsDataURL: mocked,
+            result: "TEST_RESULT,TEST_RESULT"
+        }
+        mockReader.readAsDataURL = jest.fn(() => {
+            return mockReader.onloadend()
+        });
+        window.FileReader = jest.fn(() => {
+            return mockReader
+        });
+        const photoFile = blob;
+        const component = mount(photoUpload);
+        let wrapper = component.find('#photo_file_file').at(0);
+        wrapper.simulate('change', { target: { files: [photoFile] } });
     });
 });
