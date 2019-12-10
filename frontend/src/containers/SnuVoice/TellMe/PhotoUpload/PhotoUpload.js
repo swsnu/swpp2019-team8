@@ -400,7 +400,7 @@ class PhotoUpload extends Component {
 
         let $imagePreview = (!this.state.photoUrl) ? (<div className="noPhoto">There is no image to preview</div>) :
             (this.state.uploadEnd) ? (<div></div>) :
-                (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />);
+                (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} alt="Loaded img"/>);
 
         let $canvas = (this.state.photoUrl && this.state.uploadEnd) ?
             (<canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />) : (<div></div>);
