@@ -400,7 +400,7 @@ class PhotoUpload extends Component {
 
         let $imagePreview = (!this.state.photoUrl) ? (<div className="noPhoto">There is no image to preview</div>) :
             (this.state.uploadEnd) ? (<div></div>) :
-                (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} alt="Loaded img"/>);
+                (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} alt="Loaded img" />);
 
         let $canvas = (this.state.photoUrl && this.state.uploadEnd) ?
             (<canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />) : (<div></div>);
@@ -455,7 +455,9 @@ class PhotoUpload extends Component {
                         </TabContent>
                     </div>
                     <ButtonGroup>
-                        <Button type="button" id="photo_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent || this.state.titleFormText !== ""}
+                        <Button type="button" id="photo_confirm_button"
+                            disabled={!this.state.photoTitle || !this.state.photoContent ||
+                                this.state.titleFormText !== "" || !this.state.photoFile}
                             onClick={this.onClickPhotoConfirmButton}>Confirm</Button>
                         <Button type="button" id="photo_cancel_button"
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>
