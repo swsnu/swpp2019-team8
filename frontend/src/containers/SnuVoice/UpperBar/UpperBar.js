@@ -132,7 +132,7 @@ export class UpperBar extends Component {
             searchBar = (
                 <Row className="sub_bar">
                     <Col className="navbuttons">
-                    <a
+                        <a
                             className="navbar-brand"
                             // type="button"
                             id="tell_me_button"
@@ -161,9 +161,9 @@ export class UpperBar extends Component {
         if (this.props.signIn === false) {
             upperBar = (
                 <div>
-                <div className="upperbar_top">
+                    <div className="upperbar_top">
                         <a className="logo" href="/">
-                        <img src={Logo} style={{ height: 60 }} />
+                            <img src={Logo} style={{ height: 60 }} alt="SNUVOICE logo" />
                         </a>
                         <div className="user_button">
                             <Button
@@ -181,29 +181,29 @@ export class UpperBar extends Component {
                                 SIGN-UP
                             </Button>
                         </div>
-                </div>
-                    <div className="upperbar_bottom">{searchBar}</div>
                     </div>
+                    <div className="upperbar_bottom">{searchBar}</div>
+                </div>
             );
         } else {
             upperBar = (
                 <div>
-                <div className="upperbar_top">
+                    <div className="upperbar_top">
                         <a href="/" className="logo">
-                        <img src={Logo} href="/" style={{ height: 60 }} />
+                            <img src={Logo} href="/" style={{ height: 60 }} alt="SNUVOICE logo" />
                         </a>
                         <div className="user_button">
                             <Button
                                 type="button"
                                 id="sign_out_button"
                                 onClick={this.onClickSignOutButton}
-                                >
+                            >
                                 SIGN-OUT
                             </Button>
                         </div>
-                </div>
+                    </div>
                     <div className="upperbar_bottom">{searchBar}</div>
-                                </div>
+                </div>
             );
         }
         return (
