@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import ShareLink from 'react-facebook-share-link'
 
 import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 
@@ -9,7 +10,6 @@ import * as actionCreators from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
 import './PetitionDetail.css';
-
 
 class PetitionDetail extends Component {
     state = {
@@ -22,6 +22,33 @@ class PetitionDetail extends Component {
     componentDidMount = async () => {
         await this.props.onGetPetition(this.props.match.params.petition_url);
         await this.props.onGetPetitionComments(this.props.match.params.petition_url);
+
+        window.Kakao.init('41c0076be4855dfb7bac65638652b1f9');
+        window.Kakao.Link.createDefaultButton({
+            container: '#kakao-link-btn',
+            objectType: 'feed',
+            content: {
+                title: this.props.selectedPetition.title,
+                description: '서울대학교 청원',
+                imageUrl: 'https://user-images.githubusercontent.com/26313346/70496202-20d01f00-1b52-11ea-9c55-c8213ab33352.png',
+                link: {
+                    mobileWebUrl: window.location.href,
+                    webUrl: window.location.href,
+                }
+            },
+            social: {
+                likeCount: this.props.selectedPetition.votes,
+            },
+            buttons: [
+                {
+                    title: '자세히 보기',
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
+                    }
+                },
+            ]
+        });
     }
 
     onClickCommentConfirmButton = async () => {
@@ -185,6 +212,16 @@ class PetitionDetail extends Component {
                             {links}
                             <input type="text" id="ShareUrl" value={window.location.href} />
                             <Button onClick={this.onClickCopyURL}>URL 복사</Button>
+                            <a id="kakao-link-btn">
+                                <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" />
+                            </a>
+                            <ShareLink link={window.location.href}>
+                                {_link => (
+                                    <a href={_link} target='_blank' rel="noopener noreferrer">
+                                        <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" />
+                                    </a>
+                                )}
+                            </ShareLink>
                         </div>
                         <hr />
                         <div className="petitionsView_statistic">
