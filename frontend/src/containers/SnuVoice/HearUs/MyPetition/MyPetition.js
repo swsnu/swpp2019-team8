@@ -6,7 +6,6 @@ import { withRouter } from "react-router";
 
 import {
 	Button,
-	Table,
 	TabContent,
 	TabPane,
 	Nav,
@@ -18,7 +17,6 @@ import Upperbar from "../../UpperBar/UpperBar";
 import Petition from "../../../../components/Petition/petition";
 import PetitionTableHeader from "../../../../components/Petition/petitionTableHeader";
 import * as actionCreator from "../../../../store/actions/index";
-
 
 export class MyPetition extends Component {
 	state = {
