@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import ShareLink from 'react-facebook-share-link'
 
 import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 
@@ -214,6 +215,13 @@ class PetitionDetail extends Component {
                             <a id="kakao-link-btn">
                                 <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" />
                             </a>
+                            <ShareLink link={window.location.href}>
+                                {link => (
+                                    <a href={link} target='_blank'>
+                                        <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" />
+                                    </a>
+                                )}
+                            </ShareLink>
                         </div>
                         <hr />
                         <div className="petitionsView_statistic">
