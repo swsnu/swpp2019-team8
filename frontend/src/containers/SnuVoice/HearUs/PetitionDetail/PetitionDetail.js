@@ -56,6 +56,12 @@ class PetitionDetail extends Component {
         }
     }
 
+    onClickCopyURL = () => {
+        const obShareUrl = document.getElementById("ShareUrl");
+        obShareUrl.select();
+        document.execCommand("Copy");
+        alert("URL이 클립보드에 복사되었습니다");
+    }
 
     render() {
         let title = '';
@@ -106,7 +112,7 @@ class PetitionDetail extends Component {
                                 <div className="R_R_contents_txt">
                                     <h6>{com.comment}</h6>
                                 </div>
-                                <hr/>
+                                <hr />
                             </div>
                         </div>
                     );
@@ -177,18 +183,20 @@ class PetitionDetail extends Component {
                             <br />
                             <h6 className="View_write_link">Attached links: </h6>
                             {links}
+                            <input type="text" id="ShareUrl" value={window.location.href} />
+                            <Button onClick={this.onClickCopyURL}>URL 복사</Button>
                         </div>
                         <hr />
                         <div className="petitionsView_statistic">
                             <h4>&#60;Graphs&#62;</h4>
                             <br /><br />
                             <Row>
-                            <img className="imgs" src={graphSrc + "/trend.jpg"} />
-                            <img className="imgs" src={graphSrc + "/gender.jpg"} />
+                                <img className="imgs" src={graphSrc + "/trend.jpg"} />
+                                <img className="imgs" src={graphSrc + "/gender.jpg"} />
                             </Row>
                             <Row>
-                            <img className="imgs" src={graphSrc + "/department.jpg"} />
-                            <img className="imgs" src={graphSrc + "/studentId.jpg"} />
+                                <img className="imgs" src={graphSrc + "/department.jpg"} />
+                                <img className="imgs" src={graphSrc + "/studentId.jpg"} />
                             </Row>
                             <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
                             <div className="download_csv_buttn" hidden={status !== 'ongoing'}>
