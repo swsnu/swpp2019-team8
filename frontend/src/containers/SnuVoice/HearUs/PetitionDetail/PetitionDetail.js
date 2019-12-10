@@ -144,6 +144,7 @@ class PetitionDetail extends Component {
                         </div>
                     );
                 }
+                return [];
             });
         }
 
@@ -154,6 +155,7 @@ class PetitionDetail extends Component {
                         onClick={this.onClickListNumberButton}>{number}</Button>
                 );
             }
+            return null;
         });
 
         let listNumberButtons = (
