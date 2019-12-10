@@ -129,7 +129,7 @@ def photo(request):
         photo.save()
         return HttpResponse(status=201)
     else:
-        return HttpResponseNotAllowed(['POST', 'GET'])
+        return HttpResponseNotAllowed(['POST'])
 
 def check_photo_duplicate(request, photo_title):
     if request.method == 'GET':
