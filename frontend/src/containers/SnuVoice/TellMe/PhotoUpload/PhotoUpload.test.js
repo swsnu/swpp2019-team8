@@ -190,7 +190,9 @@ describe('<PhotoUpload />', () => {
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
         try {
             await photoUploadInstance.fileUpload(content);
-        } catch (e) { }
+        } catch (e) {
+            expect(true).toBe(true);
+        }
     });
 
     it(`should call 'getPhotoInfo': The face is not recognized`, () => {
