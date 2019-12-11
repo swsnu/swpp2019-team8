@@ -184,14 +184,13 @@ describe('<PhotoUpload />', () => {
         wrapper.simulate('change', { target: { files: [photoFile] } });
     });
 
-    // it(`should call 'img.onload'`, () => {
-    // });
-
-    it(`should call 'fileUpload'`, () => {
+    it(`should call 'fileUpload'`, async () => {
         const content = 'TEST_CONTENT';
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        photoUploadInstance.fileUpload(content);
+        try {
+            await photoUploadInstance.fileUpload(content);
+        } catch (e) { }
     });
 
     it(`should call 'getPhotoInfo': The face is not recognized`, () => {
@@ -237,4 +236,10 @@ describe('<PhotoUpload />', () => {
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
         photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
     });
+
+    // it(`should call 'onClickPhotoConfirmButton'`, () => {
+    //     const component = mount(photoUpload);
+    //     const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+    //     photoUploadInstance.onClickPhotoConfirmButton();
+    // });
 });
