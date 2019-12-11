@@ -73,7 +73,7 @@ class SignUp extends Component {
 			{ value: "socialSciences", label: "Social Sciences" },
 			{ value: "veterinaryMedicine", label: "Veterinary Medicine" }
 		], // ex() 공대, 농생대
-	 	majorList: MajorList, //NOSONAR
+		majorList: MajorList, //NOSONAR
 		checkInputResult: {
 			// 회원가입을 위한 정보들이 알맞게 들어왔는지 확인
 			agreeToTerms: false,
