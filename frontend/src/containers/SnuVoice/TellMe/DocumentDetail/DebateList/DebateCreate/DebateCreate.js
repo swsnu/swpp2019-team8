@@ -8,6 +8,7 @@ import { Button, Input } from 'reactstrap';
 
 import Upperbar from '../../../../UpperBar/UpperBar';
 
+import './DebateCreate.css';
 
 export class DebateCreate extends Component {
     state = {
@@ -51,7 +52,7 @@ export class DebateCreate extends Component {
         return (
             <div>
                 <Upperbar />
-                <div className="TopOfPage">
+                <div className="DebateCreate_body">
                     <h1>DebateCreate</h1>
                     <Input
                         type="text"

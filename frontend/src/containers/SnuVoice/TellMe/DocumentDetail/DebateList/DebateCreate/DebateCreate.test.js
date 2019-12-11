@@ -33,7 +33,7 @@ describe('<DebateCreate />', () => {
 
     it('should render without errors', () => {
         const component = shallow(<DebateCreate {...props} />);
-        const top = component.find(".TopOfPage");
+        const top = component.find(".DebateCreate_body");
         expect(top.length).toBe(1);
     })
 
