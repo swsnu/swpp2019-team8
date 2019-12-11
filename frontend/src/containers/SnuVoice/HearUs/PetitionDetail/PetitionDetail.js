@@ -146,11 +146,8 @@ class PetitionDetail extends Component {
             var date_string = this.props.selectedPetition.start_date;
             var year = date_string.substring(0,4);
             var month = date_string.substring(5,7);
-            var date = date_string.substring(8,10);
-            console.log(date)
-            console.log(d.getFullYear())
-            console.log(year === d.getFullYear().toString())
-            if(year === d.getFullYear().toString() && month === (d.getMonth()+1).toString() && date === d.getDate().toString()) {
+            var day = date_string.substring(8,10);
+            if(year === d.getFullYear().toString() && month === (d.getMonth()+1).toString() && day === d.getDate().toString()) {
                 trendSrc = "http://localhost:8000/api/tellme/media/graph/ex/tomorrow.jpg";
             }
         }
