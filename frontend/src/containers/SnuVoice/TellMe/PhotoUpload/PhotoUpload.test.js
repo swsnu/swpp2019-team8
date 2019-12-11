@@ -219,4 +219,13 @@ describe('<PhotoUpload />', () => {
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
         photoUploadInstance.getPhotoInfo(data);
     });
+
+    it(`should call 'drawInCanvas'`, () => {
+        const photoInfo = null;
+        const n = 0;
+        const copiedImg = null;
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
+    });
 });
