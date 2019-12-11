@@ -30,7 +30,7 @@ class PetitionDetail extends Component {
             content: {
                 title: this.props.selectedPetition.title,
                 description: '서울대학교 청원',
-                imageUrl: 'https://user-images.githubusercontent.com/26313346/70496202-20d01f00-1b52-11ea-9c55-c8213ab33352.png',
+                imageUrl: 'https://user-images.githubusercontent.com/26313346/70518116-22fba300-1b7d-11ea-9e10-a4a41437fd09.png',
                 link: {
                     mobileWebUrl: window.location.href,
                     webUrl: window.location.href,
