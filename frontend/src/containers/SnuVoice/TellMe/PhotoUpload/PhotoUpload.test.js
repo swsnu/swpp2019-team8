@@ -216,6 +216,57 @@ describe('<PhotoUpload />', () => {
         wrapper.simulate('change', { target: { files: [photoFile] } });
     });
 
-    it(`should call 'reader.onloadend'`, () => {
+    // it(`should call 'img.onload'`, () => {
+    // });
+
+    it(`should call 'fileUpload'`, () => {
+        const content = 'TEST_CONTENT';
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.fileUpload(content);
+    });
+
+    it(`should call 'getPhotoInfo': The face is not recognized`, () => {
+        const data = {
+            responses: [{}]
+        }
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.getPhotoInfo(data);
+    });
+
+    it(`should call 'getPhotoInfo': The face is recognized`, () => {
+        const data = {
+            responses: [{
+                faceAnnotations: [{
+                    fdBoundingPoly: {
+                        vertices: [{
+
+                        }]
+                    }
+                }]
+            }]
+        }
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.getPhotoInfo(data);
+    });
+
+    it(`if 'this.state.photoUrl && this.state.uploadEnd'`, () => {
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
+        photoUploadInstance.setState({
+            photoUrl: "TEST_PHOTO_URL",
+            uploadEnd: true
+        });
+    });
+
+    it(`should call 'drawInCanvas'`, () => {
+        const photoInfo = null;
+        const n = 0;
+        const copiedImg = null;
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
     });
 });
