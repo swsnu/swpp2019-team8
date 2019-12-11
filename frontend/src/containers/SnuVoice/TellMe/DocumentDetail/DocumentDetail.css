@@ -16,7 +16,7 @@
 .document_detail_title {
     word-wrap: break-word;
     display: inline;
-    font-size: 50px;
+    font-size: 40px;
 }
 
 .document_detail_upperbar {
@@ -58,4 +58,5 @@ blockquote {
 .document_content {
     word-wrap: break-word;
     line-height: 150%;
+    margin-bottom: 10px !important;
 }

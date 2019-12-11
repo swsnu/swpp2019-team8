@@ -1,0 +1,21 @@
+.category_button {
+    background-color: #f2f4f7 !important;
+    color: gray !important;
+    border-color: #f2f4f7 !important;
+}
+
+.category_button:hover {
+    background-color: #94bfff !important;
+    color: #002a68 !important;
+}
+
+.category_buttongroup {
+    border-radius: 0% !important;
+}
+
+.category_box {
+    border-width: 2px;
+    border-color: #f2f4f7;
+    border-style: groove;
+    border-radius: 6px;
+}

@@ -78,28 +78,28 @@ export class DocumentSearchFail extends Component {
                 <UpperBar />
                 <div className="DocumentSearchFail_content_border">
                     <div className="DocumentSearchFail_content">
-                        <h3>
+                        <h4>
                         &quot;{this.props.match.params.document_title}&quot;가(이)
                             포함된 document 제목:
-                        </h3>
+                        </h4>
                         {titleList}
                         <br />
-                        <h3>
+                        <h4>
                         &quot;{this.props.match.params.document_title}&quot;가(이)
                             포함된 document 내용:
-                        </h3>
+                        </h4>
                         {contentList}
                         <br />
-                        <h3>
+                        <h4>
                         &quot;{this.props.match.params.document_title}&quot;가(이)
                             포함된 photo 제목:
-                        </h3>
+                        </h4>
                         {titlePhotoList}
                         <br />
-                        <h3>
+                        <h4>
                         &quot;{this.props.match.params.document_title}&quot;가(이)
                             포함된 photo 내용:
-                        </h3>
+                        </h4>
                         {contentPhotoList}
                         <br />
                         Can&apos;t find the document you&apos;re looking for? Create a new
