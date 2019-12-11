@@ -150,13 +150,11 @@ export class HearUs extends Component {
       <div>
         <UpperBar />
         <div className="TopOfPage">
-          <br />
-          <h1 className="title">Hear Us</h1>
           <div className="HearUs">
+          <h1 className="title">Hear Us</h1>
             {/* <h1>Hear Us</h1>
             <br /> */}
             {buttons}
-          </div>
           <br />
           <div className="Category">{category}</div>
           <br /><br /><br />
@@ -176,10 +174,11 @@ export class HearUs extends Component {
             type="button"
             id="petition_list_button"
             onClick={this.onClickListButton}
-          >
+            >
             +
           </Button>
           <br />
+            </div>
         </div>
       </div>
     );
