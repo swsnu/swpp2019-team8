@@ -48,8 +48,18 @@ class DebateTestCase(TestCase):
             'title': '!',
             'content': '2'
         }
+        
         response = client.get('/api/tellme/photo/!/')
         self.assertEqual(response.status_code, 200)
+
+        response = client.get('/api/tellme/check/!/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.get('/api/tellme/check/123123/')
+        self.assertEqual(response.status_code, 200)
+
+        response = client.delete('/api/tellme/check/123/')
+        self.assertEqual(response.status_code, 405)
 
         response = client.get('/api/tellme/photo/123/')
         self.assertEqual(response.status_code, 404)

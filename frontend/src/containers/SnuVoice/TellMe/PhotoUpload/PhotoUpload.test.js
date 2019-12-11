@@ -9,13 +9,17 @@ import PhotoUpload from './PhotoUpload';
 import { getMockStore } from '../../../../test-utils/mocks';
 import { history } from '../../../../store/store';
 
+import * as actionCreator from '../../../../store/actions/tellme';
+
 const stubInitialState = {
+    photoDuplicate : false
 };
 
 const mockStore = getMockStore(stubInitialState);
 
 describe('<PhotoUpload />', () => {
     let photoUpload;
+    let spyCheckPhoto;
 
     beforeEach(() => {
         photoUpload = (
@@ -27,7 +31,11 @@ describe('<PhotoUpload />', () => {
                 </ConnectedRouter>
             </Provider>
         );
+        spyCheckPhoto = jest.spyOn(actionCreator, 'checkPhotoDuplicate')
+            .mockImplementation(() => { return dispatch => { };} )
     });
+
+    afterEach(() => {jest.clearAllMocks()})
 
     it(`should render PhotoUpload`, () => {
         const component = mount(photoUpload);
@@ -35,17 +43,41 @@ describe('<PhotoUpload />', () => {
         expect(wrapper.length).toBe(1);
     });
 
-    it(`should set state properly on title input`, () => {
+    it(`should set state properly on title input`, async () => {
         const photoTitle = 'TEST_TITLE';
         const component = mount(photoUpload);
         const wrapper = component.find('#photo_title_input').at(0);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        wrapper.simulate('change', { target: { value: photoTitle } });
+        await wrapper.simulate('change', { target: { value: photoTitle } });
         expect(photoUploadInstance.state.photoTitle).toEqual(photoTitle);
-        wrapper.simulate('change', { target: { value: "###" } });
-        expect(photoUploadInstance.state.titleFormText).toEqual("# ? % / \\ 는 허용되지 않습니다.");
-        wrapper.simulate('change', { target: { value: "asd.jpg" } });
+        await wrapper.simulate('change', { target: { value: "###" } });
+        expect(photoUploadInstance.state.titleFormText).toEqual( "# ? % / \\ 는 허용되지 않습니다.");
+        await wrapper.simulate('change', { target: { value: "asd.jpg" } });
         expect(photoUploadInstance.state.titleFormText).toEqual("");
+        expect(spyCheckPhoto).toHaveBeenCalledTimes(1);
+    });
+
+    it(`should set state properly on title input`, async () => {
+        let inState = {
+            photoDuplicate : true
+        };
+        let mocking = getMockStore(inState);
+        photoUpload = (
+            <Provider store={mocking}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={PhotoUpload} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        );
+        const photoTitle = 'TEST_TITLE';
+        const component = mount(photoUpload);
+        const wrapper = component.find('#photo_title_input').at(0);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        await wrapper.simulate('change', { target: { value: "asd.jpg" } });
+        expect(photoUploadInstance.state.titleFormText).toEqual("이미 존재하는 사진입니다.");
+        expect(spyCheckPhoto).toHaveBeenCalledTimes(1);
     });
 
     it(`should set state properly on content input`, () => {
