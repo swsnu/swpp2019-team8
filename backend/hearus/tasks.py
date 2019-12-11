@@ -28,6 +28,7 @@ def check_end(petition_id):
     if(target_petition.status == 'ongoing'):
         target_petition.status = 'end'
         target_petition.save()
+        plot_graph(petition_id)
 
 @shared_task
 def plot_all():
@@ -52,7 +53,9 @@ def plot_graph(petition_id):
     if period is 0 :
         plt.figure()
         trend = trend.cumsum()
+        trend.values[0] = trend.values[0]+1
         trend.plot()
+        plt.yticks(np.arange(0,(trend.iloc[len(trend)-1]+2),1))
         plt.title("Increasing trend")
         plt.savefig(graph_loc + str(petition_id) + '/trend.jpg')
     else: 
@@ -68,6 +71,7 @@ def plot_graph(petition_id):
         trend_series = trend_series.cumsum()
         plt.figure()
         trend_series.plot()
+        plt.yticks(np.arange(0,(trend_series.iloc[len(trend_series)-1]+2),1))
         plt.title("Increasing trend")
         plt.savefig(graph_loc + str(petition_id) + '/trend.jpg')
     #draw gender graph
@@ -84,6 +88,8 @@ def plot_graph(petition_id):
     department = stat['department'].value_counts().sort_index()
     df_department = pd.DataFrame()
     for i in range(len(department)):
+        if department.index[i] == "all":
+            continue
         df_department[department.index[i]] = [department.values[i]]
     plt.figure()
     df_department.plot.barh(stacked=True)
@@ -94,6 +100,8 @@ def plot_graph(petition_id):
     studentid = stat['studentId'].value_counts().sort_index()
     df_studentid = pd.DataFrame()
     for i in range(len(studentid)):
+        if studentid.index[i] == "":
+            continue
         df_studentid[studentid.index[i]] = [studentid.values[i]]
     plt.figure()
     df_studentid.plot.barh(stacked=True)
