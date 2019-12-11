@@ -243,7 +243,8 @@ describe('<PhotoUpload />', () => {
         mockRefCanvas.current.getContext = jest.fn(() => {
             return _getContext;
         });
-        mockRefCanvas.current.addEventListener = jest.fn(() => {
+        let event = {}
+        mockRefCanvas.current.addEventListener = jest.fn(event => {
             return null;
         })
         React.createRef = jest.fn(() => {
@@ -255,13 +256,46 @@ describe('<PhotoUpload />', () => {
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
         await photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
-
-
     });
 
-    // it(`should call 'onClickPhotoConfirmButton'`, () => {
-    //     const component = mount(photoUpload);
-    //     const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-    //     photoUploadInstance.onClickPhotoConfirmButton();
-    // });
+    it(`should call 'onClickPhotoConfirmButton'`, () => {
+        let mocked = jest.fn();
+        let mockRefCanvas = {
+            current: {
+                getContext: '',
+                addEventListener: '',
+                toBlob: '',
+            }
+        }
+        let _getContext = {
+            clearRect: mocked,
+            drawImage: mocked
+        }
+        mockRefCanvas.current.getContext = jest.fn(() => {
+            return _getContext;
+        });
+        mockRefCanvas.current.addEventListener = jest.fn(() => {
+            return null;
+        });
+        mockRefCanvas.current.toBlob = jest.fn(() => {
+            return null;
+        });
+        React.createRef = jest.fn(() => {
+            return mockRefCanvas;
+        });
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.setState({
+            blurElements: [{
+                blur: true
+            }]
+        });
+        photoUploadInstance.onClickPhotoConfirmButton();
+        photoUploadInstance.setState({
+            blurElements: [{
+                blur: false
+            }]
+        });
+        photoUploadInstance.onClickPhotoConfirmButton();
+    });
 });
