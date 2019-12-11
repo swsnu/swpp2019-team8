@@ -6,7 +6,7 @@ import * as actionCreator from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
 
-import { Button} from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import { Remarkable } from 'remarkable';
 import hljs from 'highlight.js';
@@ -27,10 +27,10 @@ export class PhotoDetail extends Component {
     }
 
     onClickCopyURL = () => {
-    var obShareUrl = document.getElementById("ShareUrl");
-	obShareUrl.select();  
-	document.execCommand("Copy");
-	alert("URL이 클립보드에 복사되었습니다"); 
+        var obShareUrl = document.getElementById("ShareUrl");
+        obShareUrl.select();
+        document.execCommand("Copy");
+        alert("URL이 클립보드에 복사되었습니다");
     }
 
 
@@ -52,7 +52,6 @@ export class PhotoDetail extends Component {
             markdownHtml = md.render(this.props.selectedPhoto.content);
         }
 
-
         return (
             <div>
                 <UpperBar />
@@ -62,7 +61,7 @@ export class PhotoDetail extends Component {
                         <br />
                         <h1 className="title">{title}</h1>
                         <hr />
-                        <img src={"https://www.snuvoice.site/api/tellme/media/" + photo} />
+                        <img src={"https://www.snuvoice.site/api/tellme/media/" + photo} alt="Uploaded img"/>
                         <br /><br />
                         <div className="url_copy_button">
                             <input type="text" id="ShareUrl" value = {"https://www.snuvoice.site/api/tellme/media/" + photo}/>
@@ -70,50 +69,50 @@ export class PhotoDetail extends Component {
                             <Button onClick={this.onClickCopyURL}>URL 복사</Button>
                         </div>
                         <hr />
-                            <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
-                            <hr />
-                            <Button
-                                type="button"
-                                id="photo_cancel_button"
-                                onClick={this.onClickPhotoCancelButton}
-                            >
-                                Back
+                        <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
+                        <hr />
+                        <Button
+                            type="button"
+                            id="photo_cancel_button"
+                            onClick={this.onClickPhotoCancelButton}
+                        >
+                            Back
                         </Button>
                     </div>
-                    </div>
                 </div>
-                )
-            }
-        }
-        
+            </div>
+        )
+    }
+}
+
 export const mapStateToProps = state => {
     return {
-                    selectedPhoto: state.tm.selectedPhoto
-            }
-        }
-        
+        selectedPhoto: state.tm.selectedPhoto
+    }
+}
+
 export const mapDispatchToProps = dispatch => {
     return {
-                    getPhoto: (photo_title) =>
-                    dispatch(actionCreator.getPhoto(photo_title))
-            }
-        
-        }
-        
+        getPhoto: (photo_title) =>
+            dispatch(actionCreator.getPhoto(photo_title))
+    }
+
+}
+
 export function highlightCode(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
         try {
             return hljs.highlight(lang, str).value;
-        } catch (err) {console.log(err)}
-                }
-            
+        } catch (err) { console.log(err) }
+    }
+
     try {
         return hljs.highlightAuto(str).value;
-    } catch (err) {console.log(err)}
-                return ''; // use external default escaping
-            }
-            
-            export default connect(
-                mapStateToProps,
-                mapDispatchToProps
+    } catch (err) { console.log(err) }
+    return ''; // use external default escaping
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
 )(withRouter(PhotoDetail));

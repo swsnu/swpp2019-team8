@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 
-import DiffMatchPatch, { Diff } from "diff-match-patch";
+import DiffMatchPatch from "diff-match-patch";
 // import ReactHtmlParser from 'react-html-parser';
 
 import { connect } from "react-redux";
@@ -43,17 +43,17 @@ class DocumentEdit extends Component {
     componentDidMount = async () => {
         await this.props.onGetDocument(this.props.match.params.document_title);
         // if(this.props.documentConflict) {
-          this.setState({
-              newDocumentContent: this.props.selectedDocument.content,
-              prevDocumentContent: this.props.selectedDocument.content,
-          });
-      //     });
-      //   } else {
-      //   this.setState({
-      //       newDocumentContent: this.props.selectedDocument.content,
-      //       prevDocumentContent: this.props.selectedDocument.content
-      //   });
-      // }
+        this.setState({
+            newDocumentContent: this.props.selectedDocument.content,
+            prevDocumentContent: this.props.selectedDocument.content,
+        });
+        //     });
+        //   } else {
+        //   this.setState({
+        //       newDocumentContent: this.props.selectedDocument.content,
+        //       prevDocumentContent: this.props.selectedDocument.content
+        //   });
+        // }
     };
 
     onClickDocumentConfirmButton = async () => {
@@ -95,10 +95,10 @@ class DocumentEdit extends Component {
         dmp.diff_cleanupSemantic(diff);
         var ds = dmp.diff_prettyHtml(diff);
         return ds;
-      };
+    };
 
     render() {
-        let current ="";
+        let current = "";
         let content = '';
         let markdownHtml = '';
         if (this.props.selectedDocument) {
@@ -145,7 +145,7 @@ class DocumentEdit extends Component {
             markdownHtml = md.render(content);
         }
 
-  return (
+        return (
             <div>
                 <Upperbar />
                 <div className="DocumentEdit">
@@ -165,10 +165,8 @@ class DocumentEdit extends Component {
                     <TabContent activeTab={this.state.documentState}>
                         <TabPane tabId="write" className="inputTab">
                             <br />
-                            <h1>
-                                <div className="title">
+                            <h1 className="title">
                                     {this.props.match.params.document_title}
-                                </div>
                             </h1>
                             <hr />
                             <br />
@@ -176,11 +174,12 @@ class DocumentEdit extends Component {
                                 <Row>
                                     <Col>
                                             <h4>Current</h4>
-                                        <Card>
+                                        <Card className="current_content" style={{width: 500}}>
                                             <div
                                                 dangerouslySetInnerHTML={{
                                                     __html: current
                                                 }}
+                                                
                                             />
                                         </Card>
                                     </Col>
@@ -193,6 +192,7 @@ class DocumentEdit extends Component {
                                                 id="document_content_textarea"
                                                 placeholder="content"
                                                 defaultValue={content}
+                                                className="edit_content"
                                                 onChange={event =>
                                                     this.setState({
                                                         newDocumentContent:
@@ -231,7 +231,7 @@ class DocumentEdit extends Component {
                                     </h1>
                                     <br />
                                     <hr />
-                                    <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
+                                    <div dangerouslySetInnerHTML={{ __html: markdownHtml }} className="preview_content"/>
                                 </div>
                             </div>
                         </TabPane>

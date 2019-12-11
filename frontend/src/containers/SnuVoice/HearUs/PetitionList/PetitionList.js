@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Button, ButtonGroup, Table, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import { Button, ButtonGroup, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
 import UpperBar from '../../UpperBar/UpperBar'
 import Petition from '../../../../components/Petition/petition'
@@ -108,8 +108,8 @@ class PetitionList extends Component {
         if (this.state.selectedCategory === 'All') {
             petitionList =
                 this.props.petitionList
-                .filter(petition =>
-                    petition.status === this.state.petitionState)
+                    .filter(petition =>
+                        petition.status === this.state.petitionState)
 
         } else {
             petitionList = (
@@ -197,7 +197,7 @@ class PetitionList extends Component {
                             <br /><br /><br />
                             <div className="Tables">
 
-                                <PetitionTableHeader/>
+                                <PetitionTableHeader />
                                 {sortedPetitionList}
                             </div>
                             {listNumberButtons}
@@ -216,7 +216,7 @@ class PetitionList extends Component {
                             <br /><br /><br />
                             <div className="Tables">
 
-                                <PetitionTableHeader/>
+                                <PetitionTableHeader />
                                 {sortedPetitionList}
                             </div>
                             {listNumberButtons}

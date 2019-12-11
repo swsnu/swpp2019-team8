@@ -21,6 +21,8 @@ import {
 import { MarkdownPreview } from 'react-marked-markdown';
 import Resizer from 'react-image-file-resizer';
 
+import * as actionCreators from '../../../../store/actions/index';
+
 import Upperbar from '../../UpperBar/UpperBar';
 
 import './PhotoUpload.css';
@@ -53,19 +55,22 @@ class PhotoUpload extends Component {
         this.refImg = React.createRef();
     }
 
-    onChangePhotoTitleInput = (event) => {
+    onChangePhotoTitleInput = async (event) => {
         let formText;
+        let title = event.target.value;
         if (/[#%?/\\]/.exec(event.target.value)) {
             formText = "# ? % / \\ 는 허용되지 않습니다."
         } else {
-            if (/.jpg$/.exec(event.target.value) || /.jpeg$/.exec(event.target.value) || /.bmp$/.exec(event.target.value) || /.png$/.exec(event.target.value)) {
-                formText = ''
+            if (/\.jpg$/.exec(event.target.value) || /\.jpeg$/.exec(event.target.value) || /\.bmp$/.exec(event.target.value) || /\.png$/.exec(event.target.value)) {
+                await this.props.checkPhoto(title);
+                if (this.props.photoDuplicate) formText = '이미 존재하는 사진입니다.'
+                else formText = ''
             } else {
                 formText = ".jpg/.jpeg/.bmp/.png로 끝나야 합니다."
             }
         }
         this.setState({
-            photoTitle: event.target.value,
+            photoTitle: title,
             titleFormText: formText
         })
 
@@ -111,7 +116,6 @@ class PhotoUpload extends Component {
                     headers: { 'content-type': 'multipart/form-data' }
                 })
                 .then((res) => {
-                    console.log("hurray");
                     this_tmp.props.history.push('/tell_me/photo/' + this_tmp.state.photoTitle)
                 })
                 .catch(e => {
@@ -144,7 +148,6 @@ class PhotoUpload extends Component {
             this.setState({ uploadEnd: false, blurElements: [], photoFile: file, photoFileName: file.name, photoUrl: reader.result });
             const imageData = reader.result.split(",")[1];
             const img = new Image();
-            img.src = reader.result;
             img.onload = () => {
                 let copiedImg = new Image();
                 Resizer.imageFileResizer(
@@ -174,7 +177,8 @@ class PhotoUpload extends Component {
                         console.log('num_faces: ' + result.num_faces);
                         this.drawInCanvas(result.info, result.num_faces, copiedImg);
                     });
-            };
+            }
+            img.src = reader.result;
         }
 
         if (file) {
@@ -400,7 +404,8 @@ class PhotoUpload extends Component {
 
         let $imagePreview = (!this.state.photoUrl) ? (<div className="noPhoto">There is no image to preview</div>) :
             (this.state.uploadEnd) ? (<div></div>) :
-                (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} />);
+                (<img id="uploaded_image" ref={this.refImg} src={this.state.photoUrl}
+                    onLoad={this.onImgLoad} alt="Loaded img" />);
 
         let $canvas = (this.state.photoUrl && this.state.uploadEnd) ?
             (<canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />) : (<div></div>);
@@ -455,7 +460,9 @@ class PhotoUpload extends Component {
                         </TabContent>
                     </div>
                     <ButtonGroup>
-                        <Button type="button" id="photo_confirm_button" disabled={!this.state.photoTitle || !this.state.photoContent || this.state.titleFormText !== ""}
+                        <Button type="button" id="photo_confirm_button"
+                            disabled={!this.state.photoTitle || !this.state.photoContent ||
+                                this.state.titleFormText !== "" || !this.state.photoFile}
                             onClick={this.onClickPhotoConfirmButton}>Confirm</Button>
                         <Button type="button" id="photo_cancel_button"
                             onClick={this.onClickPhotoCancelButton}>Cancel</Button>
@@ -467,4 +474,21 @@ class PhotoUpload extends Component {
     }
 }
 
-export default connect(null, null)(withRouter(PhotoUpload));
+
+export const mapDispatchToProps = dispatch => {
+    return {
+        checkPhoto : (title) => {
+            dispatch(actionCreators.checkPhotoDuplicate(title))
+        }
+    }
+}
+
+export const mapStateToProps = state => {
+    return {
+        photoDuplicate : state.tm.photoDuplicate
+    }
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(PhotoUpload));

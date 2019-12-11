@@ -8,14 +8,14 @@ import SignUp from './SignUp';
 import { history } from '../../../store/store';
 import { getMockStore } from '../../../test-utils/mocks';
 import * as actionCreator from '../../../store/actions/user';
-import { sign } from 'crypto';
 
 describe('<SignUp/>', () => {
     const stubInitialState = {
         verifyCode: 123,
         emailDuplicate: false,
         nicknameDuplicate: false,
-        studentIdDuplicate: false
+        studentIdDuplicate: false,
+        signIn: false
     }
 
     const mockStore = getMockStore(stubInitialState)
@@ -27,6 +27,8 @@ describe('<SignUp/>', () => {
     let spyNickname;
     let spyStudentId;
     let spyHistoryPush;
+    let spyCheckSignIn;
+    window.alert = jest.fn();
 
     beforeEach(() => {
         signUp = (
@@ -49,7 +51,9 @@ describe('<SignUp/>', () => {
         spyStudentId = jest.spyOn(actionCreator, 'checkStudentIdDuplicate')
             .mockImplementation((studentId) => { return dispatch => { }; })
         spyHistoryPush = jest.spyOn(history, 'push')
-            .mockImplementation((path) => { })
+            .mockImplementation((path) => { });
+        spyCheckSignIn = jest.spyOn(actionCreator, 'checkSignIn')
+            .mockImplementation(() => { return dispatch => { }; })
 
     })
 
@@ -57,26 +61,29 @@ describe('<SignUp/>', () => {
         jest.clearAllMocks();
     })
 
-    it('should render without erros', () => {
-        const component = mount(signUp);
+    it('should render without erros',async () => {
+        const component =await mount(signUp);
         const wrapper = component.find('.SignUp').at(0)
+        expect(spyCheckSignIn).toHaveBeenCalledTimes(2);
         expect(wrapper.length).toBe(1)
     })
 
-    it('should buttons work', () => {
-        const component = mount(signUp);
+    it('should buttons work',async () => {
+        const component =await mount(signUp);
         const backButton = component.find('#back_button').at(0)
         backButton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/')
     })
 
-    it('should RadioButtons work', () => {
-        const component = mount(signUp);
+    it('should RadioButtons work',async () => {
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.onChangeStatusRadioButton({ target: { value: 'student', checked: true } })
         expect(signUpComponent.state.statusRadio.student).toBe(true);
-        signUpComponent.onChangeStatusRadioButton({ target: { value: 'studen', checked: true } })
-        expect(signUpComponent.state.statusRadio.student).toBe(false);
+        signUpComponent.onChangeStatusRadioButton({ target: { value: 'alumnus', checked: true } })
+        expect(signUpComponent.state.selectedDepartment).toBe('alumnus');
+        signUpComponent.onChangeStatusRadioButton({ target: { value: 'faculty', checked: true } })
+        expect(signUpComponent.state.selectedMajor).toBe('faculty');
         signUpComponent.onChangeStudentRadioButton({ target: { value: 'doctor', checked: true } })
         expect(signUpComponent.state.studentRadio.doctor).toBe(true);
         signUpComponent.onChangeGenderRadioButton({ target: { value: 'male', checked: true } })
@@ -85,7 +92,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onChangeEmailInput works', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangeEmailInput({ target: { value: 'dkwanm1@snu.ac.kr' } })
         expect(spyEmail).toHaveBeenCalledTimes(1)
@@ -98,7 +105,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onChangeVerifyInput works', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.setState({
             verifyCode: '123'
@@ -113,7 +120,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onChangePasswordInput work', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangePasswordInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputInvalid.password).toBe(false)
@@ -134,7 +141,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onChangePasswordConfirmInput work', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.setState({
             password: '1212'
@@ -149,7 +156,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onChangeNicknameInput work', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangeNicknameInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputResult.nickname).toBe(false)
@@ -160,7 +167,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onChangeStudentId work', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangeStudentIdInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputResult.studentId).toBe(false)
@@ -177,7 +184,8 @@ describe('<SignUp/>', () => {
             verfiyCode: 123,
             emailDuplicate: true,
             nicknameDuplicate: true,
-            studentIdDuplicate: true
+            studentIdDuplicate: true,
+            signIn: true
         }
         let remockStore = getMockStore(mockingState)
         let mockSignUp = (
@@ -189,7 +197,7 @@ describe('<SignUp/>', () => {
                 </ConnectedRouter>
             </Provider>
         )
-        const component = mount(mockSignUp);
+        const component =await mount(mockSignUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangeStudentIdInput({ target: { value: '2018-15722' } })
         await signUpComponent.onChangeEmailInput({ target: { value: 'dkwanm1@snu.ac.kr' } })
@@ -197,11 +205,12 @@ describe('<SignUp/>', () => {
         expect(signUpComponent.state.formFeedbackMessage.studentId).toBe('이미 가입한 학번입니다.')
         expect(signUpComponent.state.formFeedbackMessage.email).toBe('이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.')
         expect(signUpComponent.state.formFeedbackMessage.nickname).toBe('이미 존재하는 닉네임입니다.')
+        expect(spyHistoryPush).toHaveBeenCalledTimes(4);
 
     })
 
-    it('should selectWork', () => {
-        const component = mount(signUp);
+    it('should selectWork', async () => {
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.onChangeDepartmentSelect({ target: { value: 'all' } })
         expect(signUpComponent.state.checkInputResult.department).toBe(false)
@@ -215,8 +224,8 @@ describe('<SignUp/>', () => {
 
     })
 
-    it('should onClickAgreeToTermsCheckBox work', () => {
-        const component = mount(signUp);
+    it('should onClickAgreeToTermsCheckBox work', async () => {
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         const checkBox = component.find('#agree_to_terms_checkbox').at(0)
         checkBox.simulate('change')
@@ -228,9 +237,12 @@ describe('<SignUp/>', () => {
             verifyCode: '',
             emailDuplicate: true,
             nicknameDuplicate: true,
-            studentIdDuplicate: true
+            studentIdDuplicate: true,
+            signIn :true
         }
         let remockStore = getMockStore(mockingState)
+        let mocked = jest.fn();
+        window.alert = mocked;
         let mockSignUp = (
             <Provider store={remockStore}>
                 <ConnectedRouter history={history}>
@@ -240,16 +252,21 @@ describe('<SignUp/>', () => {
                 </ConnectedRouter>
             </Provider>
         )
-        const component = mount(mockSignUp);
+        const component =await mount(mockSignUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickVerifyButton()
         expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
-        expect(signUpComponent.state.verifyModalMessage).toBe('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.')
+        expect(signUpComponent.state.verifyModalMessage).toBe('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.');
+        signUpComponent.setState({
+            signIn : true
+        })
+        expect(mocked).toHaveBeenCalledTimes(4);
+        expect(spyHistoryPush).toHaveBeenCalledTimes(4);
 
     })
 
     it('should onClickVerifyButton works - 2', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickVerifyButton()
         expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
@@ -258,7 +275,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onClickSignUpConfirmButton worsk proper', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.setState({
             checkInputResult: {
@@ -272,19 +289,19 @@ describe('<SignUp/>', () => {
     })
 
     it('should onClickSignUpConfirmButton worsk not proper', async () => {
-        const component = mount(signUp);
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickSignUpConfirmButton()
         expect(signUpComponent.state.confirmModalMessage).toBe('다시 한 번 확인해주시기 바랍니다.')
 
     })
 
-    it('should toggleModal work', () => {
-        const component = mount(signUp);
+    it('should toggleModal work', async () => {
+        const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.setState({
-            confirmModal : true,
-            confirmModalMessage : '회원 가입이 완료되었습니다.'
+            confirmModal: true,
+            confirmModalMessage: '회원 가입이 완료되었습니다.'
         })
         signUpComponent.toggleConfirmModal()
         expect(spyHistoryPush).toHaveBeenCalledWith('/')

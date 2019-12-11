@@ -47,7 +47,7 @@ describe('<SearchBar/>', () => {
 
     it('should render without erros', () => {
         const component = mount(searchBar)
-        const search = component.find('.SearchBar').at(0)
+        const search = component.find('.searchBar').at(0)
         expect(search.length).toBe(1)
     })
 

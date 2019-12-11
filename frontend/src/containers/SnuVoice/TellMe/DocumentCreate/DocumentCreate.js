@@ -171,11 +171,11 @@ class DocumentCreate extends Component {
                 <div className="document">
                   <br />
                   <h1>
-                    <div >{this.state.documentTitle}</div>
+                    <div className="preview_title">{this.state.documentTitle}</div>
                   </h1>
                   <hr />
                   <br />
-                  <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
+                  <div dangerouslySetInnerHTML={{ __html: markdownHtml }} className="preview_content"/>
                 </div>
               </div>
             </TabPane>
