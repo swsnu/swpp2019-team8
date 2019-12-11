@@ -14,12 +14,14 @@
     font-weight: bold;
     font-family: Georgia, sans-serif;
     font-size: xx-large;
+    word-wrap: break-word;
 }
 
 .petitionsView_write {
     padding-left: 15%;
     padding-right: 15%;
     text-align: left;
+    word-wrap: break-word;
 }
 
 .content {
