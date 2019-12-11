@@ -184,6 +184,31 @@ describe('<PhotoUpload />', () => {
         wrapper.simulate('change', { target: { files: [photoFile] } });
     });
 
-    it(`should call 'reader.onloadend'`, () => {
+    // it(`should call 'img.onload'`, () => {
+    // });
+
+    it(`should call 'fileUpload'`, () => {
+        const content = 'TEST_CONTENT';
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.fileUpload(content);
+    });
+
+    it(`should call 'getPhotoInfo': The face is not recognized`, () => {
+        const data = {
+            responses: [{}]
+        }
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.getPhotoInfo(data);
+    });
+
+    it(`should call 'getPhotoInfo': The face is recognized`, () => {
+        const data = {
+            responses: [{}]
+        }
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.getPhotoInfo(data);
     });
 });
