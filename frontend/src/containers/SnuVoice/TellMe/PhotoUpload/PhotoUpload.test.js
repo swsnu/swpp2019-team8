@@ -220,6 +220,15 @@ describe('<PhotoUpload />', () => {
         photoUploadInstance.getPhotoInfo(data);
     });
 
+    it(`if 'this.state.photoUrl && this.state.uploadEnd'`, () => {
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
+        photoUploadInstance.setState({
+            photoUrl: "TEST_PHOTO_URL",
+            uploadEnd: true
+        });
+    });
+
     it(`should call 'drawInCanvas'`, () => {
         const photoInfo = null;
         const n = 0;
