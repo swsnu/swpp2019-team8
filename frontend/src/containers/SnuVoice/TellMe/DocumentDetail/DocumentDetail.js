@@ -16,6 +16,9 @@ import Upperbar from "../../UpperBar/UpperBar";
 import "./DocumentDetail.css";
 
 class DocumentDetail extends Component {
+    state = {
+        selectedNumber: 1
+    }
     componentDidMount = async () => {
         await this.props.onGetDocument(this.props.match.params.document_title);
         await this.props.onGetPetitionList(
@@ -44,28 +47,46 @@ class DocumentDetail extends Component {
     };
 
     render() {
-        let title = "";
-        let content = "";
-        let markdownHtml = "";
-        let petitonList = this.props.petitionList.map(petition => {
-            return (
-                <div key={petition.id}>
-                    <li key={petition.id}>
-                        <a
-                            href={
-                                "www.snuvoice.site/hear_us/petition/" +
-                                petition.url
-                            }
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            {petition.title}
-                        </a>
-                    </li>
-                    <br />
-                </div>
-            );
+        let title = '';
+        let content = '';
+        let markdownHtml = '';
+        let prev = '<';
+        let next = '>';
+        let petitonList = this.props.petitionList.map((petition, i) => {
+            if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
+                return (
+                    <div key={petition.id}>
+                        <li key={petition.id}>
+                            <a href={'/hear_us/petition/' + petition.url} target="_blank" rel="noopener noreferrer">{petition.title}</a>
+                        </li>
+                        <br />
+                    </div>
+                )
+            } else return undefined;
         });
+
+        let buttons = (
+            <div className="petition_buttons">
+                <Button
+                    type="button"
+                    id="prev_button"
+                    disabled={this.state.selectedNumber === 1}
+                    onClick={() => {
+                        this.setState({
+                            selectedNumber: this.state.selectedNumber - 1
+                        })
+                    }}>{prev}</Button>
+                <Button
+                    type="button"
+                    id="next_button"
+                    disabled={this.state.selectedNumber * 10 >= this.props.petitionList.length}
+                    onClick={() => {
+                        this.setState({
+                            selectedNumber: this.state.selectedNumber + 1
+                        })
+                    }}>{next}</Button>
+            </div>
+        )
 
         if (this.props.selectedDocument) {
             title = this.props.selectedDocument.title;
@@ -79,6 +100,41 @@ class DocumentDetail extends Component {
             });
             markdownHtml = md.render(content);
         }
+
+        let editButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            null :
+            (
+                <Button
+                    type="button"
+                    id="document_edit_button"
+                    onClick={this.onClickDocumentEditButton}>
+                    Edit
+                </Button>
+            );
+
+        let debateButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            null :
+            (
+                <Button
+                    className="debateButton"
+                    onClick={this.onClickDocumentDebateButton}>
+                    Debate
+                </Button>
+            );
+
+        let relatedPetition = this.props.match.params.document_title === "TELL-ME:기본방침" ||
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            null :
+            (
+                <div className="related_petition">
+                    {petitonList}
+                    <br />
+                    {buttons}
+                </div>
+            );
+
         return (
             <div>
                 <Upperbar />
@@ -115,7 +171,7 @@ class DocumentDetail extends Component {
                             className="document_content"
                         />
                         <hr />
-                        {petitonList}
+                        {relatedPetition}
                     </div>
                 </div>
             </div>
@@ -153,6 +209,7 @@ export function highlightCode(str, lang) {
     } catch (err) {
         console.log(err);
     }
+
 
     return ""; // use external default escaping
 }

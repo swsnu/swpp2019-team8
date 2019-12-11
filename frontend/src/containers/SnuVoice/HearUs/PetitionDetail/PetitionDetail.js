@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import ShareLink from 'react-facebook-share-link'
 
 import { Row, Col, Button, ButtonGroup } from 'reactstrap';
 
@@ -9,7 +10,6 @@ import * as actionCreators from '../../../../store/actions/index';
 
 import UpperBar from '../../UpperBar/UpperBar';
 import './PetitionDetail.css';
-
 
 class PetitionDetail extends Component {
     state = {
@@ -22,6 +22,33 @@ class PetitionDetail extends Component {
     componentDidMount = async () => {
         await this.props.onGetPetition(this.props.match.params.petition_url);
         await this.props.onGetPetitionComments(this.props.match.params.petition_url);
+
+        window.Kakao.init('41c0076be4855dfb7bac65638652b1f9');
+        window.Kakao.Link.createDefaultButton({
+            container: '#kakao-link-btn',
+            objectType: 'feed',
+            content: {
+                title: this.props.selectedPetition.title,
+                description: '서울대학교 청원',
+                imageUrl: 'https://user-images.githubusercontent.com/26313346/70518116-22fba300-1b7d-11ea-9e10-a4a41437fd09.png',
+                link: {
+                    mobileWebUrl: window.location.href,
+                    webUrl: window.location.href,
+                }
+            },
+            social: {
+                likeCount: this.props.selectedPetition.votes,
+            },
+            buttons: [
+                {
+                    title: '자세히 보기',
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
+                    }
+                },
+            ]
+        });
     }
 
     onClickCommentConfirmButton = async () => {
@@ -56,6 +83,12 @@ class PetitionDetail extends Component {
         }
     }
 
+    onClickCopyURL = () => {
+        const obShareUrl = document.getElementById("ShareUrl");
+        obShareUrl.select();
+        document.execCommand("Copy");
+        alert("URL이 클립보드에 복사되었습니다");
+    }
 
     render() {
         let title = '';
@@ -106,11 +139,12 @@ class PetitionDetail extends Component {
                                 <div className="R_R_contents_txt">
                                     <h6>{com.comment}</h6>
                                 </div>
-                                <hr/>
+                                <hr />
                             </div>
                         </div>
                     );
                 }
+                return [];
             });
         }
 
@@ -121,6 +155,7 @@ class PetitionDetail extends Component {
                         onClick={this.onClickListNumberButton}>{number}</Button>
                 );
             }
+            return null;
         });
 
         let listNumberButtons = (
@@ -177,18 +212,30 @@ class PetitionDetail extends Component {
                             <br />
                             <h6 className="View_write_link">Attached links: </h6>
                             {links}
+                            <input type="text" id="ShareUrl" value={window.location.href} />
+                            <Button onClick={this.onClickCopyURL}>URL 복사</Button>
+                            <div id="kakao-link-btn">
+                                <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" alt="Share on Kakao Talk" />
+                            </div>
+                            <ShareLink link={window.location.href}>
+                                {_link => (
+                                    <a href={_link} target='_blank' rel="noopener noreferrer">
+                                        <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" alt="Share on Facebook" />
+                                    </a>
+                                )}
+                            </ShareLink>
                         </div>
                         <hr />
                         <div className="petitionsView_statistic">
                             <h4>&#60;Graphs&#62;</h4>
                             <br /><br />
                             <Row>
-                            <img className="imgs" src={graphSrc + "/trend.jpg"} />
-                            <img className="imgs" src={graphSrc + "/gender.jpg"} />
+                                <img className="imgs" src={graphSrc + "/trend.jpg"} alt="Graph: Trend" />
+                                <img className="imgs" src={graphSrc + "/gender.jpg"} alt="Graph: Gender" />
                             </Row>
                             <Row>
-                            <img className="imgs" src={graphSrc + "/department.jpg"} />
-                            <img className="imgs" src={graphSrc + "/studentId.jpg"} />
+                                <img className="imgs" src={graphSrc + "/department.jpg"} alt="Graph: Department" />
+                                <img className="imgs" src={graphSrc + "/studentId.jpg"} alt="Graph: Student ID" />
                             </Row>
                             <h6 className="Ex_alert_message" hidden={status === 'ongoing'}>These graphs are examples, you can see this petition&apos;s graphs when this petition&apos;s state becomes ongoing.</h6>
                             <div className="download_csv_buttn" hidden={status !== 'ongoing'}>

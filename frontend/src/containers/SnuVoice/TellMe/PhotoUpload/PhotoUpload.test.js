@@ -9,13 +9,17 @@ import PhotoUpload from './PhotoUpload';
 import { getMockStore } from '../../../../test-utils/mocks';
 import { history } from '../../../../store/store';
 
+import * as actionCreator from '../../../../store/actions/tellme';
+
 const stubInitialState = {
+    photoDuplicate : false
 };
 
 const mockStore = getMockStore(stubInitialState);
 
 describe('<PhotoUpload />', () => {
     let photoUpload;
+    let spyCheckPhoto;
 
     beforeEach(() => {
         photoUpload = (
@@ -27,7 +31,11 @@ describe('<PhotoUpload />', () => {
                 </ConnectedRouter>
             </Provider>
         );
+        spyCheckPhoto = jest.spyOn(actionCreator, 'checkPhotoDuplicate')
+            .mockImplementation(() => { return dispatch => { };} )
     });
+
+    afterEach(() => {jest.clearAllMocks()})
 
     it(`should render PhotoUpload`, () => {
         const component = mount(photoUpload);
@@ -35,17 +43,41 @@ describe('<PhotoUpload />', () => {
         expect(wrapper.length).toBe(1);
     });
 
-    it(`should set state properly on title input`, () => {
+    it(`should set state properly on title input`, async () => {
         const photoTitle = 'TEST_TITLE';
         const component = mount(photoUpload);
         const wrapper = component.find('#photo_title_input').at(0);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        wrapper.simulate('change', { target: { value: photoTitle } });
+        await wrapper.simulate('change', { target: { value: photoTitle } });
         expect(photoUploadInstance.state.photoTitle).toEqual(photoTitle);
-        wrapper.simulate('change', { target: { value: "###" } });
+        await wrapper.simulate('change', { target: { value: "###" } });
         expect(photoUploadInstance.state.titleFormText).toEqual( "# ? % / \\ 는 허용되지 않습니다.");
-        wrapper.simulate('change', { target: { value: "asd.jpg" } });
+        await wrapper.simulate('change', { target: { value: "asd.jpg" } });
         expect(photoUploadInstance.state.titleFormText).toEqual("");
+        expect(spyCheckPhoto).toHaveBeenCalledTimes(1);
+    });
+
+    it(`should set state properly on title input`, async () => {
+        let inState = {
+            photoDuplicate : true
+        };
+        let mocking = getMockStore(inState);
+        photoUpload = (
+            <Provider store={mocking}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={PhotoUpload} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        );
+        const photoTitle = 'TEST_TITLE';
+        const component = mount(photoUpload);
+        const wrapper = component.find('#photo_title_input').at(0);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        await wrapper.simulate('change', { target: { value: "asd.jpg" } });
+        expect(photoUploadInstance.state.titleFormText).toEqual("이미 존재하는 사진입니다.");
+        expect(spyCheckPhoto).toHaveBeenCalledTimes(1);
     });
 
     it(`should set state properly on content input`, () => {
@@ -128,5 +160,113 @@ describe('<PhotoUpload />', () => {
         photoUploadInstance.onImgLoad({ target: { offsetWidth: 500, offsetHeight: 500 } });
         expect(photoUploadInstance.state.canvasWidth).toEqual(500);
         expect(photoUploadInstance.state.canvasHeight).toEqual(500);
+    });
+
+    it(`should call 'reader.onloadend'`, () => {
+        let mocked = jest.fn()
+        let blob = new Blob([""], { type: 'image/png' });
+        blob["lastModifiedDate"] = "";
+        blob["name"] = "TEST_FILE_NAME";
+        const mockReader = {
+            onloadend: mocked,
+            readyState: 2,
+            readAsDataURL: mocked,
+            result: "TEST_RESULT,TEST_RESULT"
+        }
+        mockReader.readAsDataURL = jest.fn(() => {
+            return mockReader.onloadend()
+        });
+        window.FileReader = jest.fn(() => {
+            return mockReader
+        });
+        const photoFile = blob;
+        const component = mount(photoUpload);
+        let wrapper = component.find('#photo_file_file').at(0);
+        wrapper.simulate('change', { target: { files: [photoFile] } });
+    });
+
+    it(`file size is bigger than 5MB`, () => {
+        function range(count) {
+            let output = "";
+            for (let i = 0; i < count; i++) {
+                output += "a";
+            }
+            return output;
+        }
+
+        let mocked = jest.fn()
+        let blob = new Blob([range(6000000)], { type: 'image/png' });
+        blob["lastModifiedDate"] = "";
+        blob["name"] = "TEST_FILE_NAME";
+        const mockReader = {
+            onloadend: mocked,
+            readyState: 2,
+            readAsDataURL: mocked,
+            result: "TEST_RESULT,TEST_RESULT"
+        }
+        mockReader.readAsDataURL = jest.fn(() => {
+            return mockReader.onloadend()
+        });
+        window.FileReader = jest.fn(() => {
+            return mockReader
+        });
+        const photoFile = blob;
+        const component = mount(photoUpload);
+        let wrapper = component.find('#photo_file_file').at(0);
+        wrapper.simulate('change', { target: { files: [photoFile] } });
+    });
+
+    // it(`should call 'img.onload'`, () => {
+    // });
+
+    it(`should call 'fileUpload'`, () => {
+        const content = 'TEST_CONTENT';
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.fileUpload(content);
+    });
+
+    it(`should call 'getPhotoInfo': The face is not recognized`, () => {
+        const data = {
+            responses: [{}]
+        }
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.getPhotoInfo(data);
+    });
+
+    it(`should call 'getPhotoInfo': The face is recognized`, () => {
+        const data = {
+            responses: [{
+                faceAnnotations: [{
+                    fdBoundingPoly: {
+                        vertices: [{
+
+                        }]
+                    }
+                }]
+            }]
+        }
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.getPhotoInfo(data);
+    });
+
+    it(`if 'this.state.photoUrl && this.state.uploadEnd'`, () => {
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance()
+        photoUploadInstance.setState({
+            photoUrl: "TEST_PHOTO_URL",
+            uploadEnd: true
+        });
+    });
+
+    it(`should call 'drawInCanvas'`, () => {
+        const photoInfo = null;
+        const n = 0;
+        const copiedImg = null;
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
     });
 });
