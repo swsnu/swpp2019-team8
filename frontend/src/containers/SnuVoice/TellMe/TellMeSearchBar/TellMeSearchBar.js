@@ -12,10 +12,12 @@ import {
     FormText
 } from 'reactstrap';
 
+import SearchIcon from '../../../../img/search_button.png';
+
 export class TellMeSearchBar extends Component {
     state = {
         searchInput: '',
-        formText: '',
+        // formText: '',
     }
 
     onKeyPress = event => {
@@ -61,7 +63,7 @@ export class TellMeSearchBar extends Component {
 
     render() {
         return (
-            <div className="SearchBar">
+            <div className="searchBar">
                 <InputGroup>
                     <Input
                         type="text"
@@ -69,18 +71,20 @@ export class TellMeSearchBar extends Component {
                         autoFocus
                         onKeyPress={this.onKeyPress}
                         onChange={this.onChangeSearchInput}
+                        className="search_input"
                     ></Input>
-                    <FormText >
+                    {/* <FormText >
                         {this.state.formText}
-                    </FormText>
+                    </FormText> */}
                     <InputGroupAddon addonType="append">
                         <Button
                             type="button"
                             id="search_confirm_button"
                             onClick={this.onClickSearchConfirmButton}
                             disabled={this.state.searchInput === '' || this.state.searchInput === undefined}
+                            className="search_confirm_button"
                         >
-                            Search
+                        <img src={SearchIcon} style={{height: 35}} />
               </Button>
                     </InputGroupAddon>
                 </InputGroup>

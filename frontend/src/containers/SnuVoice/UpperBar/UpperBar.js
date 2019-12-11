@@ -89,6 +89,7 @@ export class UpperBar extends Component {
         ) {
             this.setState({ location: "hear_us" });
         }
+
         // if (/localhost:3000\/tell_me/.exec(window.location.href)) {
         //     this.setState({ location: "tell_me" });
         // } else if (
@@ -170,6 +171,7 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_in_button"
                                 onClick={this.toggleModal}
+                                className="sign_in_button"
                             >
                                 SIGN-IN
                             </Button>
@@ -177,6 +179,7 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_up_button"
                                 onClick={this.onClickSignUpButton}
+                                className="sign_up_button"
                             >
                                 SIGN-UP
                             </Button>

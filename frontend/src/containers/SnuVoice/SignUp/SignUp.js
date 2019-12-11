@@ -5,6 +5,7 @@ import { withRouter } from "react-router";
 import * as actionCreator from "../../../store/actions/index";
 
 import terms from "./term";
+import MajorList from "../../../components/Signup/majorList";
 
 import {
 	Button,
@@ -72,112 +73,7 @@ class SignUp extends Component {
 			{ value: "socialSciences", label: "Social Sciences" },
 			{ value: "veterinaryMedicine", label: "Veterinary Medicine" }
 		], // ex() 공대, 농생대
-		majorList: {
-			all: [{ value: "-" }],
-			agricultureAndLifeSciences: [
-				{ value: "agricultureAndLifeSciences" }
-			],
-			businessAdministration: [{ value: "businessAdministration" }],
-			education: [
-				{ value: "education", label: "Education" },
-				{
-					value: "koreanLanguageEducation",
-					label: "Korean Language Education"
-				},
-				{ value: "englishEducation", label: "English Education" },
-				{
-					value: "germanLanguageEducation",
-					label: "German Language Education"
-				},
-				{
-					value: "frenchLanguageEducation",
-					label: "French Language Education"
-				},
-				{
-					value: "socialStudiesEducation",
-					label: "Social Studies Education"
-				},
-				{ value: "historyEducation", label: "History Education" },
-				{ value: "geographyEducation", label: "Geography Education" },
-				{ value: "ethicsEducation", label: "Ethics Education" },
-				{ value: "mathematicsEducation", label: "Mathematics Education" },
-				{ value: "physicsEducation", label: "Physics Education" },
-				{ value: "chemistryEducation", label: "Chemistry Education" },
-				{ value: "biologyEducation", label: "Biology Education" },
-				{
-					value: "earthScienceEducation",
-					label: "Earth Science Education"
-				},
-				{ value: "physicalEducation", label: "Physical Education" }
-			],
-			engineering: [{ value: "-" }, { value: "engineering" }],
-			fineArts: [
-				{ value: "orientalPainting", label: "Oriental Painting" },
-				{ value: "painting", label: "Painting" },
-				{ value: "sculpture", label: "Sculpture" },
-				{ value: "craftsAndDesign", label: "Crafts and Design" },
-			],
-			humanities: [
-				{ value: "koreanLanguageAndLiterature", label: "Korean Language and Literature" },
-				{ value: "chineseLanguageAndLiterature", label: "Chinese Language and Literature" },
-				{ value: "englishLanguageAndLiterature", label: "English Language and Literature" },
-				{ value: "frenchLanguageAndLiterature", label: "French Language and Literature" },
-				{ value: "germanLanguageAndLiterature", label: "German Language and Literature" },
-				{ value: "russianLanguageAndLiterature", label: "Russian Language and Literature" },
-				{ value: "hispanicLanguageAndLiterature", label: "Hispanic Language and Literature" },
-				{ value: "linguistics", label: "Linguistics" },
-				{ value: "asianLanguagesAndCivilizations", label: "Asian Languages and Civilizations" },
-				{ value: "koreanHistory", label: "Korean History" },
-				{ value: "asianHistory", label: "Asian History" },
-				{ value: "westernHistory", label: "Western History" },
-				{ value: "archaeologyAndArtHistory", label: "Archaeology and Art History" },
-				{ value: "philosophy", label: "Philosophy" },
-				{ value: "religiousStudies", label: "Religious Studies" },
-				{ value: "aesthetics", label: "Aesthetics" },
-			],
-			humanEcology: [
-				{ value: "consumerAndChildStudies", label: "Consumer and Child Studies" },
-				{ value: "foodAndNutrition", label: "Food and Nutrition" },
-				{ value: "textilesMerchandisingAndFashionDesign", label: "Textiles, Merchandising and Fashion Design" },
-			],
-			liberalStudies: [{ value: "liberalStudies" }],
-			medicine: [
-				{ value: "preliminaryMedicine", label: "Preliminary Medicine" },
-				{ value: "medicine", label: "Medicine" }
-			],
-			music: [
-				{ value: "vocalMusic", label: "Vocal Music" },
-				{ value: "composition", label: "Composition" },
-				{ value: "instrumentalMusic", label: "Instrumental Music" },
-				{ value: "koreanMusic", label: "Korean Music" }
-			],
-			naturalSciences: [
-				{ value: "mathematicalSciences", label: "Mathematical Sciences" },
-				{ value: "statistics", label: "Statistics" },
-				{ value: "physicsAndAstronomy", label: "Physics and Astronomy" },
-				{ value: "chemistry", label: "Chemistry" },
-				{ value: "biologicalSciences", label: "Biological Sciences" },
-				{ value: "earthAndEnvironmentalSciences", label: "Earth and Environmental Sciences" },
-			],
-			nursing: [
-				{ value: "nursing", label: "Nursing" },
-			],
-			socialSciences: [
-				{ value: "politicalScienceAndInternationalRelations", label: "Political Science and International Relations" },
-				{ value: "economics", label: "Economics" },
-				{ value: "sociology", label: "Sociology" },
-				{ value: "anthropology", label: "Anthropology" },
-				{ value: "psychology", label: "Psychology" },
-				{ value: "geography", label: "Geography" },
-				{ value: "socialWelfare", label: "Social Welfare" },
-				{ value: "communication", label: "Communication" },
-			],
-			pharmacy: [{ value: "pharmacy" }],
-			veterinaryMedicine: [
-				{ value: "preliminaryVeterinaryMedicine", label: "Preliminary Veterinary Medicine" },
-				{ value: "veterinaryMedicine", label: "Veterinary Medicine" },
-			],
-		},
+		majorList: MajorList, //NOSONAR
 		checkInputResult: {
 			// 회원가입을 위한 정보들이 알맞게 들어왔는지 확인
 			agreeToTerms: false,
