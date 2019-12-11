@@ -216,14 +216,15 @@ describe('<PhotoUpload />', () => {
         wrapper.simulate('change', { target: { files: [photoFile] } });
     });
 
-    // it(`should call 'img.onload'`, () => {
-    // });
-
-    it(`should call 'fileUpload'`, () => {
+    it(`should call 'fileUpload'`, async () => {
         const content = 'TEST_CONTENT';
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        photoUploadInstance.fileUpload(content);
+        try {
+            await photoUploadInstance.fileUpload(content);
+        } catch (e) {
+            expect(true).toBe(true);
+        }
     });
 
     it(`should call 'getPhotoInfo': The face is not recognized`, () => {
@@ -261,12 +262,74 @@ describe('<PhotoUpload />', () => {
         });
     });
 
-    it(`should call 'drawInCanvas'`, () => {
-        const photoInfo = null;
+    it(`should call 'drawInCanvas'`, async () => {
+        let mocked = jest.fn();
+        let mockRefCanvas = {
+            current: {
+                getContext: '',
+                addEventListener: '',
+            }
+        }
+        let _getContext = {
+            clearRect: mocked,
+            drawImage: mocked
+        }
+        mockRefCanvas.current.getContext = jest.fn(() => {
+            return _getContext;
+        });
+        let event = {}
+        mockRefCanvas.current.addEventListener = jest.fn(event => {
+            return null;
+        })
+        React.createRef = jest.fn(() => {
+            return mockRefCanvas;
+        });
+        const photoInfo = "TEST_PHOTO_INFO";
         const n = 0;
-        const copiedImg = null;
+        const copiedImg = "TEST_COPIED_IMG";
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
+        await photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
+    });
+
+    it(`should call 'onClickPhotoConfirmButton'`, () => {
+        let mocked = jest.fn();
+        let mockRefCanvas = {
+            current: {
+                getContext: '',
+                addEventListener: '',
+                toBlob: '',
+            }
+        }
+        let _getContext = {
+            clearRect: mocked,
+            drawImage: mocked
+        }
+        mockRefCanvas.current.getContext = jest.fn(() => {
+            return _getContext;
+        });
+        mockRefCanvas.current.addEventListener = jest.fn(() => {
+            return null;
+        });
+        mockRefCanvas.current.toBlob = jest.fn(() => {
+            return null;
+        });
+        React.createRef = jest.fn(() => {
+            return mockRefCanvas;
+        });
+        const component = mount(photoUpload);
+        const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        photoUploadInstance.setState({
+            blurElements: [{
+                blur: true
+            }]
+        });
+        photoUploadInstance.onClickPhotoConfirmButton();
+        photoUploadInstance.setState({
+            blurElements: [{
+                blur: false
+            }]
+        });
+        photoUploadInstance.onClickPhotoConfirmButton();
     });
 });
