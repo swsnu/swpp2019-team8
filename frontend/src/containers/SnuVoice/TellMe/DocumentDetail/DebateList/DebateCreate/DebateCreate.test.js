@@ -6,7 +6,10 @@ import { DebateCreate, mapDispatchToProps, mapStateToProps } from './DebateCreat
 describe('<DebateCreate />', () => {
     let props;
     let mocked = jest.fn();
-    let mockHistory = { push: jest.fn() };
+    let mockHistory = { 
+        push: jest.fn(),
+        goBack : jest.fn()
+     };
     window.alert = jest.fn();
 
     beforeEach(() => {
@@ -48,19 +51,28 @@ describe('<DebateCreate />', () => {
     it('should onClickDebateConfirm works', () => {
         const component = shallow(<DebateCreate {...props}/>);
         component.instance().onClickDebateConfirmButton();
-        expect(mocked).toHaveBeenCalledTimes(1);
-    })
-
-    it('componentDidMount when user is signed in', async () => {
-        const component = shallow(<DebateCreate {...props} signIn={true}/>);
-        await component.instance().componentDidMount();
         expect(mocked).toHaveBeenCalledTimes(2);
     })
 
-    it('componentDidMount when user is not signed in', async () => {
-        const component = shallow(<DebateCreate {...props} history={mockHistory}/>);
-        await component.instance().componentDidMount();
+    it('ngOnInIt when user is signed in', async () => {
+        const component = await shallow(<DebateCreate {...props} signIn={true}/>);
+        expect(mocked).toHaveBeenCalledTimes(1);
+    })
+
+    it('ngOnInIt when user is not signed in', async () => {
+        const component = await shallow(<DebateCreate {...props} history={mockHistory}/>);
         expect(mockHistory.push).toHaveBeenCalledWith('/tell_me/documents/123/debates');
+        component.instance().setState({
+            signIn: true
+        })
+        await component.instance().ngOnInIt();
+        expect(mockHistory.push).toHaveBeenCalledTimes(3);
+    })
+
+    it('should onClickCancelButton works', async () => {
+        const component = await shallow(<DebateCreate {...props} history={mockHistory}/>);
+        component.instance().onClickDebateCancelButton();
+        expect(mockHistory.goBack).toHaveBeenCalledTimes(1);
     })
 
 })

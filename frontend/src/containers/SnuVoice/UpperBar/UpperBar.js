@@ -82,13 +82,21 @@ export class UpperBar extends Component {
 
     componentDidMount = () => {
         this.props.checkSignIn();
-        if (/^https:\/\/www.snuvoice.site\/tell_me/.exec(window.location.href)) {
+        if (/snuvoice.site\/tell_me/.exec(window.location.href)) {
             this.setState({ location: "tell_me" });
         } else if (
-            /^https:\/\/www.snuvoice.site\/hear_us/.exec(window.location.href)
+            /snuvoice.site\/hear_us/.exec(window.location.href)
         ) {
             this.setState({ location: "hear_us" });
         }
+
+        // if (/localhost:3000\/tell_me/.exec(window.location.href)) {
+        //     this.setState({ location: "tell_me" });
+        // } else if (
+        //     /localhost:3000\/hear_us/.exec(window.location.href)
+        // ) {
+        //     this.setState({ location: "hear_us" });
+        // }
     };
     render() {
         let upperBar = null;
@@ -125,7 +133,7 @@ export class UpperBar extends Component {
             searchBar = (
                 <Row className="sub_bar">
                     <Col className="navbuttons">
-                    <a
+                        <a
                             className="navbar-brand"
                             // type="button"
                             id="tell_me_button"
@@ -154,15 +162,16 @@ export class UpperBar extends Component {
         if (this.props.signIn === false) {
             upperBar = (
                 <div>
-                <div className="upperbar_top">
+                    <div className="upperbar_top">
                         <a className="logo" href="/">
-                        <img src={Logo} style={{ height: 60 }} />
+                            <img src={Logo} style={{ height: 60 }} alt="SNUVOICE logo" />
                         </a>
                         <div className="user_button">
                             <Button
                                 type="button"
                                 id="sign_in_button"
                                 onClick={this.toggleModal}
+                                className="sign_in_button"
                             >
                                 SIGN-IN
                             </Button>
@@ -170,33 +179,34 @@ export class UpperBar extends Component {
                                 type="button"
                                 id="sign_up_button"
                                 onClick={this.onClickSignUpButton}
+                                className="sign_up_button"
                             >
                                 SIGN-UP
                             </Button>
                         </div>
-                </div>
-                    <div className="upperbar_bottom">{searchBar}</div>
                     </div>
+                    <div className="upperbar_bottom">{searchBar}</div>
+                </div>
             );
         } else {
             upperBar = (
                 <div>
-                <div className="upperbar_top">
+                    <div className="upperbar_top">
                         <a href="/" className="logo">
-                        <img src={Logo} href="/" style={{ height: 60 }} />
+                            <img src={Logo} href="/" style={{ height: 60 }} alt="SNUVOICE logo" />
                         </a>
                         <div className="user_button">
                             <Button
                                 type="button"
                                 id="sign_out_button"
                                 onClick={this.onClickSignOutButton}
-                                >
+                            >
                                 SIGN-OUT
                             </Button>
                         </div>
-                </div>
+                    </div>
                     <div className="upperbar_bottom">{searchBar}</div>
-                                </div>
+                </div>
             );
         }
         return (

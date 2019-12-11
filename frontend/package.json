@@ -17,6 +17,7 @@
     "react-addons-transition-group": "^15.6.2",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
+    "react-facebook-share-link": "^1.0.4",
     "react-image-file-resizer": "^0.2.1",
     "react-marked-markdown": "^1.4.6",
     "react-native-mail": "^4.0.0",

@@ -22,6 +22,7 @@ describe('TellMe Reducer', () => {
             documentConflict: false,
             selectedPhoto: null,
             titlePhotoList: [],
+            photoDuplicate: null,
             contentPhotoList: []
         });
     });
@@ -45,6 +46,7 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             documentConflict: false,
             selectedPhoto: null,
+            photoDuplicate: null,
             titlePhotoList: [],
             contentPhotoList: []
         });
@@ -70,6 +72,7 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             documentConflict: false,
             selectedPhoto: null,
+            photoDuplicate: null,
             titlePhotoList: [],
             contentPhotoList: []
         });
@@ -96,7 +99,8 @@ describe('TellMe Reducer', () => {
             selectedDebate: null,
             documentConflict: false,
             titlePhotoList: [],
-            contentPhotoList: []
+            contentPhotoList: [],
+            photoDuplicate: null
         });
     });
 
@@ -117,6 +121,7 @@ describe('TellMe Reducer', () => {
             contentDocuments: [],
             documentConflict: false,
             titlePhotoList: [],
+            photoDuplicate: null,
             contentPhotoList: []
         })
     });
@@ -133,6 +138,7 @@ describe('TellMe Reducer', () => {
             documentDuplicate: false,
             selectedPhoto: null,
             debates: [],
+            photoDuplicate: null,
             selectedDebate: null,
             debateComments: [1, 2],
             titleDocuments: [],
@@ -160,6 +166,7 @@ describe('TellMe Reducer', () => {
             titleDocuments: [],
             contentDocuments: [],
             documentConflict: false,
+            photoDuplicate: null,
             titlePhotoList: [],
             contentPhotoList: []
         })
@@ -178,6 +185,7 @@ describe('TellMe Reducer', () => {
             debates: [],
             selectedDebate: null,
             debateComments: [],
+            photoDuplicate: null,
             selectedPhoto: null,
             titleDocuments: [],
             contentDocuments: [],
@@ -199,6 +207,7 @@ describe('TellMe Reducer', () => {
             documentDuplicate: false,
             debates: 1,
             selectedPhoto: null,
+            photoDuplicate: null,
             selectedDebate: null,
             debateComments: [],
             titleDocuments: [],
@@ -222,6 +231,7 @@ describe('TellMe Reducer', () => {
             debates: [],
             selectedPhoto: 1,
             selectedDebate: null,
+            photoDuplicate: null,
             debateComments: [],
             titleDocuments: [],
             contentDocuments: [],

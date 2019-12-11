@@ -28,13 +28,11 @@ class SnuVoice extends Component {
         return (
             <div>
                 <UpperBar />
+                <div className="temp_blue_bar">
+                </div>
             <div className="SnuVoice">
-                
-                <br/>
-                <Row>
+                                <Row>
                     <Col>
-                        <br/>
-                        <h1><b>SNU VOICE</b></h1>
                         <h4>
                             <i><b>COLLECTING THE STUDENTS&apos; VOICE</b></i>
                         </h4>
