@@ -228,13 +228,35 @@ describe('<PhotoUpload />', () => {
         });
     });
 
-    it(`should call 'drawInCanvas'`, () => {
-        const photoInfo = null;
+    it(`should call 'drawInCanvas'`, async () => {
+        let mocked = jest.fn();
+        let mockRefCanvas = {
+            current: {
+                getContext: '',
+                addEventListener: '',
+            }
+        }
+        let _getContext = {
+            clearRect: mocked,
+            drawImage: mocked
+        }
+        mockRefCanvas.current.getContext = jest.fn(() => {
+            return _getContext;
+        });
+        mockRefCanvas.current.addEventListener = jest.fn(() => {
+            return null;
+        })
+        React.createRef = jest.fn(() => {
+            return mockRefCanvas;
+        });
+        const photoInfo = "TEST_PHOTO_INFO";
         const n = 0;
-        const copiedImg = null;
+        const copiedImg = "TEST_COPIED_IMG";
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
-        photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
+        await photoUploadInstance.drawInCanvas(photoInfo, n, copiedImg);
+
+
     });
 
     // it(`should call 'onClickPhotoConfirmButton'`, () => {
