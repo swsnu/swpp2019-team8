@@ -6,7 +6,6 @@ import { withRouter } from "react-router";
 
 import {
 	Button,
-	Table,
 	TabContent,
 	TabPane,
 	Nav,
