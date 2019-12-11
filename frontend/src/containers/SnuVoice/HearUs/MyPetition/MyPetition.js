@@ -133,7 +133,7 @@ export class MyPetition extends Component {
 				<div className="MyPetition">
 					<br />
 					{/* <SearchBar/> */}
-					<h1>{this.props.selectedUser.nickname}`s Petitions</h1>
+					<h1>{this.props.selectedUser.nickname}&apos;s Petitions</h1>
 					{tabButtons}
 					<TabContent activeTab={this.state.selectedTab}>
 						<TabPane tabId='Author'>
