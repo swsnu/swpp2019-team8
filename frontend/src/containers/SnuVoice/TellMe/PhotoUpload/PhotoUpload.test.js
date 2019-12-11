@@ -205,7 +205,15 @@ describe('<PhotoUpload />', () => {
 
     it(`should call 'getPhotoInfo': The face is recognized`, () => {
         const data = {
-            responses: [{}]
+            responses: [{
+                faceAnnotations: [{
+                    fdBoundingPoly: {
+                        vertices: [{
+
+                        }]
+                    }
+                }]
+            }]
         }
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
