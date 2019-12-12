@@ -76,7 +76,7 @@ class TellMe extends Component {
           </Col>
           <Col className="tellme_right" md={2}>
             <div className="recent_documents">
-              <b>Recently Edited</b>
+              <h6><b>Recently Edited</b></h6>
             {documentList}
             </div>
           </Col>
