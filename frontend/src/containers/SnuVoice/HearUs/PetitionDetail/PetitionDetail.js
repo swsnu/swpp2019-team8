@@ -54,6 +54,15 @@ class PetitionDetail extends Component {
     }
 
     onClickCommentConfirmButton = async () => {
+        if (!this.props.signIn) {
+            alert("You must be logged in to vote");
+            return;
+        }
+        else if (this.props.storedPetitionComments
+            .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0) {
+            alert("You already voted for this petition");
+            return;
+        }
         await this.props.onPetitionVote(this.props.match.params.petition_url);
         await this.props.onStorePetitionComment(this.props.match.params.petition_url, this.state.comment);
         window.location.reload(false);
@@ -268,8 +277,6 @@ class PetitionDetail extends Component {
                         <textarea id="tw_contents" placeholder="Write your comment within 50 characters."
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
-                            disabled={!this.props.signIn || this.props.storedPetitionComments
-                                .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 
