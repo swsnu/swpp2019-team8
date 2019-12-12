@@ -222,14 +222,13 @@ class DocumentEdit extends Component {
                                 <div className="document">
                                     <br />
                                     <h1>
-                                        <div className="title">
+                                        <div className="document_edit_title">
                                             {
                                                 this.props.match.params
                                                     .document_title
                                             }
                                         </div>
                                     </h1>
-                                    <br />
                                     <hr />
                                     <div dangerouslySetInnerHTML={{ __html: markdownHtml }} className="preview_content"/>
                                 </div>
