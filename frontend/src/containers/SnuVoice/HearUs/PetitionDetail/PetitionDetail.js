@@ -381,6 +381,7 @@ class PetitionDetail extends Component {
 
                             <div className="Reply_area_write">
                                 <textarea
+                                    className="Reply_textarea"
                                     id="tw_contents"
                                     placeholder="Write your comment within 50 characters."
                                     onChange={event =>
