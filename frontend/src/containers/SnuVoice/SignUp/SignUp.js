@@ -499,7 +499,7 @@ class SignUp extends Component {
 				!inputResult.department ||
 				!inputResult.major ||
 				!inputResult.studentStatus) {
-				if (message.length != 0) {
+				if (message.length !== 0) {
 					message += ', status';
 				} else {
 					message += 'status';

@@ -533,7 +533,7 @@ export class InfoEdit extends Component {
         } else {
             status_detail = '';
         }
-        if (this.props.modifiedUser != '') {
+        if (this.props.modifiedUser !== '') {
             if (this.props.modifiedUser.status === "student") {
                 detailedInfo = (
                     <div className="detailedInfo">
