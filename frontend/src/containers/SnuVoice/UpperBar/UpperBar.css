@@ -12,7 +12,6 @@
     display: flex;
     justify-content: center;
     align-content: center;
-    /* position: relative; */
     width: 100%;
 }
 
@@ -33,6 +32,7 @@
 }
 
 .sub_bar {
+    width: 100%;
     min-height: 50px;
     align-content: center;
 }
