@@ -101,6 +101,29 @@ class DocumentDetail extends Component {
             markdownHtml = md.render(content);
         }
 
+        let editButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            null :
+            (
+                <Button
+                    type="button"
+                    id="document_edit_button"
+                    onClick={this.onClickDocumentEditButton}>
+                    Edit
+                </Button>
+            );
+
+        let debateButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            null :
+            (
+                <Button
+                    className="debateButton"
+                    onClick={this.onClickDocumentDebateButton}>
+                    Debate
+                </Button>
+            );
+
         let relatedPetition = this.props.match.params.document_title === "TELL-ME:기본방침" ||
             this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
             null :
@@ -126,20 +149,8 @@ class DocumentDetail extends Component {
                             Back
                         </Button>
                         <h1 className="document_detail_title">{title}</h1>
-                        <Button
-                            type="button"
-                            id="document_edit_button"
-                            className="edit_button"
-                            onClick={this.onClickDocumentEditButton}
-                        >
-                            Edit
-                        </Button>
-                        <Button
-                            className="debateButton"
-                            onClick={this.onClickDocumentDebateButton}
-                        >
-                            Debate
-                        </Button>
+                        {editButton}
+                        {debateButton}
                     </div>
                     <div className="content">
                         <br />
