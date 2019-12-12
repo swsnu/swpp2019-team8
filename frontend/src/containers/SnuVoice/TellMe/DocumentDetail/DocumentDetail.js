@@ -102,7 +102,8 @@ class DocumentDetail extends Component {
         }
 
         let editButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
-            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ||
+            this.props.match.params.document_title === "HEAR-US:도움말" ?
             null :
             (
                 <Button
@@ -114,7 +115,8 @@ class DocumentDetail extends Component {
             );
 
         let debateButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
-            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ||
+            this.props.match.params.document_title === "HEAR-US:도움말" ?
             null :
             (
                 <Button
@@ -125,7 +127,8 @@ class DocumentDetail extends Component {
             );
 
         let relatedPetition = this.props.match.params.document_title === "TELL-ME:기본방침" ||
-            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
+            this.props.match.params.document_title === "TELL-ME:문법 도움말" ||
+            this.props.match.params.document_title === "HEAR-US:도움말" ?
             null :
             (
                 <div className="related_petition">
