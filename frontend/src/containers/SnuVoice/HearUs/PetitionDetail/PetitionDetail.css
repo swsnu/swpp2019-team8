@@ -3,13 +3,20 @@
     padding-left: 8%;
     padding-right: 8%;
     padding-top: 2%;
-    padding-bottom: 4%;
+    padding-bottom: 2%;
     font-family: "Malgun Gothic", sans-serif;
 }
 
 .petitionsView_info {
-    padding-left: 8%;
-    padding-right: 8%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: #f2f4f7;
+    border-style: solid;
+    border-color: #c0c0c0;
+    border-width: 1px;
+    border-radius: 7px;
+    padding-top: 2%;
+    padding-bottom: 2%;
 }
 
 .petitionsView_title {
@@ -35,8 +42,9 @@
 }
 
 .pet_det_votes {
-    font-style: oblique;
     font-size: xx-large;
+    color: #003686;
+    font-weight: 900;
 }
 
 .petitionsView_writeHead {
@@ -66,17 +74,25 @@ h4 {
 #tw_contents {
     resize:none;
     width: 700px;
+    border: none;
+    padding: 10px;
+
 }
 
 #comment_confirm_button {
     position: relative;
-        bottom: 20px;
+        bottom: 30px;
         left:10px;
+    height: 70px;
+    width: 100px;
+    background-color: #003686;
+    border-radius: 0;
+    border: none;
 }
-
+/* 
 #petition_cancel_button {
     float:left;
-}
+} */
 
 
 .list_numbering_button {
@@ -87,7 +103,56 @@ h4 {
 
 .View_share_icons {
     display: inline !important;
+    position: relative;
 }
 
 .Reply {
+    text-align: center !important;
+    padding-left: 2%;
+    padding-left: 2%;
+}
+
+.Reply_area_write {
+    background-color: #f2f4f7;
+    border-style: solid;
+    border-color: #c0c0c0;
+    border-width: 1px;
+    padding-top: 2%;
+    height: 110px;
+    align-self: center !important;
+    
+}
+
+.Reply_area_agree {
+    text-align: left;
+}
+
+.Kakao {
+    padding:0% !important;
+    background: none !important;
+    border: none !important;
+}
+
+.kakao_icon {
+    height: 35px !important;
+
+}
+
+.share_url {
+    position: absolute;
+    left: 50px;
+    height: 35px;
+    width: 35px;
+    font-size: 11px !important;
+    padding-left: 6px !important;
+}
+
+.share_kakao {
+    position: absolute;
+    left: 100px;
+}
+
+.share_facebook {
+    position: absolute;
+    left: 150px;
 }
