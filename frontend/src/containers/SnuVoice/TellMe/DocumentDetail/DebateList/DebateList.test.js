@@ -51,9 +51,11 @@ describe('<DebateList /> ', () => {
         const component = shallow(<DebateList {...props} />)
         const top = component.find('.DebateList')
         expect(top.length).toBe(1)
+
     })
 
     it('should onClickButton funcs works', async () => {
+        window.alert = jest.fn();
         const component = shallow(<DebateList {...props} signIn={true} history={historyMock}/>)
         await component.instance().onClickNewDebateButton()
         expect(historyMock.push).toHaveBeenCalledWith('/tell_me/documents/1/debates/create')
@@ -68,6 +70,21 @@ describe('<DebateList /> ', () => {
         }
         const component = shallow(<DebateList {...props}/>)
         expect(true).toBe(true)
+    })
+
+    it('should show debates if they exist', () => {
+        const component = shallow(<DebateList {...props}/>)
+        const debateList = component.find('.debate_list')
+        expect(debateList.length).toBe(1)
+    })
+
+    it('should not show debates if they do not exist', () => {
+        props = {
+            debates: null
+        }
+        const component = shallow(<DebateList {...props}/>)
+        const debateList = component.find('.debate_list')
+        expect(debateList.length).toBe(1)
     })
 
     it('should componentDidMount works', () => {
@@ -95,7 +112,6 @@ describe('mapDispatchToProps', () => {
 })
 
 describe('mapStateToProps', () => {
-
     it ('test props', () => {
         const initialState = {
             tm : {
