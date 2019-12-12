@@ -28,7 +28,7 @@ import "./SignUp.css";
 
 class SignUp extends Component {
 	state = {
-		signIn : '',
+		signIn: '',
 		email: "",
 		verifyCode: "",
 		password: "",
@@ -334,12 +334,12 @@ class SignUp extends Component {
 		}
 		if (selectedStatus.student === false) {
 			if (selectedStatus.alumnus === true) {
-				studentId = '-';
+				studentId = '';
 				selectedDepartment = 'alumnus';
 				selectedMajor = 'alumnus'
 				selectedStudentStatus = 'alumnus';
 			} else {
-				studentId = '-';
+				studentId = '';
 				selectedDepartment = 'faculty';
 				selectedMajor = 'faculty'
 				selectedStudentStatus = 'faculty';
@@ -468,6 +468,8 @@ class SignUp extends Component {
 		// 회원가입 확인 + 추가 구현 예정
 		let inputResult = this.state.checkInputResult;
 		let signUp = true;
+		let message = '';
+		let agree = '';
 		for (let i in inputResult) {
 			if (inputResult[i] === false) signUp = false;
 		}
@@ -488,8 +490,25 @@ class SignUp extends Component {
 				confirmModalMessage: "회원 가입이 완료되었습니다."
 			});
 		} else {
+			if (!inputResult.agreeToTerms) {
+				agree = 'Please Agree To Terms\n'
+			}
+			if (!inputResult.gender) {
+				message += 'gender'
+			}
+			if (!inputResult.status ||
+				!inputResult.studentId ||
+				!inputResult.department ||
+				!inputResult.major ||
+				!inputResult.studentStatus) {
+				if (message.length != 0) {
+					message += ', status';
+				} else {
+					message += 'status';
+				}
+			}
 			this.setState({
-				confirmModalMessage: "다시 한 번 확인해주시기 바랍니다."
+				confirmModalMessage: agree + "Please Check " + message + " Again"
 			});
 		}
 		this.toggleConfirmModal();
@@ -498,7 +517,7 @@ class SignUp extends Component {
 	onClickBackButton = () => {
 		this.props.history.push("/");
 	};
-	
+
 	ngOnInIt = async () => {
 		if (this.state.signIn === '') {
 			await this.props.checkSignIn();
@@ -532,7 +551,7 @@ class SignUp extends Component {
 				this.state.selectedDepartment
 			].map((v, i) => {
 				return (
-					<option key={i} value={v.value} label={v.value}></option>
+					<option key={i} value={v.value} label={v.label}></option>
 				);
 			});
 
@@ -624,7 +643,10 @@ class SignUp extends Component {
 					toggle={this.toggleConfirmModal}
 					className="ConfirmModal"
 				>
-					<ModalBody>{this.state.confirmModalMessage}</ModalBody>
+					<ModalBody>
+						{this.state.confirmModalMessage}
+
+					</ModalBody>
 					<ModalFooter>
 						<Button onClick={this.toggleConfirmModal}>확인</Button>
 					</ModalFooter>
