@@ -25,34 +25,35 @@ class PetitionDetail extends Component {
             this.props.match.params.petition_url
         );
 
-        window.Kakao.init("41c0076be4855dfb7bac65638652b1f9");
-        window.Kakao.Link.createDefaultButton({
-            container: "#kakao-link-btn",
-            objectType: "feed",
-            content: {
-                title: this.props.selectedPetition.title,
-                description: "서울대학교 청원",
-                imageUrl:
-                    "https://user-images.githubusercontent.com/26313346/70518116-22fba300-1b7d-11ea-9e10-a4a41437fd09.png",
-                link: {
-                    mobileWebUrl: window.location.href,
-                    webUrl: window.location.href
-                }
-            },
-            social: {
-                likeCount: this.props.selectedPetition.votes
-            },
-            buttons: [
-                {
-                    title: "자세히 보기",
+        window.Kakao.init('41c0076be4855dfb7bac65638652b1f9');
+        if (this.props.selectedPetition.title && this.props.selectedPetition.votes) {
+            window.Kakao.Link.createDefaultButton({
+                container: '#kakao-link-btn',
+                objectType: 'feed',
+                content: {
+                    title: this.props.selectedPetition.title,
+                    description: '서울대학교 청원',
+                    imageUrl: 'https://user-images.githubusercontent.com/26313346/70518116-22fba300-1b7d-11ea-9e10-a4a41437fd09.png',
                     link: {
                         mobileWebUrl: window.location.href,
                         webUrl: window.location.href
                     }
-                }
-            ]
-        });
-    };
+                },
+                social: {
+                    likeCount: this.props.selectedPetition.votes,
+                },
+                buttons: [
+                    {
+                        title: '자세히 보기',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        }
+                    },
+                ]
+            });
+        }
+    }
 
     onClickCommentConfirmButton = async () => {
         await this.props.onPetitionVote(this.props.match.params.petition_url);
