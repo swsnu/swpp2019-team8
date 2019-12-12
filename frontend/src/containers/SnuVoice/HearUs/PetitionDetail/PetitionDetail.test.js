@@ -172,14 +172,14 @@ describe('<PetitionDetail />', () => {
     });
 
 
-    it(`should call 'onClickPetitionCancelButton'`, async () => {
-        const spyHistoryPush = jest.spyOn(history, 'push')
-            .mockImplementation(path => { });
-        const component = await mount(petitionDetail);
-        const wrapper = component.find('#petition_cancel_button').at(0);
-        wrapper.simulate('click');
-        expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us');
-    });
+    // it(`should call 'onClickPetitionCancelButton'`, async () => {
+    //     const spyHistoryPush = jest.spyOn(history, 'push')
+    //         .mockImplementation(path => { });
+    //     const component = await mount(petitionDetail);
+    //     const wrapper = component.find('#petition_cancel_button').at(0);
+    //     wrapper.simulate('click');
+    //     expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us');
+    // });
 
 
     it ('should onClickDownload csvbutton works', () => {

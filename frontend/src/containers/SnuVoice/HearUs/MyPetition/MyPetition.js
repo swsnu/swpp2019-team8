@@ -18,6 +18,8 @@ import Petition from "../../../../components/Petition/petition";
 import PetitionTableHeader from "../../../../components/Petition/petitionTableHeader";
 import * as actionCreator from "../../../../store/actions/index";
 
+import "./MyPetition.css";
+
 export class MyPetition extends Component {
 	state = {
 		selectedCategory: "All",
@@ -128,12 +130,11 @@ export class MyPetition extends Component {
 
 
 		return (
-			<div className="TopOfPage" >
+			<div>
 				<Upperbar />
 				<div className="MyPetition">
 					<br />
-					{/* <SearchBar/> */}
-					<h1>{this.props.selectedUser.nickname}`s Petitions</h1>
+					<h1><b>{this.props.selectedUser.nickname}</b>&apos;s Petitions</h1>
 					{tabButtons}
 					<TabContent activeTab={this.state.selectedTab}>
 						<TabPane tabId='Author'>

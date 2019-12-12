@@ -14,13 +14,14 @@ import {
 	Label,
 	Input,
 	InputGroup,
+	InputGroupAddon,
 	FormFeedback,
 	Col,
 	Row,
 	Container,
 	Modal,
 	ModalBody,
-	ModalFooter
+	ModalFooter,
 } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
@@ -624,7 +625,11 @@ class SignUp extends Component {
 		return (
 			<div className="SignUp">
 				<UpperBar />
+				<div className="temp_blue_bar">
+                </div>
+				<br/>
 				<h1>Sign Up</h1>
+				<br/>
 				<Modal
 					isOpen={this.state.verifyModal}
 					toggle={this.toggleVerifyModal}
@@ -678,6 +683,7 @@ class SignUp extends Component {
 											this.state.checkInputInvalid.email
 										}
 									></Input>
+									<InputGroupAddon addonType="append">
 									<Button
 										type="button"
 										id="verify_button"
@@ -686,9 +692,10 @@ class SignUp extends Component {
 											!this.state.checkInputResult.email
 										}
 										onClick={this.onClickVerifyButton}
-									>
+										>
 										Verify
                                     </Button>
+										</InputGroupAddon>
 									<FormFeedback>
 										{this.state.formFeedbackMessage.email}
 									</FormFeedback>
@@ -852,6 +859,7 @@ class SignUp extends Component {
 								</Row>
 							</FormGroup>
 							{status_detail}
+							<br/>
 							<Button
 								type="button"
 								id="back_button"

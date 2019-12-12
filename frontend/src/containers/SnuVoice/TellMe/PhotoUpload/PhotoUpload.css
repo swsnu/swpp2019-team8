@@ -14,6 +14,7 @@
     text-align: left;
 }
 
-.photoTitle {
+.photo_title {
     color: black;
-}
+    word-wrap: break-word;
+} 

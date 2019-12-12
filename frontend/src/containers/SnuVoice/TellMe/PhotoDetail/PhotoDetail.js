@@ -13,6 +13,8 @@ import hljs from 'highlight.js';
 
 import 'highlight.js/styles/atom-one-dark.css';
 
+import './PhotoDetail.css';
+
 export class PhotoDetail extends Component {
 
     onClickPhotoCancelButton = () => {
@@ -59,7 +61,7 @@ export class PhotoDetail extends Component {
                     <div className="photoDetail">
                         <br />
                         <br />
-                        <h1 className="title">{title}</h1>
+                        <h1 className="photo_title">{title}</h1>
                         <hr />
                         <img src={"/api/tellme/media/" + photo} alt="Uploaded img" />
 
@@ -70,7 +72,7 @@ export class PhotoDetail extends Component {
                             <Button onClick={this.onClickCopyURL}>URL 복사</Button>
                         </div>
                         <hr />
-                        <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
+                        <div className="photo_detail" dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                         <hr />
                         <Button
                             type="button"

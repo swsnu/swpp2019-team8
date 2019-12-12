@@ -451,9 +451,9 @@ class PhotoUpload extends Component {
                                 <div className="preview">
                                     <div className="photoInfo">
                                         <br />
-                                        <h1><div className="photoTitle">{this.state.photoTitle}</div></h1>
+                                        <h1><div className="photo_title">{this.state.photoTitle}</div></h1>
                                         <hr />
-                                        <MarkdownPreview value={this.state.photoContent} />
+                                        <MarkdownPreview value={this.state.photoContent} className="photo_detail"/>
                                     </div>
                                 </div>
                             </TabPane>

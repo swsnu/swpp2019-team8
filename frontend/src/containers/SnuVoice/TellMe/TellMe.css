@@ -1,9 +1,9 @@
-.TopOfPage {
+.TellMe_body {
     background-color: #f2f4f7;
     padding-top: 1%;
     padding-bottom: 1%;
     padding-left: 5%;
-    padding-right: 5%;
+    padding-right: 2%;
     font-family: "Malgun Gothic", sans-serif;
 }
 
@@ -47,3 +47,29 @@
     background-color: #003686 !important;
     border-color: #003686 !important;
 }
+
+.tellme_right {
+    height: 400px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.recent_documents {
+    border: groove;
+    min-height: 100%;
+    padding-top: 4%;
+    background-color: white;
+    word-wrap: break-word;
+}
+
+.recent_document {
+    border-top-style: groove;
+    border-top-width: 1px;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 100%;
+    font-size: 13px;
+    text-align: left;
+}   

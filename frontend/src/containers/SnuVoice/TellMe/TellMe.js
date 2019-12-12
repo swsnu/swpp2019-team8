@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import * as actionCreator from '../../../store/actions/index';
 
-import { Button } from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
 
@@ -27,12 +27,25 @@ class TellMe extends Component {
   }
 
   render() {
+    let documentList = this.props.documentList.map((document, i) => {
+      return (
+        <div className="recent_document" key={i}>
+          <div key={i}>
+            <a href={'/tell_me/documents/' + document.title} target="_blank" rel="noopener noreferrer">{document.title}</a>
+          </div>
+        </div>
+
+      )
+    })
+    
     return (
       <div className="TellMe">
         <UpperBar />
-        <div className="TopOfPage">
+        <div className="TellMe_body">
           <div />
-          <div className="TellMeContent">
+          <Row>
+
+          <Col className="TellMeContent">
             <br />
             <div className="TellMeText">
               <h1>Tell Me</h1>
@@ -50,7 +63,7 @@ class TellMe extends Component {
               type="button"
               id="create_button"
               onClick={this.onClickCreateButton}
-            >
+              >
               Create
             </Button>
             <Button
@@ -58,10 +71,17 @@ class TellMe extends Component {
               id="photo_button"
               className="tellme_photo_button"
               onClick={this.onClickPhotoButton}
-            >
+              >
               Upload Photo
           </Button>
-          </div>
+          </Col>
+          <Col className="tellme_right" md={2}>
+            <div className="recent_documents">
+              <h6><b>Recently Edited</b></h6>
+            {documentList}
+            </div>
+          </Col>
+</Row>
         </div>
       </div>
     );
