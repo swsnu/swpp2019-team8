@@ -8,28 +8,20 @@ import PetitionCreate from './PetitionCreate';
 import { getMockStore } from '../../../../test-utils/mocks';
 import { history } from '../../../../store/store';
 import * as actionCreators from '../../../../store/actions/hearus';
+import * as usrActions from '../../../../store/actions/user';
 
 const stubInitialState = {
-    agreeToTerms: false,
-    petitionTitle: '',
-    categoryList: [
-        { value: 'All' },
-        { value: 'human rights' },
-        { value: 'welfare' },
-    ],
-    selectedCategory: '',
-    petitionContent: '',
-    petitionLink: '',
-    petitionLinkList: [],
-    petitionTag: '',
-    petitionTagList: [],
+    signIn : true
 }
 
 const mockStore = getMockStore(stubInitialState);
 
 describe('<PetitionCreate />', () => {
     let petitioncreate;
+    let spyCheckSignIn;
+    let spyHistoryPush;
 
+    window.alert = jest.fn();
     beforeEach(() => {
         petitioncreate = (
             <Provider store={mockStore}>
@@ -40,6 +32,10 @@ describe('<PetitionCreate />', () => {
                 </ConnectedRouter>
             </Provider>
         );
+        spyCheckSignIn = jest.spyOn(usrActions, 'checkSignIn')
+            .mockImplementation(() => { return dispatch => {}} );
+        spyHistoryPush = jest.spyOn(history, 'push')
+            .mockImplementation(() => {})            
     });
 
     it('should render PetitionCreate', () => {
@@ -88,6 +84,9 @@ describe('<PetitionCreate />', () => {
         wrapper = component.find('#petition_category_select').at(0);
         wrapper.simulate('change',{ target: {value: "human rights" }  });
         expect(petitionCreateInstance.state.selectedCategory).toEqual("human rights");
+        wrapper = component.find('#agree_to_terms_checkbox').at(0);
+        wrapper.simulate('change');
+        expect(petitionCreateInstance.state.agreeToTerms).toEqual(true);
     })
 
     
@@ -117,5 +116,29 @@ describe('<PetitionCreate />', () => {
         wrapper.simulate('click');
         expect(spyPostPetition).toHaveBeenCalledTimes(1);
     });
+
+    it('should ngOnInit works', async () => {
+        let inState = {
+            signIn : false
+        };
+        let reMockStore = getMockStore(inState);
+        petitioncreate = (
+            <Provider store={reMockStore}>
+                <ConnectedRouter history={history}>
+                    <Switch>
+                        <Route path='/' exact component={PetitionCreate} />
+                    </Switch>
+                </ConnectedRouter>
+            </Provider>
+        );
+        const component = await mount(petitioncreate);
+        const petitionCreateInstance = component.find(PetitionCreate.WrappedComponent).instance();
+        expect(spyHistoryPush).toHaveBeenCalledTimes(2);
+        petitionCreateInstance.setState({ 
+            signIn: true
+        })
+        await petitionCreateInstance.ngOnInit();
+        expect(spyHistoryPush).toHaveBeenCalledTimes(4);
+    })
 
 })

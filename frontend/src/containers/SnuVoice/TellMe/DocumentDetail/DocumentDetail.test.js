@@ -14,13 +14,17 @@ import * as actionCreators from '../../../../store/actions/hearus';
 
 
 import hljs from 'highlight.js';
+import PetitionDetail from '../../HearUs/PetitionDetail/PetitionDetail';
 
 const stubInitialState = {
     selectedDocument: {
         title: 'SELECTED_DOCUMENT_TEST_TITLE',
         content: 'SELECTED_DOCUMENT_TEST_CONTENT',
     },
-    petition_list_by_document: []
+    petition_list_by_document: [{
+        id: 1,
+        url : 1
+    }]
 };
 
 const mockStore = getMockStore(stubInitialState);
@@ -48,6 +52,8 @@ describe('<DocumentDetail />', () => {
         spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
     });
+
+    afterEach(() => jest.clearAllMocks())
 
     it(`should render DocumentDetail`, async () => {
         const component = await mount(documentDetail);
@@ -94,6 +100,27 @@ describe('<DocumentDetail />', () => {
         edit.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledTimes(2);
     });
+
+    it(`should call 'prev, next buttons work'`, async () => {
+        const component = await mount(documentDetail);
+        const prev = component.find('#prev_button').at(0);
+        const next = component.find('#next_button').at(0);
+        const instance = component.find(DocumentDetail.WrappedComponent).instance();
+        instance.setState({
+            selectedNumber: -1
+        });
+        next.simulate('click');
+        expect(instance.state.selectedNumber).toBe(0);
+        prev.simulate('click');
+        expect(instance.state.selectedNumber).toBe(-1);        
+    });
+
+    it('should onClickDocumentDebateButton works', async () => {
+        const component = await mount(documentDetail);
+        const instance = component.find(DocumentDetail.WrappedComponent).instance();
+        instance.onClickDocumentDebateButton();
+        expect(spyHistoryPush).toHaveBeenCalledTimes(1);
+    })
 });
 
 describe('highLightCode', () => {

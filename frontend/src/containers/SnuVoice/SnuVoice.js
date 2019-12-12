@@ -28,6 +28,8 @@ class SnuVoice extends Component {
         return (
             <div>
                 <UpperBar />
+                <div className="temp_blue_bar">
+                </div>
             <div className="SnuVoice">
                                 <Row>
                     <Col>

@@ -8,6 +8,7 @@ urlpatterns = [
     path('document/<str:document_title>/', views.document_title),
     path('document/list/latest/', views.document_recent),
     path('photo/', views.photo),
+    path('check/<str:photo_title>/', views.check_photo_duplicate),
     path('photo/<str:photo_title>/', views.photo_title),
     path('photo/<str:photo_title>/related/', views.photo_related_title),
     path('document/<str:document_title>/debate/', views.debates_by_document),

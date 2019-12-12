@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actionCreator from '../../../../store/actions/index'
 
-import SearchButton from '../../../../img/search_button.png';
-
 import {
     Button,
     Input,
@@ -14,10 +12,12 @@ import {
     FormText
 } from 'reactstrap';
 
+import SearchIcon from '../../../../img/search_button.png';
+
 export class TellMeSearchBar extends Component {
     state = {
         searchInput: '',
-        formText: '',
+        // formText: '',
     }
 
     onKeyPress = event => {
@@ -63,28 +63,28 @@ export class TellMeSearchBar extends Component {
 
     render() {
         return (
-            <div className="SearchBar">
+            <div className="searchBar">
                 <InputGroup>
                     <Input
                         type="text"
                         id="search_input"
-                        className="search_input"
                         autoFocus
                         onKeyPress={this.onKeyPress}
                         onChange={this.onChangeSearchInput}
+                        className="search_input"
                     ></Input>
-                    <FormText >
+                    {/* <FormText >
                         {this.state.formText}
-                    </FormText>
+                    </FormText> */}
                     <InputGroupAddon addonType="append">
                         <Button
                             type="button"
                             id="search_confirm_button"
                             onClick={this.onClickSearchConfirmButton}
-                            className="search_button"
                             disabled={this.state.searchInput === '' || this.state.searchInput === undefined}
+                            className="search_confirm_button"
                         >
-                            <img src={SearchButton} style={{height: 20}}></img>
+                        <img src={SearchIcon} style={{height: 35}} />
               </Button>
                     </InputGroupAddon>
                 </InputGroup>

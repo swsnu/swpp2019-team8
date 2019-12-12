@@ -36,14 +36,13 @@
     text-align: left;
 }
 
-.CreateButton {
+.tellme_create_button {
     float: right;
     background-color: #003686 !important;
     border-color: #003686 !important;
-
 }
 
-.photoButton {
+.tellme_photo_button {
     float: right;
     background-color: #003686 !important;
     border-color: #003686 !important;

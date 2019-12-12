@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { Button, Table } from "reactstrap";
+import { Button } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
 import Category from "../../../components/Category/category";
@@ -150,22 +150,21 @@ export class HearUs extends Component {
       <div>
         <UpperBar />
         <div className="TopOfPage">
-          <br />
           <div className="HearUs">
+          <h1 className="title">Hear Us</h1>
             {/* <h1>Hear Us</h1>
             <br /> */}
             {buttons}
-          </div>
-          <br></br><br />
+          <br />
           <div className="Category">{category}</div>
           <br /><br /><br />
           <div className="Tables">
             <br />
-            <h5 className="headers"><b>Top 5 Votes</b></h5>
+            <h5 className="table_name"><b>Top 5 Votes</b></h5>
             <PetitionTableHeader/>
             {voteList}
             <br />
-            <h5 className="headers"><b>Latest 5</b></h5>
+            <h5 className="table_name"><b>Latest 5</b></h5>
             <PetitionTableHeader/>
             {deadlineList}
             <br />
@@ -175,10 +174,11 @@ export class HearUs extends Component {
             type="button"
             id="petition_list_button"
             onClick={this.onClickListButton}
-          >
+            >
             +
           </Button>
           <br />
+            </div>
         </div>
       </div>
     );

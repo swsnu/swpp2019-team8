@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import * as actionCreator from "../../../../store/actions/index";
 
-import SearchButton from '../../../../img/search_button.png';
-
 import { Button, Input, InputGroup, InputGroupAddon } from "reactstrap";
+
+import SearchIcon from "../../../../img/search_button.png";
 
 export class HearUsSearchBar extends Component {
     state = {
@@ -33,9 +33,8 @@ export class HearUsSearchBar extends Component {
             if (toSearch[i] !== " ") break;
             else input = toSearch.slice(0, i);
         }
-
-        if(input === '') return;
-        this.props.history.push('/hear_us/search/' + input);
+        if (input === "") return;
+        this.props.history.push("/hear_us/search/" + input);
         this.props.getPetitionByTitle(input);
     };
 
@@ -55,14 +54,11 @@ export class HearUsSearchBar extends Component {
                         <Button
                             type="button"
                             id="search_confirm_button"
-                            className="search_button"
-                            disabled={
-                                this.state.searchInput === "" ||
-                                this.state.searchInput === undefined
-                            }
+                            disabled={this.state.searchInput === "" || this.state.searchInput === undefined}
                             onClick={this.onClickSearchConfirmButton}
+                            className="search_confirm_button"
                         >
-                            <img src={SearchButton} style={{height: 20}}></img>
+                            <img src={SearchIcon} style={{ height: 35 }} />
                         </Button>
                     </InputGroupAddon>
                 </InputGroup>

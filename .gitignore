@@ -44,3 +44,4 @@ media/
 # added by swpp2019-team8
 package-lock.json
 yarn.lock
+dump.rdb
