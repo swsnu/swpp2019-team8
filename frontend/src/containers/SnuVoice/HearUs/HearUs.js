@@ -154,8 +154,10 @@ export class HearUs extends Component {
           <h1 className="title">Hear Us</h1>
             {/* <h1>Hear Us</h1>
             <br /> */}
+            <a className="hearushow" href="/tell_me/documents/HEAR-US:도움말">HEAR-US:도움말</a>
+            <br /><br />
             {buttons}
-          <br />
+          
           <div className="Category">{category}</div>
           <br /><br /><br />
           <div className="Tables">
