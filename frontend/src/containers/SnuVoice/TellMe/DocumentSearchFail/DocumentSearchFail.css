@@ -9,6 +9,7 @@
     padding: 3%;
     background-color: white;
     border-style: groove;
+    word-wrap: break-word;
 }
 
 .DocumentSearchFail_content_border {

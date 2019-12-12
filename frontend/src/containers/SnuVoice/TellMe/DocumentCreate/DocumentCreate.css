@@ -42,4 +42,11 @@ h2, h3, h4, h6 {
     padding-left: 5%; 
 }
 
+.preview_content {
+    word-wrap: break-word;
+}
+
+.preview_title {
+    word-wrap: break-word;
+}
 

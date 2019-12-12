@@ -111,6 +111,12 @@ def petition_petitionurl(request, petition_url):
             petition = Petition.objects.get(url=petition_url)
         except Petition.DoesNotExist:
             return HttpResponse(status=404)
+
+        duplicate_chk = PetitionComment.objects.filter(
+            author=request.user, petition=petition)
+        if duplicate_chk.exists():
+            return HttpResponse(status=200)
+
         petition.votes = petition.votes + 1
         petition.save()
         ret_petition = model_to_dict(petition)
@@ -139,17 +145,18 @@ def petition_comment_user(request):
         dict_to_return = []
         for comment in ret_petition:
             temp = {
-                'status' : comment.petition.status,
-                'title' : comment.petition.title,
-                'category' : comment.petition.category,
+                'status': comment.petition.status,
+                'title': comment.petition.title,
+                'category': comment.petition.category,
                 'end_date': comment.petition.end_date,
-                'votes' : comment.petition.votes,
-                'url' : comment.petition.url
+                'votes': comment.petition.votes,
+                'url': comment.petition.url
             }
             dict_to_return.append(temp)
         return JsonResponse(dict_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
+
 
 def petition_comment(request, petition_url):
     if request.method == 'GET':
@@ -167,6 +174,12 @@ def petition_comment(request, petition_url):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponseBadRequest()
         comment_petition = Petition.objects.get(url=petition_url)
+
+        duplicate_chk = PetitionComment.objects.filter(
+            author=request.user, petition=comment_petition)
+        if duplicate_chk.exists():
+            return HttpResponse(status=201)
+
         comment = PetitionComment(
             author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
         comment.save()

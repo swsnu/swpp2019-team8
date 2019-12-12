@@ -165,22 +165,21 @@ class DocumentEdit extends Component {
                     <TabContent activeTab={this.state.documentState}>
                         <TabPane tabId="write" className="inputTab">
                             <br />
-                            <h1>
-                                <div className="title">
+                            <h1 className="title">
                                     {this.props.match.params.document_title}
-                                </div>
                             </h1>
                             <hr />
                             <br />
                             <Form>
                                 <Row>
                                     <Col>
-                                        <h4>Current</h4>
-                                        <Card>
+                                            <h4>Current</h4>
+                                        <Card className="current_content" style={{width: 500}}>
                                             <div
                                                 dangerouslySetInnerHTML={{
                                                     __html: current
                                                 }}
+                                                
                                             />
                                         </Card>
                                     </Col>
@@ -193,6 +192,7 @@ class DocumentEdit extends Component {
                                                 id="document_content_textarea"
                                                 placeholder="content"
                                                 defaultValue={content}
+                                                className="edit_content"
                                                 onChange={event =>
                                                     this.setState({
                                                         newDocumentContent:
@@ -231,7 +231,7 @@ class DocumentEdit extends Component {
                                     </h1>
                                     <br />
                                     <hr />
-                                    <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
+                                    <div dangerouslySetInnerHTML={{ __html: markdownHtml }} className="preview_content"/>
                                 </div>
                             </div>
                         </TabPane>

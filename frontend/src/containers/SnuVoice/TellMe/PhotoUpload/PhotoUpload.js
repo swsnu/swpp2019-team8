@@ -148,7 +148,6 @@ class PhotoUpload extends Component {
             this.setState({ uploadEnd: false, blurElements: [], photoFile: file, photoFileName: file.name, photoUrl: reader.result });
             const imageData = reader.result.split(",")[1];
             const img = new Image();
-            img.src = reader.result;
             img.onload = () => {
                 let copiedImg = new Image();
                 Resizer.imageFileResizer(
@@ -178,7 +177,8 @@ class PhotoUpload extends Component {
                         console.log('num_faces: ' + result.num_faces);
                         this.drawInCanvas(result.info, result.num_faces, copiedImg);
                     });
-            };
+            }
+            img.src = reader.result;
         }
 
         if (file) {
@@ -404,7 +404,8 @@ class PhotoUpload extends Component {
 
         let $imagePreview = (!this.state.photoUrl) ? (<div className="noPhoto">There is no image to preview</div>) :
             (this.state.uploadEnd) ? (<div></div>) :
-                (<img ref={this.refImg} src={this.state.photoUrl} onLoad={this.onImgLoad} alt="Loaded img" />);
+                (<img id="uploaded_image" ref={this.refImg} src={this.state.photoUrl}
+                    onLoad={this.onImgLoad} alt="Loaded img" />);
 
         let $canvas = (this.state.photoUrl && this.state.uploadEnd) ?
             (<canvas ref={this.refCanvas} width={this.state.canvasWidth} height={this.state.canvasHeight} />) : (<div></div>);
