@@ -14,8 +14,12 @@
     padding-bottom: 3%;
 }
 
+.hearushow {
+    float:right;
+}
+
 .UserOptions {
-    float: right;
+    float: right; 
 }
 
 .Category {

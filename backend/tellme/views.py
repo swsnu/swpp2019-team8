@@ -24,7 +24,7 @@ def document(request):
             document_date = timezone.now()
             if len(req_data) != 2:
                 return HttpResponseBadRequest()
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         # unique check
         exist_document = [document for document in Document.objects.filter(
@@ -57,23 +57,21 @@ def document_title(request, document_title):
         for i in selected_document:
             if len(document_title) == len(i['title']):
                 unique = True
-        if unique == True:
-            response_dict = {
-                'selectedDocument': selected_document[0],
-                'unique': True
-            }
-            return JsonResponse(response_dict, safe=False)
-        else:
-            selected_document = [document for document in Document.objects.filter(
-                title__icontains=document_title).values()]
-            content_list = [document for document in Document.objects.filter(
-                content__icontains=document_title).values()]
-            response_dict = {
-                'unique': False,
-                'titleDocuments': selected_document,
-                'contentDocuments': content_list
-            }
-            return JsonResponse(response_dict, safe=False)
+                response_dict = {
+                    'selectedDocument': selected_document[0],
+                    'unique': True
+                }
+                return JsonResponse(response_dict, safe=False)
+        selected_document = [document for document in Document.objects.filter(
+            title__icontains=document_title).values()]
+        content_list = [document for document in Document.objects.filter(
+            content__icontains=document_title).values()]
+        response_dict = {
+            'unique': False,
+            'titleDocuments': selected_document,
+            'contentDocuments': content_list
+        }
+        return JsonResponse(response_dict, safe=False)
     elif request.method == 'PUT':
         try:
             req_data = json.loads(request.body.decode())
@@ -81,7 +79,7 @@ def document_title(request, document_title):
             document_content = req_data['content']
             document_version = req_data['version']
             document_date = timezone.now()
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         try:
             document = Document.objects.get(title=document_target)
@@ -98,16 +96,15 @@ def document_title(request, document_title):
                 'content': document.content,
                 'version': document.version,
                 'conflict': False,
-                            }
+            }
             return JsonResponse(response_dict, status=201)
-        else:
-            response_dict = {
-                'title': document.title,
-                'content': document.content,
-                'version': document.version,
-                'conflict': True,
-                }
-            return JsonResponse(response_dict, status=201)
+        response_dict = {
+            'title': document.title,
+            'content': document.content,
+            'version': document.version,
+            'conflict': True,
+        }
+        return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 
@@ -115,7 +112,7 @@ def document_title(request, document_title):
 def document_recent(request):
     if request.method == 'GET':
         document_list = [document for document in
-                            Document.objects.all().values('title', 'edit_date').order_by('-edit_date')]
+                         Document.objects.all().values('title', 'edit_date').order_by('-edit_date')]
         list_to_return = document_list[:10]
         return JsonResponse(list_to_return, safe=False)
     else:
@@ -130,6 +127,7 @@ def photo(request):
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
+
 
 def check_photo_duplicate(request, photo_title):
     if request.method == 'GET':
@@ -152,6 +150,7 @@ def check_photo_duplicate(request, photo_title):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+
 def photo_title(request, photo_title):
     if request.method == 'GET':
         try:
@@ -167,23 +166,26 @@ def photo_title(request, photo_title):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+
 def photo_related_title(request, photo_title):
     if request.method == 'GET':
         title_photo_list = [
             photo for photo in
-                Photo.objects.filter(title__icontains=photo_title).values('title')
+            Photo.objects.filter(title__icontains=photo_title).values('title')
         ]
         content_photo_list = [
             photo for photo in
-                Photo.objects.filter(content__icontains=photo_title).values('title')
+            Photo.objects.filter(
+                content__icontains=photo_title).values('title')
         ]
         dict_to_return = {
-            'titlePhotoList' : title_photo_list,
-            'contentPhotoList' : content_photo_list
+            'titlePhotoList': title_photo_list,
+            'contentPhotoList': content_photo_list
         }
         return JsonResponse(dict_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
+
 
 def debates_by_document(request, document_title):
     try:
@@ -213,7 +215,7 @@ def debates_by_document(request, document_title):
             debate_content = req_data['content']
             debate_author = request.user
 
-        except (KeyError, json.JSONDecodeError) as e:
+        except (KeyError, json.JSONDecodeError):
             return HttpResponseBadRequest(400)
 
         new_debate = Debate(document=debate_document, author=debate_author,
@@ -269,7 +271,7 @@ def debate_comments(request, debate_id):
             comment_author = request.user
             comment_content = req_data['comment']
             comment_date = datetime.datetime.now()
-        except (KeyError, json.JSONDecodeError) as e:
+        except (KeyError, json.JSONDecodeError):
             return HttpResponseBadRequest(400)
 
         new_debate_comment = DebateComment(
