@@ -53,10 +53,8 @@ def document_title(request, document_title):
     if request.method == 'GET':
         selected_document = [document for document in Document.objects.filter(
             title__istartswith=document_title, title__iendswith=document_title).values()]
-        unique = False
         for i in selected_document:
             if len(document_title) == len(i['title']):
-                unique = True
                 response_dict = {
                     'selectedDocument': selected_document[0],
                     'unique': True
