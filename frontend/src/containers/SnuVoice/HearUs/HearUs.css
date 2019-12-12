@@ -1,8 +1,10 @@
-
 .HearUs {
-    background-color: #f2f4f7;
-    padding-left: 8%;
-    padding-right: 8%;
+    background-color: white;
+    padding-left: 3%;
+    padding-right: 3%; 
+    border-style: groove;
+    padding-top: 3%;
+    padding-bottom: 3%;
 }
 
 .UserOptions {
@@ -14,11 +16,18 @@
 }
 
 .Tables {
-    background-color: white;
+    background-color: white !important;
     /* text-align: left; */
 }
 
 h5 {
     text-align: left;
-    padding-left: 15%;
+}
+
+.table_name {
+    padding-left: 5%;
+}
+
+.title {
+    padding-left: 5%;
 }

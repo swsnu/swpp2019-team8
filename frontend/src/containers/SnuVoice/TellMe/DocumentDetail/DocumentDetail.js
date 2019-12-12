@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
-import * as actionCreators from '../../../../store/actions/index';
+import * as actionCreators from "../../../../store/actions/index";
 
-import { Button } from 'reactstrap';
+import { Button } from "reactstrap";
 
-import { Remarkable } from 'remarkable';
-import hljs from 'highlight.js';
+import { Remarkable } from "remarkable";
+import hljs from "highlight.js";
 
-import 'highlight.js/styles/atom-one-dark.css';
+import "highlight.js/styles/atom-one-dark.css";
 
-import Upperbar from '../../UpperBar/UpperBar';
-import './DocumentDetail.css';
+import Upperbar from "../../UpperBar/UpperBar";
+import "./DocumentDetail.css";
 
 class DocumentDetail extends Component {
     state = {
@@ -21,20 +21,30 @@ class DocumentDetail extends Component {
     }
     componentDidMount = async () => {
         await this.props.onGetDocument(this.props.match.params.document_title);
-        await this.props.onGetPetitionList(this.props.match.params.document_title);
-    }
+        await this.props.onGetPetitionList(
+            this.props.match.params.document_title
+        );
+    };
 
     onClickDocumentCancelButton = () => {
         this.props.history.push("/tell_me");
     };
 
     onClickDocumentEditButton = () => {
-        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/edit');
-    }
+        this.props.history.push(
+            "/tell_me/documents/" +
+                this.props.match.params.document_title +
+                "/edit"
+        );
+    };
 
     onClickDocumentDebateButton = () => {
-        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title + '/debates');
-    }
+        this.props.history.push(
+            "/tell_me/documents/" +
+                this.props.match.params.document_title +
+                "/debates"
+        );
+    };
 
     render() {
         let title = '';
@@ -81,10 +91,10 @@ class DocumentDetail extends Component {
         if (this.props.selectedDocument) {
             title = this.props.selectedDocument.title;
             content = this.props.selectedDocument.content;
-            var md = new Remarkable('full', {
+            var md = new Remarkable("full", {
                 html: true,
                 typographer: true,
-                highlight: function (str, lang) {
+                highlight: function(str, lang) {
                     return highlightCode(str, lang);
                 }
             });
@@ -129,23 +139,37 @@ class DocumentDetail extends Component {
             <div>
                 <Upperbar />
                 <div className="DocumentDetail">
-                    <br /><br />
-                    <div className="Document_detail_upperbar">
+                    <div className="document_detail_upperbar">
                         <Button
                             type="button"
                             id="document_cancel_button"
+                            className="back_button"
                             onClick={this.onClickDocumentCancelButton}
-                        >
+                            >
                             Back
                         </Button>
-                        {editButton}
-                        {debateButton}
                         <h1 className="document_detail_title">{title}</h1>
+                        <Button
+                            type="button"
+                            id="document_edit_button"
+                            className="edit_button"
+                            onClick={this.onClickDocumentEditButton}
+                            >
+                            Edit
+                        </Button>
+                        <Button
+                            className="debateButton"
+                            onClick={this.onClickDocumentDebateButton}
+                            >
+                            Debate
+                        </Button>
                     </div>
-                    <br />
                     <div className="content">
                         <br />
-                        <div dangerouslySetInnerHTML={{ __html: markdownHtml }} />
+                        <div
+                            dangerouslySetInnerHTML={{ __html: markdownHtml }}
+                            className="document_content"
+                        />
                         <hr />
                         {relatedPetition}
                     </div>
@@ -159,8 +183,8 @@ export const mapStateToProps = state => {
     return {
         selectedDocument: state.tm.selectedDocument,
         petitionList: state.hu.petition_list_by_document
-    }
-}
+    };
+};
 
 export const mapDispatchToProps = dispatch => {
     return {
@@ -168,21 +192,29 @@ export const mapDispatchToProps = dispatch => {
             dispatch(actionCreators.getDocument(document_title)),
         onGetPetitionList: document_title =>
             dispatch(actionCreators.getPetitionByDocument(document_title))
-    }
-}
+    };
+};
 
 export function highlightCode(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
         try {
             return hljs.highlight(lang, str).value;
-        } catch (err) { console.log("Err") }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     try {
         return hljs.highlightAuto(str).value;
-    } catch (err) { console.log("Err") }
+    } catch (err) {
+        console.log(err);
+    }
 
-    return ''; // use external default escaping
+
+    return ""; // use external default escaping
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DocumentDetail));
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(DocumentDetail));

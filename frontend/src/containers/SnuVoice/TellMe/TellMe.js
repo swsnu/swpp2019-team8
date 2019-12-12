@@ -57,7 +57,7 @@ class TellMe extends Component {
             </div>
 
             <Button
-              className="CreateButton"
+              className="tellme_create_button"
               type="button"
               id="create_button"
               onClick={this.onClickCreateButton}
@@ -67,7 +67,7 @@ class TellMe extends Component {
             <Button
               type="button"
               id="photo_button"
-              className="photoButton"
+              className="tellme_photo_button"
               onClick={this.onClickPhotoButton}
             >
               Upload Photo
