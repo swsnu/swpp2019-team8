@@ -87,9 +87,9 @@ class PetitionList extends Component {
         )
         let petitionOrderButtons = (
             <ButtonGroup>
-                <Button type="button" id="top_votes_button" value="vote"
+                <Button type="button" id="top_votes_button" value="vote" className="subcategory_button"
                     onClick={this.onClickPetitionOrderButton}>Top Votes</Button>
-                <Button type="button" id="latest_button" value="latest"
+                <Button type="button" id="latest_button" value="latest" className="subcategory_button"
                     onClick={this.onClickPetitionOrderButton}>Latest</Button>
             </ButtonGroup>
         )
@@ -164,10 +164,10 @@ class PetitionList extends Component {
         let listNumberButtons = (
             <ButtonGroup>
                 <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1}
-                    onClick={this.onClickListPrevButton}>prev</Button>
+                    onClick={this.onClickListPrevButton}>Prev</Button>
                 {listNumbers}
                 <Button type="button" id="list_next_button" disabled={this.state.listNumber[0] + 5 > this.props.petitionList.length / 10 + 1}
-                    onClick={this.onClickListNextButton}>next</Button>
+                    onClick={this.onClickListNextButton}>Next</Button>
             </ButtonGroup>
         )
 
@@ -175,13 +175,10 @@ class PetitionList extends Component {
             <div>
 
                 <UpperBar />
-                <div className="TopOfPage">
-                    <br />
                     <div className="PetitionList">
-                        <h4>Petition List</h4>
-                        <br />
-                    </div>
-                    <br />
+                <div className="PetitionList_body">
+                        <h1 className="title">Hear Us</h1>
+                        <br/>
                     {petitionStateTabButtons}
                     <TabContent activeTab={this.state.petitionState}>
                         <TabPane tabId='ongoing'>
@@ -210,7 +207,7 @@ class PetitionList extends Component {
                             </div>
                             <br />
                             <br />
-                            <div className="tableButtons1">
+                            <div className="tableButtons2">
                                 <Category onClick={this.onClickCategoryButton} />
                             </div>
                             <br /><br /><br />
@@ -224,6 +221,7 @@ class PetitionList extends Component {
                     </TabContent>
 
 
+                    </div>
                 </div>
 
             </div>
