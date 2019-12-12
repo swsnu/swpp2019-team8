@@ -58,7 +58,7 @@ export class HearUsSearchBar extends Component {
                             onClick={this.onClickSearchConfirmButton}
                             className="search_confirm_button"
                         >
-                            <img src={SearchIcon} style={{ height: 35 }} />
+                            <img src={SearchIcon} style={{ height: 35 }} alt="Search icon"/>
                         </Button>
                     </InputGroupAddon>
                 </InputGroup>
