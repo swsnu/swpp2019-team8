@@ -95,27 +95,18 @@ describe('<InfoEdit />', () => {
     it('should ngOnInit works', async () => {
         let component = await shallow(<InfoEdit {...props} history={mockHistory} />);
         expect(mocked).toHaveBeenCalledTimes(1);
-
-        props = {
-            modifiedUser: {
-                id: 1,
-                email: 'dkwanm1',
-                gender: 'mial',
-                status: 'studet',
-                department: '1',
-                major: "1",
-                nickname: " 1",
-                studentId: '1',
-                studentStatus: "1"
-            },
-            signIn: false,
-            studentIdDuplicate: false,
-            checkSignIn: mocked,
-            getUser: mocked,
-            editUser: mocked,
-            checkStudentIdDuplicate: mocked
+        let modifiedUser = {
+            id: 1,
+            email: 'dkwanm1',
+            gender: 'mial',
+            status: 'studet',
+            department: '1',
+            major: "1",
+            nickname: " 1",
+            studentId: '1',
+            studentStatus: "1"
         }
-        component = await shallow(<InfoEdit {...props} history={mockHistory} />);
+        component = await shallow(<InfoEdit {...props} modifiedUser={modifiedUser} signIn={false} history={mockHistory} />);
         // await component.instance().ngOnInit();
         expect(mocked).toHaveBeenCalledTimes(3);
         expect(mockHistory.push).toHaveBeenCalledWith('/');
@@ -169,28 +160,19 @@ describe('<InfoEdit />', () => {
 
         component.instance().onChangeStudentIdInput({ target: { value: '123' } });
         expect(true).toBe(true);
-
-        props = {
-            modifiedUser: {
-                id: 1,
-                email: 'dkwanm1',
-                gender: 'mial',
-                status: 'student',
-                department: '1',
-                major: "1",
-                nickname: " 1",
-                studentId: '2018-15722',
-                studentStatus: "1"
-            },
-            signIn: true,
-            studentIdDuplicate: true,
-            checkSignIn: mocked,
-            getUser: mocked,
-            editUser: mocked,
-            checkStudentIdDuplicate: mocked
+        let modifiedUser= {
+            id: 1,
+            email: 'dkwanm1',
+            gender: 'mial',
+            status: 'student',
+            department: '1',
+            major: "1",
+            nickname: " 1",
+            studentId: '2018-15722',
+            studentStatus: "1"
         }
 
-        component = await shallow(<InfoEdit {...props} history={mockHistory} />);
+        component = await shallow(<InfoEdit {...props} studentIdDuplicate={true} modifiedUser={modifiedUser} history={mockHistory} />);
         await component.instance().componentDidMount();
 
         component.instance().onChangeStudentIdInput({ target: { value: '2018-15722' } });

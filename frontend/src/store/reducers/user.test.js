@@ -49,7 +49,11 @@ describe('user reducer', () => {
         expect(newState).toEqual({
             selectedUser: '',
             verifyCode: '',
-            signIn: false
+            signIn: false,
+            modifiedUser: '',
+            emailDuplicate: false,
+            nicknameDuplicate: false,
+            studentIdDuplicate: false
         })
     })
 
