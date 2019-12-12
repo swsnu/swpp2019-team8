@@ -124,8 +124,8 @@ def user_to_mod(request):
             user_email = json.loads(body)['email']
             user_password = json.loads(body)['password']
             user_status = json.loads(body)['status']
-            user_studentStatus = json.loads(body)['studentStatus']
-            user_studentId = json.loads(body)['studentId']
+            user_student_status = json.loads(body)['studentStatus']
+            user_student_id = json.loads(body)['studentId']
             user_departmet = json.loads(body)['department']
             user_major = json.loads(body)['major']
         except (KeyError, json.JSONDecodeError):
@@ -136,8 +136,8 @@ def user_to_mod(request):
         edit_user.status = user_status
         edit_user.department = user_departmet
         edit_user.major = user_major
-        edit_user.studentStatus = user_studentStatus
-        edit_user.studentId = user_studentId
+        edit_user.studentStatus = user_student_status
+        edit_user.studentId = user_student_id
         edit_user.save()
         request.user.password = edit_user.password
         user = authenticate(email=user_email, password=user_password)

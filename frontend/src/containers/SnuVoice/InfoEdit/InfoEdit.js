@@ -238,6 +238,7 @@ export class InfoEdit extends Component {
         let newDepartment = 'all';
         let selectedMajor = '';
         let selectedStudentStatus = '';
+        user.status = newDepartment;
         for (let i in selectedStatus) {
             if (i === event.target.value) {
                 selectedStatus[i] = event.target.checked;
@@ -246,7 +247,6 @@ export class InfoEdit extends Component {
         }
         if (selectedStatus.student === false) {
             if (selectedStatus.alumnus === true) {
-                studentId = '';
                 selectedStudentStatus = 'alumnus';
                 newDepartment = 'alumnus';
                 selectedMajor = 'alumnus'
