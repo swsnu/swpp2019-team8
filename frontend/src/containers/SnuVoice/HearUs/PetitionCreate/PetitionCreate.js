@@ -70,6 +70,8 @@ class PetitionCreate extends Component {
         this.forceUpdate();
     }
     onClickPetitionConfirmButton = () => {
+        let temp = window.confirm('You cannot edit anymore. Are you sure?');
+        if (!temp) return;
         let retLink = '';
         for (var i in this.state.petitionLinkList) {
             retLink += this.state.petitionLinkList[i] + ' ';
