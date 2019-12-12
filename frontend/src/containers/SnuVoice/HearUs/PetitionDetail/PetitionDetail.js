@@ -56,6 +56,15 @@ class PetitionDetail extends Component {
     }
 
     onClickCommentConfirmButton = async () => {
+        if (!this.props.signIn) {
+            alert("You must be logged in to vote");
+            return;
+        }
+        else if (this.props.storedPetitionComments
+            .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0) {
+            alert("You already voted for this petition");
+            return;
+        }
         await this.props.onPetitionVote(this.props.match.params.petition_url);
         await this.props.onStorePetitionComment(this.props.match.params.petition_url, this.state.comment);
         window.location.reload(false);
