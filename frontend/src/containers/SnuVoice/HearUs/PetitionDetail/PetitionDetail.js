@@ -57,9 +57,9 @@ class PetitionDetail extends Component {
         window.location.reload(false);
     }
 
-    onClickPetitionCancelButton = () => {
-        this.props.history.push('/hear_us');
-    }
+    // onClickPetitionCancelButton = () => {
+    //     this.props.history.push('/hear_us');
+    // }
 
     onClickDownloadCsvButton = () => {
         this.props.onGetCsvFile(this.props.match.params.petition_url);
@@ -180,10 +180,6 @@ class PetitionDetail extends Component {
             <div>
                 <UpperBar />
                 <div className="PetitionDetail">
-                    <br /><br />
-                    <Button type="button" id="petition_cancel_button"
-                        onClick={this.onClickPetitionCancelButton}>BACK</Button>
-                    <br /><br />
                     <div className="content">
                         <b><br />
                             <p className="petitionStatus_count">- {status} -</p>
@@ -212,21 +208,6 @@ class PetitionDetail extends Component {
                             <br />
                             <h6 className="View_write_link">Attached links: </h6>
                             {links}<br/>
-                            <h6 className="View_share">Share your voice: </h6>
-                            <div className="View_share_icons">
-                            <div id="kakao-link-btn">
-                                <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" alt="Share on Kakao Talk" />
-                            </div>
-                            <ShareLink link={window.location.href}>
-                                {_link => (
-                                    <a href={_link} target='_blank' rel="noopener noreferrer">
-                                        <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" alt="Share on Facebook" />
-                                    </a>
-                                )}
-                            </ShareLink>
-                            <input type="text" id="ShareUrl" value={window.location.href} />
-                            <Button onClick={this.onClickCopyURL}>URL 복사</Button>
-                                </div>
                         </div>
                         <hr />
                         <div className="petitionsView_statistic">
@@ -247,10 +228,26 @@ class PetitionDetail extends Component {
                             </div>
                             <br /><br />
                         </div>
-                    </div>
                                     <br/>
-                    <h3 className="Reply_area_agree">Currently<span className="pet_det_votes">{votes}</span> Votes</h3>
+                                    <div className="Reply">
+                    <h3 className="Reply_area_agree"><span className="pet_det_votes">{votes}</span> People Agree</h3>
 
+                            <div className="View_share_icons">
+                            <h6 className="View_share">Share your voice: </h6>
+
+                            {/* <Button > */}
+                                <img id="kakao-link-btn" src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" alt="Share on Kakao Talk" />
+                            {/* </Button> */}
+                            <ShareLink link={window.location.href}>
+                                {_link => (
+                                    <a href={_link} target='_blank' rel="noopener noreferrer">
+                                        <img src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png" width="32" alt="Share on Facebook" />
+                                    </a>
+                                )}
+                            </ShareLink>
+                            <input type="text" id="ShareUrl" value={window.location.href} />
+                            <Button onClick={this.onClickCopyURL}>URL 복사</Button>
+                                </div>
 
                     <div className="Reply_area_write">
                         <textarea id="tw_contents" placeholder="Write your comment within 50 characters."
@@ -258,15 +255,17 @@ class PetitionDetail extends Component {
                         <Button type="button" id="comment_confirm_button"
                             disabled={!this.props.signIn || this.props.storedPetitionComments
                                 .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
-                            onClick={this.onClickCommentConfirmButton}> Agree</Button>
+                                onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 
                     <div className="petitionsReply_Reply">
                         {comments}
                         <br />
                         {listNumberButtons}
+                                </div>
                     </div>
                     <br />
+                                </div>
                 </div >
             </div >
         );
