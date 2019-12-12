@@ -52,8 +52,8 @@ class PetitionDetail extends Component {
     }
 
     onClickCommentConfirmButton = async () => {
-        await this.props.onStorePetitionComment(this.props.match.params.petition_url, this.state.comment);
         await this.props.onPetitionVote(this.props.match.params.petition_url);
+        await this.props.onStorePetitionComment(this.props.match.params.petition_url, this.state.comment);
         window.location.reload(false);
     }
 
