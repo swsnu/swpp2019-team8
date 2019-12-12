@@ -232,44 +232,43 @@ export class InfoEdit extends Component {
 
     onChangeStatusRadioButton = event => {
         let user = this.state.modifiedUser;
-        let inputResult = this.state.checkInputResult;
         let selectedStatus = this.state.statusRadio;
+        let inputResult = this.state.checkInputResult;
         let studentId = '';
-        let selectedDepartment = 'all';
+        let newDepartment = 'all';
         let selectedMajor = '';
         let selectedStudentStatus = '';
         for (let i in selectedStatus) {
             if (i === event.target.value) {
-                inputResult.status = true;
                 selectedStatus[i] = event.target.checked;
+                inputResult.status = true;
             } else selectedStatus[i] = false;
         }
         if (selectedStatus.student === false) {
             if (selectedStatus.alumnus === true) {
                 studentId = '';
-                selectedDepartment = 'alumnus';
-                selectedMajor = 'alumnus'
                 selectedStudentStatus = 'alumnus';
+                newDepartment = 'alumnus';
+                selectedMajor = 'alumnus'
                 user.status = 'alumnus'
             } else {
-                studentId = '';
-                selectedDepartment = 'faculty';
+                newDepartment = 'faculty';
                 selectedMajor = 'faculty'
                 selectedStudentStatus = 'faculty';
                 user.status = 'faculty'
             }
             user.studentId = '';
+            inputResult.major = true;
             inputResult.studentId = true;
             inputResult.department = true;
-            inputResult.major = true;
             inputResult.studentStatus = true;
         } else {
-            selectedDepartment = 'all';
+            newDepartment = 'all';
             user.status = 'student';
             inputResult.studentId = false;
+            inputResult.studentStatus = false;
             inputResult.department = false;
             inputResult.major = false;
-            inputResult.studentStatus = false;
         }
         this.setState({
             modifiedUser: user,
@@ -277,7 +276,7 @@ export class InfoEdit extends Component {
             selectedStatus: event.target.value,
             checkInputResult: inputResult,
             studentId: studentId,
-            selectedDepartment: selectedDepartment,
+            selectedDepartment: newDepartment,
             selectedMajor: selectedMajor,
             selectedStudentStatus: selectedStudentStatus
         });
@@ -432,11 +431,11 @@ export class InfoEdit extends Component {
             this.setState({
                 modifiedUser: {
                     'email': String(this.props.modifiedUser.email),
-                    'status': String(this.props.modifiedUser.status),
-                    'gender': String(this.props.modifiedUser.gender),
-                    'studentStatus': String(this.props.modifiedUser.studentStatus),
                     'department': String(this.props.modifiedUser.department),
+                    'status': String(this.props.modifiedUser.status),
+                    'studentStatus': String(this.props.modifiedUser.studentStatus),
                     'major': String(this.props.modifiedUser.major),
+                    'gender': String(this.props.modifiedUser.gender),
                     'studentId': String(this.props.modifiedUser.studentId),
                     'nickname': String(this.props.modifiedUser.nickname),
                     'password': ''
@@ -462,7 +461,7 @@ export class InfoEdit extends Component {
                 this.state.selectedDepartment
             ].map((v, i) => {
                 return (
-                    <option key={i} value={v.value} label={v.label}></option>
+                    <option key={i} label={v.label} value={v.value}></option>
                 );
             });
             status_detail = (
@@ -470,11 +469,11 @@ export class InfoEdit extends Component {
                     <FormGroup>
                         <Input
                             type="text"
-                            id="student_id_input"
                             placeholder="STUDENT ID"
+                            id="student_id_input"
                             onChange={this.onChangeStudentIdInput}
-                            valid={this.state.checkInputResult.studentId}
                             invalid={this.state.checkInputInvalid.studentId}
+                            valid={this.state.checkInputResult.studentId}
                         ></Input>
                         <FormFeedback>
                             {this.state.formFeedbackMessage.studentId}
@@ -486,8 +485,8 @@ export class InfoEdit extends Component {
                                 <Input
                                     type="radio"
                                     name="student_radio"
-                                    id="student_undergrad_radio"
                                     value="undergrad"
+                                    id="student_undergrad_radio"
                                     onChange={this.onChangeStudentRadioButton}
                                 ></Input>
                                 UNDERGRAD
