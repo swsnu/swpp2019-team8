@@ -62,6 +62,14 @@ class PetitionList extends Component {
         else this.props.getPetitionByTitle(this.props.match.params.petition_title)
     }
 
+    onClickCreateButton = () => {
+        this.props.history.push('/hear_us/create')
+    }
+
+    onClickMyPetitionButton = () => {
+        this.props.history.push('/hear_us/my_petition')
+    }
+
 
 
 
@@ -170,6 +178,17 @@ class PetitionList extends Component {
                     onClick={this.onClickListNextButton}>Next</Button>
             </ButtonGroup>
         )
+        let buttons = '';
+        if (this.props.signIn) {
+            buttons = (
+                <div className="userOptions">
+                    <Button type="button" id="create_button"
+                        onClick={this.onClickCreateButton}>NEW</Button>
+                    <Button type="button" id="my_petition_button"
+                        onClick={this.onClickMyPetitionButton}>MINE</Button>
+                </div>
+            )
+        }
 
         return (
             <div>
@@ -240,7 +259,8 @@ export const mapDispatchToProps = dispatch => {
 export const mapStateToProps = state => {
     return {
         selectedUser: state.usr.selectedUser,
-        petitionList: state.hu.petition_list
+        petitionList: state.hu.petition_list,
+        signIn: state.usr.signIn
     }
 }
 

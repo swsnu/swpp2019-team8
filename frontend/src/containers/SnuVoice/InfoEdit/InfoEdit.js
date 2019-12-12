@@ -452,16 +452,16 @@ export class InfoEdit extends Component {
         let usingModal = '';
 
         if (this.state.statusRadio["student"]) {
-            const departmentList = this.state.departmentList.map((v, i) => {
-                return (
-                    <option key={i} value={v.value} label={v.label}></option>
-                );
-            });
             const majorList = this.state.majorList[
                 this.state.selectedDepartment
             ].map((v, i) => {
                 return (
                     <option key={i} label={v.label} value={v.value}></option>
+                );
+            });
+            const departmentList = this.state.departmentList.map((v, i) => {
+                return (
+                    <option key={i} value={v.value} label={v.label}></option>
                 );
             });
             status_detail = (
@@ -631,14 +631,12 @@ export class InfoEdit extends Component {
                     <FormGroup row>
                         <Label>NEW PASSWORD</Label>
                         <Input
-                            type="password"
                             id="password_input"
+                            type="password"
                             placeholder="PASSWORD"
-                            onChange={this.onChangePasswordInput}
                             valid={this.state.checkInputResult.password}
-                            invalid={
-                                this.state.checkInputInvalid.password
-                            }
+                            invalid={this.state.checkInputInvalid.password}
+                            onChange={this.onChangePasswordInput}
                         ></Input>
                         <FormFeedback>
                             {this.state.formFeedbackMessage.password}
@@ -647,24 +645,15 @@ export class InfoEdit extends Component {
                     <FormGroup row>
                         <Label>PASSWORD-CONFIRM</Label>
                         <Input
-                            type="password"
                             id="password_confirm_input"
+                            type="password"
                             placeholder="PASSWORD CONFIRMATION"
+                            valid={this.state.checkInputResult.passwordConfirm}
+                            invalid={this.state.checkInputInvalid.passwordConfirm}
                             onChange={this.onChangePasswordConfirmInput}
-                            valid={
-                                this.state.checkInputResult
-                                    .passwordConfirm
-                            }
-                            invalid={
-                                this.state.checkInputInvalid
-                                    .passwordConfirm
-                            }
                         ></Input>
                         <FormFeedback>
-                            {
-                                this.state.formFeedbackMessage
-                                    .passwordConfirm
-                            }
+                            {this.state.formFeedbackMessage.passwordConfirm}
                         </FormFeedback>
                     </FormGroup>
 

@@ -17,3 +17,7 @@
     float: right;
     border-radius: 20px !important;
 }
+
+.ConfirmModal {
+    white-space: pre;
+}
