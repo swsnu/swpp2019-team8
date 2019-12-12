@@ -292,7 +292,37 @@ describe('<SignUp/>', () => {
         const component =await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickSignUpConfirmButton()
-        expect(signUpComponent.state.confirmModalMessage).toBe('다시 한 번 확인해주시기 바랍니다.')
+        expect(signUpComponent.state.confirmModalMessage).toBe('Please Agree To Terms\nPlease Check gender, status Again');
+
+        signUpComponent.setState({
+            checkInputResult : {
+                gender : true,
+                agreeToTerms: true,
+                status: false,
+                studentId: false,
+                department: false,
+                major: false,
+                studentStatus: false
+            }
+        })
+
+        await signUpComponent.onClickSignUpConfirmButton()
+        expect(signUpComponent.state.confirmModalMessage).toBe('Please Check status Again');
+
+        signUpComponent.setState({
+            checkInputResult : {
+                gender : false,
+                agreeToTerms: true,
+                status: true,
+                studentId: true,
+                department: true,
+                major: true,
+                studentStatus: true
+            }
+        })
+
+        await signUpComponent.onClickSignUpConfirmButton()
+        expect(signUpComponent.state.confirmModalMessage).toBe('Please Check gender Again');
 
     })
 

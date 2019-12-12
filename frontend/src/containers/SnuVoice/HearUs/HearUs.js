@@ -149,8 +149,8 @@ export class HearUs extends Component {
     return (
       <div>
         <UpperBar />
-        <div className="TopOfPage">
-          <div className="HearUs">
+        <div className="HearUs">
+          <div className="HearUs_body">
           <h1 className="title">Hear Us</h1>
             {/* <h1>Hear Us</h1>
             <br /> */}

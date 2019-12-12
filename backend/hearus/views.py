@@ -11,6 +11,7 @@ from secrets import token_urlsafe
 
 from django.forms.models import model_to_dict
 from django.utils import timezone
+from django.db import transaction
 from datetime import timedelta
 import json
 
@@ -107,14 +108,21 @@ def petition_petitionurl(request, petition_url):
         return JsonResponse(ret_petition, safe=False)
     # put: 1.votes++ 2.change status
     elif request.method == 'PUT':
-        try:
-            petition = Petition.objects.get(url=petition_url)
-        except Petition.DoesNotExist:
-            return HttpResponse(status=404)
-        petition.votes = petition.votes + 1
-        petition.save()
-        ret_petition = model_to_dict(petition)
-        return JsonResponse(ret_petition, status=200)
+        with transaction.atomic():
+            try:
+                petition = Petition.objects.get(url=petition_url)
+            except Petition.DoesNotExist:
+                return HttpResponse(status=404)
+
+            duplicate_chk = PetitionComment.objects.filter(
+                author=request.user, petition=petition)
+            if duplicate_chk.exists():
+                return HttpResponse(status=200)
+
+            petition.votes = petition.votes + 1
+            petition.save()
+            ret_petition = model_to_dict(petition)
+            return JsonResponse(ret_petition, status=200)
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 
@@ -139,17 +147,18 @@ def petition_comment_user(request):
         dict_to_return = []
         for comment in ret_petition:
             temp = {
-                'status' : comment.petition.status,
-                'title' : comment.petition.title,
-                'category' : comment.petition.category,
+                'status': comment.petition.status,
+                'title': comment.petition.title,
+                'category': comment.petition.category,
                 'end_date': comment.petition.end_date,
-                'votes' : comment.petition.votes,
-                'url' : comment.petition.url
+                'votes': comment.petition.votes,
+                'url': comment.petition.url
             }
             dict_to_return.append(temp)
         return JsonResponse(dict_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
+
 
 def petition_comment(request, petition_url):
     if request.method == 'GET':
@@ -158,44 +167,51 @@ def petition_comment(request, petition_url):
             petition=comment_petition.id).values().order_by('-date')]
         return JsonResponse(comment_list, safe=False)
     elif request.method == 'POST':
-        if not request.user.is_authenticated:
-            return HttpResponse(status=401)
-        try:
-            body = request.body.decode()
-            comment_comment = json.loads(body)['comment']
-            comment_date = timezone.now()
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponseBadRequest()
-        comment_petition = Petition.objects.get(url=petition_url)
-        comment = PetitionComment(
-            author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
-        comment.save()
-        if(comment_petition.votes >= 4 and comment_petition.status == "preliminary"):
-            comment_petition.status = "ongoing"
-            comment_petition.save()
-            if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
-                os.makedirs(os.path.join(
-                    './media/graph/'+str(comment_petition.id)))
-            plot_graph(comment_petition.id)
-        student_id = request.user.studentId[0:4]
-        file_location = './stat/' + str(comment_petition.id) + '.csv'
-        stat = pd.read_csv(file_location)
-        df = pd.DataFrame({
-            'voteDate': [str(comment_date.year) + '-' + str(comment_date.month) + '-' + str(comment_date.day)],
-            'status': [request.user.status],
-            'degree': [request.user.studentStatus],
-            'studentId': [student_id],
-            'gender': [request.user.gender],
-            'department': [request.user.department],
-            'major': [request.user.major]
-        })
-        index = ['voteDate', 'status', 'degree',
-                 'studentId', 'gender', 'department', 'major']
-        df = stat.append(df, sort=False, ignore_index=True)
-        df.to_csv(file_location, encoding="utf-8",
-                  columns=index)
-        response_dict = model_to_dict(comment)
-        return JsonResponse(response_dict, status=201)
+        with transaction.atomic():
+            if not request.user.is_authenticated:
+                return HttpResponse(status=401)
+            try:
+                body = request.body.decode()
+                comment_comment = json.loads(body)['comment']
+                comment_date = timezone.now()
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponseBadRequest()
+            comment_petition = Petition.objects.get(url=petition_url)
+
+            duplicate_chk = PetitionComment.objects.filter(
+                author=request.user, petition=comment_petition)
+            if duplicate_chk.exists():
+                return HttpResponse(status=201)
+
+            comment = PetitionComment(
+                author=request.user, petition=comment_petition, comment=comment_comment, date=comment_date)
+            comment.save()
+            if(comment_petition.votes >= 4 and comment_petition.status == "preliminary"):
+                comment_petition.status = "ongoing"
+                comment_petition.save()
+                if not(os.path.isdir('./media/graph/'+str(comment_petition.id))):
+                    os.makedirs(os.path.join(
+                        './media/graph/'+str(comment_petition.id)))
+                plot_graph(comment_petition.id)
+            student_id = request.user.studentId[0:4]
+            file_location = './stat/' + str(comment_petition.id) + '.csv'
+            stat = pd.read_csv(file_location)
+            df = pd.DataFrame({
+                'voteDate': [str(comment_date.year) + '-' + str(comment_date.month) + '-' + str(comment_date.day)],
+                'status': [request.user.status],
+                'degree': [request.user.studentStatus],
+                'studentId': [student_id],
+                'gender': [request.user.gender],
+                'department': [request.user.department],
+                'major': [request.user.major]
+            })
+            index = ['voteDate', 'status', 'degree',
+                     'studentId', 'gender', 'department', 'major']
+            df = stat.append(df, sort=False, ignore_index=True)
+            df.to_csv(file_location, encoding="utf-8",
+                      columns=index)
+            response_dict = model_to_dict(comment)
+            return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 

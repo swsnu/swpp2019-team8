@@ -12,8 +12,12 @@ describe('user reducer', () => {
         })
         expect(newState).toEqual({
             selectedUser: '',
+            modifiedUser: '',
             verifyCode: '',
-            signIn: false
+            signIn: false,
+            emailDuplicate: false,
+            nicknameDuplicate: false,
+            studentIdDuplicate: false,
         })
     })
 
@@ -25,8 +29,12 @@ describe('user reducer', () => {
         })
         expect(newState).toEqual({
             selectedUser: '1234',
+            modifiedUser: '',
             verifyCode: '',
-            signIn: true
+            signIn: true,
+            emailDuplicate: false,
+            nicknameDuplicate: false,
+            studentIdDuplicate: false,
         })
     })
 
@@ -49,6 +57,7 @@ describe('user reducer', () => {
         const newState = userReducer(undefined, {
             type: actionTypes.GET_USER,
             selectedUser: '123',
+            modifiedUser: '',
             verifyCode: '12',
             emailDuplicate: false,
             nicknameDuplicate: false,
@@ -60,7 +69,8 @@ describe('user reducer', () => {
             signIn: false,
             emailDuplicate: false,
             nicknameDuplicate: false,
-            studentIdDuplicate: false
+            studentIdDuplicate: false,
+            modifiedUser: '',
         })
     })
 
@@ -77,7 +87,8 @@ describe('user reducer', () => {
             signIn: false,
             emailDuplicate: false,
             nicknameDuplicate: false,
-            studentIdDuplicate: false
+            studentIdDuplicate: false,
+            modifiedUser: '',
         })
     })
 
@@ -108,7 +119,8 @@ describe('user reducer', () => {
             signIn: false,
             emailDuplicate: true,
             nicknameDuplicate: false,
-            studentIdDuplicate: false
+            studentIdDuplicate: false,
+            modifiedUser: ''
         })
 
         newState = userReducer(undefined, {
@@ -120,6 +132,7 @@ describe('user reducer', () => {
             verifyCode: '',
             signIn: false,
             emailDuplicate: false,
+            modifiedUser: '',
             nicknameDuplicate: true,
             studentIdDuplicate: false
         })
@@ -132,6 +145,7 @@ describe('user reducer', () => {
             selectedUser: '',
             verifyCode: '',
             signIn: false,
+            modifiedUser: '',
             emailDuplicate: false,
             nicknameDuplicate: false,
             studentIdDuplicate: true
@@ -148,6 +162,7 @@ describe('user reducer', () => {
             selectedUser: '',
             verifyCode: 123,
             signIn: false,
+            modifiedUser: '',
             emailDuplicate: false,
             nicknameDuplicate: false,
             studentIdDuplicate: false
@@ -157,16 +172,17 @@ describe('user reducer', () => {
     it('should checkSignIn works', () => {
         let newState = userReducer(undefined, {
             type: actionTypes.CHECK_SIGN_IN,
-            selectedUser : '1',
-            signIn : true,
+            selectedUser: '1',
+            signIn: true,
         })
         expect(newState).toEqual({
             selectedUser: '1',
-            verifyCode : '',
-            signIn : true,
-            emailDuplicate : false,
-            nicknameDuplicate : false,
-            studentIdDuplicate : false
+            verifyCode: '',
+            modifiedUser: '',
+            signIn: true,
+            emailDuplicate: false,
+            nicknameDuplicate: false,
+            studentIdDuplicate: false
         })
-    } )
+    })
 })

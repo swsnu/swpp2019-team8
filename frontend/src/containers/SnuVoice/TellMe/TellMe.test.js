@@ -44,7 +44,7 @@ describe('<TellMe/>', () => {
 
     it('should render without errors', async () => {
         const component = await mount(tellMe)
-        const top = component.find('.TopOfPage').at(0)
+        const top = component.find('.TellMe').at(0)
         expect(top.length).toBe(1)
         expect(spyGetDocuments).toHaveBeenCalledTimes(1)
     })

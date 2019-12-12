@@ -108,7 +108,7 @@ describe('<HearUs/>', () => {
 
     it('should render without errors', async () => {
         const component = await mount(hearus)
-        const top = component.find('.TopOfPage').at(0)
+        const top = component.find('.HearUs').at(0)
         expect(top.length).toBe(1);
     })
 
