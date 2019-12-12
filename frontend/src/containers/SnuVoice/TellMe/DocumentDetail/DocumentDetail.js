@@ -120,7 +120,6 @@ class DocumentDetail extends Component {
             null :
             (
                 <Button
-                    className="debateButton"
                     onClick={this.onClickDocumentDebateButton}
                     className="debate_button">
                     Debate
