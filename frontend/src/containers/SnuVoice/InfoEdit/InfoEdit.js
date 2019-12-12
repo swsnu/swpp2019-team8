@@ -452,16 +452,16 @@ export class InfoEdit extends Component {
         let usingModal = '';
 
         if (this.state.statusRadio["student"]) {
-            const departmentList = this.state.departmentList.map((v, i) => {
-                return (
-                    <option key={i} value={v.value} label={v.label}></option>
-                );
-            });
             const majorList = this.state.majorList[
                 this.state.selectedDepartment
             ].map((v, i) => {
                 return (
                     <option key={i} label={v.label} value={v.value}></option>
+                );
+            });
+            const departmentList = this.state.departmentList.map((v, i) => {
+                return (
+                    <option key={i} value={v.value} label={v.label}></option>
                 );
             });
             status_detail = (
