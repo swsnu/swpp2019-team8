@@ -116,11 +116,11 @@ export class MyPetition extends Component {
 				return (
 					<Petition
 						key={i}
-						url={petition.url}
 						title={petition.title}
+						url={petition.url}
 						state={petition.status}
-						category={petition.category}
 						dueDate={petition.end_date}
+						category={petition.category}
 						votes={petition.votes}
 						onClick={() => this.onClickDetailButton(petition)} />
 				)
