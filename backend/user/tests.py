@@ -241,3 +241,64 @@ class UserTestCase(TestCase):
 
         response = client.delete('/api/user/check/signin/')
         self.assertEqual(response.status_code, 405)
+
+    def test_get_modifiy(self):
+        client = Client(enforce_csrf_checks=False)
+
+        response = client.get('/api/user/modify/')
+        self.assertEqual(response.status_code, 401)
+
+        response = client.post('/api/user/signin/', json.dumps({'email': "dkwanm1@naver.com", "password": "1"}),
+                               content_type='application/json')
+
+        response = client.get('/api/user/modify/')
+        self.assertEqual(response.status_code, 200)
+
+        dict_to_give = {
+            'email' : 'dkwanm1@naver.com',
+            'password' : '',
+            'status' : '123',
+            'studentStatus' : '123',
+            'studentId' : '123',
+            'department': '123',
+            'major' : '123'
+        }
+
+        response = client.put('/api/user/modify/', json.dumps(dict_to_give),
+                                content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        dict_to_give = {
+            'email' : 'dkwanm1@naver.com',
+            'password' : '123123231',
+            'status' : '123',
+            'studentStatus' : '123',
+            'studentId' : '123',
+            'department': '123',
+            'major' : '123'
+        }
+
+        response = client.put('/api/user/modify/', json.dumps(dict_to_give),
+                                content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        
+
+        dict_to_give = {
+            'email' : 'dkwanm1@naver.com',
+            'password' : '',
+            'sus' : '123',
+            'studentStatus' : '123',
+            'studentId' : '123',
+            'department': '123',
+            'major' : '123'
+        }
+
+        response = client.put('/api/user/modify/', json.dumps(dict_to_give),
+                                content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+        response = client.delete('/api/user/modify/')
+        self.assertEqual(response.status_code, 405)
+
+
