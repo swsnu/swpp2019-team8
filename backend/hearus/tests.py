@@ -28,7 +28,7 @@ class HearusTestCase(TestCase):
         new_petition = Petition.objects.create(author=new_user, title="title", content="content", category="category", link="link", tag="tag",
                                  start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30), votes=2, status="preliminary", url="1")
         new_petition2 = Petition.objects.create(author=new_user, title="title2", content="content2", category="category", link="link2", tag="tag2",
-                                 start_date=timezone.now()+timedelta(days=1), end_date=timezone.now()+timedelta(days=30),votes=1, status="ongoing", url="2")
+                                 start_date=timezone.now(), end_date=timezone.now()+timedelta(days=30),votes=1, status="ongoing", url="2")
         new_comment = PetitionComment.objects.create(author=new_user, petition=new_petition, comment="comment", date=timezone.now())
         
     @patch('hearus.tasks.status_changer')
