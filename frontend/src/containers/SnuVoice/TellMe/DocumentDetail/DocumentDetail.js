@@ -33,16 +33,16 @@ class DocumentDetail extends Component {
     onClickDocumentEditButton = () => {
         this.props.history.push(
             "/tell_me/documents/" +
-                this.props.match.params.document_title +
-                "/edit"
+            this.props.match.params.document_title +
+            "/edit"
         );
     };
 
     onClickDocumentDebateButton = () => {
         this.props.history.push(
             "/tell_me/documents/" +
-                this.props.match.params.document_title +
-                "/debates"
+            this.props.match.params.document_title +
+            "/debates"
         );
     };
 
@@ -94,35 +94,12 @@ class DocumentDetail extends Component {
             var md = new Remarkable("full", {
                 html: true,
                 typographer: true,
-                highlight: function(str, lang) {
+                highlight: function (str, lang) {
                     return highlightCode(str, lang);
                 }
             });
             markdownHtml = md.render(content);
         }
-
-        let editButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
-            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
-            null :
-            (
-                <Button
-                    type="button"
-                    id="document_edit_button"
-                    onClick={this.onClickDocumentEditButton}>
-                    Edit
-                </Button>
-            );
-
-        let debateButton = this.props.match.params.document_title === "TELL-ME:기본방침" ||
-            this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
-            null :
-            (
-                <Button
-                    className="debateButton"
-                    onClick={this.onClickDocumentDebateButton}>
-                    Debate
-                </Button>
-            );
 
         let relatedPetition = this.props.match.params.document_title === "TELL-ME:기본방침" ||
             this.props.match.params.document_title === "TELL-ME:문법 도움말" ?
@@ -145,7 +122,7 @@ class DocumentDetail extends Component {
                             id="document_cancel_button"
                             className="back_button"
                             onClick={this.onClickDocumentCancelButton}
-                            >
+                        >
                             Back
                         </Button>
                         <h1 className="document_detail_title">{title}</h1>
@@ -154,13 +131,13 @@ class DocumentDetail extends Component {
                             id="document_edit_button"
                             className="edit_button"
                             onClick={this.onClickDocumentEditButton}
-                            >
+                        >
                             Edit
                         </Button>
                         <Button
                             className="debateButton"
                             onClick={this.onClickDocumentDebateButton}
-                            >
+                        >
                             Debate
                         </Button>
                     </div>
