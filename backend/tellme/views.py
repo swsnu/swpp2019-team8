@@ -63,17 +63,16 @@ def document_title(request, document_title):
                 'unique': True
             }
             return JsonResponse(response_dict, safe=False)
-        else:
-            selected_document = [document for document in Document.objects.filter(
-                title__icontains=document_title).values()]
-            content_list = [document for document in Document.objects.filter(
-                content__icontains=document_title).values()]
-            response_dict = {
-                'unique': False,
-                'titleDocuments': selected_document,
-                'contentDocuments': content_list
-            }
-            return JsonResponse(response_dict, safe=False)
+        selected_document = [document for document in Document.objects.filter(
+            title__icontains=document_title).values()]
+        content_list = [document for document in Document.objects.filter(
+            content__icontains=document_title).values()]
+        response_dict = {
+            'unique': False,
+            'titleDocuments': selected_document,
+            'contentDocuments': content_list
+        }
+        return JsonResponse(response_dict, safe=False)
     elif request.method == 'PUT':
         try:
             req_data = json.loads(request.body.decode())
@@ -98,16 +97,15 @@ def document_title(request, document_title):
                 'content': document.content,
                 'version': document.version,
                 'conflict': False,
-                            }
+            }
             return JsonResponse(response_dict, status=201)
-        else:
-            response_dict = {
-                'title': document.title,
-                'content': document.content,
-                'version': document.version,
-                'conflict': True,
-                }
-            return JsonResponse(response_dict, status=201)
+        response_dict = {
+            'title': document.title,
+            'content': document.content,
+            'version': document.version,
+            'conflict': True,
+        }
+        return JsonResponse(response_dict, status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 
@@ -115,7 +113,7 @@ def document_title(request, document_title):
 def document_recent(request):
     if request.method == 'GET':
         document_list = [document for document in
-                            Document.objects.all().values('title', 'edit_date').order_by('-edit_date')]
+                         Document.objects.all().values('title', 'edit_date').order_by('-edit_date')]
         list_to_return = document_list[:10]
         return JsonResponse(list_to_return, safe=False)
     else:
@@ -130,6 +128,7 @@ def photo(request):
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
+
 
 def check_photo_duplicate(request, photo_title):
     if request.method == 'GET':
@@ -152,6 +151,7 @@ def check_photo_duplicate(request, photo_title):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+
 def photo_title(request, photo_title):
     if request.method == 'GET':
         try:
@@ -167,23 +167,26 @@ def photo_title(request, photo_title):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+
 def photo_related_title(request, photo_title):
     if request.method == 'GET':
         title_photo_list = [
             photo for photo in
-                Photo.objects.filter(title__icontains=photo_title).values('title')
+            Photo.objects.filter(title__icontains=photo_title).values('title')
         ]
         content_photo_list = [
             photo for photo in
-                Photo.objects.filter(content__icontains=photo_title).values('title')
+            Photo.objects.filter(
+                content__icontains=photo_title).values('title')
         ]
         dict_to_return = {
-            'titlePhotoList' : title_photo_list,
-            'contentPhotoList' : content_photo_list
+            'titlePhotoList': title_photo_list,
+            'contentPhotoList': content_photo_list
         }
         return JsonResponse(dict_to_return, safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
+
 
 def debates_by_document(request, document_title):
     try:
