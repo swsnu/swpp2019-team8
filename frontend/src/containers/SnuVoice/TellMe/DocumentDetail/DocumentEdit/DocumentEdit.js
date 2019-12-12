@@ -235,6 +235,7 @@ class DocumentEdit extends Component {
                             </div>
                         </TabPane>
                     </TabContent>
+                    <br/>
                     <ButtonGroup>
                         <Button
                             type="button"
