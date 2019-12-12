@@ -211,9 +211,9 @@ class PetitionDetail extends Component {
                             <div className="View_write">{content}</div>
                             <br />
                             <h6 className="View_write_link">Attached links: </h6>
-                            {links}
-                            <input type="text" id="ShareUrl" value={window.location.href} />
-                            <Button onClick={this.onClickCopyURL}>URL 복사</Button>
+                            {links}<br/>
+                            <h6 className="View_share">Share your voice: </h6>
+                            <div className="View_share_icons">
                             <div id="kakao-link-btn">
                                 <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" alt="Share on Kakao Talk" />
                             </div>
@@ -224,6 +224,9 @@ class PetitionDetail extends Component {
                                     </a>
                                 )}
                             </ShareLink>
+                            <input type="text" id="ShareUrl" value={window.location.href} />
+                            <Button onClick={this.onClickCopyURL}>URL 복사</Button>
+                                </div>
                         </div>
                         <hr />
                         <div className="petitionsView_statistic">
@@ -245,8 +248,8 @@ class PetitionDetail extends Component {
                             <br /><br />
                         </div>
                     </div>
-
-                    <h3 className="Reply_area_agree"><span className="pet_det_votes">{votes}</span> Current Votes</h3>
+                                    <br/>
+                    <h3 className="Reply_area_agree">Currently<span className="pet_det_votes">{votes}</span> Votes</h3>
 
 
                     <div className="Reply_area_write">

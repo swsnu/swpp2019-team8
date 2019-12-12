@@ -82,3 +82,7 @@ h4 {
     padding-right: 15%;
     text-align: center;
 }
+
+.View_share_icons {
+    display: inline !important;
+}
