@@ -6,6 +6,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import SnuVoice from './containers/SnuVoice/SnuVoice';
 import SignUp from './containers/SnuVoice/SignUp/SignUp';
+import InfoEdit from './containers/SnuVoice/InfoEdit/InfoEdit';
 import TellMe from './containers/SnuVoice/TellMe/TellMe';
 import PhotoUpload from './containers/SnuVoice/TellMe/PhotoUpload/PhotoUpload';
 import DocumentSearchFail from './containers/SnuVoice/TellMe/DocumentSearchFail/DocumentSearchFail';
@@ -31,6 +32,7 @@ function App(props) {
         <Switch>
           <Route path='/' exact component={SnuVoice} />
           <Route path='/sign_up' exact component={SignUp} />
+          <Route path='/user/edit' exact component={InfoEdit} />
           <Route path='/tell_me' exact component={TellMe} />
           <Route path='/tell_me/photo' exact component={PhotoUpload} />
           <Route path='/tell_me/search_fail/:document_title' exact component={DocumentSearchFail} />

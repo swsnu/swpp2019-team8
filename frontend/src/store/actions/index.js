@@ -4,6 +4,8 @@ export {
     getSignOut,
     getVerifyCode,
     getUserByUserId,
+    editUser,
+    getUserToModify,
     getUserByEmail,
     getUserByStudentId,
     getUserByNickname,
