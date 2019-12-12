@@ -173,7 +173,6 @@ class PetitionList extends Component {
 
         return (
             <div>
-
                 <UpperBar />
                     <div className="PetitionList">
                 <div className="PetitionList_body">

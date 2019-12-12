@@ -49,7 +49,7 @@ describe('<DebateList /> ', () => {
 
     it('should render without errors', () => {
         const component = shallow(<DebateList {...props} />)
-        const top = component.find('.debate_list_page')
+        const top = component.find('.DebateList')
         expect(top.length).toBe(1)
     })
 

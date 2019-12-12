@@ -150,7 +150,7 @@ describe('<PetitionList />', () => {
 
     it('should render PetitionList', () => {
         const component = mount(petitionList)
-        const top = component.find('.TopOfPage')
+        const top = component.find('.PetitionList')
         expect(top.length).toBe(1)
     })
 
