@@ -57,6 +57,31 @@ export const getSignOut = () => {
     };
 };
 
+export const getUserToModify_ = (user) => {
+    return {
+        type: actionTypes.GET_USER_TO_MOD,
+        modifiedUser: user
+    };
+}
+
+export const getUserToModify = () => {
+    return dispatch => {
+        return axios.get('/api/user/modify/')
+            .then(res => {
+                dispatch(getUserToModify_(res.data));
+            })
+            .catch(e => {})
+    }
+}
+
+export const editUser = (user) => {
+    return dispatch => {
+        return axios.put('/api/user/modify/', user)
+            .then(() => {})
+            .catch(e => {}) 
+    }
+}
+
 export const getUser_ = (response) => {
     return {
         type: actionTypes.GET_USER,

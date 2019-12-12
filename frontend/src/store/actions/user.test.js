@@ -203,6 +203,49 @@ describe('Axios User test', () => {
         done()
     });
 
+    it('should getUserToModify', (done) => {
+        let spy = jest.spyOn(axios, 'get')
+        .mockImplementation((url) => {
+            return new Promise((resolve, reject) => {
+                const result = {
+                    status: 200,
+                    data: 1
+                }
+                resolve(result);
+            })
+        })
+
+        store.dispatch(actionCreators.getUserToModify())
+            .then(() => {
+                const newState = store.getState();
+                expect(newState.usr.modifiedUser).toBe(1);
+                expect(spy).toHaveBeenCalledTimes(1);
+                done();
+            })
+
+    })
+
+    it('should edit user', (done) => {
+        let spy = jest.spyOn(axios, 'put')
+        .mockImplementation((url) => {
+            return new Promise((resolve, reject) => {
+                const result = {
+                    status: 200,
+                    data: 1
+                }
+                resolve(result);
+            })
+        })
+
+        store.dispatch(actionCreators.editUser("1"))
+            .then(() => {
+                const newState = store.getState();
+                expect(spy).toHaveBeenCalledTimes(1);
+                done();
+            })
+
+    })
+
     it('checkDuplicate shoudl work', async (done) => {
         let spy = jest.spyOn(axios, 'get')
             .mockImplementation((url) => {
