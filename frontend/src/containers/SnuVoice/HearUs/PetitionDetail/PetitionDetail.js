@@ -55,11 +55,8 @@ class PetitionDetail extends Component {
     };
 
     onClickCommentConfirmButton = async () => {
-        await this.props.onStorePetitionComment(
-            this.props.match.params.petition_url,
-            this.state.comment
-        );
         await this.props.onPetitionVote(this.props.match.params.petition_url);
+        await this.props.onStorePetitionComment(this.props.match.params.petition_url, this.state.comment);
         window.location.reload(false);
     };
 
@@ -214,15 +211,23 @@ class PetitionDetail extends Component {
             </div>
         );
 
-        let graphSrc = "https://www.snuvoice.site/tellme/media/graph/ex"; //local : http://localhost:8000/api/tellme ...
+        let graphSrc = "https://www.snuvoice.site/api/tellme/media/graph/ex";//local : http://localhost:8000/api/tellme ...
         if (this.props.selectedPetition) {
-            if (
-                this.props.selectedPetition.status === "ongoing" ||
-                this.props.selectedPetition.status === "end"
-            )
-                graphSrc =
-                    "https://www.snuvoice.site/tellme/media/graph/" +
-                    this.props.selectedPetition.id;
+            if (this.props.selectedPetition.status === 'ongoing' || this.props.selectedPetition.status === 'end')
+                graphSrc = "https://www.snuvoice.site/api/tellme/media/graph/" + this.props.selectedPetition.id;
+        }
+        let trendSrc = graphSrc + "/trend.jpg";
+        var d = new Date();
+        if (this.props.selectedPetition) {
+            if (this.props.selectedPetition.status === 'preliminary') {
+                var date_string = this.props.selectedPetition.start_date;
+                var year = date_string.substring(0, 4);
+                var month = date_string.substring(5, 7);
+                var day = date_string.substring(8, 10);
+                if (year === d.getFullYear().toString() && month === (d.getMonth() + 1).toString() && day === d.getDate().toString()) {
+                    trendSrc = "http://localhost:8000/api/tellme/media/graph/ex/tomorrow.jpg";
+                }
+            }
         }
 
         return (
@@ -279,16 +284,8 @@ class PetitionDetail extends Component {
                             <br />
                             <br />
                             <Row>
-                                <img
-                                    className="imgs"
-                                    src={graphSrc + "/trend.jpg"}
-                                    alt="Graph: Trend"
-                                />
-                                <img
-                                    className="imgs"
-                                    src={graphSrc + "/gender.jpg"}
-                                    alt="Graph: Gender"
-                                />
+                                <img className="imgs" src={trendSrc} alt="Graph: Trend" />
+                                <img className="imgs" src={graphSrc + "/gender.jpg"} alt="Graph: Gender" />
                             </Row>
                             <Row>
                                 <img

@@ -13,6 +13,7 @@ from django.forms.models import model_to_dict
 from django.core.mail import EmailMessage, send_mail
 # Create your views here.
 
+
 def sign_up(request):
     if request.method == 'POST':
         try:
@@ -83,20 +84,65 @@ def get_verify_code(request, email):
             verify_code += str(random.randint(0, 9))
             i = i + 1
         send_mail(
-                "hi",
-                verify_code,
-                "dkwanm1@snu.ac.kr",
-                [email],
-                fail_silently=False)
+            "hi",
+            verify_code,
+            "dkwanm1@snu.ac.kr",
+            [email],
+            fail_silently=False)
         email = EmailMessage(
             '인증 메일입니다.',
             '인증 번호는 ' + verify_code + ' 입니다.',
-             to=[email]
+            to=[email]
         )
         verify_code_to_return = {
             'verifyCode': verify_code
         }
         return JsonResponse(verify_code_to_return, safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
+
+def user_to_mod(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    if request.method == 'GET':
+        dict_to_return = {
+            'id': request.user.id,
+            'email': request.user.email,
+            'nickname': request.user.nickname,
+            'gender': request.user.gender,
+            'status': request.user.status,
+            'studentId': request.user.studentId,
+            'department': request.user.department,
+            'major' : request.user.major,
+            'studentStatus': request.user.studentStatus
+        }
+        return JsonResponse(dict_to_return, status=200, safe=False)
+    elif request.method == 'PUT':
+        try:
+            body = request.body.decode()
+            user_email = json.loads(body)['email']
+            user_password = json.loads(body)['password']
+            user_status = json.loads(body)['status']
+            user_student_status = json.loads(body)['studentStatus']
+            user_student_id = json.loads(body)['studentId']
+            user_departmet = json.loads(body)['department']
+            user_major = json.loads(body)['major']
+        except (KeyError, json.JSONDecodeError):
+            return HttpResponseBadRequest()
+        edit_user = User.objects.get(id=request.user.id)
+        if not user_password == '':
+            edit_user.set_password(user_password)
+        edit_user.status = user_status
+        edit_user.department = user_departmet
+        edit_user.major = user_major
+        edit_user.studentStatus = user_student_status
+        edit_user.studentId = user_student_id
+        edit_user.save()
+        request.user.password = edit_user.password
+        user = authenticate(email=user_email, password=user_password)
+        login(request, user)
+        return HttpResponse(status=200)
     else:
         return HttpResponseNotAllowed(['GET'])
 
@@ -211,14 +257,14 @@ def check_student_id_duplicate(request, student_id):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-      
+
 @ensure_csrf_cookie
 def check_signin(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             json_to_return = {
-                'selectedUser' : {
-                    'id' : request.user.id,
+                'selectedUser': {
+                    'id': request.user.id,
                     'nickname': request.user.nickname
                 },
                 'signIn': True
@@ -226,7 +272,7 @@ def check_signin(request):
             return JsonResponse(json_to_return, safe=False)
         else:
             json_to_return = {
-                'selectedUser' : '',
+                'selectedUser': '',
                 'signIn': False
             }
             return JsonResponse(json_to_return, safe=False)
