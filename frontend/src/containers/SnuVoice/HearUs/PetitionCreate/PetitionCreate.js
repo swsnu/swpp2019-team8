@@ -10,7 +10,6 @@ import UpperBar from '../../UpperBar/UpperBar';
 
 class PetitionCreate extends Component {
     state = {
-        agreeToTerms: false,
         petitionTitle: '',
         categoryList: [
             { value: '-', label: '- Select Category -' },
@@ -49,10 +48,6 @@ class PetitionCreate extends Component {
 
         }
         //check authentication
-    }
-
-    onClickAgreeToTermsCheckBox = () => {
-        this.setState({ agreeToTerms: !this.state.agreeToTerms });
     }
 
     onChangeCategorySelect = (event) => {
@@ -157,7 +152,7 @@ class PetitionCreate extends Component {
                                 </FormGroup>
                                 <ButtonGroup className="buttons">
                                     <Button type="button" id="petition_confirm_button"
-                                        onClick={this.onClickPetitionConfirmButton} disabled={!this.state.agreeToTerms || !this.state.petitionTitle || !this.state.petitionContent || this.state.selectedCategory === '-'}>CONFIRM</Button>
+                                        onClick={this.onClickPetitionConfirmButton} disabled={!this.state.petitionTitle || !this.state.petitionContent || this.state.selectedCategory === '-'}>CONFIRM</Button>
                                     <Button type="button" id="petition_cancel_button"
                                         onClick={this.onClickPetitionCancelButton}>CANCEL</Button>
                                 </ButtonGroup>
