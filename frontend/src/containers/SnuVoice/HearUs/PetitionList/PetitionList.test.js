@@ -209,6 +209,17 @@ describe('<PetitionList />', () => {
         expect(mocked).toHaveBeenCalledTimes(2);
     })
 
+    it('should onClickButtons works', async () => {
+        const spyHistoryPush = jest.spyOn(history, 'push')
+            .mockImplementation(path => { });
+        const component = await mount(petitionList)
+        const petitionListComponent = component.find(PetitionList.WrappedComponent).instance();
+        petitionListComponent.onClickCreateButton();
+        expect(spyHistoryPush).toHaveBeenCalledTimes(1);
+        petitionListComponent.onClickMyPetitionButton();
+        expect(spyHistoryPush).toHaveBeenCalledTimes(2);
+    })
+
     it('should clickCategoryButton work', async () => {
         let mocked = jest.fn();
         const component = await mount(petitionList);
