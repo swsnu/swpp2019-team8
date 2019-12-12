@@ -170,10 +170,21 @@ class PetitionDetail extends Component {
             </div>
         );
 
-        let graphSrc = "https://www.snuvoice.site/tellme/media/graph/ex";//local : http://localhost:8000/api/tellme ...
+        let graphSrc = "https://www.snuvoice.site/api/tellme/media/graph/ex";//local : http://localhost:8000/api/tellme ...
         if (this.props.selectedPetition) {
             if (this.props.selectedPetition.status === 'ongoing' || this.props.selectedPetition.status === 'end')
-                graphSrc = "https://www.snuvoice.site/tellme/media/graph/" + this.props.selectedPetition.id;
+                graphSrc = "https://www.snuvoice.site/api/tellme/media/graph/" + this.props.selectedPetition.id;
+        }
+        let trendSrc = graphSrc + "/trend.jpg";
+        var d = new Date();
+        if(this.props.selectedPetition) {
+            var date_string = this.props.selectedPetition.start_date;
+            var year = date_string.substring(0,4);
+            var month = date_string.substring(5,7);
+            var day = date_string.substring(8,10);
+            if(year === d.getFullYear().toString() && month === (d.getMonth()+1).toString() && day === d.getDate().toString()) {
+                trendSrc = "http://localhost:8000/api/tellme/media/graph/ex/tomorrow.jpg";
+            }
         }
 
         return (
@@ -230,8 +241,8 @@ class PetitionDetail extends Component {
                             <h4>&#60;Graphs&#62;</h4>
                             <br /><br />
                             <Row>
-                                <img className="imgs" src={graphSrc + "/trend.jpg"} alt="Graph: Trend" />
-                                <img className="imgs" src={graphSrc + "/gender.jpg"} alt="Graph: Gender" />
+                            <img className="imgs" src={trendSrc} alt="Graph: Trend"/>
+                            <img className="imgs" src={graphSrc + "/gender.jpg"} alt="Graph: Gender"/>
                             </Row>
                             <Row>
                                 <img className="imgs" src={graphSrc + "/department.jpg"} alt="Graph: Department" />
@@ -254,7 +265,7 @@ class PetitionDetail extends Component {
                             onChange={(event) => this.setState({ comment: event.target.value })}></textarea>
                         <Button type="button" id="comment_confirm_button"
                             disabled={!this.props.signIn || this.props.storedPetitionComments
-                                .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
+                            .filter(comment => comment.author_id === this.props.selectedUser.id).length > 0}
                             onClick={this.onClickCommentConfirmButton}> Agree</Button>
                     </div>
 
