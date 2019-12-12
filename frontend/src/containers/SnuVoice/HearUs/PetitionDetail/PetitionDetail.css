@@ -120,7 +120,10 @@ h4 {
     padding-top: 2%;
     height: 110px;
     align-self: center !important;
-    
+}
+
+.Reply_textarea {
+    width: 80% !important;
 }
 
 .Reply_area_agree {

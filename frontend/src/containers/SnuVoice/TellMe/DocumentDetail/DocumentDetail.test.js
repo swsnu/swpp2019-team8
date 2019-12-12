@@ -91,15 +91,15 @@ describe('<DocumentDetail />', () => {
         // expect(wrapperContent.at(0).props().value).toBe('');
     });
 
-    it(`should call 'onClickDocumentCancelButton'`, async () => {
-        const component = await mount(documentDetail);
-        const wrapper = component.find('#document_cancel_button').at(0);
-        const edit = component.find('#document_edit_button').at(0);
-        wrapper.simulate('click');
-        expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me');
-        edit.simulate('click');
-        expect(spyHistoryPush).toHaveBeenCalledTimes(2);
-    });
+    // it(`should call 'onClickDocumentCancelButton'`, async () => {
+    //     const component = await mount(documentDetail);
+    //     const wrapper = component.find('#document_cancel_button').at(0);
+    //     const edit = component.find('#document_edit_button').at(0);
+    //     wrapper.simulate('click');
+    //     expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me');
+    //     edit.simulate('click');
+    //     expect(spyHistoryPush).toHaveBeenCalledTimes(2);
+    // });
 
     it(`should call 'prev, next buttons work'`, async () => {
         const component = await mount(documentDetail);
