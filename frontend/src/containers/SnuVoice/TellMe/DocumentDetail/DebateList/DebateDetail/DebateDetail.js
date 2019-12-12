@@ -9,6 +9,7 @@ import { Button, Input } from 'reactstrap';
 import DebateComments from '../../../../../../components/Debate/debateComments'
 
 import Upperbar from '../../../../UpperBar/UpperBar';
+import './DebateDetail.css';
 
 export class DebateDetail extends Component {
     state = {
@@ -64,8 +65,6 @@ export class DebateDetail extends Component {
         return (
             <div>
                 <Upperbar /><br/>
-                <div className="TopOfPage">
-
                     <div className="DebateDetail">
                         <h3 className="documentTitle">
                             {documentTitle} (Debate)
@@ -91,6 +90,7 @@ export class DebateDetail extends Component {
                             placeholder="Enter debate comment"
                             value={this.state.comment}
                             onChange={(event) => this.setState({ comment: event.target.value })} />
+                        <br/>
                         <Button
                             id="debate_comment_confirm_button" disabled={this.state.comment === ''}
                             onClick={this.onClickCommentConfirmButton}>CONFIRM</Button>
@@ -103,7 +103,6 @@ export class DebateDetail extends Component {
                         </Button>
                     </div>
                 </div>
-            </div>
         )
     }
 }

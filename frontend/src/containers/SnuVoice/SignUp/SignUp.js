@@ -14,13 +14,14 @@ import {
 	Label,
 	Input,
 	InputGroup,
+	InputGroupAddon,
 	FormFeedback,
 	Col,
 	Row,
 	Container,
 	Modal,
 	ModalBody,
-	ModalFooter
+	ModalFooter,
 } from "reactstrap";
 
 import UpperBar from "../UpperBar/UpperBar";
@@ -28,7 +29,7 @@ import "./SignUp.css";
 
 class SignUp extends Component {
 	state = {
-		signIn : '',
+		signIn: '',
 		email: "",
 		verifyCode: "",
 		password: "",
@@ -322,7 +323,6 @@ class SignUp extends Component {
 	onChangeStatusRadioButton = event => {
 		let inputResult = this.state.checkInputResult;
 		let selectedStatus = this.state.statusRadio;
-		let studentId = '';
 		let selectedDepartment = 'all';
 		let selectedMajor = '-';
 		let selectedStudentStatus = '';
@@ -334,12 +334,10 @@ class SignUp extends Component {
 		}
 		if (selectedStatus.student === false) {
 			if (selectedStatus.alumnus === true) {
-				studentId = '-';
 				selectedDepartment = 'alumnus';
 				selectedMajor = 'alumnus'
 				selectedStudentStatus = 'alumnus';
 			} else {
-				studentId = '-';
 				selectedDepartment = 'faculty';
 				selectedMajor = 'faculty'
 				selectedStudentStatus = 'faculty';
@@ -358,7 +356,7 @@ class SignUp extends Component {
 			statusRadio: selectedStatus,
 			selectedStatus: event.target.value,
 			checkInputResult: inputResult,
-			studentId: studentId,
+			studentId: '',
 			selectedDepartment: selectedDepartment,
 			selectedMajor: selectedMajor,
 			selectedStudentStatus: selectedStudentStatus
@@ -468,6 +466,8 @@ class SignUp extends Component {
 		// 회원가입 확인 + 추가 구현 예정
 		let inputResult = this.state.checkInputResult;
 		let signUp = true;
+		let message = '';
+		let agree = '';
 		for (let i in inputResult) {
 			if (inputResult[i] === false) signUp = false;
 		}
@@ -488,8 +488,25 @@ class SignUp extends Component {
 				confirmModalMessage: "회원 가입이 완료되었습니다."
 			});
 		} else {
+			if (!inputResult.agreeToTerms) {
+				agree = 'Please Agree To Terms\n'
+			}
+			if (!inputResult.gender) {
+				message += 'gender'
+			}
+			if (!inputResult.status ||
+				!inputResult.studentId ||
+				!inputResult.department ||
+				!inputResult.major ||
+				!inputResult.studentStatus) {
+				if (message.length != 0) {
+					message += ', status';
+				} else {
+					message += 'status';
+				}
+			}
 			this.setState({
-				confirmModalMessage: "다시 한 번 확인해주시기 바랍니다."
+				confirmModalMessage: agree + "Please Check " + message + " Again"
 			});
 		}
 		this.toggleConfirmModal();
@@ -498,7 +515,7 @@ class SignUp extends Component {
 	onClickBackButton = () => {
 		this.props.history.push("/");
 	};
-	
+
 	ngOnInIt = async () => {
 		if (this.state.signIn === '') {
 			await this.props.checkSignIn();
@@ -532,7 +549,7 @@ class SignUp extends Component {
 				this.state.selectedDepartment
 			].map((v, i) => {
 				return (
-					<option key={i} value={v.value} label={v.value}></option>
+					<option key={i} label={v.label} value={v.value}></option>
 				);
 			});
 
@@ -608,7 +625,11 @@ class SignUp extends Component {
 		return (
 			<div className="SignUp">
 				<UpperBar />
+				<div className="temp_blue_bar">
+                </div>
+				<br/>
 				<h1>Sign Up</h1>
+				<br/>
 				<Modal
 					isOpen={this.state.verifyModal}
 					toggle={this.toggleVerifyModal}
@@ -624,7 +645,10 @@ class SignUp extends Component {
 					toggle={this.toggleConfirmModal}
 					className="ConfirmModal"
 				>
-					<ModalBody>{this.state.confirmModalMessage}</ModalBody>
+					<ModalBody>
+						{this.state.confirmModalMessage}
+
+					</ModalBody>
 					<ModalFooter>
 						<Button onClick={this.toggleConfirmModal}>확인</Button>
 					</ModalFooter>
@@ -659,6 +683,7 @@ class SignUp extends Component {
 											this.state.checkInputInvalid.email
 										}
 									></Input>
+									<InputGroupAddon addonType="append">
 									<Button
 										type="button"
 										id="verify_button"
@@ -667,9 +692,10 @@ class SignUp extends Component {
 											!this.state.checkInputResult.email
 										}
 										onClick={this.onClickVerifyButton}
-									>
+										>
 										Verify
                                     </Button>
+										</InputGroupAddon>
 									<FormFeedback>
 										{this.state.formFeedbackMessage.email}
 									</FormFeedback>
@@ -833,6 +859,7 @@ class SignUp extends Component {
 								</Row>
 							</FormGroup>
 							{status_detail}
+							<br/>
 							<Button
 								type="button"
 								id="back_button"
