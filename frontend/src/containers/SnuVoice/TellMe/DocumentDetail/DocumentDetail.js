@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 
 import * as actionCreators from "../../../../store/actions/index";
 
-import { Button } from "reactstrap";
+import { Button,  } from "reactstrap";
 
 import { Remarkable } from "remarkable";
 import hljs from "highlight.js";
@@ -26,9 +26,9 @@ class DocumentDetail extends Component {
         );
     };
 
-    onClickDocumentCancelButton = () => {
-        this.props.history.push("/tell_me");
-    };
+    // onClickDocumentCancelButton = () => {
+    //     this.props.history.push("/tell_me");
+    // };
 
     onClickDocumentEditButton = () => {
         this.props.history.push(
@@ -106,9 +106,9 @@ class DocumentDetail extends Component {
             null :
             (
                 <Button
-                    type="button"
                     id="document_edit_button"
-                    onClick={this.onClickDocumentEditButton}>
+                    onClick={this.onClickDocumentEditButton}
+                    className="edit_button">
                     Edit
                 </Button>
             );
@@ -119,7 +119,8 @@ class DocumentDetail extends Component {
             (
                 <Button
                     className="debateButton"
-                    onClick={this.onClickDocumentDebateButton}>
+                    onClick={this.onClickDocumentDebateButton}
+                    className="debate_button">
                     Debate
                 </Button>
             );
@@ -140,19 +141,21 @@ class DocumentDetail extends Component {
                 <Upperbar />
                 <div className="DocumentDetail">
                     <div className="document_detail_upperbar">
-                        <Button
+                        {/* <Button
                             type="button"
                             id="document_cancel_button"
                             className="back_button"
                             onClick={this.onClickDocumentCancelButton}
                         >
-                            Back
-                        </Button>
-                        <h1 className="document_detail_title">{title}</h1>
+                            &#60;
+                        </Button> */}
                         {editButton}
                         {debateButton}
                     </div>
                     <div className="content">
+                        <br />
+                        <h1 className="document_detail_title">{title}</h1>
+                        <hr/>
                         <br />
                         <div
                             dangerouslySetInnerHTML={{ __html: markdownHtml }}
