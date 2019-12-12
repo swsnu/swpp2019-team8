@@ -37,6 +37,8 @@ class DocumentCreate extends Component {
   };
 
   onClickDocumentConfirmButton = async () => {
+    let temp = window.confirm("You cannot edit title anymore. Are you sure?");
+    if (!temp) return;
     let message = this.state.formFeedbackMessage;
     let title = this.state.documentTitle;
     let input = this.state.documentTitle;

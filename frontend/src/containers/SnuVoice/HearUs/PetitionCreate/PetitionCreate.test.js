@@ -110,6 +110,11 @@ describe('<PetitionCreate />', () => {
             petitionTagList: ['testtag'],
         });
         const wrapper = component.find('#petition_confirm_button').at(0);
+        window.confirm = jest.fn(() => { return false });
+        wrapper.simulate('click');
+        expect(spyPostPetition).toHaveBeenCalledTimes(0);
+        window.confirm = jest.fn(() => { return true });
+
         wrapper.simulate('click');
         expect(spyPostPetition).toHaveBeenCalledTimes(1);
     });

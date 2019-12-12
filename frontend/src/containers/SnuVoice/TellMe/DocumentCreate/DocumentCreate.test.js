@@ -65,7 +65,7 @@ describe('<DocumentCreate />', () => {
         expect(documentCreateInstance.state.documentContent).toEqual(documentContent);
     });
 
-    it(`should call 'postDocument'`, () => {
+    it(`should call 'postDocument'`, async () => {
         const spyPostDocument = jest.spyOn(actionCreators, 'postDocument')
             .mockImplementation(td => { return dispatch => { }; });
         const component = mount(documentCreate);
@@ -75,7 +75,12 @@ describe('<DocumentCreate />', () => {
             documentContent: 'TEST_CONTENT',
         });
         const wrapper = component.find('#document_confirm_button').at(0);
-        wrapper.simulate('click');
+        window.confirm = jest.fn(() => { return false; })
+        await wrapper.simulate('click');
+        expect(spyPostDocument).toHaveBeenCalledTimes(0);
+
+        window.confirm = jest.fn(() => { return true; })
+        await wrapper.simulate('click');
         expect(spyPostDocument).toHaveBeenCalledTimes(1);
     });
 
