@@ -24,7 +24,7 @@ def document(request):
             document_date = timezone.now()
             if len(req_data) != 2:
                 return HttpResponseBadRequest()
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         # unique check
         exist_document = [document for document in Document.objects.filter(
@@ -81,7 +81,7 @@ def document_title(request, document_title):
             document_content = req_data['content']
             document_version = req_data['version']
             document_date = timezone.now()
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         try:
             document = Document.objects.get(title=document_target)
@@ -213,7 +213,7 @@ def debates_by_document(request, document_title):
             debate_content = req_data['content']
             debate_author = request.user
 
-        except (KeyError, json.JSONDecodeError) as e:
+        except (KeyError, json.JSONDecodeError):
             return HttpResponseBadRequest(400)
 
         new_debate = Debate(document=debate_document, author=debate_author,
@@ -269,7 +269,7 @@ def debate_comments(request, debate_id):
             comment_author = request.user
             comment_content = req_data['comment']
             comment_date = datetime.datetime.now()
-        except (KeyError, json.JSONDecodeError) as e:
+        except (KeyError, json.JSONDecodeError):
             return HttpResponseBadRequest(400)
 
         new_debate_comment = DebateComment(
