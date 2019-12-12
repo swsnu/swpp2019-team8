@@ -9,7 +9,6 @@ import {
     Input,
     InputGroup,
     InputGroupAddon,
-    FormText
 } from 'reactstrap';
 
 import SearchIcon from '../../../../img/search_button.png';
@@ -39,8 +38,8 @@ export class TellMeSearchBar extends Component {
             if (toSearch[i] !== ' ') break;
             else input = toSearch.slice(0, i)
         }
-        if (input === '' ) return;
-        if (/.jpeg$/.exec(input) || /.jpg$/.exec(input) || /.png$/.exec(input) || /.bmp$/.exec(input)){
+        if (input === '') return;
+        if (/.jpeg$/.exec(input) || /.jpg$/.exec(input) || /.png$/.exec(input) || /.bmp$/.exec(input)) {
             await this.props.getPhoto(input)
             if (this.props.selectedPhoto !== null) {
                 this.props.history.push('/tell_me/photo/' + input)
@@ -48,14 +47,14 @@ export class TellMeSearchBar extends Component {
             }
         } else {
             await this.props.getDocumentByTitle(input)
-            if (this.props.selectedDocument !== null)  {
+            if (this.props.selectedDocument !== null) {
                 this.props.history.push('/tell_me/documents/' + input)
                 return;
             }
         }
         await this.props.getDocumentByTitle(input)
         this.props.history.push('/tell_me/search_fail/' + input)
-    }; 
+    };
 
     onClickCreateButton = () => {
         this.props.history.push("/tell_me/create");
@@ -84,8 +83,8 @@ export class TellMeSearchBar extends Component {
                             disabled={this.state.searchInput === '' || this.state.searchInput === undefined}
                             className="search_confirm_button"
                         >
-                        <img src={SearchIcon} style={{height: 35}} />
-              </Button>
+                            <img src={SearchIcon} style={{ height: 35 }} alt="Search icon"/>
+                        </Button>
                     </InputGroupAddon>
                 </InputGroup>
 
