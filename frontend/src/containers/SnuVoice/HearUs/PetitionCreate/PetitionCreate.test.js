@@ -11,7 +11,7 @@ import * as actionCreators from '../../../../store/actions/hearus';
 import * as usrActions from '../../../../store/actions/user';
 
 const stubInitialState = {
-    signIn : true
+    signIn: true
 }
 
 const mockStore = getMockStore(stubInitialState);
@@ -33,9 +33,9 @@ describe('<PetitionCreate />', () => {
             </Provider>
         );
         spyCheckSignIn = jest.spyOn(usrActions, 'checkSignIn')
-            .mockImplementation(() => { return dispatch => {}} );
+            .mockImplementation(() => { return dispatch => { } });
         spyHistoryPush = jest.spyOn(history, 'push')
-            .mockImplementation(() => {})            
+            .mockImplementation(() => { })
     });
 
     it('should render PetitionCreate', () => {
@@ -82,14 +82,11 @@ describe('<PetitionCreate />', () => {
         // wrapper.simulate('click');
         expect(petitionCreateInstance.state.petitionTagList).toEqual([]);
         wrapper = component.find('#petition_category_select').at(0);
-        wrapper.simulate('change',{ target: {value: "human rights" }  });
+        wrapper.simulate('change', { target: { value: "human rights" } });
         expect(petitionCreateInstance.state.selectedCategory).toEqual("human rights");
-        wrapper = component.find('#agree_to_terms_checkbox').at(0);
-        wrapper.simulate('change');
-        expect(petitionCreateInstance.state.agreeToTerms).toEqual(true);
     })
 
-    
+
     it('should expect cancelbutton', () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
@@ -119,7 +116,7 @@ describe('<PetitionCreate />', () => {
 
     it('should ngOnInit works', async () => {
         let inState = {
-            signIn : false
+            signIn: false
         };
         let reMockStore = getMockStore(inState);
         petitioncreate = (
@@ -134,7 +131,7 @@ describe('<PetitionCreate />', () => {
         const component = await mount(petitioncreate);
         const petitionCreateInstance = component.find(PetitionCreate.WrappedComponent).instance();
         expect(spyHistoryPush).toHaveBeenCalledTimes(2);
-        petitionCreateInstance.setState({ 
+        petitionCreateInstance.setState({
             signIn: true
         })
         await petitionCreateInstance.ngOnInit();
