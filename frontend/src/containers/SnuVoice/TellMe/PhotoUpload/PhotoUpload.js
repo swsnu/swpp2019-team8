@@ -414,7 +414,6 @@ class PhotoUpload extends Component {
             <div>
                 <Upperbar />
                 <div className="PhotoUpload">
-                    <br />
                     <h1>Photo Upload</h1>
                     <br />
                     <div>

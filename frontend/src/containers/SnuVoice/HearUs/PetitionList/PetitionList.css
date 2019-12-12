@@ -1,7 +1,18 @@
 .PetitionList {
     background-color: #f2f4f7;
-    padding-left: 8%;
-    padding-right: 8%;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.PetitionList_body {
+    background-color: white;
+    border-style: groove;
+    padding-left: 3%;
+    padding-right: 3%; 
+    padding-top: 3%;
+    padding-bottom: 3%;
 }
 
 .userOptions {
@@ -23,20 +34,28 @@
 }
 
 .tableButtons1 {
-    background-color: #f2f4f7;
-
     float: left;
+    border-width: 2px;
+    border-color: #f2f4f7;
+    border-style: groove;
+    border-radius: 6px;
+}
+
+.subcategory_button {
+    background-color: #f2f4f7 !important;
+    border-color: #f2f4f7 !important;
+    color: gray !important;
+}
+
+.subcategory_button:hover {
+    background-color: #94bfff !important;
+    color: #002a68 !important;
 }
 
 .tableButtons2 {
-    background-color: #f2f4f7;
-
     float: left;
 }
 
-h4 {
-    color: white;
-}
 
 .petitionsReply_Reply {
     padding-left: 8%;

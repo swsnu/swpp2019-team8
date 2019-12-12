@@ -1,8 +1,9 @@
 .DocumentCreate {
-  background-color: #f2f4f7;
-  padding-left: 8%;
-  padding-right: 8%;
-  font-family: "Malgun Gothic", sans-serif;
+    background-color: #f2f4f7;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-bottom: 2%;
+    font-family: "Malgun Gothic", sans-serif;
 }
 
 .document_create_title {
