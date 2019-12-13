@@ -61,22 +61,22 @@ describe('<SignUp/>', () => {
         jest.clearAllMocks();
     })
 
-    it('should render without erros',async () => {
-        const component =await mount(signUp);
+    it('should render without erros', async () => {
+        const component = await mount(signUp);
         const wrapper = component.find('.SignUp').at(0)
         expect(spyCheckSignIn).toHaveBeenCalledTimes(2);
         expect(wrapper.length).toBe(1)
     })
 
-    it('should buttons work',async () => {
-        const component =await mount(signUp);
+    it('should buttons work', async () => {
+        const component = await mount(signUp);
         const backButton = component.find('#back_button').at(0)
         backButton.simulate('click')
         expect(spyHistoryPush).toHaveBeenCalledWith('/')
     })
 
-    it('should RadioButtons work',async () => {
-        const component =await mount(signUp);
+    it('should RadioButtons work', async () => {
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.onChangeStatusRadioButton({ target: { value: 'student', checked: true } })
         expect(signUpComponent.state.statusRadio.student).toBe(true);
@@ -92,7 +92,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onChangeEmailInput works', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangeEmailInput({ target: { value: 'dkwanm1@snu.ac.kr' } })
         expect(spyEmail).toHaveBeenCalledTimes(1)
@@ -101,11 +101,11 @@ describe('<SignUp/>', () => {
         expect(spyEmail).toHaveBeenCalledTimes(1)
         expect(signUpComponent.state.checkInputResult.email).toBe(false)
         await signUpComponent.onChangeEmailInput({ target: { value: '1231' } })
-        expect(signUpComponent.state.formFeedbackMessage.email).toBe('스누메일 형식으로 입력해주세요.');
+        expect(signUpComponent.state.formFeedbackMessage.email).toBe('Please enter in SNU mail format.');
     })
 
     it('should onChangeVerifyInput works', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.setState({
             verifyCode: '123'
@@ -115,12 +115,12 @@ describe('<SignUp/>', () => {
         await signUpComponent.onChangeVerifyCodeInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputInvalid.verifyCode).toBe(false)
         await signUpComponent.onChangeVerifyCodeInput({ target: { value: '12' } })
-        expect(signUpComponent.state.formFeedbackMessage.verifyCode).toBe('인증번호가 일치하지 않습니다.')
+        expect(signUpComponent.state.formFeedbackMessage.verifyCode).toBe('The verify code does not match.')
 
     })
 
     it('should onChangePasswordInput work', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangePasswordInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputInvalid.password).toBe(false)
@@ -128,20 +128,20 @@ describe('<SignUp/>', () => {
             passwordConfirm: '121111111113'
         })
         await signUpComponent.onChangePasswordInput({ target: { value: '123' } })
-        expect(signUpComponent.state.formFeedbackMessage.password).toBe('비밀번호가 너무 짧습니다. 8자 이상으로 설정해주십시오')
-        expect(signUpComponent.state.formFeedbackMessage.passwordConfirm).toBe('비밀번호와 일치하지 않습니다.')
+        expect(signUpComponent.state.formFeedbackMessage.password).toBe('Password is too short. Please set it to at least eight characters.')
+        expect(signUpComponent.state.formFeedbackMessage.passwordConfirm).toBe('The password does not match.')
         await signUpComponent.onChangePasswordInput({ target: { value: 'iluvswpp12!' } })
         expect(signUpComponent.state.checkInputResult.password).toBe(true)
         signUpComponent.setState({
             passwordConfirm: '121111111113'
         })
         await signUpComponent.onChangePasswordInput({ target: { value: '121111111113' } })
-        expect(signUpComponent.state.formFeedbackMessage.password).toBe('영문자, 특수기호, 숫자를 포함한 8자 이상으로 설정해주십시오.')
+        expect(signUpComponent.state.formFeedbackMessage.password).toBe('Please set at least 8 characters including letters, special symbols, and numbers.')
         expect(signUpComponent.state.checkInputResult.passwordConfirm).toBe(true)
     })
 
     it('should onChangePasswordConfirmInput work', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.setState({
             password: '1212'
@@ -151,12 +151,12 @@ describe('<SignUp/>', () => {
         await signUpComponent.onChangePasswordConfirmInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputResult.passwordConfirm).toBe(false)
         await signUpComponent.onChangePasswordConfirmInput({ target: { value: '12123' } })
-        expect(signUpComponent.state.formFeedbackMessage.passwordConfirm).toBe('비밀번호와 일치하지 않습니다.')
+        expect(signUpComponent.state.formFeedbackMessage.passwordConfirm).toBe('The password does not match.')
 
     })
 
     it('should onChangeNicknameInput work', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangeNicknameInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputResult.nickname).toBe(false)
@@ -167,12 +167,12 @@ describe('<SignUp/>', () => {
     })
 
     it('should onChangeStudentId work', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangeStudentIdInput({ target: { value: '' } })
         expect(signUpComponent.state.checkInputResult.studentId).toBe(false)
         await signUpComponent.onChangeStudentIdInput({ target: { value: '1231' } })
-        expect(signUpComponent.state.formFeedbackMessage.studentId).toBe('학번의 형식이 올바르지 않습니다.\n20XX-XXXXX 형식으로 입력하여 주십시오')
+        expect(signUpComponent.state.formFeedbackMessage.studentId).toBe('The format of the student id is not valid. Please enter in 20XX-XXXX format.')
         await signUpComponent.onChangeStudentIdInput({ target: { value: '2018-15722' } })
         expect(signUpComponent.state.checkInputResult.studentId).toBe(true)
         expect(spyStudentId).toHaveBeenCalledTimes(1)
@@ -197,20 +197,20 @@ describe('<SignUp/>', () => {
                 </ConnectedRouter>
             </Provider>
         )
-        const component =await mount(mockSignUp);
+        const component = await mount(mockSignUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onChangeStudentIdInput({ target: { value: '2018-15722' } })
         await signUpComponent.onChangeEmailInput({ target: { value: 'dkwanm1@snu.ac.kr' } })
         await signUpComponent.onChangeNicknameInput({ target: { value: '123' } })
-        expect(signUpComponent.state.formFeedbackMessage.studentId).toBe('이미 가입한 학번입니다.')
-        expect(signUpComponent.state.formFeedbackMessage.email).toBe('이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.')
-        expect(signUpComponent.state.formFeedbackMessage.nickname).toBe('이미 존재하는 닉네임입니다.')
+        expect(signUpComponent.state.formFeedbackMessage.studentId).toBe('The student id already exists.')
+        expect(signUpComponent.state.formFeedbackMessage.email).toBe('This email address is already associated with the existing account. Please check again.')
+        expect(signUpComponent.state.formFeedbackMessage.nickname).toBe('The nickname already exists.')
         expect(spyHistoryPush).toHaveBeenCalledTimes(4);
 
     })
 
     it('should selectWork', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.onChangeDepartmentSelect({ target: { value: 'all' } })
         expect(signUpComponent.state.checkInputResult.department).toBe(false)
@@ -225,7 +225,7 @@ describe('<SignUp/>', () => {
     })
 
     it('should onClickAgreeToTermsCheckBox work', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         const checkBox = component.find('#agree_to_terms_checkbox').at(0)
         checkBox.simulate('change')
@@ -238,7 +238,7 @@ describe('<SignUp/>', () => {
             emailDuplicate: true,
             nicknameDuplicate: true,
             studentIdDuplicate: true,
-            signIn :true
+            signIn: true
         }
         let remockStore = getMockStore(mockingState)
         let mocked = jest.fn();
@@ -252,13 +252,13 @@ describe('<SignUp/>', () => {
                 </ConnectedRouter>
             </Provider>
         )
-        const component =await mount(mockSignUp);
+        const component = await mount(mockSignUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickVerifyButton()
         expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
-        expect(signUpComponent.state.verifyModalMessage).toBe('메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다.');
+        expect(signUpComponent.state.verifyModalMessage).toBe('Failed to send mail. Please try again.');
         signUpComponent.setState({
-            signIn : true
+            signIn: true
         })
         expect(mocked).toHaveBeenCalledTimes(4);
         expect(spyHistoryPush).toHaveBeenCalledTimes(4);
@@ -266,16 +266,16 @@ describe('<SignUp/>', () => {
     })
 
     it('should onClickVerifyButton works - 2', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickVerifyButton()
         expect(spyGetVerifyCode).toHaveBeenCalledTimes(1)
-        expect(signUpComponent.state.verifyModalMessage).toBe('메일로 인증번호를 발송하였습니다.\n메일을 확인해 주시기 바랍니다.')
+        expect(signUpComponent.state.verifyModalMessage).toBe('The verify code was sent. Please check your mail.')
 
     })
 
     it('should onClickSignUpConfirmButton worsk proper', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.setState({
             checkInputResult: {
@@ -289,14 +289,14 @@ describe('<SignUp/>', () => {
     })
 
     it('should onClickSignUpConfirmButton worsk not proper', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         await signUpComponent.onClickSignUpConfirmButton()
-        expect(signUpComponent.state.confirmModalMessage).toBe('Please Agree To Terms\nPlease Check gender, status Again');
+        expect(signUpComponent.state.confirmModalMessage).toBe('Please agree to the Terms of Use and Privacy Statement.\nPlease check gender, status again.');
 
         signUpComponent.setState({
-            checkInputResult : {
-                gender : true,
+            checkInputResult: {
+                gender: true,
                 agreeToTerms: true,
                 status: false,
                 studentId: false,
@@ -307,11 +307,11 @@ describe('<SignUp/>', () => {
         })
 
         await signUpComponent.onClickSignUpConfirmButton()
-        expect(signUpComponent.state.confirmModalMessage).toBe('Please Check status Again');
+        expect(signUpComponent.state.confirmModalMessage).toBe('Please check status again.');
 
         signUpComponent.setState({
-            checkInputResult : {
-                gender : false,
+            checkInputResult: {
+                gender: false,
                 agreeToTerms: true,
                 status: true,
                 studentId: true,
@@ -322,16 +322,16 @@ describe('<SignUp/>', () => {
         })
 
         await signUpComponent.onClickSignUpConfirmButton()
-        expect(signUpComponent.state.confirmModalMessage).toBe('Please Check gender Again');
+        expect(signUpComponent.state.confirmModalMessage).toBe('Please check gender again.');
 
     })
 
     it('should toggleModal work', async () => {
-        const component =await mount(signUp);
+        const component = await mount(signUp);
         const signUpComponent = component.find(SignUp.WrappedComponent).instance()
         signUpComponent.setState({
             confirmModal: true,
-            confirmModalMessage: '회원 가입이 완료되었습니다.'
+            confirmModalMessage: 'Thanks for signing up.'
         })
         signUpComponent.toggleConfirmModal()
         expect(spyHistoryPush).toHaveBeenCalledWith('/')
