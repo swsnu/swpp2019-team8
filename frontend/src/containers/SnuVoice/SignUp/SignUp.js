@@ -506,7 +506,7 @@ class SignUp extends Component {
 				}
 			}
 			this.setState({
-				confirmModalMessage: agree + "Please check " + message + "again."
+				confirmModalMessage: agree + "Please check " + message + " again."
 			});
 		}
 		this.toggleConfirmModal();
