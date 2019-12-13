@@ -403,14 +403,6 @@ class PetitionDetail extends Component {
                                 <Button
                                     type="button"
                                     id="comment_confirm_button"
-                                    disabled={
-                                        !this.props.signIn ||
-                                        this.props.storedPetitionComments.filter(
-                                            comment =>
-                                                comment.author_id ===
-                                                this.props.selectedUser.id
-                                        ).length > 0
-                                    }
                                     onClick={this.onClickCommentConfirmButton}
                                     onDoubleClick={this.onClickCommentConfirmButton}
                                 >
