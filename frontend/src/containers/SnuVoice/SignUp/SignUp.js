@@ -653,6 +653,7 @@ class SignUp extends Component {
 				</Modal>
 				<Container>
 					<Form>
+						<Label>Terms of Use and Privacy Statement</Label>
 						{terms}
 						<FormGroup>
 							<Input
