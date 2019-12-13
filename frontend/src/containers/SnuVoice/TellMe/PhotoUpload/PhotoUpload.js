@@ -59,14 +59,14 @@ class PhotoUpload extends Component {
         let formText;
         let title = event.target.value;
         if (/[#%?/\\]/.exec(event.target.value)) {
-            formText = "# ? % / \\ 는 허용되지 않습니다."
+            formText = "# ? % / \\ is not allowed."
         } else {
             if (/\.jpg$/.exec(event.target.value) || /\.jpeg$/.exec(event.target.value) || /\.bmp$/.exec(event.target.value) || /\.png$/.exec(event.target.value)) {
                 await this.props.checkPhoto(title);
-                if (this.props.photoDuplicate) formText = '이미 존재하는 사진입니다.'
+                if (this.props.photoDuplicate) formText = 'The photo already exists.'
                 else formText = ''
             } else {
-                formText = ".jpg/.jpeg/.bmp/.png로 끝나야 합니다."
+                formText = "Must end with .jpg/.jpeg/.bmp/.png"
             }
         }
         this.setState({
