@@ -21,10 +21,9 @@ describe('<PetitionCreate />', () => {
     let spyCheckSignIn;
     let spyHistoryPush;
     let spyStorePetition;
-    decodeURI = jest.fn();
     window.replace = jest.fn();
     window.alert = jest.fn();
-    
+
     beforeEach(() => {
         petitioncreate = (
             <Provider store={mockStore}>
