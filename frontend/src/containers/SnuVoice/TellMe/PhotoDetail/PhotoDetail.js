@@ -67,9 +67,9 @@ export class PhotoDetail extends Component {
 
                         <br /><br />
                         <div className="url_copy_button">
-                            <input type="text" id="ShareUrl" value = {"https://www.snuvoice.site/api/tellme/media/" + photo}/>
+                            <input type="text" id="ShareUrl" value={"https://www.snuvoice.site/api/tellme/media/" + photo} />
                             &nbsp;
-                            <Button onClick={this.onClickCopyURL}>URL 복사</Button>
+                            <Button onClick={this.onClickCopyURL}>URL Copy</Button>
                         </div>
                         <hr />
                         <div className="photo_detail" dangerouslySetInnerHTML={{ __html: markdownHtml }} />
