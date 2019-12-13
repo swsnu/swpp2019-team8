@@ -100,9 +100,15 @@ class PetitionDetail extends Component {
     };
 
     onClickCopyURL = () => {
-        const obShareUrl = document.getElementById("ShareUrl");
-        obShareUrl.select();
+        var element = document.createElement("input");
+        element.setAttribute("type", "text");
+        element.setAttribute("value", window.location.href);
+        element.setAttribute("id", "ShareUrl");
+        document.body.appendChild(element)
+        element.focus();
+        element.select();
         document.execCommand("Copy");
+        document.body.removeChild(element);
         alert("URL이 클립보드에 복사되었습니다");
     };
 
@@ -348,11 +354,6 @@ class PetitionDetail extends Component {
                                     Share:
                                 </div> */}
                                         <div>
-                                            {/* <input
-                                            type="text"
-                                            id="ShareUrl"
-                                            value={window.location.href}
-                                            /> */}
                                             <Button onClick={this.onClickCopyURL} className="share_url">
                                                 URL
                                         </Button>
