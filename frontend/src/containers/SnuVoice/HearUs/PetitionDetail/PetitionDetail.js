@@ -100,7 +100,7 @@ class PetitionDetail extends Component {
     };
 
     onClickCopyURL = () => {
-        var element = document.createElement("input");
+        let element = document.createElement("input");
         element.setAttribute("type", "text");
         element.setAttribute("value", window.location.href);
         element.setAttribute("id", "ShareUrl");
@@ -109,7 +109,7 @@ class PetitionDetail extends Component {
         element.select();
         document.execCommand("Copy");
         document.body.removeChild(element);
-        alert("URL이 클립보드에 복사되었습니다");
+        alert("URL copied");
     };
 
     render() {
