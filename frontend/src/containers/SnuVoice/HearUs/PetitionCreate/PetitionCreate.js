@@ -108,9 +108,8 @@ class PetitionCreate extends Component {
                             <h1 className="petition_create_title">Create New Petition</h1>
                             <br />
                             <div className="inputTop">
+                                Operaion rule
                                 <Card id="petition_terms_textarea">
-                                    Hear Us 운영 원칙
-                                    <br /><br />
                                     SNUVOICE는 사상과 표현의 다양성을 존중합니다.
                                     동시에 타인의 권리를 침해하거나 명예를 훼손하는 내용은 제한합니다.
                                     방송통신심의위원회의 '정보통신에 관한 심의 규정', 한국인터넷자율정책기구의 '정책규정' 등을 기반으로 문제 게시물은 삭제될 수 있습니다.
@@ -123,6 +122,8 @@ class PetitionCreate extends Component {
                                     </FormGroup>Agree
                                 </div>
                                 <p>
+                                    청원 작성 안내
+                                    <br />
                                     - 청원글 게시 후 24시간 동안 4명의 사전동의를 받은 청원에 한해 SNUVOICE 게시판에 공개됩니다.
                                     <br />
                                     - 한 번 작성된 청원은 수정 및 삭제가 불가능합니다. 최초 청원 취지와 다른 내용으로 변경되는 것을 방지하여 청원 참여자의 의견을 보호하기 위한 조치이니 신중하게 작성하여 주시기 바랍니다.
