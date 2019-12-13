@@ -402,8 +402,8 @@ class PhotoUpload extends Component {
             </Nav>
         );
 
-        let $imagePreview = (!this.state.photoUrl) ? (<div className="noPhoto">There is no image to preview</div>) :
-            (this.state.uploadEnd) ? (<div></div>) :
+        let $imagePreview = (!this.state.photoUrl) ? (<div />) :
+            (this.state.uploadEnd) ? (<div />) :
                 (<img id="uploaded_image" ref={this.refImg} src={this.state.photoUrl}
                     onLoad={this.onImgLoad} alt="Loaded img" />);
 
@@ -417,6 +417,11 @@ class PhotoUpload extends Component {
                     <h1>Photo Upload</h1>
                     <br />
                     <div>
+                        <p>
+                            1. Click on the red box to blur or unblur
+                            <br />
+                            2. Click outside the box to handle customized blur
+                        </p>
                         <p>{this.state.message}</p>
                         <div className="FileUpload">
                             <Input type="file" id="photo_file_file"
@@ -452,7 +457,7 @@ class PhotoUpload extends Component {
                                         <br />
                                         <h1><div className="photo_title">{this.state.photoTitle}</div></h1>
                                         <hr />
-                                        <MarkdownPreview value={this.state.photoContent} className="photo_detail"/>
+                                        <MarkdownPreview value={this.state.photoContent} className="photo_detail" />
                                     </div>
                                 </div>
                             </TabPane>
@@ -476,7 +481,7 @@ class PhotoUpload extends Component {
 
 export const mapDispatchToProps = dispatch => {
     return {
-        checkPhoto : (title) => {
+        checkPhoto: (title) => {
             dispatch(actionCreators.checkPhotoDuplicate(title))
         }
     }
@@ -484,7 +489,7 @@ export const mapDispatchToProps = dispatch => {
 
 export const mapStateToProps = state => {
     return {
-        photoDuplicate : state.tm.photoDuplicate
+        photoDuplicate: state.tm.photoDuplicate
     }
 }
 export default connect(
