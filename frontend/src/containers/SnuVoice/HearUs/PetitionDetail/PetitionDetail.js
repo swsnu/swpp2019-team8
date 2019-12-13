@@ -100,10 +100,16 @@ class PetitionDetail extends Component {
     };
 
     onClickCopyURL = () => {
-        const obShareUrl = document.getElementById("ShareUrl");
-        obShareUrl.select();
+        let element = document.createElement("input");
+        element.setAttribute("type", "text");
+        element.setAttribute("value", window.location.href);
+        element.setAttribute("id", "ShareUrl");
+        document.body.appendChild(element)
+        element.focus();
+        element.select();
         document.execCommand("Copy");
-        alert("URL이 클립보드에 복사되었습니다");
+        document.body.removeChild(element);
+        alert("URL copied");
     };
 
     render() {
@@ -348,11 +354,6 @@ class PetitionDetail extends Component {
                                     Share:
                                 </div> */}
                                         <div>
-                                            {/* <input
-                                            type="text"
-                                            id="ShareUrl"
-                                            value={window.location.href}
-                                            /> */}
                                             <Button onClick={this.onClickCopyURL} className="share_url">
                                                 URL
                                         </Button>
@@ -402,14 +403,6 @@ class PetitionDetail extends Component {
                                 <Button
                                     type="button"
                                     id="comment_confirm_button"
-                                    disabled={
-                                        !this.props.signIn ||
-                                        this.props.storedPetitionComments.filter(
-                                            comment =>
-                                                comment.author_id ===
-                                                this.props.selectedUser.id
-                                        ).length > 0
-                                    }
                                     onClick={this.onClickCommentConfirmButton}
                                     onDoubleClick={this.onClickCommentConfirmButton}
                                 >
