@@ -71,7 +71,7 @@ export class UpperBar extends Component {
             this.setState({ feedBackMessage: "" });
         } else {
             this.setState({
-                feedBackMessage: "이메일이나 비밀번호를 확인해주십시오."
+                feedBackMessage: "Please check your mail or password."
             });
         }
     };

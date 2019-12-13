@@ -15,7 +15,7 @@ describe('<UpperBar/>', () => {
             getSignOut: mocked,
             getUserByUserId: mocked
         },
-        historyMock = { push : jest.fn() }
+            historyMock = { push: jest.fn() }
     })
 
     afterEach(() => jest.clearAllMocks())
@@ -77,7 +77,7 @@ describe('<UpperBar/>', () => {
         component.instance().toggleModal = mocked;
         await component.instance().onClickSignInButton();
         expect(mocked).toHaveBeenCalledTimes(1);
-        expect(component.instance().state.feedBackMessage).toBe('이메일이나 비밀번호를 확인해주십시오.')
+        expect(component.instance().state.feedBackMessage).toBe('Please check your mail or password.')
     })
 
     it('onClickSignInButton works- 2', async () => {
@@ -145,11 +145,11 @@ describe('<UpperBar/>', () => {
     it('should render correct searchbar', () => {
         const component = shallow(<UpperBar {...props} history={historyMock} />);
         component.instance().setState({
-            location : 'tell_me'
+            location: 'tell_me'
         });
         expect(true).toBe(true);
         component.instance().setState({
-            location : 'hear_us'
+            location: 'hear_us'
         });
         expect(true).toBe(true);
 
