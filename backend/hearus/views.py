@@ -218,7 +218,12 @@ def petition_comment(request, petition_url):
 
 def petition_by_document_title(request, document_title):
     if request.method == 'GET':
-        encoded_title = urllib.parse.quote(document_title)
+        encoded_title = document_title.replace(' ', '%20')
+        encoded_title = encoded_title.replace('^', '%5E')
+        encoded_title = encoded_title.replace('|', '%7C')
+        encoded_title = encoded_title.replace('{', '%7B')
+        encoded_title = encoded_title.replace('}', '%7D')
+        encoded_title = encoded_title.replace('`','%60')
         petition_to_exclude = ['preliminary', 'fail']
         petition_list = [petition for petition in
                          Petition.objects.exclude(status__in=petition_to_exclude).filter(
