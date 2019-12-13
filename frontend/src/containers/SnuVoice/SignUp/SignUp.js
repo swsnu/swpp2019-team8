@@ -120,7 +120,7 @@ class SignUp extends Component {
 	toggleConfirmModal = () => {
 		if (
 			this.state.confirmModal === true &&
-			this.state.confirmModalMessage === "회원 가입이 완료되었습니다."
+			this.state.confirmModalMessage === "Thanks for signing up."
 		) {
 			this.props.history.push("/");
 		}
@@ -140,7 +140,7 @@ class SignUp extends Component {
 				inputResult.email = false;
 				inputInvalid.email = true;
 				formFeedbackMessage.email =
-					"이미 가입된 스누메일입니다. 다시 확인하시기 바랍니다.";
+					"This email address is already associated with the existing account. Please check again.";
 			} else {
 				inputResult.email = true;
 				inputInvalid.email = false;
@@ -154,7 +154,7 @@ class SignUp extends Component {
 			// 실패
 			inputResult.email = false;
 			inputInvalid.email = true;
-			formFeedbackMessage.email = "스누메일 형식으로 입력해주세요.";
+			formFeedbackMessage.email = "Please enter in SNU mail format.";
 		}
 
 		this.setState({
@@ -185,7 +185,7 @@ class SignUp extends Component {
 			//실패
 			inputResult.verifyCode = false;
 			inputInvalid.verifyCode = true;
-			formFeedbackMessage.verifyCode = "인증번호가 일치하지 않습니다.";
+			formFeedbackMessage.verifyCode = "The verify code does not match.";
 		}
 		this.setState({
 			verifyCode: event.target.value,
@@ -209,7 +209,7 @@ class SignUp extends Component {
 				inputResult.password = false;
 				inputInvalid.password = true;
 				formFeedbackMessage.password =
-					"비밀번호가 너무 짧습니다. 8자 이상으로 설정해주십시오";
+					"Password is too short. Please set it to at least eight characters.";
 			}
 		} else {
 			if (
@@ -224,7 +224,7 @@ class SignUp extends Component {
 				inputResult.password = false;
 				inputInvalid.password = true;
 				formFeedbackMessage.password =
-					"영문자, 특수기호, 숫자를 포함한 8자 이상으로 설정해주십시오.";
+					"Please set at least 8 characters including letters, special symbols, and numbers.";
 			}
 		}
 		if (
@@ -234,7 +234,7 @@ class SignUp extends Component {
 			inputResult.passwordConfirm = false;
 			inputInvalid.passwordConfirm = true;
 			formFeedbackMessage.passwordConfirm =
-				"비밀번호와 일치하지 않습니다.";
+				"The password does not match.";
 		} else if (this.state.passwordConfirm !== "") {
 			inputResult.passwordConfirm = true;
 			inputInvalid.passwordConfirm = false;
@@ -266,7 +266,7 @@ class SignUp extends Component {
 			inputResult.passwordConfirm = false;
 			inputInvalid.passwordConfirm = true;
 			formFeedbackMessage.passwordConfirm =
-				"비밀번호와 일치하지 않습니다.";
+				"The password does not match.";
 		}
 		this.setState({
 			passwordConfirm: event.target.value,
@@ -289,7 +289,7 @@ class SignUp extends Component {
 		} else if (this.props.nicknameDuplicate === true) {
 			inputResult.nickname = false;
 			inputInvalid.nickname = true;
-			formFeedbackMessage.nickname = "이미 존재하는 닉네임입니다.";
+			formFeedbackMessage.nickname = "The nickname already exists.";
 		} else {
 			inputResult.nickname = true;
 			inputInvalid.nickname = false;
@@ -373,7 +373,7 @@ class SignUp extends Component {
 			if (this.props.studentIdDuplicate === true) {
 				inputResult.studentId = false;
 				inputInvalid.studentId = true;
-				formFeedbackMessage.studentId = "이미 가입한 학번입니다.";
+				formFeedbackMessage.studentId = "The student id already exists.";
 			} else {
 				inputResult.studentId = true;
 				inputInvalid.studentId = false;
@@ -388,7 +388,7 @@ class SignUp extends Component {
 				inputResult.studentId = false;
 				inputInvalid.studentId = true;
 				formFeedbackMessage.studentId =
-					"학번의 형식이 올바르지 않습니다.\n20XX-XXXXX 형식으로 입력하여 주십시오";
+					"The format of the student id is not valid. Please enter in 20XX-XXXX format.";
 			}
 		}
 		this.setState({
@@ -451,12 +451,12 @@ class SignUp extends Component {
 		if (this.props.verifyCode === "") {
 			this.setState({
 				verifyModalMessage:
-					"메일 발송에 실패하였습니다.\n다시 한번 시도해 주시기 바랍니다."
+					"Failed to send mail. Please try again."
 			});
 		} else {
 			this.setState({
 				verifyModalMessage:
-					"메일로 인증번호를 발송하였습니다.\n메일을 확인해 주시기 바랍니다."
+					"The verify code was sent. Please check your mail."
 			});
 		}
 		this.toggleVerifyModal();
@@ -485,11 +485,11 @@ class SignUp extends Component {
 			};
 			await this.props.postSignUp(user);
 			this.setState({
-				confirmModalMessage: "회원 가입이 완료되었습니다."
+				confirmModalMessage: "Thanks for signing up."
 			});
 		} else {
 			if (!inputResult.agreeToTerms) {
-				agree = 'Please Agree To Terms\n'
+				agree = "Please agree to the Terms of Use and Privacy Statement.\n"
 			}
 			if (!inputResult.gender) {
 				message += 'gender'
@@ -506,7 +506,7 @@ class SignUp extends Component {
 				}
 			}
 			this.setState({
-				confirmModalMessage: agree + "Please Check " + message + " Again"
+				confirmModalMessage: agree + "Please check " + message + "again."
 			});
 		}
 		this.toggleConfirmModal();
@@ -520,7 +520,7 @@ class SignUp extends Component {
 		if (this.state.signIn === '') {
 			await this.props.checkSignIn();
 			if (this.props.signIn) {
-				alert("You must logged out to sign up");
+				alert("You must logged out to sign up.");
 				this.props.history.push("/");
 			} else {
 				this.setState({
@@ -528,12 +528,10 @@ class SignUp extends Component {
 				})
 			}
 		} else if (this.props.signIn) {
-			alert("You must logged out to sign up");
+			alert("You must logged out to sign up.");
 			this.props.history.push('/')
 		}
-
 	}
-
 
 	render() {
 		this.ngOnInIt();
@@ -626,10 +624,10 @@ class SignUp extends Component {
 			<div className="SignUp">
 				<UpperBar />
 				<div className="temp_blue_bar">
-                </div>
-				<br/>
+				</div>
+				<br />
 				<h1>Sign Up</h1>
-				<br/>
+				<br />
 				<Modal
 					isOpen={this.state.verifyModal}
 					toggle={this.toggleVerifyModal}
@@ -684,18 +682,18 @@ class SignUp extends Component {
 										}
 									></Input>
 									<InputGroupAddon addonType="append">
-									<Button
-										type="button"
-										id="verify_button"
-										className="float-right"
-										disabled={
-											!this.state.checkInputResult.email
-										}
-										onClick={this.onClickVerifyButton}
+										<Button
+											type="button"
+											id="verify_button"
+											className="float-right"
+											disabled={
+												!this.state.checkInputResult.email
+											}
+											onClick={this.onClickVerifyButton}
 										>
-										Verify
+											Verify
                                     </Button>
-										</InputGroupAddon>
+									</InputGroupAddon>
 									<FormFeedback>
 										{this.state.formFeedbackMessage.email}
 									</FormFeedback>
@@ -859,7 +857,7 @@ class SignUp extends Component {
 								</Row>
 							</FormGroup>
 							{status_detail}
-							<br/>
+							<br />
 							<Button
 								type="button"
 								id="back_button"
