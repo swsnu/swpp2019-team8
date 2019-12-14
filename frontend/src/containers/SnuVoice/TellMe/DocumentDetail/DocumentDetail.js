@@ -161,7 +161,7 @@ class DocumentDetail extends Component {
                         <br />
                         <div
                             dangerouslySetInnerHTML={{ __html: markdownHtml }}
-                            className="document_content"
+                            className="document_detail_content"
                         />
                         <hr />
                         {relatedPetition}

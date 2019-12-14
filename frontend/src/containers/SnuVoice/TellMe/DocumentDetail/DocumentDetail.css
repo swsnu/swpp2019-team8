@@ -80,8 +80,17 @@ blockquote {
     border-left: 10px solid #27a9e3;
   }
 
-/* .document_content {
+.document_detail_content {
     word-wrap: break-word;
-    line-height: 150%;
-    margin-bottom: 10px !important;
-} */
+}
+
+.document_detail_content p{
+    margin-top: -3px;
+    margin-bottom: -3px;
+}
+
+.document_detail_content li, .document_detail_content h3, .document_detail_content ul{
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+
