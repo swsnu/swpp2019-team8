@@ -46,6 +46,14 @@ export class DebateCreate extends Component {
         }
     }
 
+    componentDidMount = async () => {
+        await this.props.onGetDocument(this.props.match.params.document_title);
+        if (this.props.selectedDocument === null) {
+            this.props.history.push('/tell_me/documents/' + this.props.match.params.document_title + '/notfound')
+        }
+
+    }
+
     render() {
         this.ngOnInIt();
 

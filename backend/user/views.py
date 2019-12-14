@@ -40,6 +40,8 @@ def sign_up(request):
             'studentStatus': new_student_status
         }
         User.objects.create_user(email=new_email, new_user=new_user)
+        user = authenticate(email=new_email, password=new_password)
+        login(request, user)
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
