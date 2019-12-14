@@ -21,6 +21,10 @@ class PetitionDetail extends Component {
 
     componentDidMount = async () => {
         await this.props.onGetPetition(this.props.match.params.petition_url);
+        if (this.props.selectedPetition === null) {
+            this.props.history.push('/hear_us/petition/' + this.props.match.params.petition_url + '/notfound');
+            return;
+        }
         await this.props.onGetPetitionComments(
             this.props.match.params.petition_url
         );

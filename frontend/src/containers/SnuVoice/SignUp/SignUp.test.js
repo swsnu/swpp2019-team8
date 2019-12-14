@@ -27,6 +27,7 @@ describe('<SignUp/>', () => {
     let spyNickname;
     let spyStudentId;
     let spyHistoryPush;
+    let spyHistoryGoBack;
     let spyCheckSignIn;
     window.alert = jest.fn();
 
@@ -52,6 +53,8 @@ describe('<SignUp/>', () => {
             .mockImplementation((studentId) => { return dispatch => { }; })
         spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation((path) => { });
+        spyHistoryGoBack = jest.spyOn(history, 'goBack')
+            .mockImplementation(() => {});
         spyCheckSignIn = jest.spyOn(actionCreator, 'checkSignIn')
             .mockImplementation(() => { return dispatch => { }; })
 
@@ -72,7 +75,7 @@ describe('<SignUp/>', () => {
         const component = await mount(signUp);
         const backButton = component.find('#back_button').at(0)
         backButton.simulate('click')
-        expect(spyHistoryPush).toHaveBeenCalledWith('/')
+        expect(spyHistoryGoBack).toHaveBeenCalledTimes(1);
     })
 
     it('should RadioButtons work', async () => {
@@ -333,7 +336,7 @@ describe('<SignUp/>', () => {
             confirmModalMessage: 'Thanks for signing up.'
         })
         signUpComponent.toggleConfirmModal()
-        expect(spyHistoryPush).toHaveBeenCalledWith('/')
+        expect(true).toBe(true)
     })
 
 

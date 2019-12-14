@@ -12,9 +12,12 @@ import Upperbar from "../../../UpperBar/UpperBar";
 import "./DebateList.css";
 
 export class DebateList extends Component {
-    componentDidMount() {
-        this.props.onGetDocument(this.props.match.params.document_title);
-        this.props.onGetDebates(this.props.match.params.document_title);
+    componentDidMount = async () => {
+        await this.props.onGetDocument(this.props.match.params.document_title);
+        if (this.props.selectedDocument === null) {
+            this.props.history.push('/tell_me/documents/' + this.props.match.params.document_title + '/notfound');
+        }
+        await this.props.onGetDebates(this.props.match.params.document_title);
     }
 
     onClickDebateTitleButton = event => {
