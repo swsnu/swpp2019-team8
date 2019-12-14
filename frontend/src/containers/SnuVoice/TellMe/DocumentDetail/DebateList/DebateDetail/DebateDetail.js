@@ -64,8 +64,9 @@ export class DebateDetail extends Component {
 
         return (
             <div>
-                <Upperbar /><br/>
+                <Upperbar />
                     <div className="DebateDetail">
+                        <div className="DebateDetail_body">
                         <h3 className="documentTitle">
                             {documentTitle} (Debate)
                         </h3>
@@ -102,6 +103,8 @@ export class DebateDetail extends Component {
                         Back
                         </Button>
                     </div>
+                    </div>
+
                 </div>
         )
     }

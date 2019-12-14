@@ -1,6 +1,52 @@
 .DebateDetail {
     background-color: #f2f4f7;
-    padding-left: 8%;
-    padding-right: 8%;
-    padding-bottom: 3%;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+}
+
+.DebateDetail_body {
+    background-color: white;
+    padding: 3%;
+    border: groove;
+}
+
+.debateComment {
+    padding: 0% !important;
+    width: 60%;
+    text-align: left;
+    border-width: 2px !important;
+    border-color: #9a9a9a !important;
+    border-radius: 5px !important;
+}
+
+.debateComment_header {
+    background-color: #94bfff;
+    padding-left: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.debateComment_body {
+    background-color: #f2f4f7;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    word-wrap: break-word;
+}
+
+.debateComment_author {
+
+}
+
+.debateComment_time {
+    top: 8%;
+    position: absolute;
+    right: 5%;
 }
