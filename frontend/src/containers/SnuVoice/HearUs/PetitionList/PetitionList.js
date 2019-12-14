@@ -178,13 +178,25 @@ class PetitionList extends Component {
                     onClick={this.onClickListNextButton}>Next</Button>
             </ButtonGroup>
         )
-
+        let buttons = '';
+        if (this.props.signIn) {
+            buttons = (
+                <div className="userOptions">
+                    <Button type="button" id="create_button"
+                        onClick={this.onClickCreateButton}>NEW</Button>
+                    <Button type="button" id="my_petition_button"
+                        onClick={this.onClickMyPetitionButton}>MINE</Button>
+                </div>
+            )
+        }
         return (
             <div>
                 <UpperBar />
                 <div className="PetitionList">
                     <div className="PetitionList_body">
                         <h1 className="title">Hear Us</h1>
+                        <br />
+                        {buttons}
                         <br />
                         {petitionStateTabButtons}
                         <TabContent activeTab={this.state.petitionState}>
