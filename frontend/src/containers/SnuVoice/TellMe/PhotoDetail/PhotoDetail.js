@@ -67,10 +67,13 @@ export class PhotoDetail extends Component {
 
                         <br /><br />
                         <div className="url_copy_button">
-                            <input type="text" id="ShareUrl" value = {"https://www.snuvoice.site/api/tellme/media/" + photo}/>
+                            <input type="text" id="ShareUrl" value={"https://www.snuvoice.site/api/tellme/media/" + photo} />
                             &nbsp;
-                            <Button onClick={this.onClickCopyURL}>URL 복사</Button>
+                            <Button onClick={this.onClickCopyURL}>URL Copy</Button>
                         </div>
+                        Markdown lets you insert a photo into your document.
+                        <br />
+                        For more information, see <a href="https://www.snuvoice.site/tell_me/documents/TELL-ME:%EB%AC%B8%EB%B2%95%20%EB%8F%84%EC%9B%80%EB%A7%90">TELL-ME:문법 도움말</a>
                         <hr />
                         <div className="photo_detail" dangerouslySetInnerHTML={{ __html: markdownHtml }} />
                         <hr />

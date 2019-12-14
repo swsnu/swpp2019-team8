@@ -46,7 +46,7 @@ def petition(request):
             petition_link = json.loads(body)['link']  # array?
             petition_start_date = timezone.now()
             petition_end_date = petition_start_date + timedelta(days=30)
-        except (KeyError, JSONDecodeError) as e:
+        except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         petition_url = token_urlsafe(10)
         petition = Petition(author=request.user,
@@ -174,7 +174,7 @@ def petition_comment(request, petition_url):
                 body = request.body.decode()
                 comment_comment = json.loads(body)['comment']
                 comment_date = timezone.now()
-            except (KeyError, JSONDecodeError) as e:
+            except (KeyError, JSONDecodeError):
                 return HttpResponseBadRequest()
             comment_petition = Petition.objects.get(url=petition_url)
 

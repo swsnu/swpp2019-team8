@@ -100,10 +100,16 @@ class PetitionDetail extends Component {
     };
 
     onClickCopyURL = () => {
-        const obShareUrl = document.getElementById("ShareUrl");
-        obShareUrl.select();
+        let element = document.createElement("input");
+        element.setAttribute("type", "text");
+        element.setAttribute("value", window.location.href);
+        element.setAttribute("id", "ShareUrl");
+        document.body.appendChild(element)
+        element.focus();
+        element.select();
         document.execCommand("Copy");
-        alert("URL이 클립보드에 복사되었습니다");
+        document.body.removeChild(element);
+        alert("URL copied");
     };
 
     render() {
@@ -210,8 +216,8 @@ class PetitionDetail extends Component {
                         disabled={
                             this.props.storedPetitionComments &&
                             this.state.listNumber[0] + 5 >
-                                this.props.storedPetitionComments.length / 10 +
-                                    1
+                            this.props.storedPetitionComments.length / 10 +
+                            1
                         }
                         onClick={this.onClickListNextButton}
                     >
@@ -330,8 +336,8 @@ class PetitionDetail extends Component {
                             </div>
                             <br />
                         </div>
-                        <hr/>
-                            <br />
+                        <hr />
+                        <br />
                         <div className="Reply">
                             <Row>
                                 <Col className="Reply_area_agree">
@@ -348,48 +354,44 @@ class PetitionDetail extends Component {
                                     Share:
                                 </div> */}
                                         <div>
-                                        {/* <input
-                                            type="text"
-                                            id="ShareUrl"
-                                            value={window.location.href}
-                                            /> */}
-                                        <Button onClick={this.onClickCopyURL}  className="share_url">
-                                            URL
+                                            <Button onClick={this.onClickCopyURL} className="share_url">
+                                                URL
                                         </Button>
-                                            </div>
-                                            <div className="share_kakao">
-                                        <Button className="Kakao">
-                                        <img
-                                            id="kakao-link-btn"
-                                            src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
-                                            alt="Share on Kakao Talk"
-                                            className="kakao_icon"
-                                            />
-                                        </Button >
-                                            </div>
-                                            <div className="share_facebook">
-                                        <ShareLink link={window.location.href}>
-                                            {_link => (
-                                                <a
-                                                href={_link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                >
-                                                    <img
-                                                        src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png"
-                                                        width="32"
-                                                        alt="Share on Facebook"
+                                        </div>
+                                        <div className="share_kakao">
+                                            <Button className="Kakao">
+                                                <img
+                                                    id="kakao-link-btn"
+                                                    src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+                                                    alt="Share on Kakao Talk"
+                                                    className="kakao_icon"
+                                                />
+                                            </Button >
+                                        </div>
+                                        <div className="share_facebook">
+                                            <ShareLink link={window.location.href}>
+                                                {_link => (
+                                                    <a
+                                                        href={_link}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        <img
+                                                            src="https://user-images.githubusercontent.com/26313346/70497186-ac977a80-1b55-11ea-98d3-c45f7705b1eb.png"
+                                                            width="32"
+                                                            alt="Share on Facebook"
                                                         />
-                                                </a>
-                                            )}
-                                        </ShareLink>
-                                            </div>
+                                                    </a>
+                                                )}
+                                            </ShareLink>
+                                        </div>
                                     </div>
                                 </Col>
                             </Row>
 
                             <div className="Reply_area_write">
                                 <textarea
+                                    className="Reply_textarea"
                                     id="tw_contents"
                                     placeholder="Write your comment within 50 characters."
                                     onChange={event =>
@@ -401,15 +403,8 @@ class PetitionDetail extends Component {
                                 <Button
                                     type="button"
                                     id="comment_confirm_button"
-                                    disabled={
-                                        !this.props.signIn ||
-                                        this.props.storedPetitionComments.filter(
-                                            comment =>
-                                                comment.author_id ===
-                                                this.props.selectedUser.id
-                                        ).length > 0
-                                    }
                                     onClick={this.onClickCommentConfirmButton}
+                                    onDoubleClick={this.onClickCommentConfirmButton}
                                 >
                                     {" "}
                                     Agree
