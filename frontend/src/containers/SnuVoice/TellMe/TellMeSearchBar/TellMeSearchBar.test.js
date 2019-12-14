@@ -51,13 +51,6 @@ describe('<SearchBar/>', () => {
         expect(search.length).toBe(1)
     })
 
-    it('should onClickCreateBButton work', () => {
-        const component = mount(searchBar)
-        const searchBarComponent = component.find(TellMeSearchBar.WrappedComponent).instance()
-        searchBarComponent.onClickCreateButton()
-        expect(spyHistoryPush).toHaveBeenCalledWith('/tell_me/create')
-    })
-
     it('should onClickConfirmButton work', async () => {
         let mocked = jest.fn();
         window.alert = mocked;
