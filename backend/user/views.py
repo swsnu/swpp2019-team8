@@ -27,7 +27,7 @@ def sign_up(request):
             new_department = json.loads(body)['department']
             new_major = json.loads(body)['major']
             new_student_status = json.loads(body)['student_status']
-        except (KeyError, json.JSONDecodeError) as e:
+        except (KeyError, json.JSONDecodeError):
             return HttpResponseBadRequest()
         new_user = {
             'password': new_password,
@@ -51,7 +51,7 @@ def sign_in(request):
             body = request.body.decode()
             user_email = json.loads(body)['email']
             user_password = json.loads(body)['password']
-        except (KeyError, json.JSONDecodeError) as e:
+        except (KeyError, json.JSONDecodeError):
             return HttpResponseBadRequest()
         user = authenticate(email=user_email, password=user_password)
         if user is None:
