@@ -54,9 +54,9 @@ def document_title(request, document_title):
         selected_document = [document for document in Document.objects.filter(
             title__istartswith=document_title, title__iendswith=document_title).values()]
         for i in selected_document:
-            if len(document_title) == len(i['title']):
+            if document_title == i['title']:
                 response_dict = {
-                    'selectedDocument': selected_document[0],
+                    'selectedDocument': i,
                     'unique': True
                 }
                 return JsonResponse(response_dict, safe=False)

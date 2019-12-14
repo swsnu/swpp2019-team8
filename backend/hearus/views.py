@@ -45,7 +45,7 @@ def petition(request):
             petition_category = json.loads(body)['category']
             petition_link = json.loads(body)['link']  # array?
             petition_start_date = timezone.now()
-            petition_end_date = petition_start_date + timedelta(days=30)
+            petition_end_date = petition_start_date + timedelta(days=21)
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         petition_url = token_urlsafe(10)

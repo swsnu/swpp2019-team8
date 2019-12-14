@@ -9,6 +9,9 @@ describe('<DebateDetail/>', () => {
 
     beforeEach(() => {
         props = {
+            selectedUser : {
+                nickname : 'hi'
+            },
             selectedDocument: {
                 title: "123"
             },
@@ -26,7 +29,7 @@ describe('<DebateDetail/>', () => {
                 {
                     id: 2,
                     comment: '123',
-                    author: 'hi',
+                    author: 'hid',
                     date: '1234'
                 },
                 {
@@ -96,11 +99,15 @@ describe('mapStateToProps', () => {
                 selectedDocument : '123',
                 selectedDebate : '1',
                 debateComments : [1, 3, 4]
+            },
+            usr : {
+                selectedUser : 1
             }
         };
         expect(mapStateToProps(initialState).selectedDocument).toBe('123');
         expect(mapStateToProps(initialState).selectedDebate).toBe('1');
         expect(mapStateToProps(initialState).debateComments).toStrictEqual([1, 3, 4]);
+        expect(mapStateToProps(initialState).selectedUser).toStrictEqual(1);
     })
 })
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import * as actionCreator from '../../../store/actions/index';
 
@@ -31,7 +32,7 @@ class TellMe extends Component {
       return (
         <div className="recent_document" key={i}>
           <div key={i}>
-            <a href={'/tell_me/documents/' + document.title} target="_blank" rel="noopener noreferrer">{document.title}</a>
+            <Link to={'/tell_me/documents/' + document.title}>{document.title}</Link>
           </div>
         </div>
 
