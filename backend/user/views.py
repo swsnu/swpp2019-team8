@@ -144,7 +144,7 @@ def user_to_mod(request):
         login(request, user)
         return HttpResponse(status=200)
     else:
-        return HttpResponseNotAllowed(['GET'])
+        return HttpResponseNotAllowed(['GET','PUT'])
 
 
 def get_user_by_email(request, email):
