@@ -54,7 +54,7 @@ export class DebateList extends Component {
 
         console.log(this.props.debates)
 
-        if (this.props.debates.length > 0) {
+        if (this.props.debates && this.props.debates.length > 0) {
             debateList = this.props.debates.map(debate => {
                 return (
                     <li key={debate.id}>
