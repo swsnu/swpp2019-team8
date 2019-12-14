@@ -220,6 +220,7 @@ describe('<PhotoUpload />', () => {
         const content = 'TEST_CONTENT';
         const component = mount(photoUpload);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
+        fetch = jest.fn();
         try {
             await photoUploadInstance.fileUpload(content);
         } catch (e) {
