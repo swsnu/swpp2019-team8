@@ -18,6 +18,7 @@ import {
     Row,
 } from "reactstrap";
 
+import MajorList from '../../../components/Signup/majorList';
 import UpperBar from "../UpperBar/UpperBar";
 
 export class InfoEdit extends Component {
@@ -80,24 +81,7 @@ export class InfoEdit extends Component {
             { value: "socialSciences", label: "Social Sciences" },
             { value: "veterinaryMedicine", label: "Veterinary Medicine" }
         ],
-        majorList: {
-            all: [{ value: "all", label: "-" }],
-            agricultureAndLifeSciences: [{ value: '-', label: '-' }, { value: "agricultureAndLifeSciences", label: "Agriculture and Life Sciences" }],
-            businessAdministration: [{ value: "businessAdministration", label: "Business Administration" }],
-            education: [{ value: "education", label: "Education" }],
-            engineering: [{ value: "engineering", label: "Engineering" }],
-            fineArts: [{ value: "fineArts", label: "Fine Arts" }],
-            humanities: [{ value: "humanities", label: "Humanities" }],
-            humanEcology: [{ value: "humanEcology", label: "Human Ecology" }],
-            liberalStudies: [{ value: "liberalStudies", label: "Liberal Studies" }],
-            medicine: [{ value: "medicine", label: "Medicine" }],
-            music: [{ value: "music", label: "Music" }],
-            naturalSciences: [{ value: "naturalSciences", label: "Natural Sciences" }],
-            nursing: [{ value: "nursing", label: "Nursing" }],
-            pharmacy: [{ value: "pharmacy", label: "Pharmacy" }],
-            socialSciences: [{ value: "socialSciences", label: "Social Sciences" }],
-            veterinaryMedicine: [{ value: "veterinaryMedicine", label: "Veterinary Medicine" }]
-        }
+        majorList: MajorList    
     }
 
     toggleModal = async (event) => {

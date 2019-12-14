@@ -60,7 +60,15 @@ class PetitionCreate extends Component {
     }
 
     onClickLinkAddButton = () => {
-        this.state.petitionLinkList.push(this.state.petitionLink);
+        let temp = decodeURI(this.state.petitionLink);
+        let doTemp = decodeURI(temp);
+        doTemp = doTemp.replace(/\s/gi, '%20');
+        doTemp = doTemp.replace(/\^/gi, '%5E');
+        doTemp = doTemp.replace(/`/gi, '%60');
+        doTemp = doTemp.replace(/\|/gi, '%7C');
+        doTemp = doTemp.replace(/}/gi, '%7D');
+        doTemp = doTemp.replace(/{/gi, '%7B');
+        this.state.petitionLinkList.push(doTemp);
         this.setState({ petitionLink: '' });
         this.forceUpdate();
     }
