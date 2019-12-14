@@ -44,9 +44,8 @@ class TellMe extends Component {
         <div className="TellMe_body">
           <div />
           <Row>
-
-          <Col className="TellMeContent">
-            <br />
+          <Col>
+            <div className="TellMeContent">
             <div className="TellMeText">
               <h1>Tell Me</h1>
               <h6>
@@ -74,6 +73,7 @@ class TellMe extends Component {
               >
               Upload Photo
           </Button>
+          </div>
           </Col>
           <Col className="tellme_right" md={2}>
             <div className="recent_documents">

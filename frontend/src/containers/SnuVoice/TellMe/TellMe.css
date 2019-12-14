@@ -2,7 +2,7 @@
     background-color: #f2f4f7;
     padding-top: 1%;
     padding-bottom: 1%;
-    padding-left: 5%;
+    padding-left: 4%;
     padding-right: 2%;
     font-family: "Malgun Gothic", sans-serif;
 }
@@ -26,8 +26,10 @@
 .TellMeContent {
     background-color: white;
     min-height: 370px;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 6%;
+    padding-right: 6%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     border-style: groove;
     /* border-color: #d0d2d5; */
 }

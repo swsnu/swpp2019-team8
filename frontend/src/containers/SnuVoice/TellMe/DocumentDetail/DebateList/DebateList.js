@@ -51,7 +51,9 @@ export class DebateList extends Component {
 
         let debateList;
 
-        if (this.props.debates) {
+        console.log(this.props.debates)
+
+        if (this.props.debates.length > 0) {
             debateList = this.props.debates.map(debate => {
                 return (
                     <li key={debate.id}>
@@ -64,9 +66,9 @@ export class DebateList extends Component {
                     </li>
                 );
             });
-        } else
-            debateList =
-                "There are currently no debates about this page.\nStart a new debate by clicking the NEW button.";
+        } else {
+            debateList = 'There are currently no debates about this page.\nStart a new debate by clicking the NEW button.'
+        }
 
         return (
             <div>

@@ -1,13 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import { ListGroupItem } from 'react-bootstrap';
+import { ListGroupItem } from "react-bootstrap";
 
-const DebateComments = (props) => {
+const DebateComments = props => {
     return (
-        <p>
-            <ListGroupItem>{props.comment}  {props.author} {props.date.substring(0, 10)} {props.date.substring(11, 16)}</ListGroupItem>
-        </p>
-    )
-}
+        <div>
+            <ListGroupItem className="debateComment">
+                <div className="debateComment_header">
+                    <div className="debateComment_author">{props.author}</div> 
+                    <div className="debateComment_time"> {props.date.substring(0, 10)}{" "}{props.date.substring(11, 16)}</div>
+                </div>
+                <div className="debateComment_body">{props.comment}</div>
+            </ListGroupItem>
+            <br/>
+            </div>
+    );
+};
 
-export default DebateComments
+export default DebateComments;
