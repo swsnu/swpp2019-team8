@@ -40,8 +40,9 @@ export class DebateList extends Component {
     };
 
     onClickDebateCancelButton = () => {
-        this.props.history.goBack();
-    };
+        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title);
+    }
+
 
     render() {
         let documentTitle = "";
