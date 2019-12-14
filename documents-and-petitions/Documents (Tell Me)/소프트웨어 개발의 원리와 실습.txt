@@ -29,10 +29,46 @@ UC 버클리에서 학위를 받고 페이스북, 마이크로소프트, 야후,
 2019년 2학기에 정원의 두 배가 넘는 학생들이 수강신청을 하여 수업을 듣지 못한 학생들이 많았는데, 복부전공생 전필 해제에 따라 이러한 문제도 해결될 것으로 보인다.
 
 ### 4. 프로젝트
-추가 바람.
+2019년 2학기 기준 프로젝트는 아래와 같은 프로세스를 따랐다.
+
+* Project team formation
+* Project proposal
+* Project sprint 1 (Features + Setup)
+  * Requirements and specification
+* Project sprint 2 (Proof-of-Concept)
+  * Revised requirements and specification
+  * Design and planning
+  * Working code up to project sprint 2
+* Project sprint 3 (Feature Development)
+  * Revised requirements and specification
+  * Revised design and planning
+  * Working code up to project sprint 3
+* Project sprint 4 (Exception Handling + Testing)
+  * Revised requirements and specification
+  * Revised design and planning
+  * Working code up to project sprint 4
+* Project sprint 5 (Deployment + Optimization)
+  * Revised requirements and specification
+  * Revised design and planning
+  * Working code up to project sprint 5
+* Project sprint 6 (Wrap Up!)
+  * Revised requirements and specification
+  * Revised design and planning
+  * Working code up to project sprint 6
+* Final demo poster session & final report
+
+스프린트마다 팀별로 TA 미팅 시간을 가진다. 주로 S-Lab에서 30분 동안 미팅을 하게 된다. 아래 사진 참고.
+
+사진 추가 바람.
 
 ### 5. 과제
-추가 바람.
+2019년 2학기 기준 총 3번의 과제가 있었다.
+
+과제 주제는 아래와 같았다.
+
+* HW1 - Python and JavaScript Basics
+* HW2 - React Library & Testing
+* HW3 - Django
 
 ### 6. 시험
-추가 바람.
+추가 바람. ~~할많하않~~
