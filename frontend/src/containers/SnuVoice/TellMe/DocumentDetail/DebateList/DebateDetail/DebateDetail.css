@@ -12,13 +12,27 @@
     border: groove;
 }
 
-.debateComment {
+.debate_comment_mine .debateComment {
     padding: 0% !important;
-    width: 60%;
+    width: 51%;
     text-align: left;
     border-width: 2px !important;
     border-color: #9a9a9a !important;
     border-radius: 5px !important;
+    float: right;
+    margin-bottom: 10px;
+}
+
+.debate_comment_others .debateComment {
+    padding: 0% !important;
+    width: 51%;
+    text-align: left;
+    border-width: 2px !important;
+    border-color: #9a9a9a !important;
+    border-radius: 5px !important;
+    float: left;
+    margin-bottom: 10px;
+
 }
 
 .debateComment_header {
@@ -41,12 +55,10 @@
     word-wrap: break-word;
 }
 
-.debateComment_author {
-
-}
-
 .debateComment_time {
     top: 8%;
     position: absolute;
     right: 5%;
 }
+
+

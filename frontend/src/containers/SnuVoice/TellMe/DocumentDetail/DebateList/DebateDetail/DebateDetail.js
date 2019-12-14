@@ -60,7 +60,7 @@ export class DebateDetail extends Component {
         debateCommentList = this.props.debateComments.map(comment => {
             if (comment.author === this.props.selectedUser.nickname) {
                 return (
-                    <div className="mine">
+                    <div className="debate_comment_mine">
                         <DebateComments
                             key={comment.id}
                             id={comment.id}
@@ -72,7 +72,7 @@ export class DebateDetail extends Component {
                 );
             } else {
                 return (
-                    <div className="others">
+                    <div className="debate_comment_others">
                         <DebateComments
                             key={comment.id}
                             id={comment.id}

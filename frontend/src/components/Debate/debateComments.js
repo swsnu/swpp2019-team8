@@ -7,7 +7,7 @@ const DebateComments = props => {
         <div>
             <ListGroupItem className="debateComment">
                 <div className="debateComment_header">
-                    <div className="debateComment_author">{props.author}</div> 
+                    <div className="debateComment_author"><b>{props.author}</b></div> 
                     <div className="debateComment_time"> {props.date.substring(0, 10)}{" "}{props.date.substring(11, 16)}</div>
                 </div>
                 <div className="debateComment_body">{props.comment}</div>
