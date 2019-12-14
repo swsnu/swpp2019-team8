@@ -456,7 +456,7 @@ class SignUp extends Component {
 		} else {
 			this.setState({
 				verifyModalMessage:
-					"The verify code was sent. Please check your mail. It could take few minutes"
+					"The verify code was sent. Please check your mail. It could take a moment"
 			});
 		}
 		this.toggleVerifyModal();
