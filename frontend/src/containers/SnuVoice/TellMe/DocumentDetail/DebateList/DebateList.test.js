@@ -87,9 +87,9 @@ describe('<DebateList /> ', () => {
         expect(debateList.length).toBe(1)
     })
 
-    it('should componentDidMount works', () => {
+    it('should componentDidMount works', async () => {
         const component = shallow(<DebateList {...props}/>)
-        component.instance().componentDidMount()
+        await component.instance().componentDidMount()
         expect(mocked).toHaveBeenCalledTimes(2)
     }) 
 })

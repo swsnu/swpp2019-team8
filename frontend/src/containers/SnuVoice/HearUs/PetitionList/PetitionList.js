@@ -149,7 +149,7 @@ class PetitionList extends Component {
                 })
         } else {
             sortedPetitionList = petitionList
-                .sort((a, b) => a.start_date > b.start_date ? -1 : a.start_date < b.start_date ? 1 : 0)
+                .sort((a, b) => a.end_date > b.end_date ? -1 : a.end_date < b.end_date ? 1 : 0)
                 .map((petition, i) => {
                     if (i < this.state.selectedNumber * 10 && i >= (this.state.selectedNumber - 1) * 10) {
                         return (

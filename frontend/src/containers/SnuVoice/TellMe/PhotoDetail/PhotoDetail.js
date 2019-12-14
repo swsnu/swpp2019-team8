@@ -24,7 +24,7 @@ export class PhotoDetail extends Component {
     componentDidMount = async () => {
         await this.props.getPhoto(this.props.match.params.photo_title)
         if (this.props.selectedPhoto === null) {
-            this.props.history.push('/NotFound')
+            this.props.history.push('/tell_me/photo' + this.props.match.params.photo_title + '/notfound')
         }
     }
 
