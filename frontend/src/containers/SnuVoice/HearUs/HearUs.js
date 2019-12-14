@@ -85,7 +85,7 @@ export class HearUs extends Component {
       deadlineList = (
         this.props.petitionList
           .filter(petition => petition.status === 'ongoing')
-          .sort((a, b) => a.start_date > b.start_date ? -1 : a.start_date < b.start_date ? 1 : 0)
+          .sort((a, b) => a.end_date > b.end_date ? -1 : a.end_date < b.end_date ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
               return (
@@ -126,7 +126,7 @@ export class HearUs extends Component {
       deadlineList = (
         this.props.petitionList
           .filter(petition => petition.category === this.state.selectedCategory && petition.status === 'ongoing')
-          .sort((a, b) => a.start_date > b.start_date ? -1 : a.start_date < b.start_date ? 1 : 0)
+          .sort((a, b) => a.end_date > b.end_date ? -1 : a.end_date < b.end_date ? 1 : 0)
           .map((petition, i) => {
             if (i < 5) {
               return (
