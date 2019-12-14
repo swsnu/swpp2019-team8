@@ -79,7 +79,7 @@ class SignUp extends Component {
 			// 회원가입을 위한 정보들이 알맞게 들어왔는지 확인
 			agreeToTerms: false,
 			email: false,
-			verifyCode: true,
+			verifyCode: false,
 			password: false,
 			passwordConfirm: false,
 			nickname: false,
@@ -122,7 +122,7 @@ class SignUp extends Component {
 			this.state.confirmModal === true &&
 			this.state.confirmModalMessage === "Thanks for signing up."
 		) {
-			this.props.history.push("/");
+			this.props.history.goBack();
 		}
 		this.setState({ confirmModal: !this.state.confirmModal });
 	};
@@ -456,7 +456,7 @@ class SignUp extends Component {
 		} else {
 			this.setState({
 				verifyModalMessage:
-					"The verify code was sent. Please check your mail. It could take few minutes"
+					"The verify code was sent. Please check your mail. It could take a moment"
 			});
 		}
 		this.toggleVerifyModal();
@@ -513,7 +513,7 @@ class SignUp extends Component {
 	};
 
 	onClickBackButton = () => {
-		this.props.history.push("/");
+		this.props.history.goBack();
 	};
 
 	ngOnInIt = async () => {

@@ -75,6 +75,15 @@ describe('<DebateCreate />', () => {
         expect(mockHistory.goBack).toHaveBeenCalledTimes(1);
     })
 
+    it('should componentDidMount works', async () => {
+        let component = await shallow(<DebateCreate {...props} history={mockHistory}/>);
+        await component.instance().componentDidMount();
+        expect(true).toBe(true);
+        component = await shallow(<DebateCreate {...props} history={mockHistory}/>);
+        await component.instance().componentDidMount();
+        expect(true).toBe(true);
+    })
+
 })
 
 describe ('mapStateToProps', () => {

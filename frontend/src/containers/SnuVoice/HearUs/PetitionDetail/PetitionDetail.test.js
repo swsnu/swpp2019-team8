@@ -97,6 +97,8 @@ describe('<PetitionDetail />', () => {
 
     it(`should not render SELECTED_PETITION`, async () => {
         const mockInitialStore = getMockStore({ selectedPetition: null, comment_list: null });
+        let historyMock = jest.spyOn(history, 'push')
+            .mockImplementation(() => {})
         const component = await mount(
             <Provider store={mockInitialStore}>
                 <ConnectedRouter history={history}>
@@ -133,6 +135,8 @@ describe('<PetitionDetail />', () => {
                 time: parseInt('123')
             }]
         });
+        let historyMock = jest.spyOn(history, 'push')
+            .mockImplementation(() => {})
         const component = await mount(
             <Provider store={mockInitialStore}>
                 <ConnectedRouter history={history}>

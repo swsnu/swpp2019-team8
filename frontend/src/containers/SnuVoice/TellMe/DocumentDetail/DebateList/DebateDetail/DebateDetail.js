@@ -18,6 +18,9 @@ export class DebateDetail extends Component {
 
     componentDidMount = async () => {
         await this.props.onGetDocument(this.props.match.params.document_title);
+        if (this.props.selectedDocument === null) {
+            this.props.history.push('/tell_me/documents/' + this.props.match.params.document_title + '/notfound');
+        }
         await this.props.onGetDebateComments(this.props.match.params.debate_id);
         await this.props.onGetDebate(
             this.props.selectedDocument,
