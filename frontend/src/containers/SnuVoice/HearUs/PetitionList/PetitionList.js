@@ -189,54 +189,55 @@ class PetitionList extends Component {
                 </div>
             )
         }
-
         return (
             <div>
                 <UpperBar />
-                    <div className="PetitionList">
-                <div className="PetitionList_body">
+                <div className="PetitionList">
+                    <div className="PetitionList_body">
                         <h1 className="title">Hear Us</h1>
-                        <br/>
-                    {petitionStateTabButtons}
-                    <TabContent activeTab={this.state.petitionState}>
-                        <TabPane tabId='ongoing'>
-                            <br />
-                            <div className="tableButtons1">
-                                {petitionOrderButtons}<br />
-                            </div>
-                            <br />
-                            <br />
-                            <div className="tableButtons2">
-                                <Category onClick={this.onClickCategoryButton} />
-                            </div>
-                            <br /><br /><br />
-                            <div className="Tables">
+                        <br />
+                        {buttons}
+                        <br />
+                        {petitionStateTabButtons}
+                        <TabContent activeTab={this.state.petitionState}>
+                            <TabPane tabId='ongoing'>
+                                <br />
+                                <div className="tableButtons1">
+                                    {petitionOrderButtons}<br />
+                                </div>
+                                <br />
+                                <br />
+                                <div className="tableButtons2">
+                                    <Category onClick={this.onClickCategoryButton} />
+                                </div>
+                                <br /><br /><br />
+                                <div className="Tables">
 
-                                <PetitionTableHeader />
-                                {sortedPetitionList}
-                            </div>
-                            {listNumberButtons}
-                        </TabPane>
-                        <TabPane tabId='end'>
-                            <br />
-                            <div className="tableButtons1">
+                                    <PetitionTableHeader />
+                                    {sortedPetitionList}
+                                </div>
+                                {listNumberButtons}
+                            </TabPane>
+                            <TabPane tabId='end'>
+                                <br />
+                                <div className="tableButtons1">
 
-                                {petitionOrderButtons}<br />
-                            </div>
-                            <br />
-                            <br />
-                            <div className="tableButtons2">
-                                <Category onClick={this.onClickCategoryButton} />
-                            </div>
-                            <br /><br /><br />
-                            <div className="Tables">
+                                    {petitionOrderButtons}<br />
+                                </div>
+                                <br />
+                                <br />
+                                <div className="tableButtons2">
+                                    <Category onClick={this.onClickCategoryButton} />
+                                </div>
+                                <br /><br /><br />
+                                <div className="Tables">
 
-                                <PetitionTableHeader />
-                                {sortedPetitionList}
-                            </div>
-                            {listNumberButtons}
-                        </TabPane>
-                    </TabContent>
+                                    <PetitionTableHeader />
+                                    {sortedPetitionList}
+                                </div>
+                                {listNumberButtons}
+                            </TabPane>
+                        </TabContent>
 
 
                     </div>

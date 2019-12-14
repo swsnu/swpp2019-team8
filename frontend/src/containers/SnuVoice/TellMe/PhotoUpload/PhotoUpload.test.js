@@ -51,7 +51,7 @@ describe('<PhotoUpload />', () => {
         await wrapper.simulate('change', { target: { value: photoTitle } });
         expect(photoUploadInstance.state.photoTitle).toEqual(photoTitle);
         await wrapper.simulate('change', { target: { value: "###" } });
-        expect(photoUploadInstance.state.titleFormText).toEqual( "# ? % / \\ 는 허용되지 않습니다.");
+        expect(photoUploadInstance.state.titleFormText).toEqual( "# ? % / \\ is not allowed.");
         await wrapper.simulate('change', { target: { value: "asd.jpg" } });
         expect(photoUploadInstance.state.titleFormText).toEqual("");
         expect(spyCheckPhoto).toHaveBeenCalledTimes(1);
@@ -76,7 +76,7 @@ describe('<PhotoUpload />', () => {
         const wrapper = component.find('#photo_title_input').at(0);
         const photoUploadInstance = component.find(PhotoUpload.WrappedComponent).instance();
         await wrapper.simulate('change', { target: { value: "asd.jpg" } });
-        expect(photoUploadInstance.state.titleFormText).toEqual("이미 존재하는 사진입니다.");
+        expect(photoUploadInstance.state.titleFormText).toEqual("The photo already exists.");
         expect(spyCheckPhoto).toHaveBeenCalledTimes(1);
     });
 

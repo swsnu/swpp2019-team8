@@ -181,7 +181,7 @@ class DebateTestCase(TestCase):
         response = client.post('/api/user/signin/', json.dumps({'email': 'user@snu.ac.kr', 'password': 'iluvswpp'}),
                                content_type='application/json')
 
-        response = client.get('/api/tellme/document/Title/')
+        response = client.get('/api/tellme/document/Titles/')
         self.assertIn('true', response.content.decode())
 
         response = client.get('/api/tellme/document/content/')

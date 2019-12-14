@@ -45,7 +45,7 @@ def petition(request):
             petition_category = json.loads(body)['category']
             petition_link = json.loads(body)['link']  # array?
             petition_start_date = timezone.now()
-            petition_end_date = petition_start_date + timedelta(days=30)
+            petition_end_date = petition_start_date + timedelta(days=21)
         except (KeyError, JSONDecodeError):
             return HttpResponseBadRequest()
         petition_url = token_urlsafe(10)
@@ -218,7 +218,12 @@ def petition_comment(request, petition_url):
 
 def petition_by_document_title(request, document_title):
     if request.method == 'GET':
-        encoded_title = urllib.parse.quote(document_title)
+        encoded_title = document_title.replace(' ', '%20')
+        encoded_title = encoded_title.replace('^', '%5E')
+        encoded_title = encoded_title.replace('|', '%7C')
+        encoded_title = encoded_title.replace('{', '%7B')
+        encoded_title = encoded_title.replace('}', '%7D')
+        encoded_title = encoded_title.replace('`','%60')
         petition_to_exclude = ['preliminary', 'fail']
         petition_list = [petition for petition in
                          Petition.objects.exclude(status__in=petition_to_exclude).filter(

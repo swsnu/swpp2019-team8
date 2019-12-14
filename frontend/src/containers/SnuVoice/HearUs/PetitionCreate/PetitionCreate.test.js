@@ -20,8 +20,10 @@ describe('<PetitionCreate />', () => {
     let petitioncreate;
     let spyCheckSignIn;
     let spyHistoryPush;
-
+    let spyStorePetition;
+    window.replace = jest.fn();
     window.alert = jest.fn();
+
     beforeEach(() => {
         petitioncreate = (
             <Provider store={mockStore}>
@@ -34,21 +36,23 @@ describe('<PetitionCreate />', () => {
         );
         spyCheckSignIn = jest.spyOn(usrActions, 'checkSignIn')
             .mockImplementation(() => { return dispatch => { } });
+        spyStorePetition = jest.spyOn(actionCreators, 'postPetition')
+            .mockImplementation(() => { return dispatch => { } });
         spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(() => { })
     });
 
-    it('should render PetitionCreate', () => {
-        const component = mount(petitioncreate);
+    it('should render PetitionCreate', async () => {
+        const component = await mount(petitioncreate);
         const wrapper = component.find('.PetitionCreate');
         expect(wrapper.length).toBe(1);
     });
 
-    it('should set state properly on inputs', () => {
+    it('should set state properly on inputs', async () => {
         const testtitle = "test";
         const testcontent = "content";
 
-        const component = mount(petitioncreate);
+        const component = await mount(petitioncreate);
         const petitionCreateInstance = component.find(PetitionCreate.WrappedComponent).instance();
         let wrapper = component.find('#petition_title_input').at(0);
         wrapper.simulate('change', { target: { value: testtitle } });
@@ -58,10 +62,10 @@ describe('<PetitionCreate />', () => {
         expect(petitionCreateInstance.state.petitionContent).toEqual(testcontent);
     });
 
-    it('should handle properly with links/tags', () => {
+    it('should handle properly with links/tags', async () => {
         const testlink = "link";
         const testtag = "tag";
-        const component = mount(petitioncreate);
+        const component = await mount(petitioncreate);
         const petitionCreateInstance = component.find(PetitionCreate.WrappedComponent).instance();
         let wrapper = component.find('#petition_link_input').at(0);
         wrapper.simulate('change', { target: { value: testlink } });
@@ -87,19 +91,19 @@ describe('<PetitionCreate />', () => {
     })
 
 
-    it('should expect cancelbutton', () => {
+    it('should expect cancelbutton', async () => {
         const spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
-        const component = mount(petitioncreate);
+        const component = await mount(petitioncreate);
         let wrapper = component.find('#petition_cancel_button').at(0);
         wrapper.simulate('click');
         expect(spyHistoryPush).toHaveBeenCalledWith('/hear_us');
     });
 
-    it('should confirm successfully', () => {
+    it('should confirm successfully', async () => {
         const spyPostPetition = jest.spyOn(actionCreators, 'postPetition')
             .mockImplementation(petition => { return dispatch => { }; });
-        const component = mount(petitioncreate);
+        const component = await mount(petitioncreate);
         const petitionCreateInstance = component.find(PetitionCreate.WrappedComponent).instance()
         petitionCreateInstance.setState({
             agreeToTerms: true,

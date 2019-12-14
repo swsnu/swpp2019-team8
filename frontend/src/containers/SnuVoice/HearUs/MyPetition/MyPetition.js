@@ -96,36 +96,40 @@ export class MyPetition extends Component {
 			</Nav>
 		)
 
-		let myPetitionList = this.props.petitionList.map((petition, i) => {
-			if (i < this.state.selectedNumber * 10) {
-				return (
-					<Petition
-						key={i}
-						url={petition.url}
-						title={petition.title}
-						state={petition.status}
-						category={petition.category}
-						dueDate={petition.end_date}
-						votes={petition.votes}
-						onClick={() => this.onClickDetailButton(petition)} />
-				)
-			} else return undefined;
-		});
-		let myCommentPetitionList = this.props.petitionListByComment.map((petition, i) => {
-			if (i < this.state.selectedNumber * 10) {
-				return (
-					<Petition
-						key={i}
-						title={petition.title}
-						url={petition.url}
-						state={petition.status}
-						dueDate={petition.end_date}
-						category={petition.category}
-						votes={petition.votes}
-						onClick={() => this.onClickDetailButton(petition)} />
-				)
-			} else return undefined;
-		})
+		let myPetitionList = this.props.petitionList
+			.sort((a, b) => a.end_date > b.end_date ? -1 : a.end_date < b.end_date ? 1 : 0)
+			.map((petition, i) => {
+				if (i < this.state.selectedNumber * 10) {
+					return (
+						<Petition
+							key={i}
+							url={petition.url}
+							title={petition.title}
+							state={petition.status}
+							category={petition.category}
+							dueDate={petition.end_date}
+							votes={petition.votes}
+							onClick={() => this.onClickDetailButton(petition)} />
+					)
+				} else return undefined;
+			});
+		let myCommentPetitionList = this.props.petitionListByComment
+			.sort((a, b) => a.end_date > b.end_date ? -1 : a.end_date < b.end_date ? 1 : 0)
+			.map((petition, i) => {
+				if (i < this.state.selectedNumber * 10) {
+					return (
+						<Petition
+							key={i}
+							title={petition.title}
+							url={petition.url}
+							state={petition.status}
+							dueDate={petition.end_date}
+							category={petition.category}
+							votes={petition.votes}
+							onClick={() => this.onClickDetailButton(petition)} />
+					)
+				} else return undefined;
+			})
 
 
 

@@ -1,0 +1,22 @@
+SNUVOICE, Collects SNU Students' Voice
+
+안녕하세요, SNUVOICE(가제)입니다.
+
+SNUVOICE에서 서울대학교 학생 청원 사이트인 Hear Me(가제)와 서울대학교 위키 사이트인 Tell Me(가제)의 프로토타입을 제작하였습니다.
+
+알파 테스팅을 마치고, 서울대 구성원들을 대상으로 베타 테스팅을 진행하고자 합니다.
+
+아래 링크로 들어가 회원가입을 한 후 청원 동의 한 번씩 눌러주시면 감사하겠습니다:)
+
+https://www.snuvoice.site/hear_us/petition/BhXG-LYd0EddTA
+
+* 아직 모바일 최적화를 하지 않아 PC 환경을 통한 접속을 권장합니다. (크롬 권장)
+* 회원가입 인증 메일이 발송되는 데에 다소 시간이 걸릴 수 있습니다.
+* 오류나 개선 사항은 제보해주시면 추후 서비스에 적극 반영하겠습니다!
+* 즐거운 연말 되세요~~
+
+- 2019학년도 2학기 '소프트웨어 개발의 원리와 실습' 수업 Team 8, SNUVOICE
+
+SNUVOICE collects SNU students’ voice. The attempts of SNU students to gather their opinions and share their information through various methods (student council, school media, school organizations) have persisted, but most have been futile and lacking in quality. To solve this problem, SNUVOICE uses two microphones, Tell Me and Hear Us, to gather, deliver, and store the voices and opinions of SNU students in a permanent, accessible form.
+Tell Me is a wiki service only for SNU. In Tell Me, you will be able to access any SNU-related information. Freshmen, exchange students, those interested in double major/minor can all visit Tell Me to access the newest, temporary, verified SNU-related information.
+Hear Us is a petition service devoted to SNU. Hear Us can gather the opinion of many to create a single, consistent voice that represents the student body. Hear Us also offers statistical data and visual representations of vote results.

@@ -56,10 +56,6 @@ export class TellMeSearchBar extends Component {
         this.props.history.push('/tell_me/search_fail/' + input)
     };
 
-    onClickCreateButton = () => {
-        this.props.history.push("/tell_me/create");
-    };
-
     render() {
         return (
             <div className="searchBar">
