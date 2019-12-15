@@ -8,6 +8,7 @@ import HearUsSearchBar from "../HearUs/HearUsSearchBar/HearUsSearchBar";
 import TellMeSearchBar from "../TellMe/TellMeSearchBar/TellMeSearchBar";
 
 import Logo from "../../../img/Logo_blue.png";
+import Profile from "../../../img/profile_icon.png";
 import "./UpperBar.css";
 
 import {
@@ -19,7 +20,11 @@ import {
     ModalFooter,
     FormText,
     Col,
-    Row
+    Row,
+    ButtonDropdown,
+    DropdownMenu,
+    DropdownToggle,
+    DropdownItem
 } from "reactstrap";
 
 import "./UpperBar.css";
@@ -30,7 +35,8 @@ export class UpperBar extends Component {
         password: "",
         location: "",
         modal: false,
-        feedBackMessage: ""
+        feedBackMessage: "",
+        profile: false
     };
 
     //Set modal (sign in window)
@@ -45,6 +51,10 @@ export class UpperBar extends Component {
                 feedBackMessage: ""
             });
         }
+    };
+
+    toggleProfile = () => {
+        this.setState({ profile: !this.state.profile });
     };
 
     onKeyPress = event => {
@@ -76,9 +86,31 @@ export class UpperBar extends Component {
         }
     };
 
+    onClickInfoEditButton = () => {
+        this.props.history.push("/user/edit");
+    }
+
     onClickSignOutButton = () => {
         this.props.getSignOut();
     };
+
+    onClickCreateDocumentButton = () => {
+        this.props.history.push("/tell_me/create");
+    }
+
+    onClickUploadPhotoButton = () => {
+        this.props.history.push("/tell_me/photo");
+    }
+
+    onClickCreatePetitionButton = () => {
+        this.props.history.push("/hear_us/create");
+    }
+
+    onClickMyPetitionButton = () => {
+        this.props.history.push("/hear_us/my_petition");
+    }
+
+
 
     componentDidMount = () => {
         this.props.checkSignIn();
@@ -92,9 +124,7 @@ export class UpperBar extends Component {
 
         // if (/localhost:3000\/tell_me/.exec(window.location.href)) {
         //     this.setState({ location: "tell_me" });
-        // } else if (
-        //     /localhost:3000\/hear_us/.exec(window.location.href)
-        // ) {
+        // } else if (/localhost:3000\/hear_us/.exec(window.location.href)) {
         //     this.setState({ location: "hear_us" });
         // }
     };
@@ -164,7 +194,11 @@ export class UpperBar extends Component {
                 <div>
                     <div className="upperbar_top">
                         <a className="logo" href="/">
-                            <img src={Logo} style={{ height: 60 }} alt="SNUVOICE logo" />
+                            <img
+                                src={Logo}
+                                style={{ height: 60 }}
+                                alt="SNUVOICE logo"
+                            />
                         </a>
                         <div className="user_button">
                             <Button
@@ -193,22 +227,59 @@ export class UpperBar extends Component {
                 <div>
                     <div className="upperbar_top">
                         <a href="/" className="logo">
-                            <img src={Logo} href="/" style={{ height: 60 }} alt="SNUVOICE logo" />
+                            <img
+                                src={Logo}
+                                href="/"
+                                style={{ height: 60 }}
+                                alt="SNUVOICE logo"
+                            />
                         </a>
                         <div className="user_button">
-                            <Button
+                            {/* <Button
                                 type="button"
                                 id="sign_out_button"
                                 onClick={this.onClickSignOutButton}
                             >
                                 SIGN-OUT
-                            </Button>
+                            </Button> */}
+                            <ButtonDropdown
+                                isOpen={this.state.profile}
+                                toggle={this.toggleProfile}
+                                direction="left"
+                            >
+                                <DropdownToggle className="profile_button">
+                                    <img
+                                        src={Profile}
+                                        style={{ height: 30, width: 25 }}
+                                        className="profile_icon"
+                                    />
+                                </DropdownToggle>
+                                <DropdownMenu className="profile_dropdown">
+                                    <DropdownItem header><b>{this.props.selectedUser.nickname}</b></DropdownItem>
+                                    <DropdownItem onClick={this.onClickInfoEditButton}>Change Profile</DropdownItem>
+                                    <DropdownItem
+                                        id="sign_out_button"
+                                        onClick={this.onClickSignOutButton}
+                                    >
+                                        Sign Out
+                                    </DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem header>Tell Me</DropdownItem>
+                                    <DropdownItem onClick={this.onClickCreateDocumentButton}>New Document</DropdownItem>
+                                    <DropdownItem onClick={this.onClickUploadPhotoButton}>Upload Photo</DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem header>Hear Us</DropdownItem>
+                                    <DropdownItem onClick={this.onClickCreatePetitionButton}>New Petition</DropdownItem>
+                                    <DropdownItem onClick={this.onClickMyPetitionButton}>My Petitions</DropdownItem>
+                                </DropdownMenu>
+                            </ButtonDropdown>
                         </div>
                     </div>
                     <div className="upperbar_bottom">{searchBar}</div>
                 </div>
             );
         }
+
         return (
             <div className="UpperBar">
                 {upperBar}
