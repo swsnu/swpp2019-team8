@@ -157,10 +157,10 @@ export class HearUs extends Component {
                         petition.status === "ongoing"
                 )
                 .sort((a, b) =>
-                    a.end_date > b.end_date
-                        ? -1
-                        : a.end_date < b.end_date
+                    a.end_date < b.end_date
                         ? 1
+                        : a.end_date > b.end_date
+                        ? -1
                         : 0
                 )
                 .map((petition, i) => {
