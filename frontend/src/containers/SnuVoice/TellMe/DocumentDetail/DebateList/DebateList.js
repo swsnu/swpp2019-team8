@@ -55,7 +55,7 @@ export class DebateList extends Component {
 
         let debateList;
 
-        console.log(this.props.debates)
+        // console.log(this.props.debates)
 
         if (this.props.debates && this.props.debates.length > 0) {
             debateList = this.props.debates.map(debate => {

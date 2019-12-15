@@ -202,14 +202,14 @@ export function highlightCode(str, lang) {
         try {
             return hljs.highlight(lang, str).value;
         } catch (err) {
-            console.log(err);
+            console.log("err");
         }
     }
 
     try {
         return hljs.highlightAuto(str).value;
     } catch (err) {
-        console.log(err);
+        console.log("err");
     }
 
 

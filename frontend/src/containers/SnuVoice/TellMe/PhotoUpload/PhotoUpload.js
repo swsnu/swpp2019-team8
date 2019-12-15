@@ -119,7 +119,7 @@ class PhotoUpload extends Component {
                     this_tmp.props.history.push('/tell_me/photo/' + this_tmp.state.photoTitle)
                 })
                 .catch(e => {
-                    console.log(e);
+                    // console.log(e);
                 });
         });
     }
