@@ -2,3 +2,31 @@
     padding-left: 8%;
     padding-right: 8%;
 }
+
+#more_voter_button {
+    background-color: white !important;
+    color: #9a9a9a !important;
+    border-color: #aaaaaa !important;
+    height: 30px !important;
+    width: 30px !important;
+    padding: 0% !important;
+}
+
+#more_voter_button:hover {
+    background-color: #9a9a9a !important;
+    color: white !important;
+}
+
+#more_author_button {
+    background-color: white !important;
+    color: #9a9a9a !important;
+    border-color: #aaaaaa !important;
+    height: 30px !important;
+    width: 30px !important;
+    padding: 0% !important;
+}
+
+#more_author_button:hover {
+    background-color: #9a9a9a !important;
+    color: white !important;
+}

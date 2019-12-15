@@ -3,6 +3,8 @@
     padding-right: 4%;
     padding-top: 1%;
     padding-bottom: 1%;
+    font-family: "Malgun Gothic", sans-serif;
+
 }
 
 .HearUs_body {
@@ -10,7 +12,7 @@
     padding-left: 3%;
     padding-right: 3%; 
     border-style: groove;
-    padding-top: 3%;
+    padding-top: 1.7%;
     padding-bottom: 3%;
 }
 
@@ -40,5 +42,19 @@ h5 {
 }
 
 .title {
-    padding-left: 5%;
+    padding-left: 2.2%;
+}
+
+#petition_list_button {
+    background-color: white !important;
+    color: #9a9a9a !important;
+    border-color: #aaaaaa !important;
+    height: 30px !important;
+    width: 30px !important;
+    padding: 0% !important;
+}
+
+#petition_list_button:hover {
+    background-color: #9a9a9a !important;
+    color: white !important;
 }
