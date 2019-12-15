@@ -16,7 +16,9 @@ describe('<SnuVoice />', () => {
     let spyHistoryPush;
 
     beforeEach(() => {
-        stubInitialState = {};
+        stubInitialState = {
+            signIn : false
+        };
         mockStore = getMockStore(stubInitialState);
         spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(() => {})

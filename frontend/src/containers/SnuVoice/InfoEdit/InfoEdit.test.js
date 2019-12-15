@@ -44,12 +44,6 @@ describe('<InfoEdit />', () => {
         expect(mocked).toHaveBeenCalledTimes(2);
     })
 
-    it('should onClickMainButton works', () => {
-        const component = shallow(<InfoEdit {...props} history={mockHistory} />);
-        component.instance().onClickMainButton();
-        expect(mockHistory.push).toHaveBeenCalledWith('/');
-    })
-
     it('should onClickCOnfirmButton works', async () => {
         const component = shallow(<InfoEdit {...props} history={mockHistory} />);
         component.instance().toggleModal = mocked;

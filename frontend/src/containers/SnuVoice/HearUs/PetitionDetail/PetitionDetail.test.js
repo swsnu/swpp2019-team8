@@ -12,6 +12,7 @@ import * as actionCreators from '../../../../store/actions/hearus';
 const stubInitialState = {
     selectedUser: {
         id: '1',
+        nickname : "1"
     },
     selectedPetition: {
         title: 'SELECTED_PETITION_TEST_TITLE',
@@ -96,7 +97,7 @@ describe('<PetitionDetail />', () => {
     });
 
     it(`should not render SELECTED_PETITION`, async () => {
-        const mockInitialStore = getMockStore({ selectedPetition: null, comment_list: null });
+        const mockInitialStore = getMockStore({ selectedPetition: null, comment_list: null, signIn : false });
         let historyMock = jest.spyOn(history, 'push')
             .mockImplementation(() => {})
         const component = await mount(
@@ -133,7 +134,8 @@ describe('<PetitionDetail />', () => {
                 id: 1,
                 date: parseInt('12312'),
                 time: parseInt('123')
-            }]
+            }],
+            signIn : false
         });
         let historyMock = jest.spyOn(history, 'push')
             .mockImplementation(() => {})

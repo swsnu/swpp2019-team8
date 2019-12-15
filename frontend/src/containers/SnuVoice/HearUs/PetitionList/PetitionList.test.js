@@ -118,7 +118,8 @@ const stubInitialState = {
             end_date: '2019-210123',
             votes: 125
         },
-    ]
+    ],
+    signIn : false
 }
 
 const mockStore = getMockStore(stubInitialState)
@@ -290,7 +291,8 @@ describe('<PetitionList />', () => {
             ],
             selectedUser: {
                 id: 1
-            }
+            },
+            signIn : false
         })
         const component = await mount(
             <Provider store={mockInitialStore}>

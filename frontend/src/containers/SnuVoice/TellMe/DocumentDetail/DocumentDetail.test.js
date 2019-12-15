@@ -23,8 +23,9 @@ const stubInitialState = {
     },
     petition_list_by_document: [{
         id: 1,
-        url : 1
-    }]
+        url: 1
+    }],
+    signIn: false
 };
 
 const mockStore = getMockStore(stubInitialState);
@@ -46,9 +47,9 @@ describe('<DocumentDetail />', () => {
             </Provider>
         );
         spyOnGetDocument = jest.spyOn(actionCreator, 'getDocument')
-            .mockImplementation(() => {return dispatch => { };});
+            .mockImplementation(() => { return dispatch => { }; });
         spyOnGetPetitionList = jest.spyOn(actionCreators, 'getPetitionByDocument')
-            .mockImplementation(() => {return dispatch => { };});
+            .mockImplementation(() => { return dispatch => { }; });
         spyHistoryPush = jest.spyOn(history, 'push')
             .mockImplementation(path => { });
     });
@@ -74,7 +75,8 @@ describe('<DocumentDetail />', () => {
     it(`should not render SELECTED_DOCUMENT`, async () => {
         const mockInitialStore = getMockStore({
             selectedDocument: null,
-            petition_list_by_document: []
+            petition_list_by_document: [],
+            signIn : false
         });
         const component = await mount(
             <Provider store={mockInitialStore}>
@@ -112,7 +114,7 @@ describe('<DocumentDetail />', () => {
         next.simulate('click');
         expect(instance.state.selectedNumber).toBe(0);
         prev.simulate('click');
-        expect(instance.state.selectedNumber).toBe(-1);        
+        expect(instance.state.selectedNumber).toBe(-1);
     });
 
     it('should onClickDocumentDebateButton works', async () => {

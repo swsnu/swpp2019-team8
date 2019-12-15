@@ -11,7 +11,10 @@ import * as actionCreators from '../../../../store/actions/hearus';
 import * as usrActions from '../../../../store/actions/user';
 
 const stubInitialState = {
-    signIn: true
+    signIn: true,
+    selectedUser : {
+        nickname : '1'
+    }
 }
 
 const mockStore = getMockStore(stubInitialState);

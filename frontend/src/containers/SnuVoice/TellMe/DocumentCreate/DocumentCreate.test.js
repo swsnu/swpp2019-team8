@@ -12,7 +12,8 @@ import * as actionCreators from '../../../../store/actions/tellme';
 import hljs from 'highlight.js';
 
 const stubInitialState = {
-    documentDuplicate: true
+    documentDuplicate: true,
+    signIn : false
 };
 
 const mockStore = getMockStore(stubInitialState);
@@ -88,7 +89,8 @@ describe('<DocumentCreate />', () => {
         const spyPostDocument = jest.spyOn(actionCreators, 'postDocument')
             .mockImplementation(td => { return dispatch => { }; });
         let mockIn = {
-            documentDuplicate: false
+            documentDuplicate: false,
+            signIn : false
         }
         let mockStores = getMockStore(mockIn);
         documentCreate = (

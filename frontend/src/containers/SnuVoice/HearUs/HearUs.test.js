@@ -75,7 +75,10 @@ const stubInitialState = {
             votes: 12
         }
     ],
-    selectedUser: { id: 1 },
+    selectedUser: { 
+        id: 1,
+        nickname : '1'
+     },
     signIn : true
 }
 
