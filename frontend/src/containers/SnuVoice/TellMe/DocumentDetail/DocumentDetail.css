@@ -94,3 +94,17 @@ blockquote {
     margin-bottom: -10px;
 }
 
+pre {
+    background-color: #f2f4f7;
+    color: black !important; 
+    border: groove 2px;
+    padding: 2%;
+}
+
+[class*='hljs-'] {
+    color: black;
+}
+
+/* .hljs-meta, .hljs-bullet, .hljs-section, .hljs-number, .hljs-literal {
+    color: black !important;
+} */
