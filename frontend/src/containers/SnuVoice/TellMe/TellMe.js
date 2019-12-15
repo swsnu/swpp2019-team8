@@ -64,7 +64,7 @@ class TellMe extends Component {
               id="create_button"
               onClick={this.onClickCreateButton}
               >
-              Create
+              Create Page
             </Button>
             <Button
               type="button"
