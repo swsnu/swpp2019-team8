@@ -58,3 +58,7 @@ h5 {
     background-color: #9a9a9a !important;
     color: white !important;
 }
+
+.navy_button.newpet {
+    margin-right: 10px;
+}

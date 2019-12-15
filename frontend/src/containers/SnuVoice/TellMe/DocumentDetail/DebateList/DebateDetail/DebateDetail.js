@@ -37,13 +37,13 @@ export class DebateDetail extends Component {
         await this.props.onGetDebateComments(this.props.match.params.debate_id);
     };
 
-    onClickDebateCancelButton = () => {
-        this.props.history.push(
-            "/tell_me/documents/" +
-                this.props.selectedDocument.title +
-                "/debates"
-        );
-    };
+    // onClickDebateCancelButton = () => {
+    //     this.props.history.push(
+    //         "/tell_me/documents/" +
+    //             this.props.selectedDocument.title +
+    //             "/debates"
+    //     );
+    // };
 
     render() {
         let documentTitle = "";
@@ -104,8 +104,9 @@ export class DebateDetail extends Component {
                         <br />
                         <div className="debateCommentList">
                             {debateCommentList}
-                        </div>
+                            <br/><br/><br/><br/>
 
+                        </div>
                         <Input
                             type="textarea"
                             id="debate_new_comment_textarea"
@@ -115,21 +116,21 @@ export class DebateDetail extends Component {
                                 this.setState({ comment: event.target.value })
                             }
                         />
-                        <br />
                         <Button
                             id="debate_comment_confirm_button"
                             disabled={this.state.comment === ""}
                             onClick={this.onClickCommentConfirmButton}
+                            className="debate_confirm_button"
                         >
                             CONFIRM
                         </Button>
-                        <Button
+                        {/* <Button
                             type="button"
                             id="debate_cancel_button"
                             onClick={this.onClickDebateCancelButton}
                         >
                             Back
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </div>

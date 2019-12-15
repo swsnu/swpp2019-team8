@@ -55,12 +55,14 @@ export class HearUs extends Component {
                         type="button"
                         id="create_button"
                         onClick={this.onClickCreateButton}
+                        className="navy_button newpet"
                     >
                         NEW
                     </Button>
                     <Button
                         type="button"
                         id="my_petition_button"
+                        className="navy_button"
                         onClick={this.onClickMyPetitionButton}
                     >
                         MINE

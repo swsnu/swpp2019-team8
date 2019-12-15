@@ -1,0 +1,31 @@
+.infoedit_nav_bar {
+    background-color: #003686;
+    height: 50px;
+    align-content: center;
+}
+
+.nav_brand.info {
+    font-weight: 700 !important;
+}
+
+.userInfo {
+    min-height: 400px;
+    text-align: left;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.userInfo_body {
+    border: groove;
+    background-color: white;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.info_change {
+    padding-left: 10%;
+}

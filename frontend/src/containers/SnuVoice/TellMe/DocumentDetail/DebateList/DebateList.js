@@ -42,9 +42,9 @@ export class DebateList extends Component {
         }
     };
 
-    onClickDebateCancelButton = () => {
-        this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title);
-    }
+    // onClickDebateCancelButton = () => {
+    //     this.props.history.push("/tell_me/documents/" + this.props.match.params.document_title);
+    // }
 
 
     render() {
@@ -93,15 +93,17 @@ export class DebateList extends Component {
                         <Button
                             onClick={this.onClickNewDebateButton}
                             id="new_debate_button"
+                            className="navy_button"
                         >
                             NEW
                         </Button>
-                        <Button
+                        {/* <Button
                             id="debate_cancel_button"
                             onClick={this.onClickDebateCancelButton}
+                            className="navy_button"
                         >
                             Back
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </div>

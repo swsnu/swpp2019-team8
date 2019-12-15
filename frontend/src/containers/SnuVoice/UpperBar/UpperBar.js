@@ -114,19 +114,19 @@ export class UpperBar extends Component {
 
     componentDidMount = () => {
         this.props.checkSignIn();
-        // if (/snuvoice.site\/tell_me/.exec(window.location.href)) {
-        //     this.setState({ location: "tell_me" });
-        // } else if (
-        //     /snuvoice.site\/hear_us/.exec(window.location.href)
-        // ) {
-        //     this.setState({ location: "hear_us" });
-        // }
-
-        if (/localhost:3000\/tell_me/.exec(window.location.href)) {
+        if (/snuvoice.site\/tell_me/.exec(window.location.href)) {
             this.setState({ location: "tell_me" });
-        } else if (/localhost:3000\/hear_us/.exec(window.location.href)) {
+        } else if (
+            /snuvoice.site\/hear_us/.exec(window.location.href)
+        ) {
             this.setState({ location: "hear_us" });
         }
+
+        // if (/localhost:3000\/tell_me/.exec(window.location.href)) {
+        //     this.setState({ location: "tell_me" });
+        // } else if (/localhost:3000\/hear_us/.exec(window.location.href)) {
+        //     this.setState({ location: "hear_us" });
+        // }
     };
     render() {
         let upperBar = null;
@@ -136,7 +136,7 @@ export class UpperBar extends Component {
                 <Row className="sub_bar">
                     <Col className="navbuttons">
                         <a
-                            className="navbar-brand"
+                            className="navbar-brand info"
                             // type="button"
                             id="tell_me_button"
                             // onClick={this.onClickTellMeButton}
@@ -145,7 +145,7 @@ export class UpperBar extends Component {
                             <b>TELL-ME</b>
                         </a>
                         <a
-                            className="navbar-brand"
+                            className="navbar-brand info"
                             // type="button"
                             id="hear_us_button"
                             // onClick={this.onClickHearUsButton}

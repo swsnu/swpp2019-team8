@@ -4,11 +4,15 @@
     padding-right: 4%;
     padding-bottom: 1%;
     padding-top: 1%;
+    padding-bottom: 2%;
 }
 
 .DebateDetail_body {
     background-color: white;
-    padding: 3%;
+    padding-top: 3%;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-bottom: 3%;
     border: groove;
 }
 
@@ -61,4 +65,19 @@
     right: 5%;
 }
 
+.debate_confirm_button {
+    height: 70px;
+    width: 100px;
+    background-color: #003686 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    margin-top: -62px;
+}
 
+#debate_new_comment_textarea {
+    width: 70%;
+    height: 70px;
+    display: inline;
+    margin-top: 20px;
+    border-radius: 0% !important;
+}
