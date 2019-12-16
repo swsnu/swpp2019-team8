@@ -21,6 +21,8 @@ import {
 import MajorList from '../../../components/Signup/majorList';
 import UpperBar from "../UpperBar/UpperBar";
 
+import './InfoEdit.css';
+
 export class InfoEdit extends Component {
     state = {
         signIn: '',
@@ -405,10 +407,6 @@ export class InfoEdit extends Component {
         this.toggleModal({ target: { value: this.state.selectedModal } })
     }
 
-    onClickMainButton = () => {
-        this.props.history.push('/')
-    }
-
     componentDidMount = async () => {
         await this.props.getUser();
         if (this.props.modifiedUser !== '') {
@@ -534,21 +532,20 @@ export class InfoEdit extends Component {
             }
             userInfo = (
                 <div className="userInfo">
-                    <h3>Current Info</h3>
-                    <p>Email : {this.state.modifiedUser.email}</p>
-                    <br />
-                    <p>Gender : {this.state.modifiedUser.gender}</p>
-                    <br />
-                    <p>Nickname : {this.state.modifiedUser.nickname}</p>
-                    <br />
-                    <p>Status : {this.state.modifiedUser.status}</p>
+                    <div className="userInfo_body">
+                    <h3>Current Profile</h3>
+                    <br/>
+                    <p>Email : <b>{this.state.modifiedUser.email}</b></p>
+                    <p>Gender : <b>{this.state.modifiedUser.gender}</b></p>
+                    <p>Nickname : <b>{this.state.modifiedUser.nickname}</b></p>
+                    <p>Status : <b>{this.state.modifiedUser.status}</b></p>
+                    <br/>
                     <Button
                         type="button"
                         value="status"
                         id="status_button"
                         onClick={this.toggleModal}
-                    >Edit</Button>
-                    <br />
+                    >Change Status</Button>
                     {detailedInfo}
                     <Button
                         type="button"
@@ -556,8 +553,9 @@ export class InfoEdit extends Component {
                         id="password_button"
                         onClick={this.toggleModal}
                     >
-                        Edit password
+                        Change Password
                     </Button>
+                    </div>
                 </div>
             )
         }
@@ -648,18 +646,37 @@ export class InfoEdit extends Component {
         return (
             <div className="InfoEdit">
                 <UpperBar />
-                <br />
+                <Row className="infoedit_nav_bar">
+                    <Col className="navbuttons">
+                        <a
+                            className="navbar-brand"
+                            // type="button"
+                            id="tell_me_button"
+                            // onClick={this.onClickTellMeButton}
+                            href="/tell_me"
+                        >
+                            <b>TELL-ME</b>
+                        </a>
+                        <a
+                            className="navbar-brand"
+                            // type="button"
+                            id="hear_us_button"
+                            // onClick={this.onClickHearUsButton}
+                            href="/hear_us"
+                        >
+                            HEAR-US
+                        </a>
+                    </Col>
+                    </Row>
                 {userInfo}
-                <br />
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggleModal}
                     className="editModal"
                 >
-                    <ModalHeader>Edit your Info</ModalHeader>
-                    <ModalBody>
+                    <ModalHeader>Change your Information</ModalHeader>
+                    <ModalBody className="info_change">
                         {usingModal}
-
                     </ModalBody>
                     <ModalFooter>
                         <Button
@@ -680,11 +697,6 @@ export class InfoEdit extends Component {
 
                 </Modal>
                 {/* {userEdit} */}
-                <Button
-                    type="button"
-                    id="main_button"
-                    onClick={this.onClickMainButton}
-                >Main Page</Button>
             </div >
         );
     }

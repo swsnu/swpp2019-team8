@@ -78,7 +78,9 @@ class DocumentDetail extends Component {
                         this.setState({
                             selectedNumber: this.state.selectedNumber - 1
                         })
-                    }}>{prev}</Button>
+                    }}
+                    className="gray_button"
+                    >{prev}</Button>
                 <Button
                     type="button"
                     id="next_button"
@@ -87,7 +89,9 @@ class DocumentDetail extends Component {
                         this.setState({
                             selectedNumber: this.state.selectedNumber + 1
                         })
-                    }}>{next}</Button>
+                    }}
+                    className="gray_button right"
+                    >{next}</Button>
             </div>
         )
 
@@ -164,9 +168,10 @@ class DocumentDetail extends Component {
                         <br />
                         <div
                             dangerouslySetInnerHTML={{ __html: markdownHtml }}
-                            className="document_content"
+                            className="document_detail_content"
                         />
                         <hr />
+                        Related Petitions:
                         {relatedPetition}
                     </div>
                 </div>
@@ -196,14 +201,14 @@ export function highlightCode(str, lang) {
         try {
             return hljs.highlight(lang, str).value;
         } catch (err) {
-            console.log(err);
+            console.log("err");
         }
     }
 
     try {
         return hljs.highlightAuto(str).value;
     } catch (err) {
-        console.log(err);
+        console.log("err");
     }
 
 

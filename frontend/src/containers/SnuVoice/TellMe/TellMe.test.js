@@ -16,7 +16,8 @@ describe('<TellMe/>', () => {
                 title: "1",
                 edit_date: "!235124"
             }
-        ]
+        ],
+        signIn : false
     };
     const mockStore = getMockStore(stubInitialState);
 

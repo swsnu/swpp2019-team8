@@ -171,10 +171,10 @@ class PetitionList extends Component {
 
         let listNumberButtons = (
             <ButtonGroup>
-                <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1}
+                <Button type="button" id="list_prev_button" disabled={this.state.listNumber[0] === 1} className="navy_button left"
                     onClick={this.onClickListPrevButton}>Prev</Button>
                 {listNumbers}
-                <Button type="button" id="list_next_button" disabled={this.state.listNumber[0] + 5 > this.props.petitionList.length / 10 + 1}
+                <Button type="button" id="list_next_button" disabled={this.state.listNumber[0] + 5 > this.props.petitionList.length / 10 + 1} className="navy_button right"
                     onClick={this.onClickListNextButton}>Next</Button>
             </ButtonGroup>
         )
@@ -182,9 +182,9 @@ class PetitionList extends Component {
         if (this.props.signIn) {
             buttons = (
                 <div className="userOptions">
-                    <Button type="button" id="create_button"
+                    <Button type="button" id="create_button" className="navy_button newpet"
                         onClick={this.onClickCreateButton}>NEW</Button>
-                    <Button type="button" id="my_petition_button"
+                    <Button type="button" id="my_petition_button" className="navy_button"
                         onClick={this.onClickMyPetitionButton}>MINE</Button>
                 </div>
             )

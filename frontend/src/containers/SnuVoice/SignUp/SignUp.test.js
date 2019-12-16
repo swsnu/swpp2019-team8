@@ -188,7 +188,10 @@ describe('<SignUp/>', () => {
             emailDuplicate: true,
             nicknameDuplicate: true,
             studentIdDuplicate: true,
-            signIn: true
+            signIn: true,
+            selectedUser : {
+                nickname : 1
+            }
         }
         let remockStore = getMockStore(mockingState)
         let mockSignUp = (
@@ -208,7 +211,6 @@ describe('<SignUp/>', () => {
         expect(signUpComponent.state.formFeedbackMessage.studentId).toBe('The student id already exists.')
         expect(signUpComponent.state.formFeedbackMessage.email).toBe('This email address is already associated with the existing account. Please check again.')
         expect(signUpComponent.state.formFeedbackMessage.nickname).toBe('The nickname already exists.')
-        expect(spyHistoryPush).toHaveBeenCalledTimes(4);
 
     })
 
@@ -241,7 +243,10 @@ describe('<SignUp/>', () => {
             emailDuplicate: true,
             nicknameDuplicate: true,
             studentIdDuplicate: true,
-            signIn: true
+            signIn: true,
+            selectedUser : {
+                nickname : 1
+            }
         }
         let remockStore = getMockStore(mockingState)
         let mocked = jest.fn();
@@ -263,8 +268,7 @@ describe('<SignUp/>', () => {
         signUpComponent.setState({
             signIn: true
         })
-        expect(mocked).toHaveBeenCalledTimes(4);
-        expect(spyHistoryPush).toHaveBeenCalledTimes(4);
+        expect(mocked).toHaveBeenCalledTimes(1);
 
     })
 

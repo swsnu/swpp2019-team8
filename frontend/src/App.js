@@ -22,6 +22,7 @@ import MyPetition from './containers/SnuVoice/HearUs/MyPetition/MyPetition';
 import PetitionList from './containers/SnuVoice/HearUs/PetitionList/PetitionList';
 import PetitionCreate from './containers/SnuVoice/HearUs/PetitionCreate/PetitionCreate';
 import PetitionDetail from './containers/SnuVoice/HearUs/PetitionDetail/PetitionDetail';
+import UpperBar from './containers/SnuVoice/UpperBar/UpperBar';
 
 import Footer from './components/Footer/footer';
 
@@ -49,10 +50,15 @@ function App(props) {
           <Route path='/hear_us/search/:petition_title' exact component={PetitionList} />
           <Route path='/hear_us/create' exact component={PetitionCreate} />
           <Route path='/hear_us/petition/:petition_url' exact component={PetitionDetail} />
-          <Route render={() => <h1>Not Found</h1>} />
+          <Route render={() => 
+            <div>
+              <UpperBar/> 
+              <h1>Not Found</h1>
+            </div>
+          } />
         </Switch>
-      {/* <br/><br/> */}
-      <Footer />
+        {/* <br/><br/> */}
+        <Footer />
       </div >
     </ConnectedRouter>
   );

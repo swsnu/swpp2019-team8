@@ -154,7 +154,7 @@ class DocumentEdit extends Component {
                     <Button
                         type="button"
                         id="photo_button"
-                        className="photoButton"
+                        className="navy_button photoButton"
                         onClick={this.onClickPhotoButton}
                     >
                         Upload Photo
@@ -242,6 +242,7 @@ class DocumentEdit extends Component {
                             id="document_confirm_button"
                             disabled={!this.state.newDocumentContent}
                             onClick={this.onClickDocumentConfirmButton}
+                            className="navy_button left"
                         >
                             Confirm
                         </Button>
@@ -249,6 +250,7 @@ class DocumentEdit extends Component {
                             type="button"
                             id="document_cancel_button"
                             onClick={this.onClickDocumentCancelButton}
+                            className="navy_button right"
                         >
                             Cancel
                         </Button>
@@ -285,12 +287,12 @@ export function highlightCode(str, lang) {
     if (lang && hljs.getLanguage(lang)) {
         try {
             return hljs.highlight(lang, str).value;
-        } catch (err) { console.log(err) }
+        } catch (err) { console.log("err") }
     }
 
     try {
         return hljs.highlightAuto(str).value;
-    } catch (err) { console.log(err) }
+    } catch (err) { console.log("err") }
 
     return ''; // use external default escaping
 }

@@ -2,7 +2,7 @@
     background-color: #f2f4f7;
     padding-top: 1%;
     padding-bottom: 1%;
-    padding-left: 5%;
+    padding-left: 4%;
     padding-right: 2%;
     font-family: "Malgun Gothic", sans-serif;
 }
@@ -25,11 +25,12 @@
 
 .TellMeContent {
     background-color: white;
-    min-height: 370px;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 6%;
+    padding-right: 6%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     border-style: groove;
-    /* border-color: #d0d2d5; */
+    min-height: 600px;
 }
 
 .TellMeText {
@@ -37,15 +38,37 @@
 }
 
 .tellme_create_button {
-    float: right;
+    position: absolute;
+    right: 200px;
+    top: 30px;
+    background-color: #f2f4f7 !important;
+    border-color: gray !important;
+    border-radius: 0px !important;
+    border-width: 2px !important;
+    color: black !important;
+}
+
+.tellme_create_button:hover {
     background-color: #003686 !important;
     border-color: #003686 !important;
+    color: white !important;
 }
 
 .tellme_photo_button {
-    float: right;
+    position: absolute;
+    right: 60px;
+    top: 30px;
+    background-color: #f2f4f7 !important;
+    border-color: gray !important;
+    border-radius: 0px !important;
+    border-width: 2px !important;
+    color: black !important;
+}
+
+.tellme_photo_button:hover {
     background-color: #003686 !important;
     border-color: #003686 !important;
+    color: white !important;
 }
 
 .tellme_right {

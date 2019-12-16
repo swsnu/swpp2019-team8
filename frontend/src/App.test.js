@@ -6,7 +6,9 @@ import App from './App';
 import { getMockStore } from './test-utils/mocks';
 import { history } from './store/store';
 
-const mockStore = getMockStore({});
+const mockStore = getMockStore({
+    signIn : false
+});
 
 describe('App', () => {
     let app;

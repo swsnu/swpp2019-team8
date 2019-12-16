@@ -54,10 +54,55 @@
 
 .sign_in_button {
     border-radius: 20px !important;
+    background-color: #f2f4f7 !important;
+    border-color: #b0b2b4 !important;
+    color: gray !important;
+    margin-right: 10px;
+}
+
+.sign_in_button:hover{
+    background-color: #94bfff !important;
+    color: #002a68 !important;
 }
 
 .sign_up_button {
     border-radius: 20px !important;
+    background-color: #f2f4f7 !important;
+    border-color: #b0b2b4 !important;
+    color: gray !important;
+}
+
+.sign_up_button:hover{
+    background-color: #94bfff !important;
+    color: #002a68 !important;
+}
+/* 
+#sign_out_button {
+    border-radius: 20px !important;
+    background-color: #f2f4f7 !important;
+    border-color: #b0b2b4 !important;
+    color: gray !important;
+    margin-right: 10px;
+}
+
+#sign_out_button:hover{
+    background-color: #94bfff !important;
+    color: #002a68 !important;
+} */
+
+.profile_button {
+    border-radius: 21px !important;
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0% !important;
+    align-items: center !important;
+    border-width: 2px !important;
+    background-color: white !important;
+    border-color: #909396 !important;
+}
+
+.profile_icon {
+    filter: opacity(.4);
 }
 
 .search_confirm_button {

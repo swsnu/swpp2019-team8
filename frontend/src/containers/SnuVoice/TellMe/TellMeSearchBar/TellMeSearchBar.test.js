@@ -14,7 +14,8 @@ describe('<SearchBar/>', () => {
         selectedDocument: {
             title: '123'
         },
-        selectedPhoto : 1
+        selectedPhoto : 1,
+        signIn : false
     }
 
     const mockStore = getMockStore(stubInitialState)
@@ -78,6 +79,7 @@ describe('<SearchBar/>', () => {
         let mockState = {
             selectedDocument: null,
             selectedPhoto: null,
+            signIn : false
         }
         let remockStore = getMockStore(mockState)
         searchBar = (

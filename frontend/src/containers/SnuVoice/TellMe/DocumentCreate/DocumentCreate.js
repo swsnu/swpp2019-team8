@@ -191,6 +191,7 @@ class DocumentCreate extends Component {
                 !this.state.documentTitle || !this.state.documentContent || this.state.formFeedbackMessage.title !== ""
               }
               onClick={this.onClickDocumentConfirmButton}
+              className="navy_button left"
             >
               Confirm
             </Button>
@@ -198,6 +199,7 @@ class DocumentCreate extends Component {
               type="button"
               id="document_cancel_button"
               onClick={this.onClickDocumentCancelButton}
+              className="navy_button right"
             >
               Cancel
             </Button>
@@ -225,12 +227,12 @@ export function highlightCode(str, lang) {
   if (lang && hljs.getLanguage(lang)) {
     try {
       return hljs.highlight(lang, str).value;
-    } catch (err) { console.log(err) }
+    } catch (err) { console.log("err") }
   }
 
   try {
     return hljs.highlightAuto(str).value;
-  } catch (err) { console.log(err) }
+  } catch (err) { console.log("err") }
 
   return ''; // use external default escaping
 }

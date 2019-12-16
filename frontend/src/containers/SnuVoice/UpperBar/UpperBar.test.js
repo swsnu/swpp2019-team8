@@ -152,6 +152,11 @@ describe('<UpperBar/>', () => {
             location: 'hear_us'
         });
         expect(true).toBe(true);
+        component.instance().onClickMyPetitionButton();
+        component.instance().onClickCreatePetitionButton();
+        component.instance().onClickUploadPhotoButton();
+        component.instance().onClickCreateDocumentButton();
+        expect(true).toBe(true);
 
     })
 

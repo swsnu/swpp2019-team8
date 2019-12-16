@@ -16,7 +16,10 @@ const stubInitialState = {
         title: 'SELECTED_DOCUMENT_TEST_TITLE',
         content: 'SELECTED_DOCUMENT_TEST_CONTENT',
     },
-
+    selectedUser : {
+        nickname : 1
+    },
+    signIn : false,
     documentConflict: true,
 };
 

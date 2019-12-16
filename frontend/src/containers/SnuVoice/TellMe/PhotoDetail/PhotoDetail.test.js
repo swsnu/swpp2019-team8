@@ -18,7 +18,8 @@ const stubInitialState = {
         photo: '123',
         title: 'SELECTED_DOCUMENT_TEST_TITLE',
         content: 'SELECTED_DOCUMENT_TEST_CONTENT',
-    }
+    },
+    signIn : false
 
 };
 
@@ -59,7 +60,8 @@ describe('<PhotoDetail />', () => {
 
     it('shoudl done well int null', async () => {
         let stubsInitialState = {
-            selectedPhoto: null
+            selectedPhoto: null,
+            signIn : false
         };
         let remockStore = getMockStore(stubsInitialState);
         photoDetail = (

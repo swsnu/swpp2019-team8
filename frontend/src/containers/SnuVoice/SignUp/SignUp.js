@@ -518,6 +518,10 @@ class SignUp extends Component {
 
 	ngOnInIt = async () => {
 		if (this.state.signIn === '') {
+			let temp = this.props.signIn;
+			if (temp) {
+				return;
+			}
 			await this.props.checkSignIn();
 			if (this.props.signIn) {
 				alert("You must logged out to sign up.");
@@ -529,7 +533,7 @@ class SignUp extends Component {
 			}
 		} else if (this.props.signIn) {
 			alert("You must logged out to sign up.");
-			this.props.history.push('/')
+			this.props.history.push('/');
 		}
 	}
 

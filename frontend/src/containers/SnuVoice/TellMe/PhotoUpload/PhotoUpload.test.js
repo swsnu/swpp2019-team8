@@ -12,7 +12,8 @@ import { history } from '../../../../store/store';
 import * as actionCreator from '../../../../store/actions/tellme';
 
 const stubInitialState = {
-    photoDuplicate : false
+    photoDuplicate : false,
+    signIn : false
 };
 
 const mockStore = getMockStore(stubInitialState);
@@ -20,6 +21,7 @@ const mockStore = getMockStore(stubInitialState);
 describe('<PhotoUpload />', () => {
     let photoUpload;
     let spyCheckPhoto;
+    window.alert = jest.fn();
 
     beforeEach(() => {
         photoUpload = (
@@ -59,7 +61,8 @@ describe('<PhotoUpload />', () => {
 
     it(`should set state properly on title input`, async () => {
         let inState = {
-            photoDuplicate : true
+            photoDuplicate : true,
+            signIn : false
         };
         let mocking = getMockStore(inState);
         photoUpload = (
