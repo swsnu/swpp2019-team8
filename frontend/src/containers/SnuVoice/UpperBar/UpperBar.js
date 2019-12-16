@@ -252,6 +252,7 @@ export class UpperBar extends Component {
                                         src={Profile}
                                         style={{ height: 30, width: 25 }}
                                         className="profile_icon"
+                                        alt="profile_icon"
                                     />
                                 </DropdownToggle>
                                 <DropdownMenu className="profile_dropdown">

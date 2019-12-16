@@ -38,51 +38,57 @@ class TellMe extends Component {
 
       )
     })
-    
+
     return (
       <div className="TellMe">
         <UpperBar />
         <div className="TellMe_body">
           <div />
           <Row>
-          <Col>
-            <div className="TellMeContent">
-            <div className="TellMeText">
-              <h1>Tell Me</h1>
-              <h6>
-                <i>Ask Anything, Answer Everything</i>
-              </h6>
-              <br />
-              <a href="/tell_me/documents/TELL-ME:기본방침">TELL-ME:기본방침</a>
-              <br />
-              <a href="/tell_me/documents/TELL-ME:문법%20도움말">TELL-ME:문법 도움말</a>
-            </div>
+            <Col>
+              <div className="TellMeContent">
+                <div className="TellMeText">
+                  <h1>Tell Me</h1>
+                  <h6>
+                    <i>Ask Anything, Answer Everything</i>
+                  </h6>
+                  <br />
+                  <a href="/tell_me/documents/TELL-ME:기본방침">TELL-ME:기본방침</a>
+                  <br />
+                  <a href="/tell_me/documents/TELL-ME:문법%20도움말">TELL-ME:문법 도움말</a>
+                  <br />
+                  <br />
+                  Tell Me is a wiki  service <b>ONLY FOR SNU</b>.
+                  <br />
+                  <br />
+                  Visit Tell Me to access the <i>newest, temporary, verified</i> SNU-related information.
+                  </div>
 
-            <Button
-              className="tellme_create_button"
-              type="button"
-              id="create_button"
-              onClick={this.onClickCreateButton}
-              >
-              Create Page
+                <Button
+                  className="tellme_create_button"
+                  type="button"
+                  id="create_button"
+                  onClick={this.onClickCreateButton}
+                >
+                  Create Page
             </Button>
-            <Button
-              type="button"
-              id="photo_button"
-              className="tellme_photo_button"
-              onClick={this.onClickPhotoButton}
-              >
-              Upload Photo
+                <Button
+                  type="button"
+                  id="photo_button"
+                  className="tellme_photo_button"
+                  onClick={this.onClickPhotoButton}
+                >
+                  Upload Photo
           </Button>
-          </div>
-          </Col>
-          <Col className="tellme_right" md={2}>
-            <div className="recent_documents">
-              <h6><b>Recently Edited</b></h6>
-            {documentList}
-            </div>
-          </Col>
-</Row>
+              </div>
+            </Col>
+            <Col className="tellme_right" md={2}>
+              <div className="recent_documents">
+                <h6><b>Recently Edited</b></h6>
+                {documentList}
+              </div>
+            </Col>
+          </Row>
         </div>
       </div>
     );
