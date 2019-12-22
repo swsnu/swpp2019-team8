@@ -2,6 +2,8 @@
 
 Website link: https://www.snuvoice.site/
 
+<img width="633" alt="SNUVOICE Poster" src="https://user-images.githubusercontent.com/26313346/71319988-8d4f0480-24e8-11ea-8ac4-4725bd145424.png">
+
 ## Requirement and specification
 To see requirements and specification, please see [requirements and specification](https://github.com/swsnu/swpp2019-team8/wiki/Project-Requirements-and-Specification)
 
