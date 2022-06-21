@@ -9,7 +9,7 @@ lazy-object-proxy==1.4.2
 mccabe==0.6.1
 mysql-connector-python==8.0.18
 # mysqlclient==1.4.5
-numpy==1.17.4
+numpy==1.22.0
 pandas==0.25.3
 Pillow==6.2.1
 pycodestyle==2.5.0
